@@ -12,7 +12,7 @@ public class ConAccessary {
 
 	//移動平均線を制御する。
 	public static void setConAccessary(String code,String cate,String dayTime,S s){
-
+////
 		try {
 			s.rs_EDIT = s.sqlEditer().executeQuery(SQLChecker.getSQL(code, cate, dayTime, s));
 			s.rs_EDIT.next();
