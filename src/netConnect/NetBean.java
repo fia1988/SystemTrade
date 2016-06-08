@@ -40,6 +40,95 @@ public class NetBean extends NetSuper{
 	private List<String> netFile = new ArrayList<String>();
 	private List<List<String>> netFileS = new ArrayList<List <String>>();
 
+	
+	//リバースは何をいれても逆から入れる。
+	public void setUrlCsv(String URL,int skipLine,int intervalTime,boolean reverse){
+		netFile = new ArrayList<String>();
+		HttpURLConnection connect = null;
+		URL url = null;
+		InputStream in = null;
+		InputStreamReader isr = null;
+		BufferedReader baf = null;
+
+		try{
+
+			//ちょっと間をおいてから動かす。連続実行するときは多少はね。
+			Thread.sleep(intervalTime);
+
+			//概ねの操作で例外処理が必要です。
+			//URLを作成する
+			String adress= URL;
+			url=new URL(adress);//URLを設定
+			// URL接続
+			connect = (HttpURLConnection)url.openConnection();//サイトに接続
+			connect.setRequestMethod("GET");//プロトコルの設定
+			in=connect.getInputStream();//ファイルを開く
+			isr = new InputStreamReader( in,"SJIS");
+			baf = new BufferedReader(isr);
+
+
+
+			for (int i = 0;i<skipLine;i++){
+				baf.readLine();
+			}
+
+
+			String lineRecord = baf.readLine();
+			System.out.println("一行目：" + lineRecord);
+
+			//アクセス拒否された場合の動き
+			if(lineRecord==null){
+				System.out.println("NetBean：アクセス拒否中。150秒待ちます。");
+				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
+				try {
+					Thread.sleep(PROPARTY.SLEEPTIME);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				setUrlCsv(URL,skipLine,intervalTime);
+				return;
+			}else if(lineRecord.equals(PROPARTY.NAZO)){
+				System.out.println("NetBean：503かも。5秒待まってもう一回。");
+				try {
+					Thread.sleep(PROPARTY.SLEEPTIME-145000);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				setUrlCsv(URL,skipLine,intervalTime);
+				return;
+			}
+
+
+			netFile.add(lineRecord);
+//			System.out.println(lineRecord);
+			while ((lineRecord = baf.readLine()) != null) {
+//				System.out.println(lineRecord);
+				netFile.add(lineRecord);
+			}
+
+
+
+		}catch(Exception e){
+			//例外処理が発生したら、表示する
+			//			System.out.println("Err =" + e);
+//			e.printStackTrace();
+
+			System.out.println("ページがないよ：" + URL);
+		}finally{
+			try {
+				//				URL切断
+				baf.close();
+				isr.close();
+				in.close();//InputStreamを閉じる
+				connect.disconnect();//サイトの接続を切断
+			} catch (IOException e) {
+				System.out.println("NetBean109でIOEXception");
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public void setUrlCsv(String URL,int skipLine,int intervalTime){
 		netFile = new ArrayList<String>();

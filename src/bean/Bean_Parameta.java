@@ -4,12 +4,25 @@ import proparty.controllDay;
 import constant.ReCord;
 
 public class Bean_Parameta {
+	//出来高の調査する場合の、推移していないことを示す値
+	double BOXCHECK;
+	//出来高の調査する場合の、出来高の上がっている期間を示す
+	double HIGHT_DEKI_RATIO;
+
+	//ボーナス月日。MM-DDで入力
+	String bonus_01;
+	String bonus_02;
+	String bonus_03;
+	//給料日。MMで入力
+	String saraly_01;
+	String saraly_02;
+	String saraly_03;
 
 	String targetColumn_S_01;
 	String targetColumn_S_02;
 	String targetColumn_S_03;
 	String targetColumn_S_04;
-	
+
 	String targetColumn_L_01;
 	String targetColumn_L_02;
 	String targetColumn_L_03;
@@ -19,6 +32,111 @@ public class Bean_Parameta {
 	Double targetColumn02_value;
 	Double targetColumn03_value;
 	Double targetColumn04_value;
+
+	//持ち株会のチェックとか
+	String checkDay_01;
+	String checkDay_02;
+	String checkDay_03;
+	String checkDay_04;
+
+
+
+	public String getBonus_01() {
+		return bonus_01;
+	}
+
+	public void setBonus_01(String bonus_01) {
+		this.bonus_01 = bonus_01;
+	}
+
+	public String getBonus_02() {
+		return bonus_02;
+	}
+
+	public void setBonus_02(String bonus_02) {
+		this.bonus_02 = bonus_02;
+	}
+
+	public String getBonus_03() {
+		return bonus_03;
+	}
+
+	public void setBonus_03(String bonus_03) {
+		this.bonus_03 = bonus_03;
+	}
+
+	public String getSaraly_01() {
+		return saraly_01;
+	}
+
+	public void setSaraly_01(String saraly_01) {
+		this.saraly_01 = saraly_01;
+	}
+
+	public String getSaraly_02() {
+		return saraly_02;
+	}
+
+	public void setSaraly_02(String saraly_02) {
+		this.saraly_02 = saraly_02;
+	}
+
+	public String getSaraly_03() {
+		return saraly_03;
+	}
+
+	public void setSaraly_03(String saraly_03) {
+		this.saraly_03 = saraly_03;
+	}
+
+	public String getCheckDay_01() {
+		return checkDay_01;
+	}
+
+	public void setCheckDay_01(String checkDay_01) {
+		this.checkDay_01 = checkDay_01;
+	}
+
+	public String getCheckDay_02() {
+		return checkDay_02;
+	}
+
+	public void setCheckDay_02(String checkDay_02) {
+		this.checkDay_02 = checkDay_02;
+	}
+
+	public String getCheckDay_03() {
+		return checkDay_03;
+	}
+
+	public void setCheckDay_03(String checkDay_03) {
+		this.checkDay_03 = checkDay_03;
+	}
+
+	public String getCheckDay_04() {
+		return checkDay_04;
+	}
+
+	public void setCheckDay_04(String checkDay_04) {
+		this.checkDay_04 = checkDay_04;
+	}
+
+	public double getBOXCHECK() {
+		return BOXCHECK;
+	}
+
+	public void setBOXCHECK(double bOXCHECK) {
+		BOXCHECK = bOXCHECK;
+	}
+
+	public double getHIGHT_DEKI_RATIO() {
+		return HIGHT_DEKI_RATIO;
+	}
+
+	public void setHIGHT_DEKI_RATIO(double hIGHT_DEKI_RATIO) {
+		HIGHT_DEKI_RATIO = hIGHT_DEKI_RATIO;
+	}
+
 
 	public String getTargetColumn_S_01() {
 		return targetColumn_S_01;
@@ -113,7 +231,8 @@ public class Bean_Parameta {
 	//期間
 	private String startDay		=	ReCord.KOSHINBI_SHOKI ;
 	private String endDay		=	controllDay.getTODAY();
-	private String dayTime;
+	private String dayTime01;
+	private String dayTime02;
 	//Term		:注目する期間1
 	//beforeTerm:注目する期間2
 	private int term01;
@@ -294,12 +413,20 @@ public class Bean_Parameta {
 		this.endDay = endDay;
 	}
 
-	public String getDayTime() {
-		return dayTime;
+	public String getDayTime01() {
+		return dayTime01;
 	}
 
-	public void setDayTime(String dayTime) {
-		this.dayTime = dayTime;
+	public void setDayTime01(String dayTime) {
+		this.dayTime01 = dayTime;
+	}
+
+	public String getDayTime02() {
+		return dayTime02;
+	}
+
+	public void setDayTime02(String dayTime02) {
+		this.dayTime02 = dayTime02;
 	}
 
 	public int getTerm01() {

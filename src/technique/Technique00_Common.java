@@ -7,13 +7,18 @@ import proparty.S;
 import accesarrySQL.SQLChecker;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
+import bean.Bean_nowRecord;
 import constant.COLUMN;
 
 public class Technique00_Common {
-
+	//checkPrice_S設定部分
+	//勝ち条件
+//		paraDTO.setWinWariai(1.05);
+	//負け条件
+//		paraDTO.setLoseWariai(0.95);
 	//judgeがtrueなら勝ちの場合、falseなら負けの場合
-	public static int checkPrice_S(Bean_Parameta paraDTO,Bean_Result resultDTO){
-		String checkColumn	=	paraDTO.getTargetColumn_S_01();
+	public static int checkPrice_S(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
+		String checkColumn	=	COLUMN.CLOSE;
 		S this_s = new S ();
 		ResultSet this_rs=null;
 
@@ -22,13 +27,13 @@ public class Technique00_Common {
 		String SQL	=	" select "
 				+	checkColumn
 				+	" from  "
-				+	SQLChecker.getTBL(paraDTO.getCateflg())
+				+	SQLChecker.getTBL(nowDTO.getCateflg())
 				+	" where "
 				+	COLUMN.CODE
-				+	" = '"	+	paraDTO.getCode()	+	"' "
+				+	" = '"	+	nowDTO.getCode()	+	"' "
 				+	" and "
 				+	COLUMN.DAYTIME
-				+	" = '"	+	paraDTO.getDayTime()	+	"' ";
+				+	" = '"	+	nowDTO.getNowDay_02()	+	"' ";
 
 		try {
 			this_rs = this_s.sqlGetter().executeQuery(SQL);
@@ -37,13 +42,13 @@ public class Technique00_Common {
 				Double nowPrice = this_rs.getDouble(checkColumn) ;
 
 				//勝っているとき
-				if ( nowPrice >= paraDTO.getBuyPrice() * paraDTO.getWinWariai()){
+				if ( nowPrice >= nowDTO.getNowCLOSE_01() * paraDTO.getWinWariai()){
 					this_rs.close();
 					return Technique98_CONST.WIN_FLG;
 				}
 
 				//負けたとき
-				if ( nowPrice <= paraDTO.getBuyPrice() * paraDTO.getLoseWariai()){
+				if ( nowPrice <= nowDTO.getNowCLOSE_01() * paraDTO.getLoseWariai()){
 					this_rs.close();
 					return Technique98_CONST.LOSE_FLG;
 				}

@@ -22,8 +22,8 @@ public class Bean_Result {
 	double winParcent;
 	double loseParcent;
 	int tradeCount;
-	
-	
+
+
 	public String getDAY() {
 		return DAY;
 	}
@@ -36,25 +36,30 @@ public class Bean_Result {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public int getLoseCount() {
 		return loseCount;
 	}
-	
+
 	public void setLoseCount() {
 		this.loseCount++;
 	}
+
+	public void reSetLoseCount() {
+		this.loseCount=0;
+	}
+
 	public int getWinCount() {
 		return winCount;
 	}
 	public void setWinCount() {
 		this.winCount++;
 	}
-	
+
 	public void reSetWinCount() {
 		this.winCount=0;
 	}
-	
+
 	public int getKeepCount() {
 		return keepCount;
 	}
@@ -70,7 +75,7 @@ public class Bean_Result {
 	public void setTOTAL_WIN() {
 		TOTAL_WIN++;
 	}
-	
+
 	public void reSetTOTAL_WIN() {
 		TOTAL_WIN=0;
 	}
@@ -128,10 +133,10 @@ public class Bean_Result {
 	public int getTradeCount() {
 		return tradeCount;
 	}
-	public void setTradeCount(int tradeCount) {
-		this.tradeCount = tradeCount;
+	public void setTradeCount() {
+		this.tradeCount++;
 	}
-	
-	
-	
+
+
+
 }

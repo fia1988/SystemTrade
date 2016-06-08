@@ -3,13 +3,16 @@ package controller;
 import insertPackage.InsertDay;
 import insertPackage.InsertList;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.Net_Adress;
+import proparty.PROPARTY;
 import proparty.S;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
@@ -59,7 +62,7 @@ public class CONTOLLBOTTON {
 		}else{
 
 //			hisabisaDayBottonContoroll_STATISTICS(MAXDAY,TODAY,s);
-			
+
 			hisabisaDayBotton(MAXDAY,TODAY,ReCord.CODE_02_SATISTICS,s);
 		}
 		s.resetConnection();
@@ -89,6 +92,22 @@ public class CONTOLLBOTTON {
 	}
 
 	private void everyDayBotton(String TODAY,String cate,S s){
+
+	    DateFormat format = new SimpleDateFormat("HH:mm:ss");
+	    Date nowDate = new Date();
+	    String nowTime = format.format(nowDate);
+	    System.out.println(nowTime);
+	    System.out.println(PROPARTY.UPDATETIME);
+	    System.out.println(nowTime.compareTo(PROPARTY.UPDATETIME));
+
+	    if (nowTime.compareTo(PROPARTY.UPDATETIME) <= 0) {
+//		    System.out.println("14:30:00".compareTo("15:30:00")); //		    -1
+//		    System.out.println("15:30:00".compareTo("15:30:00")); //		    0
+//		    System.out.println("16:30:00".compareTo("15:30:00")); //		    1
+	    	System.out.println(PROPARTY.UPDATETIME + "がまだ来ていません。今は" + nowTime);
+	    	return;
+	    }
+
 		NetBean NB = new NetBean();
 
 		Bean_Bean bbb = new Bean_Bean();
@@ -286,7 +305,7 @@ public class CONTOLLBOTTON {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(MAXDAY_SPRIT[0]), Integer.parseInt(MAXDAY_SPRIT[1]) - 1, Integer.parseInt(MAXDAY_SPRIT[2]));
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 
 		calendar.add(Calendar.DAY_OF_MONTH, +1);
 		MAXDAY = sdf1.format(calendar.getTime());
@@ -300,7 +319,7 @@ public class CONTOLLBOTTON {
 			//CSVの中身がnullではない場合、続行CSVをDTOにしてインサート
 
 			if(NB.setUrlCsv(Net_Adress.STATISTICS_LIST_DD + MAXDAY + Net_Adress.DOWN_CSV,1)){
-				
+
 				//CSV→DTO
 				B_B.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),MAXDAY,0);
 				//インサート
@@ -308,7 +327,7 @@ public class CONTOLLBOTTON {
 				i_d.InsertDD_STATISTICS(B_B.getList_CSVtoDTO_STATISTICA(),MAXDAY, s);
 				check = 0;
 			}else{
-				
+
 				check++;
 				if ( check > 30 ) {
 					return false;

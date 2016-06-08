@@ -35,21 +35,20 @@ public class createTBL {
 
 		//SQL文の取得
 		String create = "create table ";
-
+//		・併合でfalse、分割でtrue
+//		  併合の場合は比率で乗算
+//		  分割の場合は比率で除算
 		colum = "( "
-
-				+ COLUMN.DAYTIME_KENRI_LAST_KATA					+ " , " //権利付最終売買日
-				+ COLUMN.DAYTIME_KENRI_OTI_KATA						+ " , " //権利落ち日
+				+ COLUMN.EFFECT_STARTDAY_KATA						+ " , " //効力発生日
 				+ COLUMN.CODE_KATA									 + " , " //銘柄コード
-				+ COLUMN.CODENAME_KATA								+ " , " //銘柄名
-				+ COLUMN.MARKET_KATA								+ " , " //マーケット、市場
-				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
-				+ COLUMN.DAYTIME_KATA								 + " , " //日付、新株式売却可能日
-				+ COLUMN.BIKOU_KATA									 + " , " //備考欄
-				+ COLUMN.SEPA_FLG_KATA								 + " , " //分割、併合処理をおえたらここに1を埋める
+//				+ COLUMN.CODENAME_KATA								+ " , " //銘柄名
+				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、
+				+ COLUMN.DAYTIME_KENRI_LAST_KATA					+ " , " //権利付最終売買日。効力は権利付最終日の翌営業日から発生する
 				+ COLUMN.CHECKSEPA_COMBINE_KATA						 + " , " //分割/併合の判断。分割の場合はtrue、併合の場合はfalse
+				+ COLUMN.SEPA_FLG_KATA								 + " , " //分割、併合処理をおえたらここに1を埋める
+				+ COLUMN.BIKOU_KATA									 + " , " //備考欄
 				+ "primary key ("
-				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME + ")) ";
+				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME_KENRI_LAST + " , " + COLUMN.SEPA_FLG + ")) ";
 
 		SQL = create + TBL_Name.SEPARATE_DD + colum;
 		System.out.println(SQL);

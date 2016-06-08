@@ -7,19 +7,27 @@ import proparty.S;
 import accesarrySQL.SQLChecker;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
+import bean.Bean_nowRecord;
 import constant.AccesarryParameta;
 import constant.COLUMN;
 import constant.ReCord;
 
 public class Technique01 {
 
+
+	//checkDeki_L設定部分
+	//一定期間の出来高の変化していない期間の設定。02と01の合計で出す
+//	paraDTO.setTerm01(60);
+	//この期間で上がったか否かをチェックする
+//	paraDTO.setTerm02(10);
+//
 //Lメソッドは戻り値int（勝ち）約定（負け）、false買わず
 //WINFLG_買う、LOSEフラグ、買わない。
-	public static int checkDeki_L(Bean_Parameta paraDTO,Bean_Result resultDTO){
+	public static int checkDeki_L(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
 		S this_s = new S ();
 		ResultSet this_rs=null;
 
-		switch(paraDTO.getCateflg()){
+		switch(nowDTO.getCateflg()){
 		case ReCord.CODE_01_STOCK:
 			break;
 		case ReCord.CODE_04_ETF:
@@ -28,8 +36,8 @@ public class Technique01 {
 			return Technique98_CONST.NO_GAME;
 		}
 
-		String SQL = SQLChecker.getTermCheckSQL(paraDTO.getCode(),paraDTO.getCateflg(),paraDTO.getDayTime(),paraDTO.getTerm01() + paraDTO.getTerm02());
-
+		String SQL = SQLChecker.getTermCheckSQL(nowDTO.getCode(),nowDTO.getCateflg(),nowDTO.getNowDay_01(),paraDTO.getTerm01() + paraDTO.getTerm02());
+		
 
 		try {
 
@@ -39,7 +47,7 @@ public class Technique01 {
 
 				String devStart = this_rs.getString((COLUMN.DAYTIME)) ;
 
-				SQL = SQLChecker.getTermCheckSQL(paraDTO.getCode(),paraDTO.getCateflg(),paraDTO.getDayTime(),paraDTO.getTerm02());
+				SQL = SQLChecker.getTermCheckSQL(nowDTO.getCode(),nowDTO.getCateflg(),nowDTO.getNowDay_01(),paraDTO.getTerm02());
 
 				this_rs.close();
 
@@ -47,12 +55,8 @@ public class Technique01 {
 				if(this_rs.next()==true){
 					String checkStart = this_rs.getString((COLUMN.DAYTIME)) ;
 
-					String DEKI="";
-					if(paraDTO.getCateflg().equals(ReCord.CODE_01_STOCK)){
-						DEKI=COLUMN.BEFORE_DEKI;
-					}else{
-						DEKI=COLUMN.DEKI;
-					}
+					String DEKI=COLUMN.DEKI;
+
 
 					String checkColumn1 = "STDDEV_SAMP(" + DEKI +  ")";
 					String checkColumn2 = "avg(" + DEKI +  ")";
@@ -64,10 +68,10 @@ public class Technique01 {
 					SQL = "select "
 							+ checkColumn5
 							+ " from "
-							+ SQLChecker.getTBL(paraDTO.getCateflg())
+							+ SQLChecker.getTBL(nowDTO.getCateflg())
 							+ " where "
 							+ COLUMN.CODE
-							+ " ='" + paraDTO.getCode() + "'"
+							+ " ='" + nowDTO.getCode() + "'"
 							+ " and "
 							+ "'" + devStart + "' <= "
 							+ COLUMN.DAYTIME
@@ -75,7 +79,7 @@ public class Technique01 {
 							+ COLUMN.DAYTIME
 							+ " < "
 							+ "'" + checkStart + "'";
-
+					
 					this_rs.close();
 					this_rs = this_s.sqlGetter().executeQuery(SQL);
 					if(this_rs.next()==true){
@@ -85,24 +89,24 @@ public class Technique01 {
 						double CHECK = this_rs.getDouble(checkColumn5) ;
 
 						//過去の出来高の変異が少ない期間であるかをチェックする
-
-						if(CHECK < AccesarryParameta.BOXCHECK){
+						
+						if(CHECK < paraDTO.getBOXCHECK()){
 							SQL = "select "
 									+ DEKI + ","
 									+ COLUMN.DEKI_CHANGERATE + ","
 									+ COLUMN.DEKI_RATIO +  ""
 									+ " from "
-									+ SQLChecker.getTBL(paraDTO.getCateflg())
+									+ SQLChecker.getTBL(nowDTO.getCateflg())
 									+ " where "
 									+ COLUMN.CODE
-									+ " ='" + paraDTO.getCode() + "'"
+									+ " ='" + nowDTO.getCode() + "'"
 									+ " and "
 									+ "'" + checkStart + "' <= "
 									+ COLUMN.DAYTIME
 									+ " and "
 									+ COLUMN.DAYTIME
 									+ " <= "
-									+ "'" + paraDTO.getDayTime() + "'";
+									+ "'" + nowDTO.getNowDay_01() + "'";
 
 							this_rs.close();
 							this_rs = this_s.sqlGetter().executeQuery(SQL);
@@ -137,7 +141,7 @@ public class Technique01 {
 
 							checkCount = checkCount / paraDTO.getTerm02();
 
-							if ( checkCount >= AccesarryParameta.HIGHT_DEKI_RATIO ){
+							if ( checkCount >= paraDTO.getHIGHT_DEKI_RATIO() ){
 								this_rs.close();
 
 								return Technique98_CONST.TRADE_FLG;

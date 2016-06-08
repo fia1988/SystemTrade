@@ -32,7 +32,7 @@ public class cloringDate {
 											   s											);
 
 		s.resetConnection();
-		
+
 		//INDEX
 		CB.everyDayBottonContoroll_INDEX(controllDay.getMAX_DD_INDEX(s) 	 ,
 										controllDay.getAJUSTMAXDAY_INDEX(s) ,
@@ -45,10 +45,12 @@ public class cloringDate {
 		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
 		OneRecord_Update.OneRecord(s);
 
-		//分割チェック
-		SEPARATE_CHECK.checkSEPARATE(s);
-
 		s.closeConection();
+
+		//分割チェック。sはこの中で独自に作る。
+		SEPARATE_CHECK.checkSEPARATE_controll();
+
+
 
 		long stop = System.currentTimeMillis();
 	    System.out.println("実行にかかった時間は " + (stop - start)/1000 + " 秒です。");

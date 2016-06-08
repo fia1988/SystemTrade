@@ -47,7 +47,7 @@ public class ConAccessary {
 //			s.rs_EDIT.updateRow();
 
 			checkCount++;
-			if( checkCount%500 == 0){
+			if( checkCount%400 == 0){
 				checkCount=0;
 				s.resetConnection();
 

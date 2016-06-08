@@ -19,11 +19,12 @@ import proparty.S;
 import proparty.TBL_Name;
 import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
-import analysis.Analysis02_DEKI;
+import analysis.Analysis00_Common;
 import bean.Bean_CodeList;
 import botton.cloringDate;
 import botton.setUp;
 import constant.CATE_FLG;
+import constant.COLUMN;
 
 //いろいろテストする。
 
@@ -173,7 +174,27 @@ public class TAB_test extends JPanel {
 //			System.out.println(TODAY_SPRIT[1]);
 //			System.out.println(TODAY_SPRIT[2]);
 
-			Analysis02_DEKI.Analysis_DEKI();
+			Analysis00_Common.sagyoSpace();
+
+			//checkMotiKabu_L設定部分
+			//あるいは持ち株会の買付日を見つける
+			//基準日1、多くは給料日
+			//paraDTO.sarary_01("DD");
+			//基準日2、多くはボーナス夏
+			//paraDTO.bonus_01("MM-DD");
+			//基準日3、多くはボーナス冬
+			//paraDTO.bonus_02("MM-DD");
+			//基準日の何営業日あとかのチェック
+			//paraDTO.intCount01(2);
+//			Bean_Parameta paraDTO = new Bean_Parameta();
+//			Bean_Result resultDTO = new Bean_Result();
+//			Bean_nowRecord nowDTO = new Bean_nowRecord();
+//			paraDTO.setIntCount01(2);
+//			nowDTO.setCode("1301―T");
+//			nowDTO.setCateflg("1");
+//			nowDTO.setNowDay_01("2008-05-05");
+//			Technique02.checkMotiKabu_L(paraDTO, nowDTO, resultDTO);
+
 			textArea_SQLresult.append(textField.getText() + "5\n");
 		}
 	}
@@ -204,6 +225,8 @@ public class TAB_test extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			cloringDate C_D = new cloringDate();
+			S s = new S();
+			s.getCon();
 			C_D.getDayDate();
 
 		}
@@ -282,7 +305,11 @@ public class TAB_test extends JPanel {
 			SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
 			s.freeUpdateQuery(SQL);
 
+			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
+			s.freeUpdateQuery(SQL);
 
+			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
+			s.freeUpdateQuery(SQL);
 
 
 			s.closeConection();
