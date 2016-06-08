@@ -2,6 +2,7 @@ package analysis;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import proparty.S;
@@ -15,6 +16,7 @@ import bean.Bean_nowRecord;
 import common.commonAP;
 
 import constant.COLUMN;
+import constant.ReCord;
 
 public class Analysis00_Common {
 
@@ -79,21 +81,14 @@ public class Analysis00_Common {
 
 					//指定した銘柄の全日付でループする
 					while ( s.rs2.next() ) {
-						//買った日
-						nowDTO.setNowDay_01(s.rs2.getString(COLUMN.DAYTIME));
 
 						//今の銘柄
 						nowDTO.setCode(code);
 
 						//今の銘柄のカテゴリ
 						nowDTO.setCateflg(cate);
-
-						//買った日の最高値、最安、とかいろいろ
-						nowDTO.setNowMAX_01(	s.rs2.getDouble(	COLUMN.MAX		)	);
-						nowDTO.setNowMIN_01(	s.rs2.getDouble(	COLUMN.MIN		)	);
-						nowDTO.setNowOpen_01(	s.rs2.getDouble(	COLUMN.OPEN		)	);
-						nowDTO.setNowCLOSE_01(	s.rs2.getDouble(	COLUMN.CLOSE	)	);
-
+						//nowDTOにいろいろセットする。
+						setNowRecord01(code,cate,nowDTO,s.rs2);
 
 						//ifの中に入ったら買いフラグがたつ
 						if( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTO,resultDTO) ==Technique98_CONST.TRADE_FLG){
@@ -224,6 +219,48 @@ public class Analysis00_Common {
 		}
 
 		return Technique98_CONST.NO_RESULT;
+
+	}
+
+	public static void setNowRecord01(String code,String cate,Bean_nowRecord nowDTO,ResultSet RS){
+		//買った日の最高値、最安、とかいろいろ
+		try {
+			switch(cate){
+			case ReCord.CODE_01_STOCK:
+				//買った日
+				nowDTO.setNowDay_01		(	RS.getString(COLUMN.DAYTIME		)	);
+				//買った日の最高値、最安、とかいろいろ
+				nowDTO.setNowMAX_01		(	RS.getDouble(	COLUMN.MAX		)	);
+				nowDTO.setNowMIN_01		(	RS.getDouble(	COLUMN.MIN		)	);
+				nowDTO.setNowOpen_01	(	RS.getDouble(	COLUMN.OPEN		)	);
+				nowDTO.setNowCLOSE_01	(	RS.getDouble(	COLUMN.CLOSE	)	);				
+				break;
+			case ReCord.CODE_02_SATISTICS:
+				
+				break;
+			case ReCord.CODE_03_INDEX:
+				
+				break;
+			case ReCord.CODE_04_ETF:
+				
+				break;
+			case ReCord.CODE_05_SAKIMONO:
+				
+				break;
+			case ReCord.CODE_06_CURRENCY:
+				
+				break;
+			default:
+				System.out.println("setIDO_Heikinなんかよくわからないの来た：" + code + ":" + cate);
+				break;
+			}
+			
+			
+		} catch (SQLException e) {
+			//
+			System.out.println("setNowRecord01でなんかミスった");
+			e.printStackTrace();
+		}
 
 	}
 

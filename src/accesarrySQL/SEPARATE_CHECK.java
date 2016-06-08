@@ -85,7 +85,7 @@ public class SEPARATE_CHECK {
 					//証券コード+市場
 					codeList.add(	s.rs.getString(COLUMN.CODE)	);
 				}
-				
+
 				for( int i = 0; i < codeList.size(); i++) {
 					//権利付最終売買日以前の株価などを更新する。効力は権利付最終日の翌営業日から発生するため。
 					SQL = " update " + TBL_Name.STOCK_DD
@@ -104,14 +104,15 @@ public class SEPARATE_CHECK {
 
 					//調整後の株価で移動平均線とかを引き直す。
 					updateAccesary(	codeList.get(i)	,s	);
+					System.out.println("");
 				}
-				
+
 
 				//フラグをtrueにする。
 				updateSEPAFLG(code_4,day_kenri_last,s);
 				System.out.println(code_4 + "の" + day_kenri_last);
 				s.rs = s.sqlGetter().executeQuery(SQL_defo);
-				
+
 			}
 		} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック

@@ -51,7 +51,7 @@ public class createTBL {
 				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME_KENRI_LAST + " , " + COLUMN.SEPA_FLG + ")) ";
 
 		SQL = create + TBL_Name.SEPARATE_DD + colum;
-		System.out.println(SQL);
+
 		s.freeUpdateQuery(SQL);
 	}
 
