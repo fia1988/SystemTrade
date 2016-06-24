@@ -1,5 +1,7 @@
 package accesarrySQL;
 
+import java.sql.SQLException;
+
 import proparty.S;
 import proparty.TBL_Name;
 import constant.COLUMN;
@@ -29,6 +31,27 @@ public class SQLChecker {
 	}
 
 
+	public static String getCate(String code,S s){
+
+		String SQL = " select "
+					+ COLUMN.CATE_FLG
+					+ " from "
+					+ TBL_Name.CODELISTTBL
+					+ " where "
+					+ COLUMN.CODE + " = '"+ code + "'";
+
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			s.rs.next();
+			return s.rs.getString(	COLUMN.CATE_FLG	);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return "";
+	}
 
 	public static String getTBL(String cate){
 		String TBL = "";

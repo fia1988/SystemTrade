@@ -4,6 +4,7 @@ import proparty.S;
 import proparty.controllDay;
 import accesarrySQL.OneRecord_Update;
 import accesarrySQL.SEPARATE_CHECK;
+import constant.ReCord;
 import controller.CONTOLLBOTTON;
 import controller.GetCodeList;
 
@@ -17,26 +18,41 @@ public class cloringDate {
 
 		s.getCon();
 		//統計
-		CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
-											   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-//											   "2007-01-15",
-											   s											);
+//		CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
+//											   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
+//											   s											);
+
+		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STATISTICS(s) 		,
+										controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
+										ReCord.CODE_02_SATISTICS					,
+										s											);
+
 		//CBのなかを破棄する。メモリ解放
 		CB = new CONTOLLBOTTON();
 		s.resetConnection();
 
 //		株,ETF
-		CB.everyDayBottonContoroll_STOCK_ETF(controllDay.getMAX_DD_STOCK_ETF(s) 	 ,
-											controllDay.getAJUSTMAXDAY_STOCK_ETF(s) ,
-//											   "2007-01-15",
-											   s											);
+//		CB.everyDayBottonContoroll_STOCK_ETF(controllDay.getMAX_DD_STOCK_ETF(s) 	 ,
+//											controllDay.getAJUSTMAXDAY_STOCK_ETF(s) ,
+//											   s											);
+
+		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STOCK_ETF(s) 			,
+										controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
+										ReCord.CODE_01_STOCK						,
+										s											);
 
 		s.resetConnection();
 
 		//INDEX
-		CB.everyDayBottonContoroll_INDEX(controllDay.getMAX_DD_INDEX(s) 	 ,
-										controllDay.getAJUSTMAXDAY_INDEX(s) ,
-												s							);
+//		CB.everyDayBottonContoroll_INDEX(controllDay.getMAX_DD_INDEX(s) 	 ,
+//										controllDay.getAJUSTMAXDAY_INDEX(s) ,
+//												s							);
+		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,
+										controllDay.getAJUSTMAXDAY_INDEX(s)			,
+										ReCord.CODE_03_INDEX						,
+										s											);
+
+
 
 		//CBのなかを破棄する。メモリ解放
 		CB = new CONTOLLBOTTON();

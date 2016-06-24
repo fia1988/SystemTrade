@@ -16,89 +16,129 @@ public class Technique00_Common {
 //		paraDTO.setWinWariai(1.05);
 	//負け条件
 //		paraDTO.setLoseWariai(0.95);
-	//judgeがtrueなら勝ちの場合、falseなら負けの場合
-	public static int checkPrice_S(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
-		String checkColumn	=	COLUMN.CLOSE;
+//売値だけで見る
+	//true:エントリー
+	//false:exit
+	public static int checkPrice_S(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,boolean judge){
+
+			//trueならレコードが存在する。
+
+		//売りメソッドでのみの運用を検討している。
+		if ( judge ) { return Technique98_CONST.NO_GAME;}
+
+		//nowDTO.getNowCLOSE_02();は売値が入っている。今日の売価
+		Double nowPrice_Exit_KOHO = nowDTO.getNowCLOSE_01();
+
+
+		//負けたとき
+		if ( nowPrice_Exit_KOHO <= nowDTO.getNowCLOSE_01() * paraDTO.getLoseWariai()){
+			nowDTO.setKessaiDay(nowDTO.getNowDay_01());
+			nowDTO.setKessaiKingaku(nowDTO.getNowCLOSE_01());
+			return Technique98_CONST.TRADE_FLG;
+		}
+
+
+		//勝っているとき
+		if ( nowPrice_Exit_KOHO >= nowDTO.getNowCLOSE_01() * paraDTO.getWinWariai()){
+			nowDTO.setKessaiDay(nowDTO.getNowDay_01());
+			nowDTO.setKessaiKingaku(nowDTO.getNowCLOSE_01());
+			return Technique98_CONST.TRADE_FLG;
+		}
+
+
+
+		return Technique98_CONST.NO_GAME;
+	}
+
+	//当日売るやつ
+	public static int checkPrice_TODAY_S(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,boolean judge){
+
+		//売りメソッドでのみの運用を検討している。
+		if ( judge ) { return Technique98_CONST.NO_GAME;}
 		S this_s = new S ();
 		ResultSet this_rs=null;
 
+		double exitMAX=0.0;
+		double exitMIN=0.0;
+		double exitOpen=0.0;
+		double exitEnd=0.0;
+		String kessaiDay="";
 
 
-		String SQL	=	" select "
-				+	checkColumn
-				+	" from  "
-				+	SQLChecker.getTBL(nowDTO.getCateflg())
-				+	" where "
-				+	COLUMN.CODE
-				+	" = '"	+	nowDTO.getCode()	+	"' "
-				+	" and "
-				+	COLUMN.DAYTIME
-				+	" = '"	+	nowDTO.getNowDay_02()	+	"' ";
-
-		try {
-			this_rs = this_s.sqlGetter().executeQuery(SQL);
-			//trueならレコードが存在する。
-			if(this_rs.next()==true){
-				Double nowPrice = this_rs.getDouble(checkColumn) ;
-
-				//勝っているとき
-				if ( nowPrice >= nowDTO.getNowCLOSE_01() * paraDTO.getWinWariai()){
-					this_rs.close();
-					return Technique98_CONST.WIN_FLG;
-				}
-
-				//負けたとき
-				if ( nowPrice <= nowDTO.getNowCLOSE_01() * paraDTO.getLoseWariai()){
-					this_rs.close();
-					return Technique98_CONST.LOSE_FLG;
-				}
-
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return Technique98_CONST.NO_GAME;
-	}
-	//judgeがtrueなら勝ちの場合、falseなら負けの場合
-	public static int checkPrice_S(String code,String cate,String dayTime,double buyPrice,double winWariai,double loseWariai, S s){
-		String checkColumn	=	COLUMN.CLOSE;
 
 
-		String SQL	=	" select "
-					+	checkColumn
-					+	" from  "
-					+	SQLChecker.getTBL(cate)
-					+	" where "
-					+	COLUMN.CODE
-					+	" = '"	+	code	+	"' "
-					+	" and "
-					+	COLUMN.DAYTIME
-					+	" = '"	+	dayTime	+	"' ";
+			String checkWord;
+			String checkDaisyo;
+
+
+		String SQL = " select "
+					+ COLUMN.DAYTIME	+ ","
+					+ COLUMN.OPEN		+ ","
+					+ COLUMN.MAX		+ ","
+					+ COLUMN.MIN		+ ","
+					+ COLUMN.CLOSE		+ " "
+					+ " from "
+					+ SQLChecker.getTBL(nowDTO.getCateflg_01())
+					+ " where "
+					+ COLUMN.DAYTIME + " <= '" + nowDTO.getNowDay_01() + "'"
+					+ " and "
+					+ COLUMN.CODE + " = '" + nowDTO.getCode_01() + "'"
+					+ " order by "
+					+ COLUMN.DAYTIME + " desc ";
 
 		try {
-			s.rs = s.sqlGetter().executeQuery(SQL);
-			//trueならレコードが存在する。
-			if(s.rs.next()==true){
-				Double nowPrice = s.rs.getDouble(checkColumn) ;
-
-				//勝っているとき
-				if ( nowPrice >= buyPrice * winWariai){
-					s.rs.close();
-					return Technique98_CONST.WIN_FLG;
-				}
-
-				//負けたとき
-				if ( nowPrice <= buyPrice * loseWariai){
-					s.rs.close();
-					return Technique98_CONST.LOSE_FLG;
-				}
-
-			}
+				this_rs = this_s.sqlGetter().executeQuery(SQL);
+				this_rs.next();
+				this_rs.next();
+				exitMAX = this_rs.getDouble(COLUMN.MAX);
+				exitMIN = this_rs.getDouble(COLUMN.MIN);
+				exitOpen = this_rs.getDouble(COLUMN.OPEN);
+				exitEnd = this_rs.getDouble(COLUMN.CLOSE);
+				kessaiDay = this_rs.getString(COLUMN.DAYTIME);
+				
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
 		}
-		return Technique98_CONST.NO_GAME;
+
+
+//		//当日の場合
+			
+
+
+
+		nowDTO.getKessaiDay();
+		nowDTO.getKessaiKingaku();
+
+		//下がりすぎ用のストッパー
+		//先にここをチェックする。
+		if ( nowDTO.getKessaiKingaku() * paraDTO.getLoseWariai() >= exitMIN ){
+			nowDTO.setKessaiKingaku(nowDTO.getKessaiKingaku() * paraDTO.getLoseWariai() );
+			nowDTO.setKessaiDay(kessaiDay);
+			return Technique98_CONST.TRADE_FLG;
+		}
+
+
+
+		//勝っているとき
+		if ( exitMAX >= nowDTO.getKessaiKingaku() * paraDTO.getWinWariai() ){
+			nowDTO.setKessaiKingaku( nowDTO.getKessaiKingaku() * paraDTO.getWinWariai() );
+			nowDTO.setKessaiDay(kessaiDay);
+			return Technique98_CONST.TRADE_FLG;
+		}
+
+
+		//予定よりも上がらなかったとき、その日に売る。
+		if ( nowDTO.getKessaiKingaku() <= exitEnd ){
+			nowDTO.setKessaiKingaku( exitEnd );
+			nowDTO.setKessaiDay(kessaiDay);
+			return Technique98_CONST.TRADE_FLG;
+		}else{
+			nowDTO.setKessaiKingaku( exitEnd );
+			nowDTO.setKessaiDay(kessaiDay);
+			return Technique98_CONST.TRADE_FLG;
+		}
+
+
 	}
 }

@@ -4,10 +4,40 @@ import proparty.controllDay;
 import constant.ReCord;
 
 public class Bean_Parameta {
-	//出来高の調査する場合の、推移していないことを示す値
-	double BOXCHECK;
-	//出来高の調査する場合の、出来高の上がっている期間を示す
-	double HIGHT_DEKI_RATIO;
+	//共通
+	//勝った場合の値段の比率。
+	private Double winWariai	=	0.0;
+	private Double loseWariai	=	0.0;
+
+	//勝った時のお値段
+	private double buyPrice		=	0;
+
+	private int winCount		=	0;
+
+	private int loseCount		=	0;
+	private int totalTrade		=	0;
+	private	int	keepCount		=	0;
+
+	
+	
+	
+	//checkMotiKabu_L
+	//持ち株会のフラグ、trueの場合、調査する。falseの場合調査しない。
+	boolean motikabuDay = false;
+	boolean summerBonus = false;
+	boolean winterBonus = false;
+	//前日の終値か当日の始値かで動作が変わる、前日の場合：true、当日の場合：false
+	boolean checkTOZITU_OWARINE = false;
+	//持ち株会のチェックとか
+	String checkDay_01;
+	String checkDay_02;
+	String checkDay_03;
+	String checkDay_04;
+
+	//何日後に売るかを設定するメソッド
+	int checkAfterDay = 0;
+
+
 
 	//ボーナス月日。MM-DDで入力
 	String bonus_01;
@@ -18,6 +48,12 @@ public class Bean_Parameta {
 	String saraly_02;
 	String saraly_03;
 
+	//checkDeki_L
+
+	//出来高の調査する場合の、推移していないことを示す値
+	double BOXCHECK;
+	//出来高の調査する場合の、出来高の上がっている期間を示す
+	double HIGHT_DEKI_RATIO;
 	String targetColumn_S_01;
 	String targetColumn_S_02;
 	String targetColumn_S_03;
@@ -33,13 +69,97 @@ public class Bean_Parameta {
 	Double targetColumn03_value;
 	Double targetColumn04_value;
 
-	//持ち株会のチェックとか
-	String checkDay_01;
-	String checkDay_02;
-	String checkDay_03;
-	String checkDay_04;
+
+	//条件出来高
+
+	//なんでもいいから数える
+	int intCount01				=	0;
+	int intCount02				=	0;
+	int intCount03				=	0;
+	int intCount04				=	0;
+	int intCount05				=	0;
+	double doublePara01			=	0;
+	double doublePara02			=	0;
+	double doublePara03			=	0;
+	double doublePara04			=	0;
+	double doublePara05			=	0;
+
+	//期間
+	private String startDay		=	ReCord.KOSHINBI_SHOKI ;
+	private String endDay		=	controllDay.getTODAY();
+	private String dayTime01;
+	private String dayTime02;
+	//Term		:注目する期間1
+	//beforeTerm:注目する期間2
+	private int term01;
+	private int term02;
 
 
+
+
+
+	public int getCheckAfterDay() {
+		return checkAfterDay;
+	}
+
+	public void setCheckAfterDay(int checkAfterDay) {
+		this.checkAfterDay = checkAfterDay;
+	}
+
+	//前日の終値か当日の始値かで動作が変わる、前日の場合：true、当日の場合：false
+	public boolean getCheckTOZITU_ZENZITU() {
+		return checkTOZITU_OWARINE;
+	}
+
+	public void setTOZITU_START() {
+		this.checkTOZITU_OWARINE = false;
+	}
+
+	public void setZENZITU_END() {
+		this.checkTOZITU_OWARINE = true;
+	}
+	//持ち株会調査メソッドにおいて、給料日、夏ボーナス日、冬ボーナス日が全部falseの場合、falseを返す。
+	public boolean checkMotikabu(){
+
+		if(getMotikabuDay()==false && getSummerBonus()==false && getWinterBonus()==false){return false;};
+		return true;
+	}
+
+	public boolean getMotikabuDay() {
+		return motikabuDay;
+	}
+
+	public void setMotikabuDay() {
+		this.motikabuDay = true;
+	}
+
+	public void setOffMotikabuDay() {
+		this.motikabuDay = false;
+	}
+
+	public boolean getSummerBonus() {
+		return summerBonus;
+	}
+
+	public void setSummerBonus() {
+		this.summerBonus = true;
+	}
+
+	public void setOffSummerBonus() {
+		this.summerBonus = false;
+	}
+
+	public boolean getWinterBonus() {
+		return winterBonus;
+	}
+
+	public void setWinterBonus() {
+		this.winterBonus = true;
+	}
+
+	public void setOffWinterBonus() {
+		this.winterBonus = false;
+	}
 
 	public String getBonus_01() {
 		return bonus_01;
@@ -201,42 +321,7 @@ public class Bean_Parameta {
 	public void setTargetColumn_L_04(String targetColumn_L_04) {
 		this.targetColumn_L_04 = targetColumn_L_04;
 	}
-	//勝った場合の値段の比率。
-	private Double winWariai	=	0.0;
-	private Double loseWariai	=	0.0;
 
-	//勝った時のお値段
-	private double buyPrice		=	0;
-
-	private int winCount		=	0;
-
-
-	private int loseCount		=	0;
-	private int totalTrade		=	0;
-	private	int	keepCount		=	0;
-	//条件出来高
-
-	//なんでもいいから数える
-	int intCount01				=	0;
-	int intCount02				=	0;
-	int intCount03				=	0;
-	int intCount04				=	0;
-	int intCount05				=	0;
-	double doublePara01			=	0;
-	double doublePara02			=	0;
-	double doublePara03			=	0;
-	double doublePara04			=	0;
-	double doublePara05			=	0;
-
-	//期間
-	private String startDay		=	ReCord.KOSHINBI_SHOKI ;
-	private String endDay		=	controllDay.getTODAY();
-	private String dayTime01;
-	private String dayTime02;
-	//Term		:注目する期間1
-	//beforeTerm:注目する期間2
-	private int term01;
-	private int term02;
 
 	//flg
 	//個別銘柄・・・1

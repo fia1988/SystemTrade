@@ -305,6 +305,15 @@ public class TAB_test extends JPanel {
 			SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
 			s.freeUpdateQuery(SQL);
 
+			//分割情報のみをリセット
+			SQL = " update " + TBL_Name.STOCK_DD	+ " set "
+							 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
+							 + COLUMN.MAX			+ " = " + COLUMN.BEFORE_MAX		+ " , "
+							 + COLUMN.MIN			+ " = " + COLUMN.BEFORE_MIN		+ " , "
+							 + COLUMN.CLOSE			+ " = " + COLUMN.BEFORE_CLOSE	+ " , "
+							 + COLUMN.DEKI			+ " = " + COLUMN.BEFORE_DEKI	+ "   ";
+			s.freeUpdateQuery(SQL);
+
 			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
 			s.freeUpdateQuery(SQL);
 

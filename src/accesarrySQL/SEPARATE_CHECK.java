@@ -90,11 +90,11 @@ public class SEPARATE_CHECK {
 					//権利付最終売買日以前の株価などを更新する。効力は権利付最終日の翌営業日から発生するため。
 					SQL = " update " + TBL_Name.STOCK_DD
 							+ " set "
-							+ getColumnSEPA(COLUMN.OPEN		,COLUMN.BEFORE_OPEN,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.MAX		,COLUMN.BEFORE_MAX,		RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.MIN		,COLUMN.BEFORE_MIN,		RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.CLOSE	,COLUMN.BEFORE_CLOSE,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.DEKI		,COLUMN.BEFORE_DEKI,	RATE,	enXan_2) + "  "
+							+ getColumnSEPA(COLUMN.OPEN		,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN.MAX		,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN.MIN		,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN.CLOSE	,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN.DEKI		,	RATE,	enXan_2) + "  "
 							+ " where "
 							+ COLUMN.DAYTIME + " <= '" + day_kenri_last + "'"
 							+ " and "
@@ -156,8 +156,8 @@ public class SEPARATE_CHECK {
 
 	}
 
-	public static String getColumnSEPA(String setAfter,String setBefore,double WARIAI,String enXan ){
-		String RESULT = setAfter + " = ( " + setBefore + " ) " + enXan + " ( " + WARIAI + " ) ";
+	public static String getColumnSEPA(String columnName,double WARIAI,String enXan ){
+		String RESULT = columnName + " = ( " + columnName + " ) " + enXan + " ( " + WARIAI + " ) ";
 
 		return RESULT;
 	}

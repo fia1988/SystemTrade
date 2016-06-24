@@ -3,16 +3,13 @@ package controller;
 import insertPackage.InsertDay;
 import insertPackage.InsertList;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.Net_Adress;
-import proparty.PROPARTY;
 import proparty.S;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
@@ -24,13 +21,50 @@ import createTBL.GetCodeTBL;
 
 public class CONTOLLBOTTON {
 
+	public void everyDayBottonContoroll(String MAXDAY ,String TODAY,String cate,S s){
+
+		if(commonAP.getTODAY().equals(MAXDAY)){
+			//更新日と今日の日付が同じ場合
+			switch(cate){
+			case ReCord.CODE_01_STOCK:
+				System.out.println("株更新梨");
+				break;
+			case ReCord.CODE_02_SATISTICS:
+				System.out.println("統計更新なし");
+				break;
+			case ReCord.CODE_03_INDEX:
+				System.out.println("指数更新梨");
+				break;
+			case ReCord.CODE_04_ETF:
+				System.out.println("株更新梨");
+				break;
+			case ReCord.CODE_05_SAKIMONO:
+				break;
+			case ReCord.CODE_06_CURRENCY:
+				break;
+			default:
+				System.out.println("なんかよくわからないの来た：");
+				break;
+			}
+
+			s.resetConnection();
+			return;
+		}
+
+		//リストを作る
+		everyDayBotton(commonAP.getTODAY(),cate,s);
+		//日々テーブルの更新
+		hisabisaDayBotton(MAXDAY, TODAY, cate, s);
+		s.resetConnection();
+	}
+
 	public void everyDayBottonContoroll_STOCK_ETF(String MAXDAY ,String TODAY,S s){
 
 
 		//更新日が昨日と同じ場合、今日の分だけ更新する。月曜日の場合はあきらめる。
 		if(commonAP.getTODAY(-1).equals(MAXDAY)){
 
-
+			//リストを作る
 //			everyDayBotton_STOCK_ETF(commonAP.getTODAY(-1),s);
 			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_01_STOCK,s);
 			System.out.println("こことおる");
@@ -38,11 +72,11 @@ public class CONTOLLBOTTON {
 		}else if(commonAP.getTODAY().equals(MAXDAY)){
 			System.out.println("株更新梨");
 		}else{
-			hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_01_STOCK, s);
+
 //			hisabisaDayBottonContoroll_STOCK_ETF(MAXDAY,TODAY,s);
 
 		}
-
+		hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_01_STOCK, s);
 		s.resetConnection();
 
 	}
@@ -51,7 +85,7 @@ public class CONTOLLBOTTON {
 
 		if(commonAP.getTODAY(-1).equals(MAXDAY)){
 
-
+			//リストを作る
 //			everyDayBotton_STATISTICS(commonAP.getTODAY(-1),s);
 			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_02_SATISTICS,s);
 			System.out.println("こことおる");
@@ -63,8 +97,9 @@ public class CONTOLLBOTTON {
 
 //			hisabisaDayBottonContoroll_STATISTICS(MAXDAY,TODAY,s);
 
-			hisabisaDayBotton(MAXDAY,TODAY,ReCord.CODE_02_SATISTICS,s);
+
 		}
+		hisabisaDayBotton(MAXDAY,TODAY,ReCord.CODE_02_SATISTICS,s);
 		s.resetConnection();
 	}
 
@@ -76,37 +111,38 @@ public class CONTOLLBOTTON {
 
 
 //			everyDayBotton_INDEX(commonAP.getTODAY(-1),s);
+			//リストを作る
 			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_03_INDEX,s);
 			System.out.println("こことおる");
 
 		}else if(commonAP.getTODAY().equals(MAXDAY)){
 			System.out.println("指数更新梨");
 		}else{
-			hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_03_INDEX, s);
+
 //			hisabisaDayBottonContoroll_INDEX(MAXDAY,TODAY,s);
 
 		}
-
+		hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_03_INDEX, s);
 		s.resetConnection();
 
 	}
 
 	private void everyDayBotton(String TODAY,String cate,S s){
 
-	    DateFormat format = new SimpleDateFormat("HH:mm:ss");
-	    Date nowDate = new Date();
-	    String nowTime = format.format(nowDate);
-	    System.out.println(nowTime);
-	    System.out.println(PROPARTY.UPDATETIME);
-	    System.out.println(nowTime.compareTo(PROPARTY.UPDATETIME));
-
-	    if (nowTime.compareTo(PROPARTY.UPDATETIME) <= 0) {
-//		    System.out.println("14:30:00".compareTo("15:30:00")); //		    -1
-//		    System.out.println("15:30:00".compareTo("15:30:00")); //		    0
-//		    System.out.println("16:30:00".compareTo("15:30:00")); //		    1
-	    	System.out.println(PROPARTY.UPDATETIME + "がまだ来ていません。今は" + nowTime);
-	    	return;
-	    }
+//	    DateFormat format = new SimpleDateFormat("HH:mm:ss");
+//	    Date nowDate = new Date();
+//	    String nowTime = format.format(nowDate);
+//	    System.out.println(nowTime);
+//	    System.out.println(PROPARTY.UPDATETIME);
+//	    System.out.println(nowTime.compareTo(PROPARTY.UPDATETIME));
+//
+//	    if (nowTime.compareTo(PROPARTY.UPDATETIME) <= 0) {
+////		    System.out.println("14:30:00".compareTo("15:30:00")); //		    -1
+////		    System.out.println("15:30:00".compareTo("15:30:00")); //		    0
+////		    System.out.println("16:30:00".compareTo("15:30:00")); //		    1
+//	    	System.out.println(PROPARTY.UPDATETIME + "がまだ来ていません。今は" + nowTime);
+//	    	return;
+//	    }
 
 		NetBean NB = new NetBean();
 
@@ -131,9 +167,9 @@ public class CONTOLLBOTTON {
 				return;
 			}
 			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
-			//取得したDTOをリストTBLに挿入する。
-			//取得したDTOをもとに日々テーブルを作る
-			//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
+//			//取得したDTOをリストTBLに挿入する。
+//			//取得したDTOをもとに日々テーブルを作る
+//			//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
 			InsertList_CreateTBL_DD_InsertDD_TODAY_STATISTICS(bbb.getList_CSVtoDTO_STATISTICA(),TODAY, s);
 			break;
 		case ReCord.CODE_03_INDEX:
@@ -152,7 +188,7 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),TODAY,0);
 			InsertList_CreateTBL_DD_InsertDD_TODAY_STOCK_ETF(bbb.getList_CSVtoDTO_STOCK_ETF(),TODAY, s);
-
+//
 
 			break;
 		case ReCord.CODE_05_SAKIMONO:
@@ -638,8 +674,8 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		InsertList_CreateTBL_DD(DTO, s);
 
-		//取得したDTOをもとに時系列テーブルにデータを挿入
-		ID.InsertDD_STOCK_ETF(DTO,DAY, s);
+		//取得したDTOをもとに時系列テーブルにデータを挿入。よく考えたらイランので没
+//		ID.InsertDD_STOCK_ETF(DTO,DAY, s);
 
 	}
 
@@ -649,8 +685,8 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		InsertList_CreateTBL_DD(DTO, s);
 
-		//取得したDTOをもとに時系列テーブルにデータを挿入
-		ID.InsertDD_INDEX(DTO, DAY, s);
+		//取得したDTOをもとに時系列テーブルにデータを挿入。よく考えたらイランので没
+//		ID.InsertDD_INDEX(DTO, DAY, s);
 
 	}
 
@@ -660,8 +696,8 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		InsertList_CreateTBL_DD(DTO, s);
 
-		//取得したDTOをもとに時系列テーブルにデータを挿入
-		ID.InsertDD_STATISTICS(DTO,TODAY, s);
+		//取得したDTOをもとに時系列テーブルにデータを挿入。よく考えたらイランので没
+//		ID.InsertDD_STATISTICS(DTO,TODAY, s);
 
 
 	}
