@@ -1,9 +1,10 @@
 package technique;
 
 public class Technique98_CONST {
-	public static  final  int NO_RESULT		=	99999;
-	public static  final  int NO_METHOD		=	99998;
-	public static  final  int METHOD_RESULT =	99997;
+	public static  final  int NO_RESULT			=	99999;
+	public static  final  int NO_METHOD			=	99998;
+	public static  final  int METHOD_RESULT 	=	99997;
+	public static  final  int CONTENUE_PROCESS	=	99996;
 
 	public static  final  int NO_GAME		=	10000;
 

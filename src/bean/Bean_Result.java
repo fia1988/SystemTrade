@@ -11,6 +11,10 @@ public class Bean_Result {
 	int winCount=0;
 	int keepCount=0;
 
+	double entryPrice;
+	String entryDay;
+	double exitPrice;
+	String exitDay;
 
 	int TOTAL_WIN=0;
 	int TOTAL_LOSE=0;
@@ -23,7 +27,82 @@ public class Bean_Result {
 	double loseParcent;
 	int tradeCount;
 
+	//結果のフラグ、trueの場合、出力する。falseの場合しない。
+	boolean resultDay = false;
+	boolean resultCode = false;
+	boolean resultTotal = false;
 
+	public void getResultCodeResult(String resultCode){
+
+		if( getResultCode() ){
+			if ( ( getWinCount() + getLoseCount() ) > 0){
+				System.out.print("・" + resultCode +  "：勝【" + getWinCount() + "】");
+				System.out.println("／" +  "：負【" + getLoseCount() + "】");
+			}
+		}
+		reSetWinCount();
+		reSetLoseCount();
+	}
+
+	public void getResultDayResult(String code){
+
+		String result = "";
+		if ( exitPrice - entryPrice > 0){
+			//勝った場合
+			setWinCount();
+			setTOTAL_WIN();
+			result = "(勝)";
+		}else{
+			//負けた場合
+			setLoseCount();
+			setTOTAL_LOSE();
+			result = "(負)";
+		}
+
+		if( getResultDay() ){
+			System.out.println(code + ":" + result + entryDay + "／" + entryPrice + "／" + exitDay + "／" + exitPrice + "／【" + getKeepCount() + "】" + (exitPrice - entryPrice) );
+		}
+
+
+		reSetKeepCount();
+	}
+
+	public void getResultTotalResult(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName){
+		if( getResultTotal() ){
+			System.out.println("トータル勝：" + getTOTAL_WIN());
+			System.out.println("トータル負：" + getTOTAL_LOSE());
+			System.out.println("売却できず：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) );
+			System.out.println("トータル計：" + getTradeCount());
+
+			System.out.println("Lメソッド：" + ":" + L_packageName + ":" + L_className + ":" + L_methodName );
+			System.out.println("Sメソッド：" + ":" + S_packageName + ":" + S_className + ":" + S_methodName );
+		}
+	}
+
+	public double getEntryPrice() {
+		return entryPrice;
+	}
+	public void setEntryPrice(double entryPrice) {
+		this.entryPrice = entryPrice;
+	}
+	public String getEntryDay() {
+		return entryDay;
+	}
+	public void setEntryDay(String entryDay) {
+		this.entryDay = entryDay;
+	}
+	public double getExitPrice() {
+		return exitPrice;
+	}
+	public void setExitPrice(double exitPrice) {
+		this.exitPrice = exitPrice;
+	}
+	public String getExitDay() {
+		return exitDay;
+	}
+	public void setExitDay(String exitDay) {
+		this.exitDay = exitDay;
+	}
 	public String getDAY() {
 		return DAY;
 	}
@@ -138,5 +217,42 @@ public class Bean_Result {
 	}
 
 
+
+	public boolean getResultDay() {
+		return resultDay;
+	}
+
+	public boolean getResultCode() {
+		return resultCode;
+	}
+
+	public boolean getResultTotal() {
+		return resultTotal;
+	}
+
+
+	public void setOnResultDay() {
+		this.resultDay = true;
+	}
+
+	public void setOnResultCode() {
+		this.resultCode = true;
+	}
+
+	public void setOnResultTotal() {
+		this.resultTotal = true;
+	}
+
+	public void setOffResultDay() {
+		this.resultDay = false;
+	}
+
+	public void setOffResultCode() {
+		this.resultCode = false;
+	}
+
+	public void setOffResultTotal() {
+		this.resultTotal = false;
+	}
 
 }

@@ -8,6 +8,7 @@ import java.util.Calendar;
 import proparty.S;
 import proparty.TBL_Name;
 import constant.COLUMN;
+import constant.ReCord;
 
 public class commonAP {
 
@@ -66,6 +67,7 @@ public class commonAP {
 	}
 
 
+
 	public static void setCodeList(S s){
 //		codeList = new ArrayList<String>();
 //		codeCateList = new ArrayList<ArrayList<String>>();
@@ -96,7 +98,18 @@ public class commonAP {
 //		codeCateList = new ArrayList<ArrayList<String>>();
 		codeListwithiCate = new ArrayList<String[]>();
 //		codeSingle=null;
-		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
+
+		String SQL;
+
+		if(cate.equals(ReCord.CODE_99_ALLTYPE)){
+			SQL = " select " + COLUMN.CODE + "," + COLUMN.CATE_FLG + " from " + TBL_Name.CODELISTTBL;
+		}else{
+			SQL = " select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
+		}
+
+
+
+
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {

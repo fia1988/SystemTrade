@@ -27,21 +27,27 @@ public class Technique00_Common {
 		if ( judge ) { return Technique98_CONST.NO_GAME;}
 
 		//nowDTO.getNowCLOSE_02();は売値が入っている。今日の売価
-		Double nowPrice_Exit_KOHO = nowDTO.getNowCLOSE_01();
+		Double kessaiKin = nowDTO.getKessaiKingaku();
+		Double nowMAX = nowDTO.getNowMAX_01();
+		Double nowMIN = nowDTO.getNowMIN_01();
+		Double nowOpen = nowDTO.getNowOpen_01();
+		Double nowEnd = nowDTO.getNowCLOSE_01();
+		Double winPrice = kessaiKin * paraDTO.getWinWariai();
+		Double losePrice = kessaiKin * paraDTO.getLoseWariai();
 
 
 		//負けたとき
-		if ( nowPrice_Exit_KOHO <= nowDTO.getNowCLOSE_01() * paraDTO.getLoseWariai()){
+		if ( nowMIN <= losePrice ){
 			nowDTO.setKessaiDay(nowDTO.getNowDay_01());
-			nowDTO.setKessaiKingaku(nowDTO.getNowCLOSE_01());
+			nowDTO.setKessaiKingaku( losePrice );
 			return Technique98_CONST.TRADE_FLG;
 		}
 
 
 		//勝っているとき
-		if ( nowPrice_Exit_KOHO >= nowDTO.getNowCLOSE_01() * paraDTO.getWinWariai()){
-			nowDTO.setKessaiDay(nowDTO.getNowDay_01());
-			nowDTO.setKessaiKingaku(nowDTO.getNowCLOSE_01());
+		if ( nowMAX >= winPrice ){
+			nowDTO.setKessaiDay( nowDTO.getNowDay_01() );
+			nowDTO.setKessaiKingaku( winPrice );
 			return Technique98_CONST.TRADE_FLG;
 		}
 
@@ -80,7 +86,7 @@ public class Technique00_Common {
 					+ " from "
 					+ SQLChecker.getTBL(nowDTO.getCateflg_01())
 					+ " where "
-					+ COLUMN.DAYTIME + " <= '" + nowDTO.getNowDay_01() + "'"
+					+ COLUMN.DAYTIME + " = '" + nowDTO.getNowDay_01() + "'"
 					+ " and "
 					+ COLUMN.CODE + " = '" + nowDTO.getCode_01() + "'"
 					+ " order by "
@@ -95,7 +101,7 @@ public class Technique00_Common {
 				exitOpen = this_rs.getDouble(COLUMN.OPEN);
 				exitEnd = this_rs.getDouble(COLUMN.CLOSE);
 				kessaiDay = this_rs.getString(COLUMN.DAYTIME);
-				
+
 		} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -103,7 +109,7 @@ public class Technique00_Common {
 
 
 //		//当日の場合
-			
+
 
 
 

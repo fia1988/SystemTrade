@@ -19,6 +19,7 @@ public class ReCord {
 	public static final String CODE_04_ETF = "4";
 	public static final String CODE_05_SAKIMONO = "5";
 	public static final String CODE_06_CURRENCY = "6";
+	public static final String CODE_99_ALLTYPE = "99";
 
 
 

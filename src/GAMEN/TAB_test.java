@@ -19,7 +19,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
-import analysis.Analysis00_Common;
+import analysis.SagyoSpace;
 import bean.Bean_CodeList;
 import botton.cloringDate;
 import botton.setUp;
@@ -174,8 +174,7 @@ public class TAB_test extends JPanel {
 //			System.out.println(TODAY_SPRIT[1]);
 //			System.out.println(TODAY_SPRIT[2]);
 
-			Analysis00_Common.sagyoSpace();
-
+			SagyoSpace.testCase03();
 			//checkMotiKabu_L設定部分
 			//あるいは持ち株会の買付日を見つける
 			//基準日1、多くは給料日

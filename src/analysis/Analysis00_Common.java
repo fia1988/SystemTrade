@@ -19,113 +19,7 @@ import constant.ReCord;
 
 public class Analysis00_Common {
 
-	public static void sagyoSpace(){
 
-		Bean_Parameta paraDTO = new Bean_Parameta();
-		Bean_Result resultDTO = new Bean_Result();
-		Bean_nowRecord nowDTO = new Bean_nowRecord();
-
-
-		long start = System.currentTimeMillis();
-
-//		**
-//		checkDeki_L設定部分
-//		paraDTO.setTerm01(60);
-//		paraDTO.setTerm02(10);
-//		//変化していないの定義。TERM01と02の合計期間の出来高前日比率のSTDDEV_SAMP。すなわち「どのぐらい変化していないか」。0でまったく変化していない。初期値1.5
-//		paraDTO.setBOXCHECK(1.5);
-//		//スコア。変化率でスコアを設定している。その点数。初期値0.7
-//		paraDTO.setHIGHT_DEKI_RATIO(1.5);
-////		checkPrice_S設定部分
-//		paraDTO.setWinWariai(1.1);
-//		paraDTO.setLoseWariai(0.95);
-//		Analysis_COMMON("technique","Technique01","checkDeki_L","technique","Technique00_Common","checkPrice_S",paraDTO,nowDTO,resultDTO);
-		//
-
-
-		//checkMotiKabu_L設定部分
-		//あるいは持ち株会の買付日を見つける
-		//基準日1、多くは給料日
-		paraDTO.setSaraly_01("20");
-		//基準日2、多くはボーナス夏
-		paraDTO.setBonus_01("06-25");
-		//基準日3、多くはボーナス冬
-		paraDTO.setBonus_02("12-10");
-		//基準日の何営業日あとかのチェック
-		paraDTO.setIntCount01(2);
-		//勝敗条件
-		paraDTO.setWinWariai(1.01);
-		paraDTO.setLoseWariai(0.99);
-		//持ち株、ボーナス夏、ボーナス冬の設定
-		paraDTO.setMotikabuDay();
-//		paraDTO.setSummerBonus();
-//		paraDTO.setWinterBonus();
-		//前日終値、当日始値
-			//当日の始値で買えていそう、当日の終値で売れていそう
-		paraDTO.setTOZITU_START();
-
-//		paraDTO.setZENZITU_END();
-
-
-
-
-
-//		System.out.println("【当日／給料日】");
-//		paraDTO.setIntCount01(0);
-//		paraDTO.setMotikabuDay();
-//		paraDTO.setOffSummerBonus();
-//		paraDTO.setOffWinterBonus();
-//		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO_entry,nowDTO_exit,resultDTO);
-//
-//		System.out.println("【２日後／給料日】");
-//		paraDTO.setIntCount01(2);
-//		paraDTO.setMotikabuDay();
-//		paraDTO.setOffSummerBonus();
-//		paraDTO.setOffWinterBonus();
-//		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO_entry,nowDTO_exit,resultDTO);
-//
-//		System.out.println("【当日／夏ボーナス】");
-//		paraDTO.setIntCount01(0);
-//		paraDTO.setOffMotikabuDay();
-//		paraDTO.setSummerBonus();
-//		paraDTO.setOffWinterBonus();
-//		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO_entry,nowDTO_exit,resultDTO);
-//
-//		System.out.println("【２日後／冬ボーナス】");
-//		paraDTO.setIntCount01(2);
-//		paraDTO.setOffMotikabuDay();
-//		paraDTO.setOffSummerBonus();
-//		paraDTO.setWinterBonus();
-//		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO_entry,nowDTO_exit,resultDTO);
-//
-//		System.out.println("【当日／夏ボーナス】");
-//		paraDTO.setIntCount01(0);
-//		paraDTO.setOffMotikabuDay();
-//		paraDTO.setSummerBonus();
-//		paraDTO.setOffWinterBonus();
-//		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO_entry,nowDTO_exit,resultDTO);
-//
-//		System.out.println("【２日後／冬ボーナス】");
-//		paraDTO.setIntCount01(2);
-//		paraDTO.setOffMotikabuDay();
-//		paraDTO.setOffSummerBonus();
-//		paraDTO.setWinterBonus();
-//		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO_entry,nowDTO_exit,resultDTO);
-
-		S s = new S();
-		s.getCon();
-
-		Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO,"2229―T",s);
-
-		//
-		s.closeConection();
-
-
-
-		long stop = System.currentTimeMillis();
-	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
-
-	}
 
 	//買いメソッド、売りメソッドを入れると計算してくれる
 	//引数1:買いメソッドのパッケージ名
@@ -144,7 +38,8 @@ public class Analysis00_Common {
 
 		String SQL;
 		//全銘柄をリストに入れる
-		commonAP.setCodeList(s);
+		commonAP.setCodeList(paraDTO.getCheckCate(),s);
+//		commonAP.setCodeList(s);
 		//forの中のAnalysis_COMMONのなかでS作るため。切断
 //		s.closeConection();
 
@@ -158,9 +53,7 @@ public class Analysis00_Common {
 
 		}
 
-		System.out.println("トータル勝：" + resultDTO.getTOTAL_WIN());
-		System.out.println("トータル負：" + resultDTO.getTOTAL_LOSE());
-		System.out.println("トータル  ：" + resultDTO.getTradeCount());
+		resultDTO.getResultTotalResult(L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName);
 
 		s.closeConection();
 
@@ -183,9 +76,7 @@ public class Analysis00_Common {
 
 
 		//全銘柄をリストに入れる
-		commonAP.setCodeList(s);
-		//forの中のAnalysis_COMMONのなかでS作るため。切断
-//		s.closeConection();
+		commonAP.setCodeList(paraDTO.getCheckCate(),s);
 
 		//全銘柄でループする
 		for (int i=0;i<commonAP.getCodeList().size();i++){
@@ -279,18 +170,16 @@ public class Analysis00_Common {
 					//今の銘柄のカテゴリ
 					nowDTO.setCateflg_01(cate);
 					//nowDTOにいろいろセットする。
-					setNowRecord01(code,cate,nowDTO,s.rs2);
+					setNowRecord(code,cate,nowDTO,s.rs2);
 
 					//true:エントリー
 					//false:exit
 					switch( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTO,resultDTO,true) ){
 						case Technique98_CONST.TRADE_FLG:
 
-						//								System.out.println(code + " :1: " + nowDTO.getNowDay_01());
 						//決済が発生した日、決済金額を入れる。
-						kessaiKin01 = nowDTO.getKessaiKingaku();
-						kessaiDay01 = nowDTO.getKessaiDay();
-
+						resultDTO.setEntryDay(nowDTO.getKessaiDay());
+						resultDTO.setEntryPrice(nowDTO.getKessaiKingaku());
 
 						//取引の発生した回数
 						resultDTO.setTradeCount();
@@ -303,34 +192,21 @@ public class Analysis00_Common {
 								//今何日保有しているかをnowDTOにいれる。
 								nowDTO.setKeepDay(resultDTO.getKeepCount());
 								//売る日、売りフラグでなければ次の日へ
-								nowDTO.setNowDay_01		(	s.rs2.getString(	COLUMN.DAYTIME	)	);
-								nowDTO.setNowCLOSE_01	(	s.rs2.getDouble(	COLUMN.CLOSE	)	);
-								setNowRecord01(code,cate,nowDTO,s.rs2);
-
+								setNowRecord(code,cate,nowDTO,s.rs2);
 
 								switch( Analysis00_Common.Analysis_intMethod(S_packageName,S_className,S_methodName,paraDTO,nowDTO,resultDTO,false) ){
-
-
 
 									//勝った場合
 									case Technique98_CONST.TRADE_FLG:
 										//決済が発生した日、決済金額を入れる。
-										kessaiKin02 = nowDTO.getKessaiKingaku();
-										kessaiDay02 = nowDTO.getKessaiDay();
+										resultDTO.setExitDay(nowDTO.getKessaiDay());
+										resultDTO.setExitPrice(nowDTO.getKessaiKingaku());
+
 										//ループが終わった証を立てる
 										loopCheck=true;
-										if ( kessaiKin02 - kessaiKin01 > 0){
-											//勝った場合
-											resultDTO.setWinCount();
-											resultDTO.setTOTAL_WIN();
-											System.out.println("(勝)" + kessaiDay01 + "／" + kessaiKin01 + "／" + kessaiDay02 + "／" + kessaiKin02 + "／【" + resultDTO.getKeepCount() + "】" + (kessaiKin02 - kessaiKin01) );
-										}else{
-											//負けた場合
-											resultDTO.setLoseCount();
-											resultDTO.setTOTAL_LOSE();
-											System.out.println("(負)" + kessaiDay01 + "／" + kessaiKin01 + "／" + kessaiDay02 + "／" + kessaiKin02 + "／【" + resultDTO.getKeepCount() + "】"  + (kessaiKin02 - kessaiKin01) );
-										}
-										resultDTO.reSetKeepCount();
+										//その日の結論を出す。
+										resultDTO.getResultDayResult(code);
+
 										break;
 
 									//売りメソッドがどこにもない場合
@@ -350,22 +226,15 @@ public class Analysis00_Common {
 				s.rs2.close();
 				s.reCon();
 				//銘柄の結果を出す
-				if ( ( resultDTO.getWinCount() + resultDTO.getLoseCount() ) > 0){
-					System.out.print("・" + code +  "：勝【" + resultDTO.getWinCount() + "】");
-					System.out.println("／" + code +  "：負【" + resultDTO.getLoseCount() + "】");
+				resultDTO.getResultCodeResult(code);
 
-					resultDTO.reSetWinCount();
-					resultDTO.reSetLoseCount();
-				}
 				return Technique98_CONST.METHOD_RESULT;
 
 			} catch (SQLException e) {
 				//						e.printStackTrace();
 			}
+//			resultDTO.getResultTotalResult(L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName);
 
-			//				System.out.println("トータル勝：" + resultDTO.getTOTAL_WIN());
-			//				System.out.println("トータル負：" + resultDTO.getTOTAL_LOSE());
-			//				System.out.println("トータル  ：" + resultDTO.getTradeCount());
 
 		} catch (Exception e1) {
 			// TODO 自動生成された catch ブロック
@@ -456,7 +325,7 @@ public class Analysis00_Common {
 
 	}
 
-	private static void setNowRecord01(String code,String cate,Bean_nowRecord nowDTO,ResultSet RS){
+	private static void setNowRecord(String code,String cate,Bean_nowRecord nowDTO,ResultSet RS){
 
 		try {
 			//買った日の最高値、最安、とかいろいろ

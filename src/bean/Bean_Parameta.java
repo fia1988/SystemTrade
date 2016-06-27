@@ -18,9 +18,9 @@ public class Bean_Parameta {
 	private int totalTrade		=	0;
 	private	int	keepCount		=	0;
 
-	
-	
-	
+
+
+
 	//checkMotiKabu_L
 	//持ち株会のフラグ、trueの場合、調査する。falseの場合調査しない。
 	boolean motikabuDay = false;
@@ -48,8 +48,10 @@ public class Bean_Parameta {
 	String saraly_02;
 	String saraly_03;
 
-	//checkDeki_L
+	//カテゴリを引数にして、そのカテゴリだけを調査する。
+	String checkCate = ReCord.CODE_99_ALLTYPE;
 
+	//checkDeki_L
 	//出来高の調査する場合の、推移していないことを示す値
 	double BOXCHECK;
 	//出来高の調査する場合の、出来高の上がっている期間を示す
@@ -69,7 +71,10 @@ public class Bean_Parameta {
 	Double targetColumn03_value;
 	Double targetColumn04_value;
 
-
+	//checkBori_L
+	//何日前まで意識するかを設定する
+	int checkBori_checkBORI;
+	
 	//条件出来高
 
 	//なんでもいいから数える
@@ -97,6 +102,22 @@ public class Bean_Parameta {
 
 
 
+
+	public int getCheckBori_checkBORI() {
+		return checkBori_checkBORI;
+	}
+
+	public void setCheckBori_checkBORI(int checkBori_checkBORI) {
+		this.checkBori_checkBORI = checkBori_checkBORI;
+	}
+
+	public String getCheckCate() {
+		return checkCate;
+	}
+
+	public void setCheckCate(String checkCate) {
+		this.checkCate = checkCate;
+	}
 
 	public int getCheckAfterDay() {
 		return checkAfterDay;
