@@ -1,15 +1,8 @@
 package technique;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import proparty.S;
-import accesarrySQL.SQLChecker;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
-import constant.COLUMN;
-import constant.ReCord;
 
 public class Technique01 {
 
@@ -22,148 +15,150 @@ public class Technique01 {
 //
 //Lメソッドは戻り値int（勝ち）約定（負け）、false買わず
 //WINFLG_買う、LOSEフラグ、買わない。
+	//ボツ!!!!!!!!!!!!!!!!!!
 	public static int checkDeki_L(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,boolean judge){
-		//買いメソッドでのみの運用を検討している。
-		//true:エントリー
-		//false:exit
-//		if ( judge==false ) { return Technique98_CONST.NO_GAME;}
-//		Bean_nowRecord nowDTO = Techinique_COMMON_METHOD.checkStartNowDTO(nowDTO_entry, nowDTO_exit, judge);
-
-		S this_s = new S ();
-		ResultSet this_rs=null;
-
-		switch(nowDTO.getCateflg_01()){
-		case ReCord.CODE_01_STOCK:
-			break;
-		case ReCord.CODE_04_ETF:
-			break;
-		default:
-			return Technique98_CONST.NO_GAME;
-		}
-
-		String SQL = SQLChecker.getTermCheckSQL(nowDTO.getCode_01(),nowDTO.getCateflg_01(),nowDTO.getNowDay_01(),paraDTO.getTerm01() + paraDTO.getTerm02());
-
-
-		try {
-
-			this_rs = this_s.sqlGetter().executeQuery(SQL);
-			if(this_rs.next()==true){
-				//もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
-
-				String devStart = this_rs.getString((COLUMN.DAYTIME)) ;
-
-				SQL = SQLChecker.getTermCheckSQL(nowDTO.getCode_01(),nowDTO.getCateflg_01(),nowDTO.getNowDay_01(),paraDTO.getTerm02());
-
-				this_rs.close();
-
-				this_rs = this_s.sqlGetter().executeQuery(SQL);
-				if(this_rs.next()==true){
-					String checkStart = this_rs.getString((COLUMN.DAYTIME)) ;
-
-					String DEKI=COLUMN.DEKI;
-
-
-					String checkColumn1 = "STDDEV_SAMP(" + DEKI +  ")";
-					String checkColumn2 = "avg(" + DEKI +  ")";
-					String checkColumn3 = "STDDEV_SAMP(" + COLUMN.DEKI_CHANGERATE +  ")";
-					String checkColumn4 = "avg(" + COLUMN.DEKI_CHANGERATE +  ")";
-					String checkColumn5 = "STDDEV_SAMP(" + COLUMN.DEKI_RATIO +  ")";
-					String checkColumn6 = "avg(" + COLUMN.DEKI_RATIO +  ")";
-
-					SQL = "select "
-							+ checkColumn5
-							+ " from "
-							+ SQLChecker.getTBL(nowDTO.getCateflg_01())
-							+ " where "
-							+ COLUMN.CODE
-							+ " ='" + nowDTO.getCode_01() + "'"
-							+ " and "
-							+ "'" + devStart + "' <= "
-							+ COLUMN.DAYTIME
-							+ " and "
-							+ COLUMN.DAYTIME
-							+ " < "
-							+ "'" + checkStart + "'";
-
-					this_rs.close();
-					this_rs = this_s.sqlGetter().executeQuery(SQL);
-					if(this_rs.next()==true){
-						//出来高が変化していない期間を調査する。
-//						double dekiDEV = s.rs.getDouble(checkColumn1) ;
-//						double dekiAVG = s.rs.getDouble(checkColumn2) ;
-						double CHECK = this_rs.getDouble(checkColumn5) ;
-
-						//過去の出来高の変異が少ない期間であるかをチェックする
-
-						if(CHECK < paraDTO.getBOXCHECK()){
-							SQL = "select "
-									+ DEKI + ","
-									+ COLUMN.DEKI_CHANGERATE + ","
-									+ COLUMN.DEKI_RATIO +  ""
-									+ " from "
-									+ SQLChecker.getTBL(nowDTO.getCateflg_01())
-									+ " where "
-									+ COLUMN.CODE
-									+ " ='" + nowDTO.getCode_01() + "'"
-									+ " and "
-									+ "'" + checkStart + "' <= "
-									+ COLUMN.DAYTIME
-									+ " and "
-									+ COLUMN.DAYTIME
-									+ " <= "
-									+ "'" + nowDTO.getNowDay_01() + "'";
-
-							this_rs.close();
-							this_rs = this_s.sqlGetter().executeQuery(SQL);
-							//有効なカウントを数える
-							double checkCount	 = 0;
-//							double MAXDEKI		 = 0;
-							while ( this_rs.next() ) {
-								Double DEKI_ChANGERATE=this_rs.getDouble(COLUMN.DEKI_CHANGERATE);
-								if( DEKI_ChANGERATE > 0.1 ){
-									checkCount++;
-									if( DEKI_ChANGERATE > 0.2 ){
-										checkCount++;
-										if( DEKI_ChANGERATE > 0.3 ){
-											checkCount++;
-										}
-									}
-								}
-
-
-
-								Double DEKI_RATIO = this_rs.getDouble(COLUMN.DEKI_RATIO);
-								if( DEKI_RATIO < -0.1 ){
-									checkCount--;
-									if( DEKI_RATIO < -0.2 ){
-										checkCount--;
-										if( DEKI_RATIO < -0.3 ){
-											checkCount--;
-										}
-									}
-								}
-							}
-
-							checkCount = checkCount / paraDTO.getTerm02();
-
-							if ( checkCount >= paraDTO.getHIGHT_DEKI_RATIO() ){
-								this_rs.close();
-								nowDTO.setKessaiDay(nowDTO.getNowDay_01());
-								nowDTO.setKessaiKingaku(nowDTO.getNowCLOSE_01());
-								return Technique98_CONST.TRADE_FLG;
-							}
-						}else if(Double.isNaN(CHECK)){
-							System.out.println(CHECK);
-						}
-
-					}
-				}
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
+//		//買いメソッドでのみの運用を検討している。
+//		//true:エントリー
+//		//false:exit
+////		if ( judge==false ) { return Technique98_CONST.NO_GAME;}
+////		Bean_nowRecord nowDTO = Techinique_COMMON_METHOD.checkStartNowDTO(nowDTO_entry, nowDTO_exit, judge);
+//
+//		S this_s = new S ();
+//		ResultSet this_rs=null;
+//
+//		switch(nowDTO.getCateflg_01()){
+//		case ReCord.CODE_01_STOCK:
+//			break;
+//		case ReCord.CODE_04_ETF:
+//			break;
+//		default:
+//			return Technique98_CONST.NO_GAME;
+//		}
+//
+//
+//
+//
+//		try {
+//			String nowDay = nowDTO.getNowRS().getString(COLUMN.DAYTIME);
+//			String SQL = SQLChecker.getTermCheckSQL(nowDTO.getCode_01(),nowDTO.getCateflg_01(),nowDay,paraDTO.getTerm01() + paraDTO.getTerm02());
+//			this_rs = this_s.sqlGetter().executeQuery(SQL);
+//			if(this_rs.next()==true){
+//				//もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
+//
+//				String devStart = this_rs.getString((COLUMN.DAYTIME)) ;
+//
+//				SQL = SQLChecker.getTermCheckSQL(nowDTO.getCode_01(),nowDTO.getCateflg_01(),nowDay,paraDTO.getTerm02());
+//
+//				this_rs.close();
+//
+//				this_rs = this_s.sqlGetter().executeQuery(SQL);
+//				if(this_rs.next()==true){
+//					String checkStart = this_rs.getString((COLUMN.DAYTIME)) ;
+//
+//					String DEKI=COLUMN.DEKI;
+//
+//
+//					String checkColumn1 = "STDDEV_SAMP(" + DEKI +  ")";
+//					String checkColumn2 = "avg(" + DEKI +  ")";
+//					String checkColumn3 = "STDDEV_SAMP(" + COLUMN.DEKI_CHANGERATE +  ")";
+//					String checkColumn4 = "avg(" + COLUMN.DEKI_CHANGERATE +  ")";
+//					String checkColumn5 = "STDDEV_SAMP(" + COLUMN.DEKI_RATIO +  ")";
+//					String checkColumn6 = "avg(" + COLUMN.DEKI_RATIO +  ")";
+//
+//					SQL = "select "
+//							+ checkColumn5
+//							+ " from "
+//							+ SQLChecker.getTBL(nowDTO.getCateflg_01())
+//							+ " where "
+//							+ COLUMN.CODE
+//							+ " ='" + nowDTO.getCode_01() + "'"
+//							+ " and "
+//							+ "'" + devStart + "' <= "
+//							+ COLUMN.DAYTIME
+//							+ " and "
+//							+ COLUMN.DAYTIME
+//							+ " < "
+//							+ "'" + checkStart + "'";
+//
+//					this_rs.close();
+//					this_rs = this_s.sqlGetter().executeQuery(SQL);
+//					if(this_rs.next()==true){
+//						//出来高が変化していない期間を調査する。
+////						double dekiDEV = s.rs.getDouble(checkColumn1) ;
+////						double dekiAVG = s.rs.getDouble(checkColumn2) ;
+//						double CHECK = this_rs.getDouble(checkColumn5) ;
+//
+//						//過去の出来高の変異が少ない期間であるかをチェックする
+//
+//						if(CHECK < paraDTO.getBOXCHECK()){
+//							SQL = "select "
+//									+ DEKI + ","
+//									+ COLUMN.DEKI_CHANGERATE + ","
+//									+ COLUMN.DEKI_RATIO +  ""
+//									+ " from "
+//									+ SQLChecker.getTBL(nowDTO.getCateflg_01())
+//									+ " where "
+//									+ COLUMN.CODE
+//									+ " ='" + nowDTO.getCode_01() + "'"
+//									+ " and "
+//									+ "'" + checkStart + "' <= "
+//									+ COLUMN.DAYTIME
+//									+ " and "
+//									+ COLUMN.DAYTIME
+//									+ " <= "
+//									+ "'" + nowDay + "'";
+//
+//							this_rs.close();
+//							this_rs = this_s.sqlGetter().executeQuery(SQL);
+//							//有効なカウントを数える
+//							double checkCount	 = 0;
+////							double MAXDEKI		 = 0;
+//							while ( this_rs.next() ) {
+//								Double DEKI_ChANGERATE=this_rs.getDouble(COLUMN.DEKI_CHANGERATE);
+//								if( DEKI_ChANGERATE > 0.1 ){
+//									checkCount++;
+//									if( DEKI_ChANGERATE > 0.2 ){
+//										checkCount++;
+//										if( DEKI_ChANGERATE > 0.3 ){
+//											checkCount++;
+//										}
+//									}
+//								}
+//
+//
+//
+//								Double DEKI_RATIO = this_rs.getDouble(COLUMN.DEKI_RATIO);
+//								if( DEKI_RATIO < -0.1 ){
+//									checkCount--;
+//									if( DEKI_RATIO < -0.2 ){
+//										checkCount--;
+//										if( DEKI_RATIO < -0.3 ){
+//											checkCount--;
+//										}
+//									}
+//								}
+//							}
+//
+//							checkCount = checkCount / paraDTO.getTerm02();
+//
+//							if ( checkCount >= paraDTO.getHIGHT_DEKI_RATIO() ){
+//								this_rs.close();
+//								nowDTO.setKessaiDay(nowDay);
+//								nowDTO.setKessaiKingaku(nowDTO.getNowRS().getDouble(COLUMN.CLOSE));
+//								return Technique98_CONST.TRADE_FLG;
+//							}
+//						}else if(Double.isNaN(CHECK)){
+//							System.out.println(CHECK);
+//						}
+//
+//					}
+//				}
+//			}
+//		} catch (SQLException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
+//
 		return Technique98_CONST.NO_GAME;
 	}
 //	static int count=0;

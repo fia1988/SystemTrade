@@ -90,7 +90,7 @@ public class InsertDay {
 				//値が存在しない場合、前日の価格を挿入する。
 				if(DTO.get(i).getMax().equals("0")){
 
-					String price = ZenzituEnd.getZenzituClose_Stock(DTO.get(i).getCode(),s);
+					String price = ZenzituEnd.getZenzituClose(DTO.get(i).getCode(),DTO.get(i).getCateflg(),s);
 					if (!price.equals("0")){
 						//0ではないとき、前日のpriceを全ての値にsetする。
 						DTO.get(i).setOpen (price);
@@ -119,8 +119,28 @@ public class InsertDay {
 				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case ReCord.CODE_04_ETF:
-				InsertDD_case4(DTO.get(i),s);
-				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+
+				//値が存在しない場合、前日の価格を挿入する。
+				if(DTO.get(i).getMax().equals("0")){
+
+					String price = ZenzituEnd.getZenzituClose(DTO.get(i).getCode(),DTO.get(i).getCateflg(),s);
+					if (!price.equals("0")){
+						//0ではないとき、前日のpriceを全ての値にsetする。
+						DTO.get(i).setOpen (price);
+						DTO.get(i).setMax  (price);
+						DTO.get(i).setMin  (price);
+						DTO.get(i).setClose(price);
+						InsertDD_case4(DTO.get(i),s);
+						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+						//0のとき＝前日の価格が存在しない。レコードが存在しない。
+						//0の時は何もしない。
+					}
+				}else{
+					InsertDD_case4(DTO.get(i),s);
+					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+				}
+
+
 				break;
 			case ReCord.CODE_05_SAKIMONO:
 				InsertDD_case5(DTO.get(i),s);

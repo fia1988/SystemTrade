@@ -16,8 +16,10 @@ public class SEPARATE_CHECK {
 
 	public static void checkSEPARATE_controll(){
 
+
 		S s = new S();
 		s.getCon();
+		
 
 
 		String SQL = "";

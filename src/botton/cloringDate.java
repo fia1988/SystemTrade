@@ -2,6 +2,7 @@ package botton;
 
 import proparty.S;
 import proparty.controllDay;
+import technique.CheckSign;
 import accesarrySQL.OneRecord_Update;
 import accesarrySQL.SEPARATE_CHECK;
 import constant.ReCord;
@@ -18,10 +19,6 @@ public class cloringDate {
 
 		s.getCon();
 		//統計
-//		CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
-//											   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-//											   s											);
-
 		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STATISTICS(s) 		,
 										controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
 										ReCord.CODE_02_SATISTICS					,
@@ -31,10 +28,6 @@ public class cloringDate {
 		CB = new CONTOLLBOTTON();
 		s.resetConnection();
 
-//		株,ETF
-//		CB.everyDayBottonContoroll_STOCK_ETF(controllDay.getMAX_DD_STOCK_ETF(s) 	 ,
-//											controllDay.getAJUSTMAXDAY_STOCK_ETF(s) ,
-//											   s											);
 
 		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STOCK_ETF(s) 			,
 										controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
@@ -43,10 +36,7 @@ public class cloringDate {
 
 		s.resetConnection();
 
-		//INDEX
-//		CB.everyDayBottonContoroll_INDEX(controllDay.getMAX_DD_INDEX(s) 	 ,
-//										controllDay.getAJUSTMAXDAY_INDEX(s) ,
-//												s							);
+
 		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,
 										controllDay.getAJUSTMAXDAY_INDEX(s)			,
 										ReCord.CODE_03_INDEX						,
@@ -66,6 +56,9 @@ public class cloringDate {
 		//分割チェック。sはこの中で独自に作る。
 		SEPARATE_CHECK.checkSEPARATE_controll();
 
+
+		//今日のサインの点灯をチェックする。
+		CheckSign.checkTodaySign();
 
 
 		long stop = System.currentTimeMillis();

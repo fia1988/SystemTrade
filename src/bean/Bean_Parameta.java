@@ -5,6 +5,9 @@ import constant.ReCord;
 
 public class Bean_Parameta {
 	//共通
+	//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+	private boolean checkRenzokuSign = false;
+
 	//勝った場合の値段の比率。
 	private Double winWariai	=	0.0;
 	private Double loseWariai	=	0.0;
@@ -74,7 +77,7 @@ public class Bean_Parameta {
 	//checkBori_L
 	//何日前まで意識するかを設定する
 	int checkBori_checkBORI;
-	
+
 	//条件出来高
 
 	//なんでもいいから数える
@@ -102,6 +105,14 @@ public class Bean_Parameta {
 
 
 
+
+	public boolean getCheckRenzokuSign() {
+		return checkRenzokuSign;
+	}
+
+	public void setCheckRenzokuSign(boolean checkRenzokuSign) {
+		this.checkRenzokuSign = checkRenzokuSign;
+	}
 
 	public int getCheckBori_checkBORI() {
 		return checkBori_checkBORI;

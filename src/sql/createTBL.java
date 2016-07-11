@@ -421,7 +421,7 @@ public class createTBL {
 				+ COLUMN.MIDDLEIDO_RATIO_KATA						 + " , " //株価中期間移動平均線前日比率
 				+ COLUMN.LONGIDO_RATIO_KATA							 + " , " //株価長期間移動平均線前日比率
 				+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
-				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（最高値-最安値)/1
+				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（1-最安値)/最高値
 				+ COLUMN.CANDLE_AREA_KATA							 + " , " //ローソク足の面積
 				+ COLUMN.CANDLE_AREA_SCALE_KATA						 + " , " //ひげの長さと比較したローソク足面積の比率
 				+ COLUMN.WINDOW_KATA								 + " , " //前日の終値-今日の始値
@@ -699,7 +699,7 @@ public class createTBL {
 				+ COLUMN.MIDDLEIDO_CHANGERATE_KATA					 + " , " //株価中期間移動平均線前日比
 				+ COLUMN.LONGIDO_CHANGERATE_KATA					 + " , " //株価長期間移動平均線前日比
 				+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
-				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（最高値-最安値)/1
+				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（1-最安値)/最高値
 				+ COLUMN.DEKI_CHANGERATE_KATA						 + " , " //出来高前日比
 				+ COLUMN.BAYBAY_CHANGERATE_KATA						 + " , " //売買代金前日比
 				+ COLUMN.SHORTIDO_DEKI_KATA							 + " , " //出来高短期移動平均線
@@ -799,7 +799,7 @@ public class createTBL {
 				+ COLUMN.MIDDLEIDO_CHANGERATE_KATA					 + " , " //株価中期間移動平均線前日比
 				+ COLUMN.LONGIDO_CHANGERATE_KATA					 + " , " //株価長期間移動平均線前日比
 				+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
-				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（最高値-最安値)/1
+				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（1-最安値)/最高値
 				+ COLUMN.SHORT_DEV_KATA								 + " , " //短期間の標準偏差（シグマ）
 				+ COLUMN.SHORT_NOW_SIGMA_KATA						 + " , " //短期間内で今日の終値が何シグマにいるか。（少ないほうが上）
 				+ COLUMN.SHORT_1_H_SIGMA_KATA						 + " , " //短期間でのシグマ１

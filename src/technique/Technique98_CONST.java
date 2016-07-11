@@ -16,7 +16,12 @@ public class Technique98_CONST {
 	public static  final  int TRADE_FLG		=	10003;
 
 
-
-
+	//ここからmethod名
+	public static final String MACD_L = "MACD_L";
+	public static final String MACD_S = "MACD_S";
+	//ここからパッケージ名
+	public static final String PACKAGE_01 = "technique";
+	//ここからクラス名
+	public static final String CLASS_04 = "Technique04";
 
 }

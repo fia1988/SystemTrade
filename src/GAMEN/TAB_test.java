@@ -17,10 +17,14 @@ import javax.swing.JTextField;
 
 import proparty.S;
 import proparty.TBL_Name;
+import technique.Techinique_COMMON_METHOD;
 import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
 import analysis.SagyoSpace;
 import bean.Bean_CodeList;
+import bean.Bean_Parameta;
+import bean.Bean_Result;
+import bean.Bean_nowRecord;
 import botton.cloringDate;
 import botton.setUp;
 import constant.CATE_FLG;
@@ -174,7 +178,7 @@ public class TAB_test extends JPanel {
 //			System.out.println(TODAY_SPRIT[1]);
 //			System.out.println(TODAY_SPRIT[2]);
 
-			SagyoSpace.testCase03();
+			SagyoSpace.testCase06();
 			//checkMotiKabu_L設定部分
 			//あるいは持ち株会の買付日を見つける
 			//基準日1、多くは給料日
@@ -266,7 +270,19 @@ public class TAB_test extends JPanel {
 			s.getCon();
 			b_b.setOpen("200");
 			cf.testsub(b_b);
-
+			
+			Bean_Parameta paraDTO = new Bean_Parameta();
+			Bean_Result resultDTO = new Bean_Result();
+			Bean_nowRecord nowDTO = new Bean_nowRecord();
+			List<Bean_nowRecord> nowDTOList = new ArrayList<>();
+			paraDTO.setCheckRenzokuSign(false);
+			//結論の出力方法
+			resultDTO.setOnResultDay();
+			resultDTO.setOnResultCode();
+			resultDTO.setOnResultTotal();
+//			Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO);
+			
+			Techinique_COMMON_METHOD.codeMethodMove("technique","Technique04","MACD_L",paraDTO,nowDTOList,8,resultDTO,"9994―T","2016-06-06",5,true);
 			System.out.println(b_b.getOpen());
 
 

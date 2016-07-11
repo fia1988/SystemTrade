@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.ArrayList;
+
 public class Bean_Result {
 
 	String DAY;
@@ -11,8 +13,17 @@ public class Bean_Result {
 	int winCount=0;
 	int keepCount=0;
 
-	double entryPrice;
-	String entryDay;
+//	Double entryPrice;
+//	String entryDay;
+	ArrayList<Double> entryPriceList = new ArrayList<Double>();
+	ArrayList<String> entryDayList = new ArrayList<String>();
+
+	double totalWinParcent;
+	double averageWinParcent;
+	double totalLoseParcent;
+	double averageLoseParcent;
+
+	double averagePrice;
 	double exitPrice;
 	String exitDay;
 
@@ -47,23 +58,30 @@ public class Bean_Result {
 	public void getResultDayResult(String code){
 
 		String result = "";
-		if ( exitPrice - entryPrice > 0){
+		double average = getEntryAveragePrice();
+		double averageParcent = (exitPrice - average) / average;
+		if ( exitPrice - average > 0){
 			//勝った場合
 			setWinCount();
 			setTOTAL_WIN();
+			setTotalWinParcent(averageParcent);
 			result = "(勝)";
+
 		}else{
 			//負けた場合
 			setLoseCount();
 			setTOTAL_LOSE();
+			setTotalLoseParcent(averageParcent);
 			result = "(負)";
 		}
 
+
+
 		if( getResultDay() ){
-			System.out.println(code + ":" + result + entryDay + "／" + entryPrice + "／" + exitDay + "／" + exitPrice + "／【" + getKeepCount() + "】" + (exitPrice - entryPrice) );
+			System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
 		}
 
-
+//		resetEntryList();
 		reSetKeepCount();
 	}
 
@@ -73,23 +91,68 @@ public class Bean_Result {
 			System.out.println("トータル負：" + getTOTAL_LOSE());
 			System.out.println("売却できず：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) );
 			System.out.println("トータル計：" + getTradeCount());
-
-			System.out.println("Lメソッド：" + ":" + L_packageName + ":" + L_className + ":" + L_methodName );
-			System.out.println("Sメソッド：" + ":" + S_packageName + ":" + S_className + ":" + S_methodName );
+			System.out.println("トータル勝％：" + getTotalWinParcent());
+			System.out.println("トータル負％：" + getTotalLoseParcent() );
+			System.out.println("トータル平均勝％：" + getAverageWinParcent());
+			System.out.println("トータル平均負％：" + getAverageLoseParcent());
+			System.out.println("Lメソッド：" + L_packageName + "." + L_className + "." + L_methodName );
+			System.out.println("Sメソッド：" + S_packageName + "." + S_className + "." + S_methodName );
+			
 		}
 	}
 
-	public double getEntryPrice() {
-		return entryPrice;
+	public void resetEntryList(){
+		this.entryPriceList = new ArrayList<Double>();
+		this.entryDayList = new ArrayList<String>();
 	}
+
+
+	public String getEntryList(){
+		String dayList="";
+		String entryList="";
+
+		for (int i = 0 ; i < entryPriceList.size() ; i++){
+			if(i==0){
+				entryList = entryPriceList.get(i) + "";
+			}else{
+				entryList = entryList + "/" + entryPriceList.get(i);
+			}
+		}
+
+		for (int i = 0 ; i < entryDayList.size() ; i++){
+			if(i==0){
+				dayList = entryDayList.get(i) + "";
+			}else{
+				dayList = dayList + "/" + entryDayList.get(i);
+			}
+		}
+
+		return "購入日：" + dayList + "／購入額：" +  entryList;
+	}
+
+	public ArrayList<Double> getEntryPrice() {
+		return entryPriceList;
+	}
+
+	public double getEntryAveragePrice(){
+		double total=0.0;
+		for (int i = 0 ; i < entryPriceList.size() ; i++){
+			total = total + entryPriceList.get(i);
+		}
+		return (total/entryPriceList.size());
+	}
+
 	public void setEntryPrice(double entryPrice) {
-		this.entryPrice = entryPrice;
+//		this.entryPrice = entryPrice;
+		this.entryPriceList.add(entryPrice);
 	}
-	public String getEntryDay() {
-		return entryDay;
+	public ArrayList<String> getEntryDay() {
+		return entryDayList;
+//		return entryDay;
 	}
 	public void setEntryDay(String entryDay) {
-		this.entryDay = entryDay;
+		this.entryDayList.add(entryDay);
+//		this.entryDay = entryDay;
 	}
 	public double getExitPrice() {
 		return exitPrice;
@@ -254,5 +317,33 @@ public class Bean_Result {
 	public void setOffResultTotal() {
 		this.resultTotal = false;
 	}
+
+	public double getTotalWinParcent() {
+		return totalWinParcent;
+	}
+
+	public void setTotalWinParcent(double totalWinParcent) {
+		this.totalWinParcent = totalWinParcent + this.totalWinParcent;
+	}
+
+	public double getTotalLoseParcent() {
+		return totalLoseParcent;
+	}
+
+	public void setTotalLoseParcent(double totalLoseParcent) {
+		this.totalLoseParcent = totalLoseParcent + this.totalLoseParcent;
+	}
+
+	public double getAverageWinParcent() {
+		return getTotalWinParcent() / getTOTAL_WIN();
+	}
+
+
+	public double getAverageLoseParcent() {
+		return ( getTotalLoseParcent() / getTOTAL_LOSE()) ;
+	}
+
+
+
 
 }
