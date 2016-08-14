@@ -21,7 +21,41 @@ public class ReCord {
 	public static final String CODE_06_CURRENCY = "6";
 	public static final String CODE_99_ALLTYPE = "99";
 
-
+	 //01_stock_dd a
+	 //00_codelisttbl b
+	 //02_statistics_dd c
+	public static final String STOCK_TBK_DD_A = "a";
+	public static final String STOCK_TBK_DD_AA = "aa";
+	public static final String CODELIST_B = "b";
+	public static final String STATISTICS_DD_C = "c";
+	public static final String INDEX_DD_D = "d";
+	public static final String ETF_DD_E = "e";
+	public static final String INDEX_TBK_DD_NIKKE_AVE		= "i";
+	public static final String INDEX_TBK_DD_TOPIX			= "ii";
+	public static final String INDEX_TBK_DD_JPX400			= "iii";
+	public static final String INDEX_TBK_DD_CORE30			= "iiii";
+	public static final String INDEX_TBK_DD_TOPIX100		= "iiiii";
+	public static final String INDEX_TBK_DD_TOPIX_SMALL		= "iiiiii";
+	public static final String INDEX_TBK_DD_ASIA			= "iiiiiii";
+	public static final String INDEX_TBK_DD_JASDAC			= "iiiiiiii";
+	
+	//銘柄名など
+//	I101 日経平均
+	public static final String indexName_I101 = "I101";
+//	I102　TOPIX
+	public static final String indexName_I102 = "I102";
+//	I103　JPXINDEX400
+	public static final String indexName_I103 = "I103";
+//	I111 コア30
+	public static final String indexName_I111 = "I111";
+//	I113　TOPIX100
+	public static final String indexName_I113 = "I113";
+//	I116　TOPIXSMALL
+	public static final String indexName_I116 = "I116";
+//	I131　アジア関連株指数
+	public static final String indexName_I131 = "I131";
+//	I306、ジャスダック
+	public static final String indexName_I306 = "I306";
 
 	//初期値
 	public static String KOSHINBI_SHOKI									= "2007-01-03";

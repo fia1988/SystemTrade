@@ -76,7 +76,7 @@ public class Bean_Bean {
 //			System.out.println(listCSV.get(i));
 
 			B_C.setDay					(DAY);
-			B_C.setCode					(listCSV_SPRIT[0]);
+			B_C.setCode					(listCSV_SPRIT[0].replace("東証1部_", ""));
 			B_C.setCodeName				(listCSV_SPRIT[0]);
 			B_C.setDeki					(listCSV_SPRIT[1]);
 			B_C.setBaybay				(listCSV_SPRIT[2]);

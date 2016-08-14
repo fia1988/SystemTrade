@@ -261,6 +261,7 @@ public class InsertDay {
 			s.getPstmt().setString( i++,  DTO.getDeki()			);
 			s.getPstmt().setString( i++,  DTO.getBayBay()		);
 			s.getPstmt().setString( i++,  DTO.getStockCount()	);
+			
 			s.getPstmt().setString( i++,  DTO.getTakePrice()	);
 			s.getPstmt().setString( i++,  DTO.getUpPrice()		);
 			s.getPstmt().setString( i++,  DTO.getNoChange()		);

@@ -9,8 +9,8 @@ public class Bean_Parameta {
 	private boolean checkRenzokuSign = false;
 
 	//勝った場合の値段の比率。
-	private Double winWariai	=	0.0;
-	private Double loseWariai	=	0.0;
+	private Double winWariai	=	100.0;
+	private Double loseWariai	=	0.0001;
 
 	//勝った時のお値段
 	private double buyPrice		=	0;
@@ -21,6 +21,8 @@ public class Bean_Parameta {
 	private int totalTrade		=	0;
 	private	int	keepCount		=	0;
 
+	//最初の最低限出来高
+	private int minDeki			=	10000;
 
 
 
@@ -40,6 +42,8 @@ public class Bean_Parameta {
 	//何日後に売るかを設定するメソッド
 	int checkAfterDay = 0;
 
+	//何日保有しているか。最大保有日数をチェック
+	int checkKeepDay=1000;
 
 
 	//ボーナス月日。MM-DDで入力
@@ -105,6 +109,22 @@ public class Bean_Parameta {
 
 
 
+
+	public int getMinDeki() {
+		return minDeki;
+	}
+
+	public void setMinDeki(int minDeki) {
+		this.minDeki = minDeki;
+	}
+
+	public int getCheckKeepDay() {
+		return checkKeepDay;
+	}
+
+	public void setCheckKeepDay(int checkKeepDay) {
+		this.checkKeepDay = checkKeepDay;
+	}
 
 	public boolean getCheckRenzokuSign() {
 		return checkRenzokuSign;

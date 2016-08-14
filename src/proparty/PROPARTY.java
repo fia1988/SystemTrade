@@ -14,7 +14,7 @@ public class PROPARTY {
 	//連続アクセスを防ぐﾐﾘ秒数
 	public static int SLEEPTIME = 3600000;
 	//ちょっと間をおいてアクセスする。その間の時間。
-	public static int INTERVALTIME = 5000;
+	public static int INTERVALTIME = 4000;
 	//最終更新日が1年前なら分割する。150で23075秒。180で28207一晩ぐらい？
 	//400:55252
 	//1000:

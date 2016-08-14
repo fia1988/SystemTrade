@@ -27,7 +27,7 @@ public class createTBL {
 
 	}
 
-	private void createSEPARETE_DD(S s){
+	public void createSEPARETE_DD(S s){
 		//SQL全文
 		String SQL;
 		//列名の取得
@@ -48,7 +48,7 @@ public class createTBL {
 				+ COLUMN.SEPA_FLG_KATA								 + " , " //分割、併合処理をおえたらここに1を埋める
 				+ COLUMN.BIKOU_KATA									 + " , " //備考欄
 				+ "primary key ("
-				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME_KENRI_LAST + " , " + COLUMN.SEPA_FLG + ")) ";
+				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME_KENRI_LAST + " , " + COLUMN.CHECKSEPA_COMBINE + ")) ";
 
 		SQL = create + TBL_Name.SEPARATE_DD + colum;
 

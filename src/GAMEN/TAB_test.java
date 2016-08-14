@@ -17,17 +17,12 @@ import javax.swing.JTextField;
 
 import proparty.S;
 import proparty.TBL_Name;
-import technique.Techinique_COMMON_METHOD;
 import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
 import analysis.SagyoSpace;
 import bean.Bean_CodeList;
-import bean.Bean_Parameta;
-import bean.Bean_Result;
-import bean.Bean_nowRecord;
 import botton.cloringDate;
 import botton.setUp;
-import constant.CATE_FLG;
 import constant.COLUMN;
 
 //いろいろテストする。
@@ -50,8 +45,10 @@ public class TAB_test extends JPanel {
 	private final Action action_7 = new SwingAction_7();
 	private final Action action_8 = new SwingAction_8();
 	private final Action action_9 = new SwingAction_9();
+	private final Action action_10 = new SwingAction_10();
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
+	private JTextField textField_1;
 
 	/**
 	 * Create the panel.
@@ -157,6 +154,20 @@ public class TAB_test extends JPanel {
 		btnNewButton_7.setBounds(581, 177, 155, 27);
 		add(btnNewButton_7);
 
+		JButton button_2 = new JButton("作業ボタン");
+		button_2.setAction(action_10);
+		button_2.setBounds(598, 375, 119, 27);
+		add(button_2);
+
+		btnNewButton.setBounds(52, 37, 119, 27);
+		add(btnNewButton);
+
+		textField_1 = new JTextField();
+		textField_1.setBounds(594, 335, 136, 25);
+		add(textField_1);
+		textField_1.setColumns(10);
+		textField_1.setText("testCase");
+
 
 
 	}
@@ -178,7 +189,19 @@ public class TAB_test extends JPanel {
 //			System.out.println(TODAY_SPRIT[1]);
 //			System.out.println(TODAY_SPRIT[2]);
 
-			SagyoSpace.testCase06();
+
+
+
+//			long x =0;
+//			long total=0;
+//			List list = new ArrayList<>();
+//			Random rnd = new Random();
+//			for (long i = 0; i < 1000000 ; i++) {
+//				int ran = rnd.nextInt(100);
+//				total = ran + total;
+//				list.add(ran);
+//			}
+//			System.out.println(total);
 			//checkMotiKabu_L設定部分
 			//あるいは持ち株会の買付日を見つける
 			//基準日1、多くは給料日
@@ -201,6 +224,19 @@ public class TAB_test extends JPanel {
 			textArea_SQLresult.append(textField.getText() + "5\n");
 		}
 	}
+
+	private class SwingAction_10 extends AbstractAction {
+		public SwingAction_10() {
+			putValue(NAME, "試験モジュール");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			SagyoSpace.sagyoSpaceDoing(textField_1.getText());
+
+
+		}
+	}
+
 	private class SwingAction_1 extends AbstractAction {
 		public SwingAction_1() {
 			putValue(NAME, "消す");
@@ -259,33 +295,33 @@ public class TAB_test extends JPanel {
 
 	private class SwingAction_6 extends AbstractAction {
 		public SwingAction_6() {
-			putValue(NAME, "DTO実験");
+			putValue(NAME, "分割情報リセット");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
 
-			Bean_CodeList b_b = new Bean_CodeList ();
-			CATE_FLG cf = new CATE_FLG();
 			S s = new S();
 			s.getCon();
-			b_b.setOpen("200");
-			cf.testsub(b_b);
-			
-			Bean_Parameta paraDTO = new Bean_Parameta();
-			Bean_Result resultDTO = new Bean_Result();
-			Bean_nowRecord nowDTO = new Bean_nowRecord();
-			List<Bean_nowRecord> nowDTOList = new ArrayList<>();
-			paraDTO.setCheckRenzokuSign(false);
-			//結論の出力方法
-			resultDTO.setOnResultDay();
-			resultDTO.setOnResultCode();
-			resultDTO.setOnResultTotal();
-//			Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO);
-			
-			Techinique_COMMON_METHOD.codeMethodMove("technique","Technique04","MACD_L",paraDTO,nowDTOList,8,resultDTO,"9994―T","2016-06-06",5,true);
-			System.out.println(b_b.getOpen());
+
+			String SQL;
+
+			//分割情報のみをリセット
+			SQL = " update " + TBL_Name.STOCK_DD	+ " set "
+							 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
+							 + COLUMN.MAX			+ " = " + COLUMN.BEFORE_MAX		+ " , "
+							 + COLUMN.MIN			+ " = " + COLUMN.BEFORE_MIN		+ " , "
+							 + COLUMN.CLOSE			+ " = " + COLUMN.BEFORE_CLOSE	+ " , "
+							 + COLUMN.DEKI			+ " = " + COLUMN.BEFORE_DEKI	+ "   ";
+			s.freeUpdateQuery(SQL);
+
+			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
+			s.freeUpdateQuery(SQL);
+
+			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
+			s.freeUpdateQuery(SQL);
 
 
+			s.closeConection();
 
 
 		}

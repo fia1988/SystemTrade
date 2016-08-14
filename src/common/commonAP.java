@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
@@ -15,9 +16,69 @@ public class commonAP {
 //	static ArrayList<String> codeList = new ArrayList<String>();
 //	static ArrayList<ArrayList<String>> codeCateList = new ArrayList<ArrayList<String>>();
 
+
+
 	static String codeSingle[] = new String[2];
 	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
 //	static List<String[]> codeListwithiCate = new ArrayList<String>();
+
+
+	//judgeがtrueのとき、不偏分散
+	//       falseのとき、分散
+	public static double getDev(List<Double> list,boolean judge){
+        double vars = 0;
+        double sum = 0;
+
+        for(int i=0; i<list.size(); i++ ) {
+        	sum += list.get(i);
+        }
+
+        if(list.size()==0){
+        	return 0;
+        }
+
+        double ave = ( (double)sum )/list.size();
+        for (int i=0; i<list.size(); i++) {
+            vars += ((list.get(i) - ave)*(list.get(i) - ave));
+        }
+
+        int bunbo=0;
+        if(judge){
+        	bunbo=list.size() - 1;
+        }else{
+        	bunbo=list.size();
+        }
+//        System.out.println("abbbbbbbbbbbbbbaaa" + sum);
+        double std = Math.sqrt(vars/bunbo);
+        return std;
+	}
+
+	//第三引数に意味はない
+	public static double getDev(List<Long> list,boolean judge,String a){
+        double vars = 0;
+        double sum = 0;
+        for(int i=0; i<list.size(); i++ ) {
+            sum += list.get(i);
+        }
+        if(list.size()==0){
+        	return 0;
+        }
+
+        double ave = ( (double)sum )/list.size();
+        for (int i=0; i<list.size(); i++) {
+            vars += ((list.get(i) - ave)*(list.get(i) - ave));
+        }
+
+        int bunbo=0;
+        if(judge){
+        	bunbo=list.size() - 1;
+        }else{
+        	bunbo=list.size();
+        }
+
+        double std = Math.sqrt(vars/bunbo);
+        return std;
+	}
 
 	//ArrayList<ArrayList<型名>> list=new ArrayList<ArrayList <型名>>();//二次元配列の生成
 	public boolean checkMAX(S s){
