@@ -209,7 +209,7 @@ public class createTBL {
 				+ COLUMN.STOCK_DOWNSTOCK_KATA						 + " , " //値下がり
 
 				+ COLUMN.NETUKI_MAXMIN_KATA							 + " , " //当日の銘柄数-値付き
-				+ COLUMN.NETUKI_MAXMINRATIO_KATA					 + " , " //（銘柄数-値付き)/1
+				+ COLUMN.NETUKI_MAXMINRATIO_KATA					 + " , " //値上がり銘柄数 ÷ 値下がり銘柄数
 
 
 				+ COLUMN.STOCK_GETPRICE_KATA						 + " , " //値付き
@@ -257,9 +257,9 @@ public class createTBL {
 				+ COLUMN.STOCK_UPPRICE_IDO_SHORT_KATA				 + " , " //値上がり短期移動平均線
 				+ COLUMN.STOCK_UPPRICE_IDO_MIDDLE_KATA				 + " , " //値上がり中期移動平均線
 				+ COLUMN.STOCK_UPPRICE_IDO_LONG_KATA				 + " , " //値上がり長期移動平均線
-				+ COLUMN.STOCK_UPPRICE_IDO_SHORT_CHANGERATE_KATA	 + " , " //値上がり短期間移動平均線前日比
-				+ COLUMN.STOCK_UPPRICE_IDO_MIDDLE_CHANGERATE_KATA	 + " , " //値上がり中期間移動平均線前日比
-				+ COLUMN.STOCK_UPPRICE_IDO_LONG_CHANGERATE_KATA		 + " , " //値上がり長期間移動平均線前日比
+				+ COLUMN.STOCK_UPPRICE_IDO_SHORT_CHANGERATE_KATA	 + " , " //値上がり短期間移動平均線前日比　※値付き移動平均線
+				+ COLUMN.STOCK_UPPRICE_IDO_MIDDLE_CHANGERATE_KATA	 + " , " //値上がり中期間移動平均線前日比　※値付き移動平均線
+				+ COLUMN.STOCK_UPPRICE_IDO_LONG_CHANGERATE_KATA		 + " , " //値上がり長期間移動平均線前日比　※値付き移動平均線
 				+ COLUMN.STOCK_UPPRICE_IDO_SHORT_RATIO_KATA			 + " , " //値上がり短期間移動平均線前日比率
 				+ COLUMN.STOCK_UPPRICE_IDO_MIDDLE_RATIO_KATA		 + " , " //値上がり中期間移動平均線前日比率
 				+ COLUMN.STOCK_UPPRICE_IDO_LONG_RATIO_KATA			 + " , " //値上がり長期間移動平均線前日比率

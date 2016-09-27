@@ -418,6 +418,8 @@ public class Sigma{
 				+ " where "
 				+ COLUMN.CODE
 				+ " ='" + code + "'"
+				+ " and "
+				+ COLUMN.DAYTIME + " <= '" + dayTime + "'"
 				+ " order by "	   + COLUMN.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;

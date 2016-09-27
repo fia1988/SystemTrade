@@ -66,6 +66,7 @@ public class commonAP {
 
         double ave = ( (double)sum )/list.size();
         for (int i=0; i<list.size(); i++) {
+
             vars += ((list.get(i) - ave)*(list.get(i) - ave));
         }
 

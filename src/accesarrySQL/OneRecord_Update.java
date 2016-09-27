@@ -1,5 +1,6 @@
 package accesarrySQL;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import proparty.S;
@@ -12,6 +13,88 @@ import constant.ReCord;
 
 
 public class OneRecord_Update {
+
+	//前日など参照せず、一行のレコードのみで比較できるもの
+	//ただし、今のところ統計の騰落レシオだけ20160821
+	public static void OneRecord(String code,String cate,String dayTime,S s,ResultSet EDIT){
+		//個別銘柄・・・1
+				//統計・・・2
+				//指数・・・3
+				//ETF・・・4
+				//先物・・・5
+				//通貨・・・6
+				switch(cate){
+				case ReCord.CODE_01_STOCK:
+
+					break;
+				case ReCord.CODE_02_SATISTICS:
+					OneRecord_02_STATISTICS(code, ReCord.CODE_02_SATISTICS, dayTime,s,EDIT);
+					break;
+				case ReCord.CODE_03_INDEX:
+
+					break;
+				case ReCord.CODE_04_ETF:
+
+					break;
+				case ReCord.CODE_05_SAKIMONO:
+
+					break;
+				case ReCord.CODE_06_CURRENCY:
+
+					break;
+				default:
+					System.out.println("setIDO_Heikinなんかよくわからないの来た：" + code + ":" + cate);
+					break;
+				}
+	}
+
+	public static void OneRecord_02_STATISTICS(String code,String cate,String dayTime,S s,ResultSet EDIT){
+		String SQL;
+		//計算結果を入れる
+		double resultDouble;
+
+
+
+		//ここでテーブル指定
+		SQL = "select "
+				+ COLUMN.STOCK_DOWNSTOCK + " , "
+				+ COLUMN.STOCK_UPSTOCK + " , "
+				+ COLUMN.NETUKI_MAXMINRATIO + "  "
+				+ " from "
+				+ SQLChecker.getTBL(cate)
+				+ " where "
+				+ COLUMN.DAYTIME
+				+ " = '" + dayTime + "'"
+				+ " and "
+				+ COLUMN.CODE
+				+ " ='" + code + "'";
+		
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			//trueならレコードが存在する。
+			if(s.rs.next()==true){
+
+				//騰落レシオ
+				//値上がり銘柄数 ÷ 値下がり銘柄数
+				
+				double stock_downStock = s.rs.getDouble(COLUMN.STOCK_DOWNSTOCK);
+				if ( stock_downStock == 0 ){
+					stock_downStock = 1;
+				}
+				
+				resultDouble=( s.rs.getDouble(COLUMN.STOCK_UPSTOCK) / stock_downStock );
+				
+				EDIT.updateDouble(COLUMN.NETUKI_MAXMINRATIO,resultDouble);
+
+			}
+
+		} catch (SQLException ea) {
+			// TODO 自動生成された catch ブロック
+			ea.printStackTrace();
+		}
+	}
+
+
 
 	//前日など参照せず、一行のレコードのみで比較できるもの
 	public static void OneRecord(S s){

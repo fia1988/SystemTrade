@@ -28,6 +28,7 @@ public class ReCord {
 	public static final String STOCK_TBK_DD_AA = "aa";
 	public static final String CODELIST_B = "b";
 	public static final String STATISTICS_DD_C = "c";
+	public static final String STATISTICS_NIKKE01_DD_CC = "cc";
 	public static final String INDEX_DD_D = "d";
 	public static final String ETF_DD_E = "e";
 	public static final String INDEX_TBK_DD_NIKKE_AVE		= "i";
@@ -57,6 +58,9 @@ public class ReCord {
 //	I306、ジャスダック
 	public static final String indexName_I306 = "I306";
 
+	//東証一部
+	public static final String TOSYO_01 = "東証1部";
+	
 	//初期値
 	public static String KOSHINBI_SHOKI									= "2007-01-03";
 	//通貨初期値

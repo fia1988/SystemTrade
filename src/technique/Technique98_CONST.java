@@ -22,6 +22,7 @@ public class Technique98_CONST {
 	//S売り、L買い
 	//M順張り、R逆張り
 	public static final String MACD_M_L = "MACD_M_L";
+	public static final String MACD_M_L_SMALL = "MACD_M_L_SMALL";
 	public static final String MACD_R_L = "MACD_R_L";
 	public static final String MACD_M_S = "MACD_M_S";
 	public static final String MACD_R_S = "MACD_R_S";
@@ -37,7 +38,34 @@ public class Technique98_CONST {
 	static ArrayList<String> nowSTOCK = new ArrayList<String>();
 	public static void setNowSTOCK() {
 		nowSTOCK = new ArrayList<String>();
-		nowSTOCK.add("9031―T");
+
+
+
+		nowSTOCK.add("1352―T");
+		nowSTOCK.add("1376―T");
+		nowSTOCK.add("1377―T");
+		nowSTOCK.add("1400―T");
+		nowSTOCK.add("1414―T");
+		nowSTOCK.add("1417―T");
+		nowSTOCK.add("1418―T");
+		nowSTOCK.add("1420―T");
+		nowSTOCK.add("1429―T");
+		nowSTOCK.add("1435―T");
+		nowSTOCK.add("1514―T");
+		nowSTOCK.add("1663―T");
+		nowSTOCK.add("1712―T");
+		nowSTOCK.add("1719―T");
+		nowSTOCK.add("1720―T");
+		nowSTOCK.add("1722―T");
+		nowSTOCK.add("1762―T");
+		nowSTOCK.add("1766―T");
+		nowSTOCK.add("1775―T");
+		nowSTOCK.add("1782―T");
+		nowSTOCK.add("1780―T");
+		nowSTOCK.add("1419―T");
+		nowSTOCK.add("1737―T");
+
+
 	}
 	public static ArrayList<String> getNowSTOCK() {
 		return nowSTOCK;

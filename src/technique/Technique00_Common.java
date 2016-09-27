@@ -50,6 +50,8 @@ public class Technique00_Common {
 	}
 
 
+
+
 	//買いメソッドの場合だけ動作する。
 	//NOGAMEの時、処理しない
 	//トレードフラグの時、処理続行
@@ -58,6 +60,10 @@ public class Technique00_Common {
 		//売りの場合は動かさない
 		//買いメソッドの場合の処理
 		if ( judge==false ) {return Technique98_CONST.NO_GAME;	}
+
+		//日経が急落してたり今の銘柄が急落してたら買いフラグをたてないようにする。
+		//NOGAMEで返す
+
 
 		//取引量の少ない銘柄は計算しない
 		if (nowDTOList.get(nowDTOadress).getNowDEKI_01() < paraDTO.getMinDeki()	){
@@ -101,9 +107,9 @@ public class Technique00_Common {
 			return Technique98_CONST.TRADE_FLG;
 		}
 
-		if (checkPlunge_STOCK_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			return Technique98_CONST.TRADE_FLG;
-		}
+//		if (checkPlunge_STOCK_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
+//			return Technique98_CONST.TRADE_FLG;
+//		}
 
 		return Technique98_CONST.NO_GAME;
 
@@ -133,7 +139,7 @@ public class Technique00_Common {
 //			default:
 //				break;
 //		}
-		
+
 		if (nowDTOList.get(nowDTOadress).getCateflg_01().equals(ReCord.CODE_99_ALLTYPE)){
 			//急落要素を書く
 

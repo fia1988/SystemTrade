@@ -22,8 +22,19 @@ public class Bean_Parameta {
 	private	int	keepCount		=	0;
 
 	//最初の最低限出来高
-	private int minDeki			=	10000;
+	private int minDeki			=	0;
 
+
+	//手数料
+	double tesuRYO = 0;
+
+	public double getTesuRYO() {
+		return tesuRYO;
+	}
+
+	public void setTesuRYO(double tesuRYO) {
+		this.tesuRYO = tesuRYO;
+	}
 
 
 	//checkMotiKabu_L
@@ -394,7 +405,17 @@ public class Bean_Parameta {
 
 
 
+	private double doubleCount = 0;
+	
+	
 
+	public double getDoubleCount() {
+		return doubleCount;
+	}
+
+	public void setDoubleCount(double doubleCount) {
+		this.doubleCount = doubleCount;
+	}
 
 	public int getIntCount01() {
 		return intCount01;

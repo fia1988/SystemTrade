@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 
 import proparty.S;
 import proparty.TBL_Name;
-import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
 import analysis.SagyoSpace;
 import bean.Bean_CodeList;
@@ -245,6 +244,8 @@ public class TAB_test extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			textArea_SQLresult.setText(null);
 
+
+			
 		}
 	}
 	private class SwingAction_2 extends AbstractAction {
@@ -305,20 +306,20 @@ public class TAB_test extends JPanel {
 
 			String SQL;
 
-			//分割情報のみをリセット
-			SQL = " update " + TBL_Name.STOCK_DD	+ " set "
-							 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
-							 + COLUMN.MAX			+ " = " + COLUMN.BEFORE_MAX		+ " , "
-							 + COLUMN.MIN			+ " = " + COLUMN.BEFORE_MIN		+ " , "
-							 + COLUMN.CLOSE			+ " = " + COLUMN.BEFORE_CLOSE	+ " , "
-							 + COLUMN.DEKI			+ " = " + COLUMN.BEFORE_DEKI	+ "   ";
-			s.freeUpdateQuery(SQL);
-
-			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
-			s.freeUpdateQuery(SQL);
-
-			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
-			s.freeUpdateQuery(SQL);
+//			//分割情報のみをリセット
+//			SQL = " update " + TBL_Name.STOCK_DD	+ " set "
+//							 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
+//							 + COLUMN.MAX			+ " = " + COLUMN.BEFORE_MAX		+ " , "
+//							 + COLUMN.MIN			+ " = " + COLUMN.BEFORE_MIN		+ " , "
+//							 + COLUMN.CLOSE			+ " = " + COLUMN.BEFORE_CLOSE	+ " , "
+//							 + COLUMN.DEKI			+ " = " + COLUMN.BEFORE_DEKI	+ "   ";
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
+//			s.freeUpdateQuery(SQL);
 
 
 			s.closeConection();
@@ -338,38 +339,38 @@ public class TAB_test extends JPanel {
 
 			String SQL;
 
-			SQL = "delete from " + TBL_Name.CODELISTTBL;
-			s.freeUpdateQuery(SQL);
-
-			SQL = "delete from " + TBL_Name.STOCK_DD;
-			s.freeUpdateQuery(SQL);
-
-			SQL = "delete from " + TBL_Name.STATISTICS_DD;
-			s.freeUpdateQuery(SQL);
-
-			SQL = "delete from " + TBL_Name.INDEX_DD;
-			s.freeUpdateQuery(SQL);
-
-			SQL = "delete from " + TBL_Name.ETF_DD;
-			s.freeUpdateQuery(SQL);
-
-			SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
-			s.freeUpdateQuery(SQL);
-
-			//分割情報のみをリセット
-			SQL = " update " + TBL_Name.STOCK_DD	+ " set "
-							 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
-							 + COLUMN.MAX			+ " = " + COLUMN.BEFORE_MAX		+ " , "
-							 + COLUMN.MIN			+ " = " + COLUMN.BEFORE_MIN		+ " , "
-							 + COLUMN.CLOSE			+ " = " + COLUMN.BEFORE_CLOSE	+ " , "
-							 + COLUMN.DEKI			+ " = " + COLUMN.BEFORE_DEKI	+ "   ";
-			s.freeUpdateQuery(SQL);
-
-			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
-			s.freeUpdateQuery(SQL);
-
-			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
-			s.freeUpdateQuery(SQL);
+//			SQL = "delete from " + TBL_Name.CODELISTTBL;
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = "delete from " + TBL_Name.STOCK_DD;
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = "delete from " + TBL_Name.STATISTICS_DD;
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = "delete from " + TBL_Name.INDEX_DD;
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = "delete from " + TBL_Name.ETF_DD;
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
+//			s.freeUpdateQuery(SQL);
+//
+//			//分割情報のみをリセット
+//			SQL = " update " + TBL_Name.STOCK_DD	+ " set "
+//							 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
+//							 + COLUMN.MAX			+ " = " + COLUMN.BEFORE_MAX		+ " , "
+//							 + COLUMN.MIN			+ " = " + COLUMN.BEFORE_MIN		+ " , "
+//							 + COLUMN.CLOSE			+ " = " + COLUMN.BEFORE_CLOSE	+ " , "
+//							 + COLUMN.DEKI			+ " = " + COLUMN.BEFORE_DEKI	+ "   ";
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
+//			s.freeUpdateQuery(SQL);
 
 
 			s.closeConection();
@@ -378,7 +379,7 @@ public class TAB_test extends JPanel {
 
 	private class SwingAction_8 extends AbstractAction {
 		public SwingAction_8() {
-			putValue(NAME, "実験1");
+			putValue(NAME, "レコード削除_株だけ");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
@@ -386,20 +387,34 @@ public class TAB_test extends JPanel {
 			s.getCon();
 			long start = System.currentTimeMillis();
 
-			DayTimeSeries DT = new DayTimeSeries();
-			//個別銘柄・・・1
-			//統計・・・2
-			//指数・・・3
-			//ETF・・・4
-			//先物・・・5
-			//通貨・・・6
-			DT.setCodeDTO_DD("1301―T","2007-01-01","2007-01-09", s);
+//			DayTimeSeries DT = new DayTimeSeries();
+//			//個別銘柄・・・1
+//			//統計・・・2
+//			//指数・・・3
+//			//ETF・・・4
+//			//先物・・・5
+//			//通貨・・・6
+//			DT.setCodeDTO_DD("1301―T","2007-01-01","2007-01-09", s);
+//
+//
+//			for(int i =0;i<DT.getCodeDTO_DD().size();i++){
+//				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki() +" フラグ；" +  DT.getCodeDTO_DD().get(i).getCateflg());
+//			}
+			
+			
+			String SQL;
+			SQL = "delete from " + TBL_Name.STOCK_DD;
+			s.freeUpdateQuery(SQL);
+			
+			
+			SQL = "delete from " + TBL_Name.ETF_DD;
+			s.freeUpdateQuery(SQL);
+			
+			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
+			s.freeUpdateQuery(SQL);
 
-
-			for(int i =0;i<DT.getCodeDTO_DD().size();i++){
-				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki() +" フラグ；" +  DT.getCodeDTO_DD().get(i).getCateflg());
-			}
-
+			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
+			s.freeUpdateQuery(SQL);
 
 			s.closeConection();
 

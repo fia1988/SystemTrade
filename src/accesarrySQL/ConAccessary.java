@@ -17,6 +17,11 @@ public class ConAccessary {
 			s.rs_EDIT = s.sqlEditer().executeQuery(SQLChecker.getSQL(code, cate, dayTime, s));
 			s.rs_EDIT.next();
 
+
+			//騰落レシオとか、一日でいけるやつを引く。
+			OneRecord_Update.OneRecord(code, cate, dayTime, s, s.rs_EDIT);
+			s.rs_EDIT.updateRow();
+
 			//売買高、出来高、終値で移動平均線を引く。
 			IDO_HEKIN_Price.setIDO_Heikin(code, cate, dayTime,s,s.rs_EDIT);
 

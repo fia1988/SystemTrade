@@ -340,6 +340,8 @@ public class IDO_HEKIN_HEKATU {
 				+ " where "
 				+ COLUMN.CODE
 				+ " ='" + code + "'"
+				+ " and "
+				+ COLUMN.DAYTIME + " <= '" + dayTime + "'"
 				+ " order by "	   + COLUMN.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;

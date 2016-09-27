@@ -222,6 +222,11 @@ public class IDO_HEKIN_Price extends Super_IDO_HEKIN{
 		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.IDOMIDDLE, (COLUMN.STOCK_GETPRICE_IDO_MIDDLE),(COLUMN.STOCK_GETPRICE), s,EDIT);
 		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.IDOLONG, (COLUMN.STOCK_GETPRICE_IDO_LONG),(COLUMN.STOCK_GETPRICE), s,EDIT);
 
+		//騰落レシオ
+		//列の再利用として、shortIDO_stock_upprice_changeRateを使う
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.IDOSHORT, (COLUMN.STOCK_UPPRICE_IDO_SHORT_CHANGERATE),(COLUMN.NETUKI_MAXMINRATIO), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.IDOMIDDLE, (COLUMN.STOCK_UPPRICE_IDO_MIDDLE_CHANGERATE),(COLUMN.NETUKI_MAXMINRATIO), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.IDOLONG, (COLUMN.STOCK_UPPRICE_IDO_LONG_CHANGERATE),(COLUMN.NETUKI_MAXMINRATIO), s,EDIT);
 	}
 
 	//指数・・・3

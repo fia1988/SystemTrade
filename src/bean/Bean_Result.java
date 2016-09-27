@@ -10,6 +10,9 @@ public class Bean_Result {
 	String DAY;
 	String code;
 
+	//勝率
+	double shoritu = 0;
+	int totalGames = 10;
 	long resultPlusClass00 = 0;
 	long resultPlusClass01 = 0;
 	long resultPlusClass02 = 0;
@@ -69,6 +72,41 @@ public class Bean_Result {
 	ArrayList<Double> entryPriceList = new ArrayList<Double>();
 	ArrayList<String> entryDayList = new ArrayList<String>();
 
+
+	ArrayList<Long> entryTimeList = new ArrayList<Long>();
+	long entryTime = 0;
+	List<Long> arrayEntryTime = new ArrayList();
+
+
+	public double getEntryTimeAverage(){
+		double total=0.0;
+		for (int i = 0 ; i < entryTimeList.size() ; i++){
+			total = total + entryTimeList.get(i);
+		}
+		return (total/entryTimeList.size());
+	}
+
+	public ArrayList<Long> getEntryTimeList() {
+		return entryTimeList;
+	}
+
+	public void setEntryTimeList(Long entryTimeList) {
+		this.entryTimeList.add(entryTimeList);
+	}
+
+	public long getEntryTime() {
+		return entryTime;
+	}
+
+	public void setEntryTime() {
+		this.entryTime++;
+	}
+
+	public void reSetEntryTime() {
+		this.entryTime=0;
+		
+	}
+
 	double totalWinParcent;
 	double averageWinParcent;
 	double totalLoseParcent;
@@ -95,6 +133,7 @@ public class Bean_Result {
 	boolean resultTotal = false;
 
 	public void resetList(){
+		entryTimeList = new ArrayList<Long>();
 		entryPriceList = new ArrayList<Double>();
 		entryDayList = new ArrayList<String>();
 		totalDays = 0;
@@ -145,9 +184,25 @@ public class Bean_Result {
 	public void getResultCodeResult(String resultCode){
 
 		if( getResultCode() ){
+
+
 			if ( ( getWinCount() + getLoseCount() ) > 0){
-				System.out.print("・" + resultCode +  "：勝【" + getWinCount() + "】");
-				System.out.println("／" +  "：負【" + getLoseCount() + "】");
+
+				//勝率が90％のものだけ出力
+
+				double totalCodeGame = (getWinCount() + getLoseCount() );
+				double shouritu = getWinCount() / totalCodeGame;
+
+				//設定した勝率（shoritu）以上の場合、結果を表示する
+				if ( shouritu > shoritu){
+					if( totalCodeGame > totalGames){
+						System.out.print("・" + resultCode +  "：勝【" + getWinCount() + "】");
+						System.out.println("／" +  "：負【" + getLoseCount() + "】");
+					}
+				}
+
+//				System.out.print("・" + resultCode +  "：勝【" + getWinCount() + "】");
+//				System.out.println("／" +  "：負【" + getLoseCount() + "】");
 			}
 		}
 		reSetWinCount();
@@ -167,17 +222,18 @@ public class Bean_Result {
 			if (entryDayList.size() > 0 ){
 				entryDayList.remove(entryDayList.size() - 1);
 			}
-			
+
 			if (entryDayList.size() ==0 ){
+				reSetKeepCount();
 				return false;
 			}
 		}
-		
+
 		return true;
 
 	}
 
-	public void getResultDayResult(String code){
+	public void getResultDayResult(String code,Bean_Parameta paraDTO){
 
 		String result = "";
 
@@ -186,12 +242,18 @@ public class Bean_Result {
 		//同日の場合は買った日のエントリーを取り消す。
 		//これでentryDayListのレコードが0になるとメソッドの処理を中断する。
 		if ( checkSameDay() == false ){
+			
 			return;
 		};
 
 		double average = getEntryAveragePrice();
 		double averageParcent = (exitPrice - average) / average;
-		if ( exitPrice - average > 0){
+
+		//手数料を差し引く
+		averageParcent = averageParcent - paraDTO.getTesuRYO();
+
+
+		if ( averageParcent > 0){
 			//勝った場合
 			setWinCount();
 			setTOTAL_WIN();
@@ -205,6 +267,8 @@ public class Bean_Result {
 			setTotalLoseParcent(averageParcent);
 			result = "(負)";
 		}
+
+
 
 		double checkClass = Math.floor(averageParcent * 100);
 		//階級を作る
@@ -322,23 +386,32 @@ public class Bean_Result {
 		}
 
 		//標準偏差を計算する。
-		setKeepDayList(getKeepCount());
-		setReturnList((averageParcent));
+		setKeepDayList		( getKeepCount() );
+		setReturnList		( averageParcent );
+		setEntryTimeList	( getEntryTime() );
 
-
+//		if(getEntryTime() != 1){
+//			System.out.println(code);
+//		}
+		
 		if( getResultDay() ){
 			System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
 		}
 
-		if (averageParcent < -0.35 ){
-			System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
-		}
-		
+//		if (averageParcent < -0.35 ){
+//			System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
+//		}
+
 //		resetEntryList();
+		resetCount();
+	}
+	
+	public void resetCount(){
 		reSetKeepCount();
+		reSetEntryTime();	
 	}
 
-	public void getResultTotalResult(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName){
+	public void getResultTotalResult(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO){
 		if( getResultTotal() ){
 			System.out.println("トータル勝：" + getTOTAL_WIN());
 			System.out.println("トータル負：" + getTOTAL_LOSE());
@@ -350,45 +423,47 @@ public class Bean_Result {
 			System.out.println("トータル平均負％：" + getAverageLoseParcent());
 			System.out.println("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE()));
 			System.out.println("見込みリスク：" + commonAP.getDev(getReturnList(),  true));
-			System.out.println("平均保有期間：" + getTotalDays() / getTradeCount());
+			System.out.println("平均保有期間(売却できずを除く)：" + getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) );
 			System.out.println("保有期間標準偏差：" + commonAP.getDev(getKeepDayList(), true,""));
-
-			System.out.println(" 17%以上 ："	+	resultPlusClassOver);
-			System.out.println("16%～ 17%："	+	resultPlusClass17);
-			System.out.println("15%～ 16%："	+	resultPlusClass16);
-			System.out.println("14%～ 15%："	+	resultPlusClass15);
-			System.out.println("13%～ 14%："	+	resultPlusClass14);
-			System.out.println("12%～ 13%："	+	resultPlusClass13);
-			System.out.println("11%～ 12%："	+	resultPlusClass12);
-			System.out.println("10%～ 11%："	+	resultPlusClass11);
-			System.out.println("  9～ 10%："	+	resultPlusClass10);
-			System.out.println("  8～  9%："	+	resultPlusClass09);
-			System.out.println("  7～  8%："	+	resultPlusClass08);
-			System.out.println("  6～  7%："	+	resultPlusClass07);
-			System.out.println("  5～  6%："	+	resultPlusClass06);
-			System.out.println("  4～  5%："	+	resultPlusClass05);
-			System.out.println("  3～  4%："	+	resultPlusClass04);
-			System.out.println("  2～  3%："	+	resultPlusClass03);
-			System.out.println("  1～  2%："	+	resultPlusClass02);
-			System.out.println("  0～  1%："	+	resultPlusClass01);
-			System.out.println("-1 ～  0%："	+	resultMinusClass01);
-			System.out.println("-2 ～ -1%："	+	resultMinusClass02);
-			System.out.println("-3 ～ -2%："	+	resultMinusClass03);
-			System.out.println("-4 ～ -3%："	+	resultMinusClass04);
-			System.out.println("-5 ～ -4%："	+	resultMinusClass05);
-			System.out.println("-6 ～ -5%："	+	resultMinusClass06);
-			System.out.println("-7 ～ -6%："	+	resultMinusClass07);
-			System.out.println("-8 ～ -7%："	+	resultMinusClass08);
-			System.out.println("-9 ～ -8%："	+	resultMinusClass09);
-			System.out.println("-10～ -9%："	+	resultMinusClass10);
-			System.out.println("-11～-10%："	+	resultMinusClass11);
-			System.out.println("-12～-11%："	+	resultMinusClass12);
-			System.out.println("-13～-12%："	+	resultMinusClass13);
-			System.out.println("-14～-13%："	+	resultMinusClass14);
-			System.out.println("-15～-14%："	+	resultMinusClass15);
-			System.out.println("-16～-15%："	+	resultMinusClass16);
-			System.out.println("-17～-16%："	+	resultMinusClass17);
-			System.out.println("-17%以下 ："	+	resultMinusClassOver);
+			System.out.println("手数料：" + paraDTO.getTesuRYO()*100 + "%");
+			System.out.println("平均エントリー回数" + getEntryTimeAverage());
+			System.out.println("エントリー回数標準偏差" + commonAP.getDev(getEntryTimeList(), true,""));
+			System.out.println("	 17%以上 ："	+	resultPlusClassOver);
+			System.out.println("	16%～ 17%："	+	resultPlusClass17);
+			System.out.println("	15%～ 16%："	+	resultPlusClass16);
+			System.out.println("	14%～ 15%："	+	resultPlusClass15);
+			System.out.println("	13%～ 14%："	+	resultPlusClass14);
+			System.out.println("	12%～ 13%："	+	resultPlusClass13);
+			System.out.println("	11%～ 12%："	+	resultPlusClass12);
+			System.out.println("	10%～ 11%："	+	resultPlusClass11);
+			System.out.println("	  9～ 10%："	+	resultPlusClass10);
+			System.out.println("	  8～  9%："	+	resultPlusClass09);
+			System.out.println("	  7～  8%："	+	resultPlusClass08);
+			System.out.println("	  6～  7%："	+	resultPlusClass07);
+			System.out.println("	  5～  6%："	+	resultPlusClass06);
+			System.out.println("	  4～  5%："	+	resultPlusClass05);
+			System.out.println("	  3～  4%："	+	resultPlusClass04);
+			System.out.println("	  2～  3%："	+	resultPlusClass03);
+			System.out.println("	  1～  2%："	+	resultPlusClass02);
+			System.out.println("	  0～  1%："	+	resultPlusClass01);
+			System.out.println("	-1 ～  0%："	+	resultMinusClass01);
+			System.out.println("	-2 ～ -1%："	+	resultMinusClass02);
+			System.out.println("	-3 ～ -2%："	+	resultMinusClass03);
+			System.out.println("	-4 ～ -3%："	+	resultMinusClass04);
+			System.out.println("	-5 ～ -4%："	+	resultMinusClass05);
+			System.out.println("	-6 ～ -5%："	+	resultMinusClass06);
+			System.out.println("	-7 ～ -6%："	+	resultMinusClass07);
+			System.out.println("	-8 ～ -7%："	+	resultMinusClass08);
+			System.out.println("	-9 ～ -8%："	+	resultMinusClass09);
+			System.out.println("	-10～ -9%："	+	resultMinusClass10);
+			System.out.println("	-11～-10%："	+	resultMinusClass11);
+			System.out.println("	-12～-11%："	+	resultMinusClass12);
+			System.out.println("	-13～-12%："	+	resultMinusClass13);
+			System.out.println("	-14～-13%："	+	resultMinusClass14);
+			System.out.println("	-15～-14%："	+	resultMinusClass15);
+			System.out.println("	-16～-15%："	+	resultMinusClass16);
+			System.out.println("	-17～-16%："	+	resultMinusClass17);
+			System.out.println("	-17%以下 ："	+	resultMinusClassOver);
 
 
 			System.out.println("Lメソッド：" + L_packageName + "." + L_className + "." + L_methodName );
@@ -398,6 +473,7 @@ public class Bean_Result {
 
 		resetList();
 		reSetKeepCount();
+		reSetEntryTime();
 	}
 
 
@@ -417,6 +493,7 @@ public class Bean_Result {
 	}
 
 	public void setKeepDayList(long keepDayCount) {
+		
 		totalDays = totalDays + keepDayCount;
 		keepDayList.add(keepDayCount);
 	}
@@ -669,6 +746,22 @@ public class Bean_Result {
 
 	public double getAverageLoseParcent() {
 		return ( getTotalLoseParcent() / getTOTAL_LOSE()) ;
+	}
+
+	public double getShoritu() {
+		return shoritu;
+	}
+
+	public void setShoritu(double shoritu) {
+		this.shoritu = shoritu;
+	}
+
+	public int getTotalGames() {
+		return totalGames;
+	}
+
+	public void setTotalGames(int totalGames) {
+		this.totalGames = totalGames;
 	}
 
 

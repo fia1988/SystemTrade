@@ -394,7 +394,7 @@ public class COLUMN {
 	//当日の銘柄数-値付き
 	public static String NETUKI_MAXMIN = "NETUKI_maxmin";
 	public static String NETUKI_MAXMIN_KATA = NETUKI_MAXMIN + "  smallint unsigned  ";
-	//（銘柄数-値付き)/1
+	//値上がり銘柄数 ÷ 値下がり銘柄数 ×100
 	public static String NETUKI_MAXMINRATIO = "NETUKI_maxminRatio";
 	public static String NETUKI_MAXMINRATIO_KATA = NETUKI_MAXMINRATIO + " double ";
 

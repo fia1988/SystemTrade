@@ -98,6 +98,8 @@ public class Super_IDO_HEKIN {
 				+ " where "
 				+ COLUMN.CODE
 				+ " ='" + code + "'"
+				+ " and "
+				+ COLUMN.DAYTIME + " <= '" + dayTime + "'"
 				+ " order by "	   + COLUMN.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
@@ -131,16 +133,16 @@ public class Super_IDO_HEKIN {
 
 					//ここから更新
 
-					SQL = " update "
-						+ TBL
-						+ " set "
-						+ updateColomn + " = " + s.rs.getDouble("avg(" + targetColomn +  ")")
-						+ " where "
-						+ COLUMN.DAYTIME
-						+ " = '" + dayTime + "'"
-						+ " and "
-						+ COLUMN.CODE
-						+ " ='" + code + "'";
+//					SQL = " update "
+//						+ TBL
+//						+ " set "
+//						+ updateColomn + " = " + s.rs.getDouble("avg(" + targetColomn +  ")")
+//						+ " where "
+//						+ COLUMN.DAYTIME
+//						+ " = '" + dayTime + "'"
+//						+ " and "
+//						+ COLUMN.CODE
+//						+ " ='" + code + "'";
 
 					EDIT.updateDouble(updateColomn,s.rs.getDouble("avg(" + targetColomn +  ")"));
 //						long	art = System.currentTimeMillis();
