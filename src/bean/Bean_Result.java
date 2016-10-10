@@ -104,7 +104,7 @@ public class Bean_Result {
 
 	public void reSetEntryTime() {
 		this.entryTime=0;
-		
+
 	}
 
 	double totalWinParcent;
@@ -242,7 +242,7 @@ public class Bean_Result {
 		//同日の場合は買った日のエントリーを取り消す。
 		//これでentryDayListのレコードが0になるとメソッドの処理を中断する。
 		if ( checkSameDay() == false ){
-			
+
 			return;
 		};
 
@@ -393,9 +393,12 @@ public class Bean_Result {
 //		if(getEntryTime() != 1){
 //			System.out.println(code);
 //		}
-		
+
 		if( getResultDay() ){
-			System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
+//			if (averageParcent>50 || -50 > averageParcent){
+				System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
+//			}
+
 		}
 
 //		if (averageParcent < -0.35 ){
@@ -405,10 +408,10 @@ public class Bean_Result {
 //		resetEntryList();
 		resetCount();
 	}
-	
+
 	public void resetCount(){
 		reSetKeepCount();
-		reSetEntryTime();	
+		reSetEntryTime();
 	}
 
 	public void getResultTotalResult(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO){
@@ -493,7 +496,7 @@ public class Bean_Result {
 	}
 
 	public void setKeepDayList(long keepDayCount) {
-		
+
 		totalDays = totalDays + keepDayCount;
 		keepDayList.add(keepDayCount);
 	}

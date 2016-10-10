@@ -2,9 +2,6 @@ package GAMEN;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -16,13 +13,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import proparty.S;
-import proparty.TBL_Name;
-import timeSeriesDTO.DayTimeSeries2;
 import analysis.SagyoSpace;
-import bean.Bean_CodeList;
 import botton.cloringDate;
 import botton.setUp;
-import constant.COLUMN;
 
 //いろいろテストする。
 
@@ -401,21 +394,21 @@ public class TAB_test extends JPanel {
 //				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki() +" フラグ；" +  DT.getCodeDTO_DD().get(i).getCateflg());
 //			}
 			
-			
-			String SQL;
-			SQL = "delete from " + TBL_Name.STOCK_DD;
-			s.freeUpdateQuery(SQL);
-			
-			
-			SQL = "delete from " + TBL_Name.ETF_DD;
-			s.freeUpdateQuery(SQL);
-			
-			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
-			s.freeUpdateQuery(SQL);
-
-			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
-			s.freeUpdateQuery(SQL);
-
+			//ここから処理
+//			String SQL;
+//			SQL = "delete from " + TBL_Name.STOCK_DD;
+//			s.freeUpdateQuery(SQL);
+//			
+//			
+//			SQL = "delete from " + TBL_Name.ETF_DD;
+//			s.freeUpdateQuery(SQL);
+//			
+//			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
+//			s.freeUpdateQuery(SQL);
+//
+//			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = true  where dayTime_kenri_last <= '2006-12-31'";
+//			s.freeUpdateQuery(SQL);
+//
 			s.closeConection();
 
 
@@ -441,21 +434,21 @@ public class TAB_test extends JPanel {
 			//先物・・・5
 			//通貨・・・6
 
-			DayTimeSeries2 D_T = new DayTimeSeries2();
-			HashMap<String,List<Bean_CodeList>> map = new HashMap<String,List<Bean_CodeList>>();
-			List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
-			List<List<Bean_CodeList>> B_Css  = new ArrayList<List<Bean_CodeList>>();
-
-//			D_T.setCodeDTO_DD("1",s);
-			D_T.setCodeDTO_DD("2","2008-01-01","2012-01-01",s);
-			D_T.setCodeDTO_DD("2",s);
-//			D_T.setCodeDTO_DD("3",s);
-//			D_T.setCodeDTO_DD("4",s);
-			String CODE = "東証1部";
-			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
-				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
-
-			}
+//			DayTimeSeries2 D_T = new DayTimeSeries2();
+//			HashMap<String,List<Bean_CodeList>> map = new HashMap<String,List<Bean_CodeList>>();
+//			List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
+//			List<List<Bean_CodeList>> B_Css  = new ArrayList<List<Bean_CodeList>>();
+//
+////			D_T.setCodeDTO_DD("1",s);
+//			D_T.setCodeDTO_DD("2","2008-01-01","2012-01-01",s);
+//			D_T.setCodeDTO_DD("2",s);
+////			D_T.setCodeDTO_DD("3",s);
+////			D_T.setCodeDTO_DD("4",s);
+//			String CODE = "東証1部";
+//			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
+//				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
+//
+//			}
 
 //			map = D_T.getDTO();
 //			B_Cs = D_T.getDTO().get(CODE);
@@ -474,6 +467,11 @@ public class TAB_test extends JPanel {
 
 
 
+			System.out.println("2010-01-01".compareTo("2010-01-01"));
+			System.out.println("2010-01-01".compareTo("2009-01-01"));
+			System.out.println("2010-01-01".compareTo("2011-01-01"));
+			
+			
 //			System.out.println(D_T.getDTO().get("JQグロース").size());
 //			System.out.println(D_T.getDTO().get("東証1部").size());
 			s.closeConection();

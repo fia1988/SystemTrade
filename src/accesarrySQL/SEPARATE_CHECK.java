@@ -19,7 +19,7 @@ public class SEPARATE_CHECK {
 
 		S s = new S();
 		s.getCon();
-		
+
 
 
 		String SQL = "";
@@ -103,6 +103,63 @@ public class SEPARATE_CHECK {
 							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
 
 					s.freeUpdateQuery(SQL);
+
+
+					//2010-01-01以前、権利付最終売買日以後4営業日は取引期間後4営業日を営業停止期間としている。これのレコードを削除する。
+					if("2010-01-01".compareTo(day_kenri_last) > 0){
+						SQL	= " select "
+								+ " * "
+								+ " from "
+								+ TBL_Name.STOCK_DD
+								+ " where "
+								+ COLUMN.CODE + " = '" + codeList.get(i) + "'"
+								+ " and "
+								+ COLUMN.DAYTIME + " > '" + day_kenri_last + "'"
+								+ " limit 0,4 ";
+
+
+						int checkDelete = 0;
+						ArrayList<String> dayList = new ArrayList<String>();
+
+						s.rs = s.sqlGetter().executeQuery(SQL);
+						while ( s.rs.next() ) {
+
+							  if (s.rs.getString(COLUMN.BEFORE_OPEN).equals(s.rs.getString(COLUMN.BEFORE_MAX))){
+								  if (s.rs.getString(COLUMN.BEFORE_MIN).equals(s.rs.getString(COLUMN.BEFORE_CLOSE))){
+									  if (s.rs.getString(COLUMN.BEFORE_MIN).equals(s.rs.getString(COLUMN.BEFORE_MAX))){
+										  if (s.rs.getString(COLUMN.BEFORE_DEKI).equals(s.rs.getString(COLUMN.BEFORE_BAYBAY))){
+											  if (s.rs.getString(COLUMN.BEFORE_DEKI).equals(("0"))){
+												  dayList.add(s.rs.getString(COLUMN.DAYTIME));
+												  checkDelete++;
+											  }
+										  }
+									  }
+								  }
+							  }
+
+						}
+
+						if ( checkDelete == 4 ){
+
+
+							SQL = " delete from "
+								+ TBL_Name.STOCK_DD
+								+ " where "
+								+ COLUMN.CODE + " = '" + codeList.get(i) + "'"
+								+ " and "
+								+ COLUMN.DAYTIME + " >= '" + dayList.get(0) + "'"
+								+ " and "
+								+ COLUMN.DAYTIME + " <= '" + dayList.get(3) + "'";
+							System.out.println(SQL);
+							s.freeUpdateQuery(SQL);
+						}
+					}
+
+
+
+
+
+
 
 					//調整後の株価で移動平均線とかを引き直す。
 					updateAccesary(	codeList.get(i)	,s	);
