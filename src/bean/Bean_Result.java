@@ -395,7 +395,7 @@ public class Bean_Result {
 //		}
 
 		if( getResultDay() ){
-//			if (averageParcent>50 || -50 > averageParcent){
+//			if (averageParcent>1 || -0.4 > averageParcent){
 				System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
 //			}
 
@@ -431,6 +431,18 @@ public class Bean_Result {
 			System.out.println("手数料：" + paraDTO.getTesuRYO()*100 + "%");
 			System.out.println("平均エントリー回数" + getEntryTimeAverage());
 			System.out.println("エントリー回数標準偏差" + commonAP.getDev(getEntryTimeList(), true,""));
+
+
+			System.out.println("上1%カットトータル勝："				+ commonAP.getAverageCut(getReturnList(),true,	commonAP.COUNT_FLG,	0.01));
+			System.out.println("下1%カットトータル負："				+ commonAP.getAverageCut(getReturnList(),false,	commonAP.COUNT_FLG,	0.01));
+			System.out.println("上1%カット勝％："					+ commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	0.01));
+			System.out.println("下1%カット負％："					+ commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	0.01));
+			System.out.println("上1%カット平均勝％："				+ commonAP.getAverageCut(getReturnList(),true,	commonAP.AVERAGE_FLG,	0.01));
+			System.out.println("下1%カット平均負％："				+ commonAP.getAverageCut(getReturnList(),false,	commonAP.AVERAGE_FLG,	0.01));
+			System.out.println("上下1%カットリスク："				+ commonAP.getDev(getReturnList(),		true,	0.01,0.01));
+			System.out.println("上下1%カット保有期間標準偏差："		+ commonAP.getDev(getKeepDayList(),		true,"",0.01,0.01));
+			System.out.println("上下1%カットエントリー回数標準偏差"	+ commonAP.getDev(getEntryTimeList(),	true,"",0.01,0.01));
+
 			System.out.println("	 17%以上 ："	+	resultPlusClassOver);
 			System.out.println("	16%～ 17%："	+	resultPlusClass17);
 			System.out.println("	15%～ 16%："	+	resultPlusClass16);

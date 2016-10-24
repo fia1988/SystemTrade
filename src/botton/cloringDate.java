@@ -36,6 +36,8 @@ public class cloringDate {
 		s.resetConnection();
 
 
+		//CBのなかを破棄する。メモリ解放
+		CB = new CONTOLLBOTTON();
 		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,
 										controllDay.getAJUSTMAXDAY_INDEX(s)			,
 										ReCord.CODE_03_INDEX						,

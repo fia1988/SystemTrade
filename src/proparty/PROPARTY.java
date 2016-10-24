@@ -2,7 +2,7 @@ package proparty;
 
 public class PROPARTY {
 
-//	DBのID　
+//	DBのID
 	public static String DBUSER = "";
 //	DBのパス。
 	public static String DBPASS = "";

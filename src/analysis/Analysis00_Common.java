@@ -234,7 +234,7 @@ public class Analysis00_Common {
 							resultDTO.setKeepCount();
 							//今何日保有しているかをnowDTOにいれる。
 							nowDTO.setKeepDay(resultDTO.getKeepCount());
-
+							
 							//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
 							if (paraDTO.getCheckRenzokuSign()){
 								switch( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTOList,i,resultDTO,true) ){

@@ -238,7 +238,7 @@ public class TAB_test extends JPanel {
 			textArea_SQLresult.setText(null);
 
 
-			
+
 		}
 	}
 	private class SwingAction_2 extends AbstractAction {
@@ -393,16 +393,16 @@ public class TAB_test extends JPanel {
 //			for(int i =0;i<DT.getCodeDTO_DD().size();i++){
 //				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki() +" フラグ；" +  DT.getCodeDTO_DD().get(i).getCateflg());
 //			}
-			
+
 			//ここから処理
 //			String SQL;
 //			SQL = "delete from " + TBL_Name.STOCK_DD;
 //			s.freeUpdateQuery(SQL);
-//			
-//			
+//
+//
 //			SQL = "delete from " + TBL_Name.ETF_DD;
 //			s.freeUpdateQuery(SQL);
-//			
+//
 //			SQL = " update " + TBL_Name.SEPARATE_DD +  " set " + COLUMN.SEPA_FLG + " = false ";
 //			s.freeUpdateQuery(SQL);
 //
@@ -470,8 +470,8 @@ public class TAB_test extends JPanel {
 			System.out.println("2010-01-01".compareTo("2010-01-01"));
 			System.out.println("2010-01-01".compareTo("2009-01-01"));
 			System.out.println("2010-01-01".compareTo("2011-01-01"));
-			
-			
+
+
 //			System.out.println(D_T.getDTO().get("JQグロース").size());
 //			System.out.println(D_T.getDTO().get("東証1部").size());
 			s.closeConection();

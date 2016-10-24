@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import proparty.S;
@@ -17,11 +18,133 @@ public class commonAP {
 //	static ArrayList<ArrayList<String>> codeCateList = new ArrayList<ArrayList<String>>();
 
 
+	public static final   int TOTAL_FLG	= 1;
+	public static final  int AVERAGE_FLG	= 2;
+	public static final  int COUNT_FLG	= 3;
+
 
 	static String codeSingle[] = new String[2];
 	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
 //	static List<String[]> codeListwithiCate = new ArrayList<String>();
 
+
+
+
+	//checkJudgeがtrueの場合は正の数、falseは負の数
+	public static double getAverageCut(List<Double> list,boolean checkJudge,int checkCountTotal,double cut){
+		List<Double> doubleListCopy = new ArrayList<Double>();
+//		List<Double> doubleList = new ArrayList<Double>();
+
+		int totalCount	=	0;
+		double sum	=	0 ;
+
+		doubleListCopy = list;
+		//昇順に並び替え
+		Collections.sort(doubleListCopy);
+
+
+		if (checkJudge){
+			for (int i = 0  ; i < doubleListCopy.size() - (int)Math.round(cut * doubleListCopy.size()) ; i++) {
+				if(doubleListCopy.get(i) >= 0){
+					totalCount++;
+					sum = sum + doubleListCopy.get(i);
+
+				}
+	        }
+		}else{
+			for (int i = 0 + (int)Math.round(cut * doubleListCopy.size() )   ; i < doubleListCopy.size() ; i++) {
+				if(doubleListCopy.get(i) < 0){
+					totalCount++;
+					sum = sum + doubleListCopy.get(i);
+
+				}
+	        }
+		}
+
+
+		switch(checkCountTotal){
+			case TOTAL_FLG:
+				return sum;
+			case COUNT_FLG:
+				return totalCount;
+			case AVERAGE_FLG:
+				return sum/totalCount;
+			default:
+				return 0;
+		}
+	}
+
+//	//checkJudgeがtrueの場合は正の数、falseは負の数
+//	public static double getAverageCutCount(List<Long> list,boolean judge,boolean checkJudge,double cut){
+//		List<Long> doubleListCopy = new ArrayList<Long>();
+//		List<Long> doubleList = new ArrayList<Long>();
+//	}
+//
+//	//checkJudgeがtrueの場合は正の数、falseは負の数
+//	public static double getAverageCut(List<Double> list,boolean judge,boolean checkJudge,double cutMAX,double cutMIN){
+//		List<Long> doubleListCopy = new ArrayList<Long>();
+//		List<Long> doubleList = new ArrayList<Long>();
+//	}
+//
+//
+//	//checkJudgeがtrueの場合は正の数、falseは負の数
+//	public static double getAverageCutCount(List<Double> list,boolean judge,boolean checkJudge,double cut){
+//		List<Long> doubleListCopy = new ArrayList<Long>();
+//		List<Long> doubleList = new ArrayList<Long>();
+//	}
+
+	//第三引数に意味はない
+	public static double getDev(List<Long> list,boolean judge,String a,double cutMAX,double cutMIN){
+		long allSumple=list.size();
+		if ( allSumple < 10 ){
+			return getDev(list,judge,a);
+		}
+
+
+		List<Long> doubleListCopy = new ArrayList<Long>();
+		List<Long> doubleList = new ArrayList<Long>();
+
+		//昇順に並び替え
+		doubleListCopy = list;
+		Collections.sort(doubleListCopy);
+
+//		for (int i=0; i< list.size(); i++) {
+		for (int i = 0 + (int)Math.round(cutMIN * doubleListCopy.size() ) ; i < doubleListCopy.size() - (int)Math.round(cutMAX * doubleListCopy.size()) ; i++) {
+			doubleList.add( doubleListCopy.get(i) );
+        }
+
+		return getDev(doubleList,judge,a);
+
+	}
+	//judgeがtrueのとき、不偏分散
+	//       falseのとき、分散
+	//cutMAXに入力した割合だけ上からカットして値を返す。
+	//cutMINに入力した割合だけ上からカットして値を返す。
+	public static double getDev(List<Double> list,boolean judge,double cutMAX,double cutMIN){
+		long allSumple=list.size();
+		if ( allSumple < 10 ){
+			return getDev(list,judge);
+		}
+
+		List<Double> doubleListCopy = new ArrayList<Double>();
+		List<Double> doubleList = new ArrayList<Double>();
+
+		//昇順に並び替え
+		doubleListCopy = list;
+		Collections.sort(doubleListCopy);
+
+//		for (int i=0; i< list.size(); i++) {
+
+		for (int i = 0 + (int)Math.round(cutMIN * doubleListCopy.size() ) ; i < doubleListCopy.size() - (int)Math.round(cutMAX * doubleListCopy.size()) ; i++) {
+			doubleList.add( doubleListCopy.get(i) );
+        }
+
+//		for (int i=0; i< doubleList.size(); i++) {
+//
+//			System.out.println(doubleList.get(i));
+//        }
+		return getDev(doubleList,judge);
+	}
 
 	//judgeがtrueのとき、不偏分散
 	//       falseのとき、分散
@@ -30,8 +153,9 @@ public class commonAP {
         double sum = 0;
 
         for(int i=0; i<list.size(); i++ ) {
-        	
+
         	sum += list.get(i);
+//        	System.out.println(list.get(i));
         }
 
         if(list.size()==0){
