@@ -29,6 +29,48 @@ public class commonAP {
 
 
 
+	public static double getAverageCut(List<Long> list,boolean checkJudge,int checkCountTotal,double cut,String a){
+		List<Long> doubleListCopy = new ArrayList<Long>();
+//		List<Double> doubleList = new ArrayList<Double>();
+
+		int totalCount	=	0;
+		double sum	=	0 ;
+
+		doubleListCopy = list;
+		//昇順に並び替え
+		Collections.sort(doubleListCopy);
+
+
+		if (checkJudge){
+			for (int i = 0  ; i < doubleListCopy.size() - (int)Math.round(cut * doubleListCopy.size()) ; i++) {
+				if(doubleListCopy.get(i) >= 0){
+					totalCount++;
+					sum = sum + doubleListCopy.get(i);
+
+				}
+	        }
+		}else{
+			for (int i = 0 + (int)Math.round(cut * doubleListCopy.size() )   ; i < doubleListCopy.size() ; i++) {
+				if(doubleListCopy.get(i) < 0){
+					totalCount++;
+					sum = sum + doubleListCopy.get(i);
+
+				}
+	        }
+		}
+
+
+		switch(checkCountTotal){
+			case TOTAL_FLG:
+				return sum;
+			case COUNT_FLG:
+				return totalCount;
+			case AVERAGE_FLG:
+				return sum/totalCount;
+			default:
+				return 0;
+		}
+	}
 
 	//checkJudgeがtrueの場合は正の数、falseは負の数
 	public static double getAverageCut(List<Double> list,boolean checkJudge,int checkCountTotal,double cut){
