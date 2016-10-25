@@ -181,10 +181,10 @@ public class commonAP {
 			doubleList.add( doubleListCopy.get(i) );
         }
 
-//		for (int i=0; i< doubleList.size(); i++) {
-//
-//			System.out.println(doubleList.get(i));
-//        }
+		for (int i=0; i< doubleList.size(); i++) {
+
+			System.out.println(doubleList.get(i));
+        }
 		return getDev(doubleList,judge);
 	}
 
