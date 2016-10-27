@@ -90,7 +90,7 @@ public class commonAP {
 				if(doubleListCopy.get(i) >= 0){
 					totalCount++;
 					sum = sum + doubleListCopy.get(i);
-
+//					System.out.println(doubleListCopy.get(i));
 				}
 	        }
 		}else{
@@ -98,10 +98,11 @@ public class commonAP {
 				if(doubleListCopy.get(i) < 0){
 					totalCount++;
 					sum = sum + doubleListCopy.get(i);
-
+//					System.out.println(doubleListCopy.get(i));
 				}
 	        }
 		}
+
 
 
 		switch(checkCountTotal){
