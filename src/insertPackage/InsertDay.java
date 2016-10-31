@@ -9,8 +9,12 @@ import proparty.ZenzituEnd;
 import proparty.controllDay;
 import accesarrySQL.ConAccessary;
 import bean.Bean_CodeList;
+
+import common.commonAP;
+
 import constant.COLUMN;
 import constant.ReCord;
+import constant.logWriting;
 
 public class InsertDay {
 	String SQL;
@@ -22,7 +26,8 @@ public class InsertDay {
 		InsertDD(DTO,s);
 
 		controllDay.update_STOCK_ETF(DAY, s);
-		System.out.println("株更新日：" + DAY);
+		commonAP.writeInLog("株更新日：" + DAY,logWriting.DATEDATE_LOG_FLG);
+
 
 
 	}
@@ -32,8 +37,8 @@ public class InsertDay {
 		InsertDD(DTO,s);
 
 		controllDay.update_INDEX(DAY, s);
-		System.out.println("指数更新日：" + DAY);
 
+		commonAP.writeInLog("指数更新日：" + DAY,logWriting.DATEDATE_LOG_FLG);
 
 	}
 
@@ -42,7 +47,8 @@ public class InsertDay {
 			InsertDD(DTO,s);
 
 			controllDay.update_STATISTICS(UPDATEDAY, s);
-			System.out.println("統計更新日：" + UPDATEDAY);
+
+			commonAP.writeInLog("統計更新日：" + UPDATEDAY,logWriting.DATEDATE_LOG_FLG);
 
 	}
 
@@ -54,7 +60,8 @@ public class InsertDay {
 
 			InsertDD(DTOs.get(i),s);
 			controllDay.update_STOCK_ETF(DTOs.get(i).get(0).getDay(), s);
-			System.out.println("株更新日：" + DTOs.get(i).get(0).getDay());
+
+			commonAP.writeInLog("株更新日：" + DTOs.get(i).get(0).getDay(),logWriting.DATEDATE_LOG_FLG);
 
 //			if(i%100==0){
 //				s.resetConnection();
@@ -66,7 +73,8 @@ public class InsertDay {
 		for (int i = 0 ; i < DTOs.size() ; i++){
 			InsertDD(DTOs.get(i),s);
 			controllDay.update_STATISTICS(DTOs.get(i).get(0).getDay(), s);
-			System.out.println("統計更新日：" + DTOs.get(i).get(0).getDay());
+
+			commonAP.writeInLog("統計更新日：" + DTOs.get(i).get(0).getDay(),logWriting.DATEDATE_LOG_FLG);
 		}
 	}
 
@@ -261,7 +269,7 @@ public class InsertDay {
 			s.getPstmt().setString( i++,  DTO.getDeki()			);
 			s.getPstmt().setString( i++,  DTO.getBayBay()		);
 			s.getPstmt().setString( i++,  DTO.getStockCount()	);
-			
+
 			s.getPstmt().setString( i++,  DTO.getTakePrice()	);
 			s.getPstmt().setString( i++,  DTO.getUpPrice()		);
 			s.getPstmt().setString( i++,  DTO.getNoChange()		);

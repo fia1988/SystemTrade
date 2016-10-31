@@ -17,6 +17,7 @@ import bean.Bean_CodeList;
 import common.commonAP;
 
 import constant.ReCord;
+import constant.logWriting;
 import createTBL.GetCodeTBL;
 
 public class CONTOLLBOTTON {
@@ -27,16 +28,16 @@ public class CONTOLLBOTTON {
 			//更新日と今日の日付が同じ場合
 			switch(cate){
 			case ReCord.CODE_01_STOCK:
-				System.out.println("株更新梨");
+				commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ReCord.CODE_02_SATISTICS:
-				System.out.println("統計更新なし");
+				commonAP.writeInLog("統計更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ReCord.CODE_03_INDEX:
-				System.out.println("指数更新梨");
+				commonAP.writeInLog("指数更新梨",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ReCord.CODE_04_ETF:
-				System.out.println("株更新梨");
+				commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ReCord.CODE_05_SAKIMONO:
 				break;
@@ -67,10 +68,10 @@ public class CONTOLLBOTTON {
 			//リストを作る
 //			everyDayBotton_STOCK_ETF(commonAP.getTODAY(-1),s);
 			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_01_STOCK,s);
-			System.out.println("こことおる");
+			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
 
 		}else if(commonAP.getTODAY().equals(MAXDAY)){
-			System.out.println("株更新梨");
+			commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
 		}else{
 
 //			hisabisaDayBottonContoroll_STOCK_ETF(MAXDAY,TODAY,s);
@@ -88,11 +89,11 @@ public class CONTOLLBOTTON {
 			//リストを作る
 //			everyDayBotton_STATISTICS(commonAP.getTODAY(-1),s);
 			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_02_SATISTICS,s);
-			System.out.println("こことおる");
+			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
 
 		}else if(commonAP.getTODAY().equals(MAXDAY)){
 			//更新日とボタン実行日が同じならここ
-			System.out.println("統計更新なし");
+			commonAP.writeInLog("統計更新なし",logWriting.DATEDATE_LOG_FLG);
 		}else{
 
 //			hisabisaDayBottonContoroll_STATISTICS(MAXDAY,TODAY,s);
@@ -113,10 +114,10 @@ public class CONTOLLBOTTON {
 //			everyDayBotton_INDEX(commonAP.getTODAY(-1),s);
 			//リストを作る
 			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_03_INDEX,s);
-			System.out.println("こことおる");
+			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
 
 		}else if(commonAP.getTODAY().equals(MAXDAY)){
-			System.out.println("指数更新梨");
+			commonAP.writeInLog("指数更新梨",logWriting.DATEDATE_LOG_FLG);
 		}else{
 
 //			hisabisaDayBottonContoroll_INDEX(MAXDAY,TODAY,s);
@@ -152,7 +153,7 @@ public class CONTOLLBOTTON {
 		switch(cate){
 		case ReCord.CODE_01_STOCK:
 			if(NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0) == false){
-				System.out.println("株のリスト作るの失敗");
+				commonAP.writeInLog("株のリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
 				return;
 			}
 			//CSVをDTOにする
@@ -163,7 +164,8 @@ public class CONTOLLBOTTON {
 		case ReCord.CODE_02_SATISTICS:
 			URL = Net_Adress.STATISTICS_LIST;
 			if(NB.setUrlCsv(URL , 1) == false){
-				System.out.println("統計のリスト作るの失敗");
+
+				commonAP.writeInLog("統計のリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
 				return;
 			}
 			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
@@ -174,7 +176,7 @@ public class CONTOLLBOTTON {
 			break;
 		case ReCord.CODE_03_INDEX:
 			if( NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0) == false ){
-				System.out.println("INDEXのリスト作るの失敗");
+				commonAP.writeInLog("INDEXのリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
 				return;
 			}
 			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),TODAY,0);
@@ -182,7 +184,7 @@ public class CONTOLLBOTTON {
 			break;
 		case ReCord.CODE_04_ETF:
 			if(NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0) == false){
-				System.out.println("株のリスト作るの失敗");
+				commonAP.writeInLog("株のリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
 				return;
 			}
 			//CSVをDTOにする
@@ -216,22 +218,25 @@ public class CONTOLLBOTTON {
 		switch(cate){
 		case ReCord.CODE_01_STOCK:
 			if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)==false){
-				System.out.println("こりゃだめだ：株ETF");
+
+				commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
 			}
 			break;
 		case ReCord.CODE_02_SATISTICS:
 			if(insertDD_STATISTICS(MAXDAY,TODAY,s)==false){
-				System.out.println("こりゃだめだ：統計");
+
+				commonAP.writeInLog("こりゃだめだ：統計",logWriting.DATEDATE_LOG_FLG);
 			}
 			break;
 		case ReCord.CODE_03_INDEX:
 			if(insertDD_INDEX(MAXDAY,TODAY,s)==false){
-				System.out.println("こりゃだめだ：INDEX");
+
+				commonAP.writeInLog("こりゃだめだ：INDEX",logWriting.DATEDATE_LOG_FLG);
 			}
 			break;
 		case ReCord.CODE_04_ETF:
 			if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)==false){
-				System.out.println("こりゃだめだ：株ETF");
+				commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
 			}
 
 			break;
@@ -260,7 +265,8 @@ public class CONTOLLBOTTON {
 		try{
 			NB.setUrlCsv(Net_Adress.STATISTICS_LIST , 1);
 		}catch(Exception o){
-			System.out.println("たぶん何かのえらー");
+
+			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
 			o.printStackTrace();
 			return;
 		}
@@ -270,10 +276,12 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
 		}catch(NullPointerException nu){
-			System.out.println("なんかヌルポ");
+			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+
 			return;
 		}catch(Exception e){
-			System.out.println("原因不明");
+
+			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
 			e.printStackTrace();
 			return;
 		}
@@ -301,7 +309,7 @@ public class CONTOLLBOTTON {
 
 			NB.setUrlCsv(Net_Adress.STATISTICS_LIST,1);
 		}catch(Exception o){
-			System.out.println("たぶん何かのえらー");
+			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
 			o.printStackTrace();
 			return;
 		}
@@ -311,10 +319,11 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
 		}catch(NullPointerException nu){
-			System.out.println("なんかヌルポ");
+			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
 			return;
 		}catch(Exception e){
-			System.out.println("原因不明");
+
+			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
 			e.printStackTrace();
 			return;
 		}
@@ -394,7 +403,8 @@ public class CONTOLLBOTTON {
 		try{
 			NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0);
 		}catch(Exception o){
-			System.out.println("たぶん何かのえらー");
+
+			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
 			o.printStackTrace();
 			return;
 		}
@@ -403,10 +413,12 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),TODAY,0);
 		}catch(NullPointerException nu){
-			System.out.println("なんかヌルポ");
+
+			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
 			return;
 		}catch(Exception e){
-			System.out.println("原因不明");
+
+			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
 			e.printStackTrace();
 			return;
 		}
@@ -422,7 +434,8 @@ public class CONTOLLBOTTON {
 		if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)){
 
 		}else{
-			System.out.println("こりゃだめだ：株ETF");
+
+			commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
 		}
 	}
 
@@ -440,7 +453,8 @@ public class CONTOLLBOTTON {
 		try{
 			NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0);
 		}catch(Exception o){
-			System.out.println("たぶん何かのえらー");
+
+			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
 			o.printStackTrace();
 			return;
 		}
@@ -449,10 +463,12 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),DAY,0);
 		}catch(NullPointerException nu){
-			System.out.println("なんかヌルポ");
+
+			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
 			return;
 		}catch(Exception e){
-			System.out.println("原因不明");
+
+			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
 			e.printStackTrace();
 			return;
 		}
@@ -483,7 +499,8 @@ public class CONTOLLBOTTON {
 
 		calendar.add(Calendar.DAY_OF_MONTH, +1);
 		MAXDAY = sdf1.format(calendar.getTime());
-		System.out.println("今から株ETFの更新：insertDD_STOCK_ETF");
+		commonAP.writeInLog("今から株ETFの更新：insertDD_STOCK_ETF",logWriting.DATEDATE_LOG_FLG);
+
 
 		int check = 0;
 		while(cAP.checkDay(TODAY, MAXDAY)){
@@ -535,7 +552,8 @@ public class CONTOLLBOTTON {
 		try{
 			NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0);
 		}catch(Exception o){
-			System.out.println("たぶん何かのえらー");
+
+			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
 			o.printStackTrace();
 			return;
 		}
@@ -544,10 +562,12 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),DAY,0);
 		}catch(NullPointerException nu){
-			System.out.println("なんかヌルポ");
+
+			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
 			return;
 		}catch(Exception e){
-			System.out.println("原因不明");
+
+			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
 			e.printStackTrace();
 			return;
 		}
@@ -571,7 +591,8 @@ public class CONTOLLBOTTON {
 		try{
 			NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0);
 		}catch(Exception o){
-			System.out.println("たぶん何かのえらー");
+
+			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
 			o.printStackTrace();
 			return;
 		}
@@ -580,10 +601,10 @@ public class CONTOLLBOTTON {
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),TODAY,0);
 		}catch(NullPointerException nu){
-			System.out.println("なんかヌルポ");
+			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
 			return;
 		}catch(Exception e){
-			System.out.println("原因不明");
+			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
 			e.printStackTrace();
 			return;
 		}
@@ -599,7 +620,8 @@ public class CONTOLLBOTTON {
 		if(insertDD_INDEX(MAXDAY,TODAY,s)){
 
 		}else{
-			System.out.println("こりゃだめだ：指数");
+			commonAP.writeInLog("こりゃだめだ：指数",logWriting.DATEDATE_LOG_FLG);
+
 		}
 	}
 
@@ -621,8 +643,8 @@ public class CONTOLLBOTTON {
 
 		calendar.add(Calendar.DAY_OF_MONTH, +1);
 		MAXDAY = sdf1.format(calendar.getTime());
-		System.out.println("今からINDEXの更新：insertDD_INDEX");
 
+		commonAP.writeInLog("今からINDEXの更新：insertDD_INDEX",logWriting.DATEDATE_LOG_FLG);
 		int check = 0;
 		while(cAP.checkDay(TODAY, MAXDAY)){
 

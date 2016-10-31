@@ -100,7 +100,10 @@ public class Analysis00_Common {
 		S s = new S();
 		s.getCon();
 
-
+		//期間の最初と最後を指定してテストすることを確認するフラグ
+		paraDTO.setTermFLG();
+		paraDTO.setObStartDay(startDay);
+		paraDTO.setObEndDay(endDay);
 
 		//全銘柄をリストに入れる
 		commonAP.setCodeList(paraDTO.getCheckCate(),s);
@@ -203,9 +206,9 @@ public class Analysis00_Common {
 
 				resultDTO.resetCount();
 				for (int i = 0 ; i < nowDTOList.size() ; i++){
-					
 
-					
+
+
 					loopCheck = false;
 
 					resultDTO.resetEntryList();
@@ -223,7 +226,7 @@ public class Analysis00_Common {
 						resultDTO.setTradeCount();
 
 						resultDTO.setEntryTime();
-						
+
 						//次の日に
 						i++;
 //						System.out.println("b" + nowDTOList.get(i).getNowDay_01());
@@ -234,7 +237,7 @@ public class Analysis00_Common {
 							resultDTO.setKeepCount();
 							//今何日保有しているかをnowDTOにいれる。
 							nowDTO.setKeepDay(resultDTO.getKeepCount());
-							
+
 							//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
 							if (paraDTO.getCheckRenzokuSign()){
 								switch( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTOList,i,resultDTO,true) ){
@@ -269,8 +272,8 @@ public class Analysis00_Common {
 									resultDTO.getResultDayResult(code,paraDTO);
 									//下で一日増やすので減らしておく
 									i--;
-									
-									
+
+
 									break;
 
 								case Technique98_CONST.NO_RESULT:

@@ -6,8 +6,12 @@ import java.util.List;
 import proparty.S;
 import proparty.TBL_Name;
 import bean.Bean_CodeList;
+
+import common.commonAP;
+
 import constant.COLUMN;
 import constant.ReCord;
+import constant.logWriting;
 
 public class InsertList {
 	String SQL;
@@ -43,7 +47,7 @@ public class InsertList {
 				InsertList_case6(DTO.get(i),s);
 				break;
 			default:
-				System.out.println("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName());
+				commonAP.writeInLog("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName(),logWriting.DATEDATE_LOG_FLG);
 				break;
 			}
 
@@ -93,7 +97,7 @@ public class InsertList {
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
 				//								e.printStackTrace();
-				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName());
+				commonAP.writeInLog("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName(),logWriting.DATEDATE_LOG_FLG);
 			}
 		}
 	}
@@ -122,7 +126,8 @@ public class InsertList {
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
 												e.printStackTrace();
-				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName() + ":" + DTO.getCateflg());
+
+				commonAP.writeInLog("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName(),logWriting.DATEDATE_LOG_FLG);
 			}
 		}
 
@@ -161,7 +166,8 @@ public class InsertList {
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
 				//								e.printStackTrace();
-				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName());
+
+				commonAP.writeInLog("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName(),logWriting.DATEDATE_LOG_FLG);
 			}
 		}
 
@@ -198,7 +204,7 @@ public class InsertList {
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
 				//								e.printStackTrace();
-				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName());
+				commonAP.writeInLog("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName(),logWriting.DATEDATE_LOG_FLG);
 			}
 		}
 

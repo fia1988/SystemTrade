@@ -11,6 +11,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import constant.COLUMN;
 import constant.ReCord;
+import constant.logWriting;
 
 public class commonAP {
 
@@ -27,7 +28,73 @@ public class commonAP {
 	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
 //	static List<String[]> codeListwithiCate = new ArrayList<String>();
 
+	public static double countDay(String start,String end,S s){
 
+		String SQL = " select count(" + COLUMN.DAYTIME + ")"
+					+" from " + TBL_Name.INDEX_DD
+					+" where "
+					+ COLUMN.CODE + " = 'I101'"
+					+ " and "
+					+ COLUMN.DAYTIME + " <= '" + end + "'"
+					+ " and "
+					+ COLUMN.DAYTIME + " >= '" + start + "'";
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			s.rs.next();
+			return s.rs.getDouble(	"count(" + COLUMN.DAYTIME + ")"	);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return 0;
+
+	}
+
+	public static void writeInLog(String writing,int writeType){
+
+
+		switch (writeType) {
+			case logWriting.DATEDATE_LOG_FLG:
+				System.out.print(writeType);
+				break;
+			case logWriting.STOCK_RESULT_LOG_FLG:
+				System.out.print(writeType);
+				break;
+			case logWriting.BACKTEST_LOG_FLG:
+				System.out.print(writeType);
+				break;
+			case logWriting.ANOTHER_RROR_LOG_FLG:
+				System.out.print(writeType);
+				break;
+			default:
+			break;
+		}
+
+		System.out.println(":" + writing);
+	}
+
+	public static void writeLog(String writing,int writeType){
+
+		switch (writeType) {
+		case logWriting.DATEDATE_LOG_FLG:
+			System.out.print(writeType);
+			break;
+		case logWriting.STOCK_RESULT_LOG_FLG:
+			System.out.print(writeType);
+			break;
+		case logWriting.BACKTEST_LOG_FLG:
+			System.out.print(writeType);
+			break;
+		case logWriting.ANOTHER_RROR_LOG_FLG:
+			System.out.print(writeType);
+			break;
+		default:
+		break;
+	}
+		System.out.print(":"+ writing);
+	}
 
 	public static double getAverageCut(List<Long> list,boolean checkJudge,int checkCountTotal,double cut,String a){
 		List<Long> doubleListCopy = new ArrayList<Long>();
@@ -116,6 +183,51 @@ public class commonAP {
 				return 0;
 		}
 	}
+
+//	//checkJudgeがtrueの場合は正の数、falseは負の数
+//	public static double getAverageCut(ArrayList<Long> list,boolean checkJudge,int checkCountTotal,double cut){
+//		List<Long> doubleListCopy = new ArrayList<Long>();
+//		//			List<Double> doubleList = new ArrayList<Double>();
+//
+//		int totalCount	=	0;
+//		double sum	=	0 ;
+//
+//		doubleListCopy = list;
+//		//昇順に並び替え
+//		Collections.sort(doubleListCopy);
+//
+//
+//		if (checkJudge){
+//			for (int i = 0  ; i < doubleListCopy.size() - (int)Math.round(cut * doubleListCopy.size()) ; i++) {
+//				if(doubleListCopy.get(i) >= 0){
+//					totalCount++;
+//					sum = sum + doubleListCopy.get(i);
+//					//						System.out.println(doubleListCopy.get(i));
+//				}
+//			}
+//		}else{
+//			for (int i = 0 + (int)Math.round(cut * doubleListCopy.size() )   ; i < doubleListCopy.size() ; i++) {
+//				if(doubleListCopy.get(i) < 0){
+//					totalCount++;
+//					sum = sum + doubleListCopy.get(i);
+//					//						System.out.println(doubleListCopy.get(i));
+//				}
+//			}
+//		}
+//
+//
+//
+//		switch(checkCountTotal){
+//		case TOTAL_FLG:
+//			return sum;
+//		case COUNT_FLG:
+//			return totalCount;
+//		case AVERAGE_FLG:
+//			return sum/totalCount;
+//		default:
+//			return 0;
+//		}
+//	}
 
 //	//checkJudgeがtrueの場合は正の数、falseは負の数
 //	public static double getAverageCutCount(List<Long> list,boolean judge,boolean checkJudge,double cut){

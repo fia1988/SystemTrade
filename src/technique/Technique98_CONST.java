@@ -41,29 +41,29 @@ public class Technique98_CONST {
 
 
 
-		nowSTOCK.add("1352―T");
-		nowSTOCK.add("1376―T");
-		nowSTOCK.add("1377―T");
-		nowSTOCK.add("1400―T");
-		nowSTOCK.add("1414―T");
-		nowSTOCK.add("1417―T");
-		nowSTOCK.add("1418―T");
-		nowSTOCK.add("1420―T");
-		nowSTOCK.add("1429―T");
-		nowSTOCK.add("1435―T");
-		nowSTOCK.add("1514―T");
-		nowSTOCK.add("1663―T");
-		nowSTOCK.add("1712―T");
-		nowSTOCK.add("1719―T");
-		nowSTOCK.add("1720―T");
-		nowSTOCK.add("1722―T");
-		nowSTOCK.add("1762―T");
-		nowSTOCK.add("1766―T");
-		nowSTOCK.add("1775―T");
-		nowSTOCK.add("1782―T");
-		nowSTOCK.add("1780―T");
-		nowSTOCK.add("1419―T");
-		nowSTOCK.add("1737―T");
+//		nowSTOCK.add("1352―T");
+//		nowSTOCK.add("1376―T");
+//		nowSTOCK.add("1377―T");
+//		nowSTOCK.add("1400―T");
+//		nowSTOCK.add("1414―T");
+//		nowSTOCK.add("1417―T");
+//		nowSTOCK.add("1418―T");
+//		nowSTOCK.add("1420―T");
+//		nowSTOCK.add("1429―T");
+//		nowSTOCK.add("1435―T");
+//		nowSTOCK.add("1514―T");
+//		nowSTOCK.add("1663―T");
+//		nowSTOCK.add("1712―T");
+//		nowSTOCK.add("1719―T");
+//		nowSTOCK.add("1720―T");
+//		nowSTOCK.add("1722―T");
+//		nowSTOCK.add("1762―T");
+//		nowSTOCK.add("1766―T");
+//		nowSTOCK.add("1775―T");
+//		nowSTOCK.add("1782―T");
+//		nowSTOCK.add("1780―T");
+//		nowSTOCK.add("1419―T");
+//		nowSTOCK.add("1737―T");
 
 
 	}

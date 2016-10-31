@@ -4,6 +4,10 @@ import java.sql.SQLException;
 
 import proparty.S;
 
+import common.commonAP;
+
+import constant.logWriting;
+
 public class ConAccessary {
 //アクセサリを制御する。
 	static int checkCount=0;
@@ -55,8 +59,8 @@ public class ConAccessary {
 			if( checkCount%400 == 0){
 				checkCount=0;
 				s.resetConnection();
-
-				System.out.print(code + ":" + dayTime + ":");
+				commonAP.writeInLog(code + ":" + dayTime + ":",logWriting.DATEDATE_LOG_FLG);
+//				System.out.print(code + ":" + dayTime + ":");
 			}
 
 
@@ -64,11 +68,11 @@ public class ConAccessary {
 			// TODO 自動生成された catch ブロック
 
 			if(e.getErrorCode()!=1146){
-				System.out.println("SQLException: " + e.getMessage());
-				System.out.println("SQLState: " + e.getSQLState());
-				System.out.println(" VendorError: " + e.getErrorCode());
-				System.out.println("Exception: " + e.getMessage());
-				System.out.println("【" + code + ":" + cate + ":" + dayTime + "】");
+				commonAP.writeInLog("SQLException: " + e.getMessage(),logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("SQLState: " + e.getSQLState(),logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog(" VendorError: " + e.getErrorCode(),logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("Exception: " + e.getMessage(),logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("【" + code + ":" + cate + ":" + dayTime + "】",logWriting.DATEDATE_LOG_FLG);
 				e.printStackTrace();
 
 			}

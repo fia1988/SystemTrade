@@ -5,6 +5,8 @@ import java.util.List;
 
 import common.commonAP;
 
+import constant.logWriting;
+
 public class Bean_Result {
 
 	String DAY;
@@ -196,8 +198,8 @@ public class Bean_Result {
 				//設定した勝率（shoritu）以上の場合、結果を表示する
 				if ( shouritu > shoritu){
 					if( totalCodeGame > totalGames){
-						System.out.print("・" + resultCode +  "：勝【" + getWinCount() + "】");
-						System.out.println("／" +  "：負【" + getLoseCount() + "】");
+						commonAP.writeLog("・" + resultCode +  "：勝【" + getWinCount() + "】",logWriting.BACKTEST_LOG_FLG);
+						commonAP.writeInLog("／" +  "：負【" + getLoseCount() + "】",logWriting.BACKTEST_LOG_FLG);
 					}
 				}
 
@@ -396,7 +398,7 @@ public class Bean_Result {
 
 		if( getResultDay() ){
 //			if (averageParcent>1 || -0.4 > averageParcent){
-				System.out.println(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent);
+				commonAP.writeInLog(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent,logWriting.BACKTEST_LOG_FLG);
 //			}
 
 		}
@@ -416,78 +418,110 @@ public class Bean_Result {
 
 	public void getResultTotalResult(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO){
 		if( getResultTotal() ){
-			System.out.println("トータル勝：" + getTOTAL_WIN());
-			System.out.println("トータル負：" + getTOTAL_LOSE());
-			System.out.println("売却できず：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) );
-			System.out.println("トータル計：" + getTradeCount());
-			System.out.println("トータル勝％：" + getTotalWinParcent());
-			System.out.println("トータル負％：" + getTotalLoseParcent() );
-			System.out.println("トータル平均勝％：" + getAverageWinParcent());
-			System.out.println("トータル平均負％：" + getAverageLoseParcent());
-			System.out.println("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE()));
-			System.out.println("見込みリスク：" + commonAP.getDev(getReturnList(),  true));
-			System.out.println("平均保有期間(売却できずを除く)：" + getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) );
-			System.out.println("保有期間標準偏差：" + commonAP.getDev(getKeepDayList(), true,""));
-			System.out.println("手数料：" + paraDTO.getTesuRYO()*100 + "%");
-			System.out.println("平均エントリー回数" + getEntryTimeAverage());
-			System.out.println("エントリー回数標準偏差" + commonAP.getDev(getEntryTimeList(), true,""));
+			//上下カット平均保有日数
+			double aveCutKeepDays = commonAP.getAverageCut(getKeepDayList(), true,commonAP.AVERAGE_FLG,	0.005,"");
+			//上下カット年間勝ち数
+			double getCutWinCount=commonAP.getAverageCut(getReturnList(),true,	commonAP.COUNT_FLG,	0.005);
+			double getCutLoseCount=commonAP.getAverageCut(getReturnList(),false,	commonAP.COUNT_FLG,	0.005);
+			//上下1%カット見込みリターン
+			double getCutAveReturn=( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	0.005) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	0.005) ) / ( getReturnList().size() * 0.99 ) ;
+			//上下カット平均エントリー回数
+			double getCutAveEntryTimes	=	commonAP.getAverageCut(getEntryTimeList(),true,	commonAP.AVERAGE_FLG,	0.01,"");
+
+			commonAP.writeInLog("トータル勝：" + getTOTAL_WIN(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("トータル負：" + getTOTAL_LOSE(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("売却できず：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("トータル計：" + getTradeCount(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("トータル勝％：" + getTotalWinParcent(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() ,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("トータル平均勝％：" + getAverageWinParcent(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("トータル平均負％：" + getAverageLoseParcent(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE()),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("見込みリスク：" + commonAP.getDev(getReturnList(),  true),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("平均保有期間(売却できずを除く)：" + getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("保有期間標準偏差：" + commonAP.getDev(getKeepDayList(), true,""),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("手数料：" + paraDTO.getTesuRYO()*100 + "%",logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("平均エントリー回数" + getEntryTimeAverage(),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("エントリー回数標準偏差" + commonAP.getDev(getEntryTimeList(), true,""),logWriting.BACKTEST_LOG_FLG);
 
 
-			System.out.println("上1%カットトータル勝："				+ commonAP.getAverageCut(getReturnList(),true,	commonAP.COUNT_FLG,	0.005));
-			System.out.println("下1%カットトータル負："				+ commonAP.getAverageCut(getReturnList(),false,	commonAP.COUNT_FLG,	0.005));
-			System.out.println("上1%カットトータル勝％："			+ commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	0.005));
-			System.out.println("下1%カットトータル負％："			+ commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	0.005));
-			System.out.println("上1%カットトータル平均勝％："		+ commonAP.getAverageCut(getReturnList(),true,	commonAP.AVERAGE_FLG,	0.005));
-			System.out.println("下1%カットトータル平均負％："		+ commonAP.getAverageCut(getReturnList(),false,	commonAP.AVERAGE_FLG,	0.005));
+			commonAP.writeInLog("上1%カットトータル勝："			+	getCutWinCount ,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("下1%カットトータル負："				+ getCutLoseCount,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("上1%カットトータル勝％："			+ commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	0.005),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("下1%カットトータル負％："			+ commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	0.005),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("上1%カットトータル平均勝％："		+ commonAP.getAverageCut(getReturnList(),true,	commonAP.AVERAGE_FLG,	0.005),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("下1%カットトータル平均負％："		+ commonAP.getAverageCut(getReturnList(),false,	commonAP.AVERAGE_FLG,	0.005),logWriting.BACKTEST_LOG_FLG);
 
-			System.out.println("上下1%カット見込みリターン："		+ ( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	0.005) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	0.005) ) / ( getReturnList().size() * 0.99 ) );
+			commonAP.writeInLog("上下1%カット見込みリターン："		+ getCutAveReturn,logWriting.BACKTEST_LOG_FLG);;
 
-			System.out.println("上下1%カットリスク："				+ commonAP.getDev(getReturnList(),		true,	0.005,0.005));
-			System.out.println("上下1%カット平均保有期間："			+ commonAP.getAverageCut(getKeepDayList(), true,commonAP.AVERAGE_FLG,	0.005,""));
-			System.out.println("上下1%カット保有期間標準偏差："		+ commonAP.getDev(getKeepDayList(),		true,"",0.005,0.005));
-			System.out.println("上下1%カットエントリー回数標準偏差"	+ commonAP.getDev(getEntryTimeList(),	true,"",0.005,0.005));
+			commonAP.writeInLog("上下1%カットリスク："				+ commonAP.getDev(getReturnList(),		true,	0.005,0.005),logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("上下1%カット平均保有期間："			+ aveCutKeepDays,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("上下1%カット保有期間標準偏差："		+ commonAP.getDev(getKeepDayList(),		true,"",0.005,0.005),logWriting.BACKTEST_LOG_FLG);
 
-			System.out.println("	 17%以上 ："	+	resultPlusClassOver);
-			System.out.println("	16%～ 17%："	+	resultPlusClass17);
-			System.out.println("	15%～ 16%："	+	resultPlusClass16);
-			System.out.println("	14%～ 15%："	+	resultPlusClass15);
-			System.out.println("	13%～ 14%："	+	resultPlusClass14);
-			System.out.println("	12%～ 13%："	+	resultPlusClass13);
-			System.out.println("	11%～ 12%："	+	resultPlusClass12);
-			System.out.println("	10%～ 11%："	+	resultPlusClass11);
-			System.out.println("	  9～ 10%："	+	resultPlusClass10);
-			System.out.println("	  8～  9%："	+	resultPlusClass09);
-			System.out.println("	  7～  8%："	+	resultPlusClass08);
-			System.out.println("	  6～  7%："	+	resultPlusClass07);
-			System.out.println("	  5～  6%："	+	resultPlusClass06);
-			System.out.println("	  4～  5%："	+	resultPlusClass05);
-			System.out.println("	  3～  4%："	+	resultPlusClass04);
-			System.out.println("	  2～  3%："	+	resultPlusClass03);
-			System.out.println("	  1～  2%："	+	resultPlusClass02);
-			System.out.println("	  0～  1%："	+	resultPlusClass01);
-			System.out.println("	-1 ～  0%："	+	resultMinusClass01);
-			System.out.println("	-2 ～ -1%："	+	resultMinusClass02);
-			System.out.println("	-3 ～ -2%："	+	resultMinusClass03);
-			System.out.println("	-4 ～ -3%："	+	resultMinusClass04);
-			System.out.println("	-5 ～ -4%："	+	resultMinusClass05);
-			System.out.println("	-6 ～ -5%："	+	resultMinusClass06);
-			System.out.println("	-7 ～ -6%："	+	resultMinusClass07);
-			System.out.println("	-8 ～ -7%："	+	resultMinusClass08);
-			System.out.println("	-9 ～ -8%："	+	resultMinusClass09);
-			System.out.println("	-10～ -9%："	+	resultMinusClass10);
-			System.out.println("	-11～-10%："	+	resultMinusClass11);
-			System.out.println("	-12～-11%："	+	resultMinusClass12);
-			System.out.println("	-13～-12%："	+	resultMinusClass13);
-			System.out.println("	-14～-13%："	+	resultMinusClass14);
-			System.out.println("	-15～-14%："	+	resultMinusClass15);
-			System.out.println("	-16～-15%："	+	resultMinusClass16);
-			System.out.println("	-17～-16%："	+	resultMinusClass17);
-			System.out.println("	-17%以下 ："	+	resultMinusClassOver);
+			commonAP.writeInLog("上下1%カット平均エントリー回数："			+ getCutAveEntryTimes,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("上下1%カットエントリー回数標準偏差："	+ commonAP.getDev(getEntryTimeList(),	true,"",0.005,0.005),logWriting.BACKTEST_LOG_FLG);
+
+			commonAP.writeInLog("	 17%以上 ："	+	resultPlusClassOver,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	16%～ 17%："	+	resultPlusClass17,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	15%～ 16%："	+	resultPlusClass16,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	14%～ 15%："	+	resultPlusClass15,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	13%～ 14%："	+	resultPlusClass14,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	12%～ 13%："	+	resultPlusClass13,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	11%～ 12%："	+	resultPlusClass12,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	10%～ 11%："	+	resultPlusClass11,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  9～ 10%："	+	resultPlusClass10,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  8～  9%："	+	resultPlusClass09,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  7～  8%："	+	resultPlusClass08,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  6～  7%："	+	resultPlusClass07,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  5～  6%："	+	resultPlusClass06,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  4～  5%："	+	resultPlusClass05,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  3～  4%："	+	resultPlusClass04,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  2～  3%："	+	resultPlusClass03,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  1～  2%："	+	resultPlusClass02,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	  0～  1%："	+	resultPlusClass01,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-1 ～  0%："	+	resultMinusClass01,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-2 ～ -1%："	+	resultMinusClass02,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-3 ～ -2%："	+	resultMinusClass03,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-4 ～ -3%："	+	resultMinusClass04,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-5 ～ -4%："	+	resultMinusClass05,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-6 ～ -5%："	+	resultMinusClass06,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-7 ～ -6%："	+	resultMinusClass07,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-8 ～ -7%："	+	resultMinusClass08,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-9 ～ -8%："	+	resultMinusClass09,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-10～ -9%："	+	resultMinusClass10,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-11～-10%："	+	resultMinusClass11,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-12～-11%："	+	resultMinusClass12,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-13～-12%："	+	resultMinusClass13,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-14～-13%："	+	resultMinusClass14,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-15～-14%："	+	resultMinusClass15,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-16～-15%："	+	resultMinusClass16,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-17～-16%："	+	resultMinusClass17,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("	-17%以下 ："	+	resultMinusClassOver,logWriting.BACKTEST_LOG_FLG);
 
 
-			System.out.println("Lメソッド：" + L_packageName + "." + L_className + "." + L_methodName );
-			System.out.println("Sメソッド：" + S_packageName + "." + S_className + "." + S_methodName );
 
+			//年間営業日は245で想定
+			int yearDay	=	245;
+			//年間エントリー数
+			double yearEntryTimes	=	(	getCutAveEntryTimes	*	(	( getCutWinCount + getCutLoseCount )	)	)	/(paraDTO.getObTerm()*yearDay);
+			//必要資金
+			double needMoney	=	yearEntryTimes
+								*	paraDTO.getEntryMoney()
+								*	aveCutKeepDays;
+			commonAP.writeInLog("必要投資資金："	+	needMoney	,logWriting.BACKTEST_LOG_FLG);
+
+			//回転サイクル
+			double kaitenCyecle=yearDay/aveCutKeepDays;
+
+			commonAP.writeInLog("想定金利(単位は%ではない)："	+	(yearEntryTimes * getCutAveReturn * kaitenCyecle)		,logWriting.BACKTEST_LOG_FLG);
+
+
+			commonAP.writeInLog("Lメソッド：" + L_packageName + "." + L_className + "." + L_methodName ,logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("Sメソッド：" + S_packageName + "." + S_className + "." + S_methodName ,logWriting.BACKTEST_LOG_FLG);
+			if ( paraDTO.getTermFLG() ){
+				commonAP.writeInLog("開始時期：" + paraDTO.getObStartDay() ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
+			}
 		}
 
 		resetList();

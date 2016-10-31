@@ -2,9 +2,14 @@ package botton;
 
 import proparty.S;
 import proparty.controllDay;
+import technique.CheckSign;
 import accesarrySQL.OneRecord_Update;
 import accesarrySQL.SEPARATE_CHECK;
+
+import common.commonAP;
+
 import constant.ReCord;
+import constant.logWriting;
 import controller.CONTOLLBOTTON;
 import controller.GetCodeList;
 
@@ -59,11 +64,11 @@ public class cloringDate {
 
 
 		//今日のサインの点灯をチェックする。
-//		CheckSign.checkTodaySign();
+		CheckSign.checkTodaySign();
 
 
 		long stop = System.currentTimeMillis();
-	    System.out.println("実行にかかった時間は " + (stop - start)/1000 + " 秒です。");
+		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 
 	}
 }

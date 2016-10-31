@@ -24,6 +24,44 @@ public class Bean_Parameta {
 	//最初の最低限出来高
 	private int minDeki			=	0;
 
+	//一回のエントリーで支払う金額、単位万円
+	private int entryMoney = 1;
+	//観測期間。単位は年
+	private double obTerm = 10;
+
+	//観測期間にかかわるデータ
+	private String obStartDay;
+	private String obEndDay;
+	private boolean termFLG = false;
+
+
+
+	public String getObStartDay() {
+		return obStartDay;
+	}
+
+	public void setObStartDay(String obStartDay) {
+		this.obStartDay = obStartDay;
+	}
+
+	public String getObEndDay() {
+		return obEndDay;
+	}
+
+	public void setObEndDay(String obEndDay) {
+		this.obEndDay = obEndDay;
+	}
+
+	public boolean getTermFLG() {
+		return termFLG;
+	}
+
+	public void setTermFLG() {
+		this.termFLG = true;
+	}
+
+
+
 
 	//手数料
 	double tesuRYO = 0;
@@ -35,6 +73,8 @@ public class Bean_Parameta {
 	public void setTesuRYO(double tesuRYO) {
 		this.tesuRYO = tesuRYO;
 	}
+
+
 
 
 	//checkMotiKabu_L
@@ -120,6 +160,22 @@ public class Bean_Parameta {
 
 
 
+
+	public int getEntryMoney() {
+		return entryMoney;
+	}
+
+	public void setEntryMoney(int entryMoney) {
+		this.entryMoney = entryMoney;
+	}
+
+	public double getObTerm() {
+		return obTerm;
+	}
+
+	public void setObTerm(double obTerm) {
+		this.obTerm = obTerm;
+	}
 
 	public int getMinDeki() {
 		return minDeki;
@@ -406,8 +462,8 @@ public class Bean_Parameta {
 
 
 	private double doubleCount = 0;
-	
-	
+
+
 
 	public double getDoubleCount() {
 		return doubleCount;
