@@ -42,6 +42,7 @@ public class commonAP {
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			s.rs.next();
+
 			return s.rs.getDouble(	"count(" + COLUMN.DAYTIME + ")"	);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -103,6 +104,7 @@ public class commonAP {
 		int totalCount	=	0;
 		double sum	=	0 ;
 
+
 		doubleListCopy = list;
 		//昇順に並び替え
 		Collections.sort(doubleListCopy);
@@ -157,7 +159,7 @@ public class commonAP {
 				if(doubleListCopy.get(i) >= 0){
 					totalCount++;
 					sum = sum + doubleListCopy.get(i);
-//					System.out.println(doubleListCopy.get(i));
+
 				}
 	        }
 		}else{
@@ -165,7 +167,7 @@ public class commonAP {
 				if(doubleListCopy.get(i) < 0){
 					totalCount++;
 					sum = sum + doubleListCopy.get(i);
-//					System.out.println(doubleListCopy.get(i));
+
 				}
 	        }
 		}
@@ -255,7 +257,7 @@ public class commonAP {
 			return getDev(list,judge,a);
 		}
 
-
+		
 		List<Long> doubleListCopy = new ArrayList<Long>();
 		List<Long> doubleList = new ArrayList<Long>();
 
@@ -266,6 +268,7 @@ public class commonAP {
 //		for (int i=0; i< list.size(); i++) {
 		for (int i = 0 + (int)Math.round(cutMIN * doubleListCopy.size() ) ; i < doubleListCopy.size() - (int)Math.round(cutMAX * doubleListCopy.size()) ; i++) {
 			doubleList.add( doubleListCopy.get(i) );
+
         }
 
 		return getDev(doubleList,judge,a);
@@ -292,6 +295,7 @@ public class commonAP {
 
 		for (int i = 0 + (int)Math.round(cutMIN * doubleListCopy.size() ) ; i < doubleListCopy.size() - (int)Math.round(cutMAX * doubleListCopy.size()) ; i++) {
 			doubleList.add( doubleListCopy.get(i) );
+
         }
 
 //		for (int i=0; i< doubleList.size(); i++) {
@@ -340,6 +344,7 @@ public class commonAP {
         for(int i=0; i<list.size(); i++ ) {
             sum += list.get(i);
         }
+
         if(list.size()==0){
         	return 0;
         }

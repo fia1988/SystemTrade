@@ -26,7 +26,7 @@ public class Bean_Parameta {
 
 	//一回のエントリーで支払う金額、単位万円
 	private int entryMoney = 1;
-	//観測期間。単位は年
+	//観測期間。単位は日
 	private double obTerm = 10;
 
 	//観測期間にかかわるデータ
@@ -34,7 +34,18 @@ public class Bean_Parameta {
 	private String obEndDay;
 	private boolean termFLG = false;
 
+	//結果表示において上下のカットする比率
+	private double cutWariai = 0.01;
+	
+	
 
+	public double getCutWariai() {
+		return cutWariai;
+	}
+
+	public void setCutWariai(double cutWariai) {
+		this.cutWariai = cutWariai;
+	}
 
 	public String getObStartDay() {
 		return obStartDay;

@@ -9,6 +9,7 @@ import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
+import proparty.controllDay;
 import technique.Technique98_CONST;
 import accesarrySQL.SQLChecker;
 import bean.Bean_Parameta;
@@ -38,7 +39,16 @@ public class Analysis00_Common {
 		S s = new S();
 		s.getCon();
 
-
+		paraDTO.setObTerm(commonAP.countDay(ReCord.KOSHINBI_SHOKI,controllDay.getMAX_DD_INDEX(s), s));
+		//期間の最初と最後を指定してテストすることを確認するフラグ
+		paraDTO.setTermFLG();
+		paraDTO.setObStartDay(ReCord.KOSHINBI_SHOKI);
+		paraDTO.setObEndDay(controllDay.getMAX_DD_INDEX(s));
+		s.closeConection();
+		
+		s = new S();
+		s.getCon();
+		
 		String SQL;
 		//全銘柄をリストに入れる
 		commonAP.setCodeList(paraDTO.getCheckCate(),s);
@@ -77,9 +87,15 @@ public class Analysis00_Common {
 	public static void Analysis_COMMON(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,String startDay){
 		S s = new S();
 		s.getCon();
-
-
-
+		paraDTO.setObTerm(commonAP.countDay(startDay,controllDay.getMAX_DD_INDEX(s), s));
+		
+		//期間の最初と最後を指定してテストすることを確認するフラグ
+		paraDTO.setTermFLG();
+		paraDTO.setObStartDay(startDay);
+		paraDTO.setObEndDay(controllDay.getMAX_DD_INDEX(s));
+		s.closeConection();
+		s.getCon();
+		s = new S();		
 		//全銘柄をリストに入れる
 		commonAP.setCodeList(paraDTO.getCheckCate(),s);
 
@@ -100,10 +116,15 @@ public class Analysis00_Common {
 		S s = new S();
 		s.getCon();
 
+		paraDTO.setObTerm(commonAP.countDay(startDay,endDay, s));
 		//期間の最初と最後を指定してテストすることを確認するフラグ
 		paraDTO.setTermFLG();
 		paraDTO.setObStartDay(startDay);
 		paraDTO.setObEndDay(endDay);
+		s.closeConection();
+		s = new S();
+		s.getCon();
+
 
 		//全銘柄をリストに入れる
 		commonAP.setCodeList(paraDTO.getCheckCate(),s);
