@@ -1,0 +1,1978 @@
+package analysis;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import proparty.S;
+import technique.Technique98_CONST;
+import bean.Bean_Parameta;
+import bean.Bean_Result;
+import bean.Bean_nowRecord;
+
+import common.commonAP;
+
+public class SagyoSpace {
+
+
+	public static void shokisettei(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		resultDTO.setShoritu(0.95);
+		resultDTO.setTotalGames(50);
+		//手数料
+		paraDTO.setTesuRYO(0.01);
+		//統計データを使わない場合
+		paraDTO.setStaticsFLG(false);
+		System.out.println("【出来高"+ i + "】");
+	}
+
+	public static void shokisettei_false(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		resultDTO.setShoritu(0.95);
+		resultDTO.setTotalGames(50);
+		//手数料
+		paraDTO.setTesuRYO(0.01);
+		System.out.println("【出来高"+ i + "】");
+	}
+
+	public static void testCase27(){
+		long start = System.currentTimeMillis();
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		String startDD	=	"";
+		String endDD		=	"";
+		String L_CLASS = "";
+		String L_METHOD = "";
+
+
+
+		ArrayList<String[]> methodList_L = new ArrayList<String[]>();
+		String methodName[] = new String[2];
+		methodName[0] = "Technique04";
+		methodName[1] = "MACD_M_L_OVER0";
+		methodList_L.add(methodName);
+
+		methodName[0] = "Technique06";
+		methodName[1] = "idoHeikinTest_L";
+		methodList_L.add(methodName);
+
+
+		methodName[0] = "Technique04";
+		methodName[1] = "MACD_M_L";
+		methodList_L.add(methodName);
+
+
+		methodName[0] = "Technique08";
+		methodName[1] = "MACD_IDOHEIKIN_L";
+		methodList_L.add(methodName);
+
+
+
+		startDD	=	"2016-10-01";
+		endDD		=	"2016-10-31";
+		for (int p = 0 ;p < methodList_L.size() ; p++){
+
+//			paraDTO = new Bean_Parameta();
+//			resultDTO = new Bean_Result();
+//			nowDTO = new Bean_nowRecord();
+//			shokisettei(paraDTO, nowDTO, resultDTO);
+//			L_CLASS = methodList.get(p)[0];
+//			L_METHOD = methodList.get(p)[1];
+//			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			System.out.println("");
+//
+//			paraDTO = new Bean_Parameta();
+//			resultDTO = new Bean_Result();
+//			nowDTO = new Bean_nowRecord();
+//			shokisettei(paraDTO, nowDTO, resultDTO);
+//			L_CLASS = methodList.get(p)[0];
+//			L_METHOD = methodList.get(p)[1];
+//			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique08","MACD_OR_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			System.out.println("");
+//
+//			paraDTO = new Bean_Parameta();
+//			resultDTO = new Bean_Result();
+//			nowDTO = new Bean_nowRecord();
+//			shokisettei(paraDTO, nowDTO, resultDTO);
+//			L_CLASS = methodList.get(p)[0];
+//			L_METHOD = methodList.get(p)[1];
+//			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique08","MACD_0_OR_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			System.out.println("");
+//
+//			paraDTO = new Bean_Parameta();
+//			resultDTO = new Bean_Result();
+//			nowDTO = new Bean_nowRecord();
+//			shokisettei(paraDTO, nowDTO, resultDTO);
+//			L_CLASS = methodList.get(p)[0];
+//			L_METHOD = methodList.get(p)[1];
+//			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			System.out.println("");
+//
+//			paraDTO = new Bean_Parameta();
+//			resultDTO = new Bean_Result();
+//			nowDTO = new Bean_nowRecord();
+//			shokisettei(paraDTO, nowDTO, resultDTO);
+//			L_CLASS = methodList.get(p)[0];
+//			L_METHOD = methodList.get(p)[1];
+//			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			System.out.println("");
+//
+//			paraDTO = new Bean_Parameta();
+//			resultDTO = new Bean_Result();
+//			nowDTO = new Bean_nowRecord();
+//			shokisettei(paraDTO, nowDTO, resultDTO);
+//			L_CLASS = methodList.get(p)[0];
+//			L_METHOD = methodList.get(p)[1];
+//			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			System.out.println("");
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+			L_CLASS = methodList_L.get(p)[0];
+			L_METHOD = methodList_L.get(p)[1];
+			Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+			System.out.println("");
+
+		}
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+
+	public static void testCase26(){
+		long start = System.currentTimeMillis();
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		String startDD	=	"";
+		String endDD		=	"";
+		String L_CLASS = "";
+		String L_METHOD = "";
+
+
+//		List<Double> returnList = new ArrayList();
+		List<String[]> methodList_L = new ArrayList<String[]>();
+//		String methodName[] = new String[2];
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L_OVER0";
+//		methodList_L.add(methodName);
+//
+//		String methodNameA[] = new String[2];
+//		methodNameA[0] = "Technique06";
+//		methodNameA[1] = "idoHeikinTest_L";
+//		methodList_L.add(methodNameA);
+//
+//		String methodNameB[] = new String[2];
+//		methodNameB[0] = "Technique04";
+//		methodNameB[1] = "MACD_M_L";
+//		methodList_L.add(methodNameB);
+//
+//		String methodNameC[] = new String[2];
+//		methodNameC[0] = "Technique08";
+//		methodNameC[1] = "MACD_IDOHEIKIN_L";
+//		methodList_L.add(methodNameC);
+
+		String methodNameD[] = new String[2];
+		methodNameD[0] = "Technique06";
+		methodNameD[1] = "IDO_HEKIN_1_L";
+		methodList_L.add(methodNameD);
+
+		String methodNameE[] = new String[2];
+		methodNameE[0] = "Technique06";
+		methodNameE[1] = "IDO_HEKIN_2_L";
+		methodList_L.add(methodNameE);
+
+		String methodNameF[] = new String[2];
+		methodNameF[0] = "Technique06";
+		methodNameF[1] = "IDO_HEKIN_3_L";
+		methodList_L.add(methodNameF);
+
+		String methodNameG[] = new String[2];
+		methodNameG[0] = "Technique06";
+		methodNameG[1] = "IDO_HEKIN_4_L";
+		methodList_L.add(methodNameG);
+
+		String methodNameH[] = new String[2];
+		methodNameH[0] = "Technique06";
+		methodNameH[1] = "IDO_HEKIN_1_S";
+		methodList_L.add(methodNameH);
+
+		String methodNameI[] = new String[2];
+		methodNameI[0] = "Technique06";
+		methodNameI[1] = "IDO_HEKIN_2_S";
+		methodList_L.add(methodNameI);
+
+		String methodNameJ[] = new String[2];
+		methodNameJ[0] = "Technique06";
+		methodNameJ[1] = "IDO_HEKIN_3_S";
+		methodList_L.add(methodNameJ);
+
+		String methodNameK[] = new String[2];
+		methodNameK[0] = "Technique06";
+		methodNameK[1] = "IDO_HEKIN_4_S";
+		methodList_L.add(methodNameK);
+
+		List<String[]> methodList_S = new ArrayList<String[]>();
+		String methodNameS[] = new String[2];
+		methodNameS[0] = "Technique08";
+		methodNameS[1] = "MACD_OR_IDOHEIKIN_S";
+		methodList_S.add(methodNameS);
+
+		String methodNameSA[] = new String[2];
+		methodNameSA[0] = "Technique08";
+		methodNameSA[1] = "MACD_0_OR_IDOHEIKIN_S";
+		methodList_S.add(methodNameSA);
+
+		String methodNameSB[] = new String[2];
+		methodNameSB[0] = "Technique06";
+		methodNameSB[1] = "idoHeikinTest_S";
+		methodList_S.add(methodNameSB);
+
+		String methodNameSC[] = new String[2];
+		methodNameSC[0] = "Technique04";
+		methodNameSC[1] = "MACD_M_S_OVER0";
+		methodList_S.add(methodNameSC);
+
+//		String methodNameSD[] = new String[2];
+//		methodNameSD[0] = "Technique04";
+//		methodNameSD[1] = "MACD_M_S_14";
+//		methodList_S.add(methodNameSD);
+
+		String methodNameSE[] = new String[2];
+		methodNameSE[0] = "Technique04";
+		methodNameSE[1] = "MACD_M_S";
+		methodList_S.add(methodNameSE);
+
+		String methodNameSF[] = new String[2];
+		methodNameSF[0] = "Technique08";
+		methodNameSF[1] = "MACD_IDOHEIKIN_S";
+		methodList_S.add(methodNameSF);
+
+
+
+
+
+		String methodNameSG[] = new String[2];
+		methodNameSG[0] = "Technique06";
+		methodNameSG[1] = "IDO_HEKIN_1_L";
+		methodList_S.add(methodNameSG);
+
+		String methodNameSH[] = new String[2];
+		methodNameSH[0] = "Technique06";
+		methodNameSH[1] = "IDO_HEKIN_2_L";
+		methodList_S.add(methodNameSH);
+
+		String methodNameSI[] = new String[2];
+		methodNameSI[0] = "Technique06";
+		methodNameSI[1] = "IDO_HEKIN_3_L";
+		methodList_S.add(methodNameSI);
+
+		String methodNameSJ[] = new String[2];
+		methodNameSJ[0] = "Technique06";
+		methodNameSJ[1] = "IDO_HEKIN_4_L";
+		methodList_S.add(methodNameSJ);
+
+		String methodNameSK[] = new String[2];
+		methodNameSK[0] = "Technique06";
+		methodNameSK[1] = "IDO_HEKIN_1_S";
+		methodList_S.add(methodNameSK);
+
+		String methodNameSL[] = new String[2];
+		methodNameSL[0] = "Technique06";
+		methodNameSL[1] = "IDO_HEKIN_2_S";
+		methodList_S.add(methodNameSL);
+
+		String methodNameSM[] = new String[2];
+		methodNameSM[0] = "Technique06";
+		methodNameSM[1] = "IDO_HEKIN_3_S";
+		methodList_S.add(methodNameSM);
+
+		String methodNameSN[] = new String[2];
+		methodNameSN[0] = "Technique06";
+		methodNameSN[1] = "IDO_HEKIN_4_S";
+		methodList_S.add(methodNameSN);
+
+
+
+		List<String[]> checkDAYS = new ArrayList<String[]>();
+		String checkDAYA[] = new String[3];
+		String checkDAYB[] = new String[3];
+		String checkDAYC[] = new String[3];
+		checkDAYA[0] = "2016-01-01";
+		checkDAYA[1] = "2016-10-31";
+		checkDAYA[2] = "直近";
+		checkDAYS.add(checkDAYA);
+
+		checkDAYB[0] = "2007-01-01";
+		checkDAYB[1] = "2016-08-01";
+		checkDAYB[2] = "歴史";
+		checkDAYS.add(checkDAYB);
+
+		checkDAYC[0] = "2007-06-30";
+		checkDAYC[1] = "2009-07-01";
+		checkDAYC[2] = "リーマンショック";
+		checkDAYS.add(checkDAYC);
+
+
+		for (int a = 0 ;a < checkDAYS.size() ; a++){
+			System.out.println("");
+			System.out.println("--------" + checkDAYS.get(a)[2] + "--------");
+			startDD	=	checkDAYS.get(a)[0];
+			endDD		=	checkDAYS.get(a)[1];
+
+			for (int b = 0 ;b < methodList_L.size() ; b++){
+				L_CLASS = methodList_L.get(b)[0];
+				L_METHOD = methodList_L.get(b)[1];
+
+				for (int c = 0 ;c < methodList_S.size() ; c++){
+					paraDTO = new Bean_Parameta();
+					resultDTO = new Bean_Result();
+					nowDTO = new Bean_nowRecord();
+					shokisettei(paraDTO, nowDTO, resultDTO);
+
+
+					System.out.println("");
+					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+				}
+			}
+		}
+
+		//ここから繰り返し
+		ArrayList<String[]> methodList_ROOP_L = new ArrayList<String[]>();
+		String methodRoopNameA[] = new String[2];
+		methodRoopNameA[0] = "Technique04";
+		methodRoopNameA[1] = "MACD_M_L_ENTRY";
+		methodList_ROOP_L.add(methodRoopNameA);
+
+		String methodRoopNameB[] = new String[2];
+		methodRoopNameB[0] = "Technique04";
+		methodRoopNameB[1] = "MACD_M_L_OVER0_ENTRY";
+		methodList_ROOP_L.add(methodRoopNameB);
+
+
+
+		for (int a = 0 ;a < checkDAYS.size() ; a++){
+			System.out.println("");
+			System.out.println("--------" + checkDAYS.get(a)[2] + "--------");
+			startDD	=	checkDAYS.get(a)[0];
+			endDD		=	checkDAYS.get(a)[1];
+
+			for (int b = 0 ;b < methodList_ROOP_L.size() ; b++){
+				L_CLASS = methodList_ROOP_L.get(b)[0];
+				L_METHOD = methodList_ROOP_L.get(b)[1];
+
+				for (int c = 0 ;c < methodList_S.size() ; c++){
+
+					for (int i = 0 ;i < 20 ; i=i+5){
+
+						paraDTO = new Bean_Parameta();
+						resultDTO = new Bean_Result();
+						nowDTO = new Bean_nowRecord();
+						shokisettei(paraDTO, nowDTO, resultDTO);
+						paraDTO.setIntCount01(i);
+
+						System.out.println("");
+						System.out.println("繰り返し設定：" + i);
+						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+					}
+
+				}
+			}
+		}
+
+
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+
+	}
+
+	public static void testCase25(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		long start = System.currentTimeMillis();
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		S s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(5);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		paraDTO.setIntCount01(10);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(15);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-01-01","2016-10-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-01-01","2016-10-01");
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+
+	}
+	public static void testCase24(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		long start = System.currentTimeMillis();
+
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+	public static void testCase23(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		long start = System.currentTimeMillis();
+
+		testCase21();
+		System.out.println("");
+		System.out.println("ここからてｓｔ20");
+		System.out.println("");
+		testCase20();
+		System.out.println("");
+		System.out.println("ここからてｓｔ20");
+		System.out.println("");
+		testCase25();
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","testL","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//
+//		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+//		List<Double> doubleListCopy = new ArrayList<Double>();
+//
+//		doubleListCopy.add(0.1);
+//		doubleListCopy.add(0.2);
+//		doubleListCopy.add(0.3);
+//		doubleListCopy.add(0.4);
+//		doubleListCopy.add(0.5);
+//		doubleListCopy.add(0.6);
+//		doubleListCopy.add(0.7);
+//		doubleListCopy.add(0.8);
+//		doubleListCopy.add(0.9);
+//		doubleListCopy.add(1.0);
+//		doubleListCopy.add(-0.1);
+//		doubleListCopy.add(-0.2);
+//		doubleListCopy.add(-0.3);
+//		doubleListCopy.add(-0.4);
+//		doubleListCopy.add(-0.5);
+//		doubleListCopy.add(-0.6);
+//		doubleListCopy.add(-0.7);
+//		doubleListCopy.add(-0.8);
+//		doubleListCopy.add(-0.9);
+//		doubleListCopy.add(-1.0);
+//
+//		System.out.println(commonAP.getDev(doubleListCopy,true,	0.4,	0.1));
+//		S s = new S();
+//		s.getCon();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"5721―T","2009-07-01","2013-08-01",s);
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+	public static void testCase22(){
+		long start = System.currentTimeMillis();
+
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+
+
+	public static void testCase21(){
+
+		long start = System.currentTimeMillis();
+
+		System.out.println("【2007-01-01,2016-08-01】");
+
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		S s = new S();
+		s.getCon();
+//		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(0);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(20);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(0);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(5);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(10);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+
+
+		System.out.println("【2007-06-30、2009-07-01】");
+		System.out.println("");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(0);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(10);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		paraDTO.setIntCount01(0);
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(0);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		paraDTO.setIntCount01(5);
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(10);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L_ENTRY","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+	public static void testCase20(){
+
+		long start = System.currentTimeMillis();
+
+		System.out.println("【2007-01-01,2016-08-01】");
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		S s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-01-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","testL","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2016-05-01","2016-08-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-05-01","2016-08-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+		System.out.println("【2007-06-30、2009-07-01】");
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		s = new S();
+		s.getCon();
+		paraDTO.setObTerm(commonAP.countDay("2007-06-30","2009-07-01", s));
+		s.closeConection();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+	public static void testCase19(){
+
+		System.out.println("ここから18");
+		testCase18();
+		System.out.println("ここから17");
+		testCase17();
+	}
+
+	public static void testCase18(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(20);
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_ENTRY","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2015-07-01","2016-06-30");
+
+	}
+
+	public static void testCase17(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(20);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_ENTRY","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_BORIBAN","technique","Technique04","MACD_M_S_OVER0_BORIBAN",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		System.out.println("");
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setIntCount01(20);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_ENTRY","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setCheckRenzokuSign(false);
+//		S s = new S();
+//		s.getCon();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"1587―T","2016-05-01","2016-08-01",s);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-05-01","2016-08-01");
+//		s.closeConection();
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(20);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setIntCount01(20);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_ENTRY","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+	public static void testCase16(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		long start = System.currentTimeMillis();
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+		resultDTO.setOffResultCode();
+		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		resultDTO.setShoritu(0);
+		resultDTO.setTotalGames(0);
+		//手数料
+		paraDTO.setTesuRYO(0.01);
+		System.out.println("【出来高"+ i + "】");
+
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","testL","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2014-07-01","2015-06-30");
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+	public static void testCase15(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_BORIBAN","technique","Technique04","MACD_M_S_OVER0_BORIBAN",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		System.out.println("");
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setCheckRenzokuSign(false);
+//		S s = new S();
+//		s.getCon();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"1587―T","2016-05-01","2016-08-01",s);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-05-01","2016-08-01");
+//		s.closeConection();
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+
+	public static void testCase14(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique09","BORIBAN_L","technique","Technique09","BORIBAN_S",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+	public static void testCase13(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+
+
+
+		S s = new S();
+		s.getCon();
+//
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_TORAKU_L","technique","Technique08","MACD_TORAKU_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+//
+//
+
+
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.06);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.07);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.08);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.09);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.10);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.11);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.12);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		System.out.println("");
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		paraDTO.setDoubleCount(-0.13);
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0_KYURAKU","technique","Technique04","MACD_M_S_OVER0_KYURAKU",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+	public static void testCase12(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		resultDTO.setShoritu(0.8);
+		resultDTO.setTotalGames(20);
+		System.out.println("【出来高"+ i + "】");
+
+		S s = new S();
+		s.getCon();
+
+		//手数料
+		paraDTO.setTesuRYO(0.01);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		Analysis00_Common.Analysis_COMMON("technique","Technique07","torakuRatio_L","technique","Technique07","torakuRatio_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-05-31","2016-06-30");
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+
+
+	public static void testCase11(){
+
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		resultDTO.setShoritu(0.8);
+		resultDTO.setTotalGames(20);
+		System.out.println("【出来高"+ i + "】");
+
+		S s = new S();
+		s.getCon();
+
+		//手数料
+		paraDTO.setTesuRYO(0.05);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-05-31","2016-06-30");
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+
+
+	public static void testCase10(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		System.out.println("【出来高"+ i + "】");
+
+		S s = new S();
+		s.getCon();
+
+		//手数料
+		paraDTO.setTesuRYO(0.05);
+		resultDTO.setShoritu(0.8);
+		resultDTO.setTotalGames(20);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,"2016-05-31","2016-06-30");
+
+
+
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+	public static void testCase09(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+		resultDTO.setOffResultCode();
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 1;
+		paraDTO.setMinDeki(i);
+		System.out.println("【出来高"+ i + "】");
+
+		S s = new S();
+		s.getCon();
+
+		//手数料
+				paraDTO.setTesuRYO(0.01);
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultTotal();
+//		//勝敗条件
+//				paraDTO.setWinWariai(111.01);
+//				paraDTO.setLoseWariai(0.05);
+//				paraDTO.setCheckKeepDay(100000);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2015-06-30");
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultTotal();
+		//勝敗条件
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2014-06-30","2015-07-01");
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		resultDTO.setOffResultDay();
+//		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultTotal();
+//		//勝敗条件
+//				paraDTO.setWinWariai(111.01);
+//				paraDTO.setLoseWariai(0.75);
+//				paraDTO.setCheckKeepDay(100000);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"1629―T",s);
+		paraDTO.setCheckKeepDay(930);
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_beforeDay","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-06-30","2009-07-01");
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+	public static void testCase08(){
+
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOffResultDay();
+		resultDTO.setOffResultCode();
+//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		int i = 0;
+		paraDTO.setMinDeki(i);
+		System.out.println("【出来高"+ i + "】");
+
+		S s = new S();
+		s.getCon();
+
+//		手数料
+//		paraDTO.setTesuRYO(0.01);
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"1629―T",s);
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_beforeDay","technique","Technique04","MACD_M_S_14_beforeDay",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-01-01","2016-08-01");
+
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"2007-08-01","2009-07-31");
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO,nowDTO,resultDTO,"1310―T",s);
+
+
+
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO);
+//		resultDTO.getResultTotalResult("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_14",paraDTO);
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+
+	public static void testCase07(){
+
+
+
+
+
+		ArrayList<String[]> methodList = new ArrayList<String[]>();
+		String methodName[] = new String[3];
+		methodName[0] = "technique";
+		methodName[1] = "Technique04";
+		methodName[2] = "MACD_M_L";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_01";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_02";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_03";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_04";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_05";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_06";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_07";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_08";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_09";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_10";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_11";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_12";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_13";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_14";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_15";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_L_16";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_01";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_02";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_03";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_04";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_05";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_06";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_07";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_08";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_09";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_10";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_11";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_12";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_13";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_14";
+		methodList.add(methodName);
+
+		methodName = new String[3];
+		methodName[2] = "MACD_M_S_15";
+		methodList.add(methodName);
+
+
+
+
+
+
+
+		long start = System.currentTimeMillis();
+
+		for (int i = 0 ;i < methodList.size() ; i++){
+			for (int p = 0 ;p < methodList.size() ; p++){
+
+				if (methodList.get(i)[2].equals(methodList.get(p)[2])){
+
+				}else{
+					Bean_Parameta paraDTO = new Bean_Parameta();
+					Bean_Result resultDTO = new Bean_Result();
+					Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+					//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+					paraDTO.setCheckRenzokuSign(true);
+//					paraDTO.setCheckRenzokuSign(false);
+					//結論の出力方法
+					resultDTO.setOffResultDay();
+					resultDTO.setOffResultCode();
+//					resultDTO.setOnResultDay();
+//					resultDTO.setOnResultCode();
+					resultDTO.setOnResultTotal();
+
+
+					//勝敗条件
+					paraDTO.setWinWariai(111.01);
+					paraDTO.setLoseWariai(0.0099);
+					paraDTO.setCheckKeepDay(100000);
+
+
+					Analysis00_Common.Analysis_COMMON("technique","Technique04",methodList.get(i)[2],"technique","Technique04",methodList.get(p)[2],paraDTO,nowDTO,resultDTO);
+				}
+				System.out.println();
+			}
+		}
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+	public static void testCase06(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOnResultDay();
+			resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+
+
+		//checkMotiKabu_L設定部分
+		//あるいは持ち株会の買付日を見つける
+		//基準日1、多くは給料日
+		paraDTO.setSaraly_01("20");
+		//基準日2、多くはボーナス夏
+		paraDTO.setBonus_01("06-25");
+		//基準日3、多くはボーナス冬
+		paraDTO.setBonus_02("12-10");
+		//基準日の何営業日あとかのチェック
+		paraDTO.setIntCount01(2);
+
+		//持ち株、ボーナス夏、ボーナス冬の設定
+		paraDTO.setMotikabuDay();
+//		paraDTO.setSummerBonus();
+//		paraDTO.setWinterBonus();
+		//前日終値、当日始値
+			//当日の始値で買えていそう、当日の終値で売れていそう
+		paraDTO.setTOZITU_START();
+
+//		paraDTO.setZENZITU_END();
+
+		paraDTO.setMotikabuDay();
+		paraDTO.setOffSummerBonus();
+		paraDTO.setOffWinterBonus();
+
+		//勝敗条件
+//		paraDTO.setWinWariai(1.01);
+//		paraDTO.setLoseWariai(0.099);
+		paraDTO.setCheckKeepDay(100000);
+
+		long start = System.currentTimeMillis();
+		S s = new S();
+		s.getCon();
+
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","testMACD_L","technique","Technique04","MACD_M_S",paraDTO,nowDTO,resultDTO);
+		s.closeConection();
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+
+	}
+
+	public static void testCase05(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		long start = System.currentTimeMillis();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO);
+	}
+
+	public static void testCase04(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+//		paraDTO.setCheckRenzokuSign(true);
+		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		//損切ライン
+		paraDTO.setWinWariai(2.1);
+		paraDTO.setLoseWariai(0.47);
+
+		long start = System.currentTimeMillis();
+
+		//手数料
+		paraDTO.setTesuRYO(0.01);
+
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_L","technique","Technique04","MACD_S",paraDTO,nowDTO,resultDTO);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_S","technique","Technique04","MACD_L",paraDTO,nowDTO,resultDTO);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_L","technique","Technique00_Common","checkPrice_S",paraDTO,nowDTO,resultDTO);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_S","technique","Technique04","MACD_L",paraDTO,nowDTO,resultDTO);
+		S s = new S();
+		s.getCon();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_S","technique","Technique04","MACD_L",paraDTO,nowDTO,resultDTO,"I306",s);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_L","technique","Technique04","MACD_S",paraDTO,nowDTO,resultDTO,"9994―T",s);
+
+		Analysis00_Common.Analysis_COMMON("technique","Technique03","checkIDOHeikin_SandL_S","technique","Technique03","checkIDOHeikin_SandL_L",paraDTO,nowDTO,resultDTO);
+//		resultDTO.getResultTotalResult("technique","Technique04","MACD_S","technique","Technique04","MACD_L",paraDTO);
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
+	}
+
+	public static void testCase03(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
+		paraDTO.setCheckRenzokuSign(false);
+		//結論の出力方法
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		//何をみるか
+		paraDTO.setCheckBori_checkBORI(10);
+		//勝敗条件
+		paraDTO.setWinWariai(1.1);
+		paraDTO.setLoseWariai(0.9);
+
+		long start = System.currentTimeMillis();
+		Analysis00_Common.Analysis_COMMON("technique","Technique05","checkBori_L","technique","Technique00_Common","checkPrice_S",paraDTO,nowDTO,resultDTO);
+		S s = new S();
+		s.getCon();
+
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique03","checkIDOHeikin_SandL_S","technique","Technique03","checkIDOHeikin_SandL_L",paraDTO,nowDTO,resultDTO,"I139",s);
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+
+	public static void testCase02(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		//結論の出力方法
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		//何をみるか
+//		paraDTO.setCheckCate(ReCord.CODE_02_SATISTICS);
+
+		long start = System.currentTimeMillis();
+		Analysis00_Common.Analysis_COMMON("technique","Technique03","checkIDOHeikin_MandL_S","technique","Technique00_Common","checkIDOHeikin_MandL_L",paraDTO,nowDTO,resultDTO);
+		S s = new S();
+		s.getCon();
+
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique03","checkIDOHeikin_SandL_S","technique","Technique03","checkIDOHeikin_SandL_L",paraDTO,nowDTO,resultDTO,"I139",s);
+		s.closeConection();
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+	public static void testCase01(){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+
+		long start = System.currentTimeMillis();
+
+//		**
+//		checkDeki_L設定部分
+//		paraDTO.setTerm01(60);
+//		paraDTO.setTerm02(10);
+//		//変化していないの定義。TERM01と02の合計期間の出来高前日比率のSTDDEV_SAMP。すなわち「どのぐらい変化していないか」。0でまったく変化していない。初期値1.5
+//		paraDTO.setBOXCHECK(1.5);
+//		//スコア。変化率でスコアを設定している。その点数。初期値0.7
+//		paraDTO.setHIGHT_DEKI_RATIO(1.5);
+////		checkPrice_S設定部分
+//		paraDTO.setWinWariai(1.1);
+//		paraDTO.setLoseWariai(0.95);
+//		Analysis_COMMON("technique","Technique01","checkDeki_L","technique","Technique00_Common","checkPrice_S",paraDTO,nowDTO,resultDTO);
+		//
+
+		//結論の出力方法
+//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultTotal();
+
+
+		//checkMotiKabu_L設定部分
+		//あるいは持ち株会の買付日を見つける
+		//基準日1、多くは給料日
+		paraDTO.setSaraly_01("20");
+		//基準日2、多くはボーナス夏
+		paraDTO.setBonus_01("06-25");
+		//基準日3、多くはボーナス冬
+		paraDTO.setBonus_02("12-10");
+		//基準日の何営業日あとかのチェック
+		paraDTO.setIntCount01(2);
+		//勝敗条件
+		paraDTO.setWinWariai(1.5);
+		paraDTO.setLoseWariai(0.40);
+		//持ち株、ボーナス夏、ボーナス冬の設定
+		paraDTO.setMotikabuDay();
+//		paraDTO.setSummerBonus();
+//		paraDTO.setWinterBonus();
+		//前日終値、当日始値
+			//当日の始値で買えていそう、当日の終値で売れていそう
+		paraDTO.setTOZITU_START();
+
+//		paraDTO.setZENZITU_END();
+
+
+
+
+
+//		System.out.println("【当日／給料日】");
+//		paraDTO.setIntCount01(0);
+//		paraDTO.setMotikabuDay();
+//		paraDTO.setOffSummerBonus();
+//		paraDTO.setOffWinterBonus();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO);
+
+		System.out.println("【２日後／給料日】");
+		paraDTO.setIntCount01(2);
+		paraDTO.setMotikabuDay();
+		paraDTO.setOffSummerBonus();
+		paraDTO.setOffWinterBonus();
+		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO);
+
+//		System.out.println("【当日／夏ボーナス】");
+//		paraDTO.setIntCount01(0);
+//		paraDTO.setOffMotikabuDay();
+//		paraDTO.setSummerBonus();
+//		paraDTO.setOffWinterBonus();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO);
+//
+//		System.out.println("【２日後／冬ボーナス】");
+//		paraDTO.setIntCount01(2);
+//		paraDTO.setOffMotikabuDay();
+//		paraDTO.setOffSummerBonus();
+//		paraDTO.setWinterBonus();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO);
+//
+//		System.out.println("【当日／夏ボーナス】");
+//		paraDTO.setIntCount01(0);
+//		paraDTO.setOffMotikabuDay();
+//		paraDTO.setSummerBonus();
+//		paraDTO.setOffWinterBonus();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO);
+//
+//		System.out.println("【２日後／冬ボーナス】");
+//		paraDTO.setIntCount01(2);
+//		paraDTO.setOffMotikabuDay();
+//		paraDTO.setOffSummerBonus();
+//		paraDTO.setWinterBonus();
+//		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO);
+
+		S s = new S();
+		s.getCon();
+
+//		Analysis00_Common.Analysis_COMMON("technique","Technique02","checkMotiKabu_L","technique","Technique00_Common","checkPrice_TODAY_S",paraDTO,nowDTO,resultDTO,"2229―T",s);
+
+		//
+		s.closeConection();
+
+
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+	}
+
+
+	//true:エントリー
+		//false:exit
+	public static int sagyoSpaceDoing(String methodName){
+			try {
+				//クラス名を指定。パッケージ名のクラス名
+				Class cl = Class.forName( "analysis.SagyoSpace");
+
+				try {
+					// メソッドに引き渡すクラスの順番を定義
+
+					// 引数ありのメソッドを取得する。methodNameがメソッド名
+					Method m = cl.getMethod(methodName);
+
+					// 引数をいれて実行
+					try {
+						Object result = m.invoke(cl.newInstance());
+
+					} catch (IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException
+							| InstantiationException e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
+
+				} catch (NoSuchMethodException | SecurityException e) {
+					e.printStackTrace();
+					System.out.println(methodName + "はありません");
+					return Technique98_CONST.NO_METHOD;
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+			return Technique98_CONST.NO_RESULT;
+
+		}
+
+
+}
