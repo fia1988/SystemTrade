@@ -463,7 +463,7 @@ public class Bean_Result {
 			commonAP.writeInLog("上" + half * 100 +  "%カットトータル平均勝％："		+ commonAP.getAverageCut(getReturnList(),true,	commonAP.AVERAGE_FLG,	half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 			commonAP.writeInLog("下" + half * 100 +  "%カットトータル平均負％："		+ commonAP.getAverageCut(getReturnList(),false,	commonAP.AVERAGE_FLG,	half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 
-			commonAP.writeInLog("上0.5%カット見込みリターン："		+ getCutAveReturn * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
+			commonAP.writeInLog("上下0.5%カット見込みリターン："		+ getCutAveReturn * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 //			commonAP.writeInLog("上下1%カット見込みリターン："		+ ( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) ) / ( getReturnList().size() * (paraDTO.getCutWariai()) ),logWriting.BACKTEST_LOG_FLG);
 
 
@@ -493,15 +493,16 @@ public class Bean_Result {
 									*	aveCutKeepDays;
 				commonAP.writeInLog("一日辺りサイン点灯数" + dayRightUpTimes ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("必要投資資金："	+	needMoney + " 万円"	,logWriting.BACKTEST_LOG_FLG);
-
+				commonAP.writeInLog("一回辺りエントリー金額："	+	paraDTO.getEntryMoney() + " 万円"	,logWriting.BACKTEST_LOG_FLG);
 				//回転サイクル
 				double kaitenCyecle=yearDay/(aveCutKeepDays*dayRightUpTimes);
 
-				commonAP.writeInLog("想定金利："	+	( 100 * getCutAveReturn * dayRightUpTimes * (yearDay/aveCutKeepDays))	 + "%"	,logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("想定金利："	+	( (100 * paraDTO.getEntryMoney() * getCutAveReturn * dayRightUpTimes * yearDay) /needMoney )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("想定金利："	+	( (100 *  getCutAveReturn * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 
 				commonAP.writeInLog("開始時期：" + paraDTO.getObStartDay() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() + " 営業日",logWriting.BACKTEST_LOG_FLG);
 
 			}
 

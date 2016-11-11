@@ -25,7 +25,7 @@ public class Bean_Parameta {
 	private int minDeki			=	0;
 
 	//一回のエントリーで支払う金額、単位万円
-	private int entryMoney = 1;
+	private double entryMoney = 1.2;
 	//観測期間。単位は日
 	private double obTerm = 10;
 
@@ -36,8 +36,21 @@ public class Bean_Parameta {
 
 	//結果表示において上下のカットする比率
 	private double cutWariai = 0.01;
-	
-	
+
+
+	//テストメソッドの処理を早くする
+	//統計データを取得するかどうかを選択する
+	private boolean staticsFLG = true;
+
+
+
+	public boolean isStaticsFLG() {
+		return staticsFLG;
+	}
+
+	public void setStaticsFLG(boolean staticsFLG) {
+		this.staticsFLG = staticsFLG;
+	}
 
 	public double getCutWariai() {
 		return cutWariai;
@@ -172,7 +185,7 @@ public class Bean_Parameta {
 
 
 
-	public int getEntryMoney() {
+	public double getEntryMoney() {
 		return entryMoney;
 	}
 
