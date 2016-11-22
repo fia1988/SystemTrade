@@ -176,9 +176,10 @@ public class SEPARATE_CHECK {
 		} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
-			}
+		}
 
-
+		
+		s.closeConection();
 
 
 	}

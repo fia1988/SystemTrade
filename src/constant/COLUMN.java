@@ -38,7 +38,7 @@ public class COLUMN {
 	//効力発生日
 	public static String EFFECT_STARTDAY									= "effect_startDay";
 	public static String EFFECT_STARTDAY_KATA								= EFFECT_STARTDAY + " DATE not null ";
-	
+
 	//権利付最終売買日
 	public static String DAYTIME_KENRI_LAST									= "dayTime_kenri_last";
 	public static String DAYTIME_KENRI_LAST_KATA							= DAYTIME_KENRI_LAST + " DATE not null ";
@@ -533,6 +533,18 @@ public class COLUMN {
 	//値下がり短期間移動平均線前日比率
 	//値下がり中期間移動平均線前日比率
 	//値下がり長期間移動平均線前日比率
+
+
+//新テーブル
+	//購入日
+	public static String ENTRYDAY												= "entryDay";
+	public static String ENTRYDAY_KATA											= ENTRYDAY  + " DATE not null ";
+
+	//購入回数
+	public static String ENTRYTIMES = "entryTimes";
+	public static String ENTRYTIMES_KATA = ENTRYTIMES + " smallint  unsigned ";
+//	 + " double unsigned  ";
+
 
 
 	//更新内容

@@ -4,10 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import proparty.S;
-import proparty.controllDay;
-
-import common.commonAP;
-
 import constant.COLUMN;
 import constant.ReCord;
 
@@ -68,7 +64,7 @@ public class OneRecord_Update {
 				+ " and "
 				+ COLUMN.CODE
 				+ " ='" + code + "'";
-		
+
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			//trueならレコードが存在する。
@@ -76,14 +72,14 @@ public class OneRecord_Update {
 
 				//騰落レシオ
 				//値上がり銘柄数 ÷ 値下がり銘柄数
-				
+
 				double stock_downStock = s.rs.getDouble(COLUMN.STOCK_DOWNSTOCK);
 				if ( stock_downStock == 0 ){
 					stock_downStock = 1;
 				}
-				
+
 				resultDouble=( s.rs.getDouble(COLUMN.STOCK_UPSTOCK) / stock_downStock );
-				
+
 				EDIT.updateDouble(COLUMN.NETUKI_MAXMINRATIO,resultDouble);
 
 			}
@@ -99,9 +95,9 @@ public class OneRecord_Update {
 	//前日など参照せず、一行のレコードのみで比較できるもの
 	public static void OneRecord(S s){
 
-		if(commonAP.getTODAY().equals(controllDay.getMAX_DD_STOCK_ETF(s) )){
-			return;
-		}
+//		if(commonAP.getTODAY().equals(controllDay.getMAX_DD_STOCK_ETF(s) )){
+//			return;
+//		}
 		windowScale(ReCord.CODE_01_STOCK,s);
 		windowScale(ReCord.CODE_03_INDEX,s);
 		windowScale(ReCord.CODE_04_ETF,s);
@@ -167,7 +163,7 @@ public class OneRecord_Update {
 //					+ targetCOMUMN
 //					+ " where "
 //+ COLUMN.DAYTIME + " > '2016-06-30'";
-
+//			System.out.println(SQL);
 			s.sqlGetter().executeUpdate(SQL);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック

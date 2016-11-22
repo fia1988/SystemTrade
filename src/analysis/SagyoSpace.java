@@ -187,166 +187,162 @@ public class SagyoSpace {
 
 //		List<Double> returnList = new ArrayList();
 		List<String[]> methodList_L = new ArrayList<String[]>();
-//		String methodName[] = new String[2];
+		String methodName[] = new String[2];
 //		methodName[0] = "Technique04";
 //		methodName[1] = "MACD_M_L_OVER0";
-//		methodList_L.add(methodName);
+//		methodList_L.add(methodName.clone());
 //
-//		String methodNameA[] = new String[2];
-//		methodNameA[0] = "Technique06";
-//		methodNameA[1] = "idoHeikinTest_L";
-//		methodList_L.add(methodNameA);
 //
-//		String methodNameB[] = new String[2];
-//		methodNameB[0] = "Technique04";
-//		methodNameB[1] = "MACD_M_L";
-//		methodList_L.add(methodNameB);
+//		methodName[0] = "Technique06";
+//		methodName[1] = "idoHeikinTest_L";
+//		methodList_L.add(methodName.clone());
 //
-//		String methodNameC[] = new String[2];
-//		methodNameC[0] = "Technique08";
-//		methodNameC[1] = "MACD_IDOHEIKIN_L";
-//		methodList_L.add(methodNameC);
+//
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique08";
+//		methodName[1] = "MACD_IDOHEIKIN_L";
+//		methodList_L.add(methodName.clone());
 
-		String methodNameD[] = new String[2];
-		methodNameD[0] = "Technique06";
-		methodNameD[1] = "IDO_HEKIN_1_L";
-		methodList_L.add(methodNameD);
 
-		String methodNameE[] = new String[2];
-		methodNameE[0] = "Technique06";
-		methodNameE[1] = "IDO_HEKIN_2_L";
-		methodList_L.add(methodNameE);
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_1_L";
+		methodList_L.add(methodName.clone());
 
-		String methodNameF[] = new String[2];
-		methodNameF[0] = "Technique06";
-		methodNameF[1] = "IDO_HEKIN_3_L";
-		methodList_L.add(methodNameF);
 
-		String methodNameG[] = new String[2];
-		methodNameG[0] = "Technique06";
-		methodNameG[1] = "IDO_HEKIN_4_L";
-		methodList_L.add(methodNameG);
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_2_L";
+		methodList_L.add(methodName.clone());
 
-		String methodNameH[] = new String[2];
-		methodNameH[0] = "Technique06";
-		methodNameH[1] = "IDO_HEKIN_1_S";
-		methodList_L.add(methodNameH);
 
-		String methodNameI[] = new String[2];
-		methodNameI[0] = "Technique06";
-		methodNameI[1] = "IDO_HEKIN_2_S";
-		methodList_L.add(methodNameI);
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_3_L";
+		methodList_L.add(methodName.clone());
 
-		String methodNameJ[] = new String[2];
-		methodNameJ[0] = "Technique06";
-		methodNameJ[1] = "IDO_HEKIN_3_S";
-		methodList_L.add(methodNameJ);
 
-		String methodNameK[] = new String[2];
-		methodNameK[0] = "Technique06";
-		methodNameK[1] = "IDO_HEKIN_4_S";
-		methodList_L.add(methodNameK);
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_4_L";
+		methodList_L.add(methodName.clone());
+
+
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_1_S";
+		methodList_L.add(methodName.clone());
+
+
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_2_S";
+		methodList_L.add(methodName.clone());
+
+
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_3_S";
+		methodList_L.add(methodName.clone());
+
+
+		methodName[0] = "Technique06";
+		methodName[1] = "IDO_HEKIN_4_S";
+		methodList_L.add(methodName.clone());
+
+
 
 		List<String[]> methodList_S = new ArrayList<String[]>();
 		String methodNameS[] = new String[2];
-		methodNameS[0] = "Technique08";
-		methodNameS[1] = "MACD_OR_IDOHEIKIN_S";
-		methodList_S.add(methodNameS);
-
-		String methodNameSA[] = new String[2];
-		methodNameSA[0] = "Technique08";
-		methodNameSA[1] = "MACD_0_OR_IDOHEIKIN_S";
-		methodList_S.add(methodNameSA);
-
-		String methodNameSB[] = new String[2];
-		methodNameSB[0] = "Technique06";
-		methodNameSB[1] = "idoHeikinTest_S";
-		methodList_S.add(methodNameSB);
-
-		String methodNameSC[] = new String[2];
-		methodNameSC[0] = "Technique04";
-		methodNameSC[1] = "MACD_M_S_OVER0";
-		methodList_S.add(methodNameSC);
-
-//		String methodNameSD[] = new String[2];
-//		methodNameSD[0] = "Technique04";
-//		methodNameSD[1] = "MACD_M_S_14";
-//		methodList_S.add(methodNameSD);
-
-		String methodNameSE[] = new String[2];
-		methodNameSE[0] = "Technique04";
-		methodNameSE[1] = "MACD_M_S";
-		methodList_S.add(methodNameSE);
-
-		String methodNameSF[] = new String[2];
-		methodNameSF[0] = "Technique08";
-		methodNameSF[1] = "MACD_IDOHEIKIN_S";
-		methodList_S.add(methodNameSF);
-
-
+//		methodNameS[0] = "Technique08";
+//		methodNameS[1] = "MACD_OR_IDOHEIKIN_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique08";
+//		methodNameS[1] = "MACD_0_OR_IDOHEIKIN_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "idoHeikinTest_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique04";
+//		methodNameS[1] = "MACD_M_S_OVER0";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+////		methodNameS[0] = "Technique04";
+////		methodNameS[1] = "MACD_M_S_14";
+////		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique04";
+//		methodNameS[1] = "MACD_M_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique08";
+//		methodNameS[1] = "MACD_IDOHEIKIN_S";
+//		methodList_S.add(methodNameS.clone());
 
 
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_1_L";
+		methodList_S.add(methodNameS.clone());
 
-		String methodNameSG[] = new String[2];
-		methodNameSG[0] = "Technique06";
-		methodNameSG[1] = "IDO_HEKIN_1_L";
-		methodList_S.add(methodNameSG);
 
-		String methodNameSH[] = new String[2];
-		methodNameSH[0] = "Technique06";
-		methodNameSH[1] = "IDO_HEKIN_2_L";
-		methodList_S.add(methodNameSH);
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_2_L";
+		methodList_S.add(methodNameS.clone());
 
-		String methodNameSI[] = new String[2];
-		methodNameSI[0] = "Technique06";
-		methodNameSI[1] = "IDO_HEKIN_3_L";
-		methodList_S.add(methodNameSI);
 
-		String methodNameSJ[] = new String[2];
-		methodNameSJ[0] = "Technique06";
-		methodNameSJ[1] = "IDO_HEKIN_4_L";
-		methodList_S.add(methodNameSJ);
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_3_L";
+		methodList_S.add(methodNameS.clone());
 
-		String methodNameSK[] = new String[2];
-		methodNameSK[0] = "Technique06";
-		methodNameSK[1] = "IDO_HEKIN_1_S";
-		methodList_S.add(methodNameSK);
 
-		String methodNameSL[] = new String[2];
-		methodNameSL[0] = "Technique06";
-		methodNameSL[1] = "IDO_HEKIN_2_S";
-		methodList_S.add(methodNameSL);
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_4_L";
+		methodList_S.add(methodNameS.clone());
 
-		String methodNameSM[] = new String[2];
-		methodNameSM[0] = "Technique06";
-		methodNameSM[1] = "IDO_HEKIN_3_S";
-		methodList_S.add(methodNameSM);
 
-		String methodNameSN[] = new String[2];
-		methodNameSN[0] = "Technique06";
-		methodNameSN[1] = "IDO_HEKIN_4_S";
-		methodList_S.add(methodNameSN);
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_1_S";
+		methodList_S.add(methodNameS.clone());
+
+
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_2_S";
+		methodList_S.add(methodNameS.clone());
+
+
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_3_S";
+		methodList_S.add(methodNameS.clone());
+
+
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "IDO_HEKIN_4_S";
+		methodList_S.add(methodNameS.clone());
 
 
 
 		List<String[]> checkDAYS = new ArrayList<String[]>();
-		String checkDAYA[] = new String[3];
-		String checkDAYB[] = new String[3];
-		String checkDAYC[] = new String[3];
-		checkDAYA[0] = "2016-01-01";
-		checkDAYA[1] = "2016-10-31";
-		checkDAYA[2] = "直近";
-		checkDAYS.add(checkDAYA);
+		String checkDAY[] = new String[3];
+		checkDAY[0] = "2016-01-01";
+		checkDAY[1] = "2016-10-31";
+		checkDAY[2] = "直近";
+		checkDAYS.add(checkDAY.clone());
 
-		checkDAYB[0] = "2007-01-01";
-		checkDAYB[1] = "2016-08-01";
-		checkDAYB[2] = "歴史";
-		checkDAYS.add(checkDAYB);
+		checkDAY[0] = "2007-01-01";
+		checkDAY[1] = "2016-08-01";
+		checkDAY[2] = "歴史";
+		checkDAYS.add(checkDAY.clone());
 
-		checkDAYC[0] = "2007-06-30";
-		checkDAYC[1] = "2009-07-01";
-		checkDAYC[2] = "リーマンショック";
-		checkDAYS.add(checkDAYC);
+		checkDAY[0] = "2007-06-30";
+		checkDAY[1] = "2009-07-01";
+		checkDAY[2] = "リーマンショック";
+		checkDAYS.add(checkDAY.clone());
 
 
 		for (int a = 0 ;a < checkDAYS.size() ; a++){
@@ -359,15 +355,17 @@ public class SagyoSpace {
 				L_CLASS = methodList_L.get(b)[0];
 				L_METHOD = methodList_L.get(b)[1];
 
+				System.out.println(L_METHOD);
+
 				for (int c = 0 ;c < methodList_S.size() ; c++){
-					paraDTO = new Bean_Parameta();
-					resultDTO = new Bean_Result();
-					nowDTO = new Bean_nowRecord();
-					shokisettei(paraDTO, nowDTO, resultDTO);
-
-
-					System.out.println("");
-					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
+//					paraDTO = new Bean_Parameta();
+//					resultDTO = new Bean_Result();
+//					nowDTO = new Bean_nowRecord();
+//					shokisettei(paraDTO, nowDTO, resultDTO);
+//
+//
+//					System.out.println("");
+//					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 				}
 			}
@@ -375,15 +373,14 @@ public class SagyoSpace {
 
 		//ここから繰り返し
 		ArrayList<String[]> methodList_ROOP_L = new ArrayList<String[]>();
-		String methodRoopNameA[] = new String[2];
-		methodRoopNameA[0] = "Technique04";
-		methodRoopNameA[1] = "MACD_M_L_ENTRY";
-		methodList_ROOP_L.add(methodRoopNameA);
+		String methodRoopName[] = new String[2];
+		methodRoopName[0] = "Technique04";
+		methodRoopName[1] = "MACD_M_L_ENTRY";
+		methodList_ROOP_L.add(methodRoopName.clone());
 
-		String methodRoopNameB[] = new String[2];
-		methodRoopNameB[0] = "Technique04";
-		methodRoopNameB[1] = "MACD_M_L_OVER0_ENTRY";
-		methodList_ROOP_L.add(methodRoopNameB);
+		methodRoopName[0] = "Technique04";
+		methodRoopName[1] = "MACD_M_L_OVER0_ENTRY";
+		methodList_ROOP_L.add(methodRoopName.clone());
 
 
 

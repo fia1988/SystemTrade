@@ -66,7 +66,7 @@ public class cloringDate {
 		//今日のサインの点灯をチェックする。
 		CheckSign.checkTodaySign();
 
-
+		s.closeConection();
 		long stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 
