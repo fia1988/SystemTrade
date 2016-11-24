@@ -1,16 +1,19 @@
 package technique;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import proparty.S;
-import proparty.controllDay;
+import proparty.TBL_Name;
+import accesarrySQL.SQLChecker;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
 
 import common.commonAP;
 
+import constant.COLUMN;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -49,7 +52,7 @@ public class CheckSign {
 		Technique98_CONST.setNowSTOCK();
 
 		commonAP.writeInLog("--------------買いフラグチェックここから------------------",logWriting.STOCK_RESULT_LOG_FLG);
-		checkMACD_L_SMALL(STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//		checkMACD_L_SMALL(STOCKList,SATISTICSList,INDEXList,ETFNameList);
 //		checkMACD_L(STOCKList,SATISTICSList,INDEXList,ETFNameList);
 		commonAP.writeInLog("--------------買いフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
 		commonAP.writeInLog("",logWriting.STOCK_RESULT_LOG_FLG);
@@ -58,6 +61,302 @@ public class CheckSign {
 		commonAP.writeInLog("--------------売りフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
 
 
+	}
+
+
+	private static void checkToday_L_Sign(
+			int size,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName,
+			Bean_Parameta paraDTO,
+			List<Bean_nowRecord> nowDTOList,
+			Bean_Result resultDTO,
+			ArrayList<String[]> STOCKList,
+			ArrayList<String[]> SATISTICSList,
+			ArrayList<String[]> INDEXList,
+			ArrayList<String[]> ETFNameList){
+
+		ArrayList<String> resultCodeList = new ArrayList<String>();
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,STOCKList);
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,SATISTICSList);
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,INDEXList);
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,ETFNameList);
+
+
+//		setEntryTBL(resultCodeList, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,"DD");
+	}
+
+
+	private static void checkToday_S_Sign(
+			int size,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName,
+			Bean_Parameta paraDTO,
+			List<Bean_nowRecord> nowDTOList,
+			Bean_Result resultDTO,
+			ArrayList<String[]> STOCKList,
+			ArrayList<String[]> SATISTICSList,
+			ArrayList<String[]> INDEXList,
+			ArrayList<String[]> ETFNameList){
+
+		ArrayList<String> resultCodeList = new ArrayList<String>();
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,STOCKList);
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
+		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,ETFNameList);
+
+
+//		setResultTBL(resultCodeList, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,"DD");
+	}
+
+	public static void setResultTBL(List<String> codeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type){
+		S s = new S();
+		s.getCon();
+		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
+		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+
+
+		for (int i = 0; i < codeList.size();i++){
+			String cate = SQLChecker.getCate(codeList.get(i), s);
+			String TBL = SQLChecker.getTBL(cate);
+			String code = codeList.get(i);
+			String TODAY = SQLChecker.getCateToday(cate,s);
+			String SQL = " select "
+						+ COLUMN.DAYTIME + "," + COLUMN.CLOSE
+						+ " from "
+						+ TBL
+						+ " where "
+						+ COLUMN.DAYTIME + " = '" + TODAY
+						+ "' and "
+						+ COLUMN.CODE + " = '" + code + "'";
+
+
+			try {
+				s.rs2 = s.sqlGetter().executeQuery(SQL);
+
+				double nowClose = 0.0;
+
+				while(s.rs2.next()){
+					nowClose =s.rs2.getDouble(	COLUMN.CLOSE	);
+				};
+
+
+				SQL = "select * from " + TBL_Name.KEEPLISTTBL
+						+ " where "
+						+ COLUMN.CODE + " = '" + code + "'"
+						+ " and "
+						+ COLUMN.TYPE + " = '" + type + "'"
+						+ " and "
+						+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+						+ " and "
+						+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+
+					s.rs2 = s.sqlGetter().executeQuery(SQL);
+
+
+					if ( s.rs2.next() ) {
+						//trueのとき、存在する。
+
+						String entryDay = s.rs2.getString(COLUMN.ENTRYDAY);
+						int entryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
+						double averagePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
+						double RETURN = ( nowClose - averagePrice ) / averagePrice;
+						int keepTime = commonAP.countDay(entryDay,TODAY, s);
+
+						SQL ="insert into " + TBL_Name.RESULTHISTROYTBL
+								+ " ( "
+								+ COLUMN.CODE										 + " , " //
+								+ COLUMN.ENTRYDAY									 + " , " //
+								+ COLUMN.EXITDAY									 + " , " //
+								+ COLUMN.AVERAGEPRICE								 + " , " //
+								+ COLUMN.EXITPRICE									 + " , " //
+								+ COLUMN.TYPE									 	 + " , " //
+								+ COLUMN.ENTRYTIMES								 + " , " //
+								+ COLUMN.RESULTRETURN									 + " , " //
+								+ COLUMN.KEEPTIME									 + " , " //
+								+ COLUMN.ENTRYMETHOD								 + " , " //
+								+ COLUMN.EXITMETHOD								 + "   " //
+								+ " ) value ( "
+								+ "'" + code + "'"	 + ","
+								+ "'" + entryDay			+ "'"	 + ","
+								+ "'" + TODAY			+ "'"	 + ","
+								+ averagePrice						 + ","
+								+ nowClose							 + ","
+								+ "'" + type			+ "'"	 + ","
+								+ entryTime							 + ","
+								+ RETURN							 + ","
+								+ keepTime							 + ","
+								+ "'" + Lmethod			+ "'"	 + ","
+								+ "'" + Smethod			+ "'"	 + " "
+								+ ")";
+
+						s.freeUpdateQuery(SQL);
+
+						//ここからはキープテーブルの削除
+						SQL = " delete from " + TBL_Name.KEEPLISTTBL
+								+ " where "
+								+ COLUMN.CODE + " = '" + code + "'"
+								+ " and "
+								+ COLUMN.TYPE + " = '" + type + "'"
+								+ " and "
+								+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+								+ " and "
+								+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+						s.freeUpdateQuery(SQL);
+
+						//売りサインの出た持ってる銘柄だけ表示する。ログ
+						commonAP.writeInLog("売:" + Smethod + ":" + code,logWriting.STOCK_RESULT_LOG_FLG);
+
+					}else{
+						//falseのとき存在しない
+
+					}
+
+
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+
+		}
+
+		s.closeConection();
+	}
+
+	public static void setEntryTBL(List<String> codeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type){
+
+
+		S s = new S();
+		s.getCon();
+		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
+		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+
+
+//		String TODAY = controllDay.getMAX_DD_INDEX(s);
+		for (int i = 0; i < codeList.size();i++){
+			String cate = SQLChecker.getCate(codeList.get(i), s);
+			String TODAY = SQLChecker.getCateToday(cate,s);
+
+			String code = codeList.get(i);
+			String TBL = SQLChecker.getTBL(cate);
+
+
+			String SQL = " select "
+						+ COLUMN.DAYTIME + "," + COLUMN.CLOSE
+						+ " from "
+						+ TBL
+						+ " where "
+						+ COLUMN.DAYTIME + " = '" + TODAY
+						+ "' and "
+						+ COLUMN.CODE + " = '" + code + "'";
+
+			try {
+				s.rs2 = s.sqlGetter().executeQuery(SQL);
+				double nowClose = 0.0;
+
+				boolean existCheck = false;
+				while(s.rs2.next()){
+					nowClose =s.rs2.getDouble(	COLUMN.CLOSE	);
+					existCheck = true;
+				};
+
+				SQL = "select * from " + TBL_Name.KEEPLISTTBL
+					+ " where "
+					+ COLUMN.CODE + " = '" + code + "'"
+					+ " and "
+					+ COLUMN.TYPE + " = '" + type + "'"
+					+ " and "
+					+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+					+ " and "
+					+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+
+				s.rs2 = s.sqlGetter().executeQuery(SQL);
+
+
+				if ( s.rs2.next() ) {
+					//trueのとき、存在する。
+
+					if( !s.rs2.getString(COLUMN.LASTENTRYDAY).equals(TODAY)){
+						//一緒じゃない場合だけ動く
+
+						int beforeEntryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
+						double beforeAveragePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
+						double nowAveragePrice = ( ( beforeAveragePrice * beforeEntryTime ) + nowClose ) / ( beforeEntryTime + 1);
+
+//						s.rs2.updateDouble(COLUMN.AVERAGEPRICE,nowAveragePrice);
+//						s.rs2.updateInt(COLUMN.ENTRYTIMES,beforeEntryTime + 1);
+//						s.rs2.updateString(COLUMN.LASTENTRYDAY,TODAY);
+
+
+						if(existCheck){
+							//
+							SQL = " update "+ TBL_Name.KEEPLISTTBL + " "
+								+ " set "
+								+ COLUMN.ENTRYTIMES + 	   " = " + ( beforeEntryTime + 1 ) + " , "
+								+ COLUMN.AVERAGEPRICE + 	   " = " + nowAveragePrice + " , "
+								+ COLUMN.LASTENTRYDAY + " = '" + TODAY + "' "
+								+ " where "
+								+ COLUMN.CODE + " = '" + code + "'"
+								+ " and "
+								+ COLUMN.TYPE + " = '" + type + "'"
+								+ " and "
+								+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+								+ " and "
+								+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+
+							s.freeUpdateQuery(SQL);
+							//買いサインログ
+							commonAP.writeInLog("買:" + Lmethod + ":" + code,logWriting.STOCK_RESULT_LOG_FLG);
+						}
+
+					}
+
+				}else{
+					//falseのとき存在しない
+					SQL ="insert into " + TBL_Name.KEEPLISTTBL
+						+ " ( "
+						+ COLUMN.CODE										 + " , " //
+						+ COLUMN.ENTRYDAY									 + " , " //
+						+ COLUMN.LASTENTRYDAY								 + " , " //
+						+ COLUMN.ENTRYTIMES								 + " , " //
+						+ COLUMN.AVERAGEPRICE								 + " , " //
+						+ COLUMN.TYPE									 	 + " , " //
+						+ COLUMN.ENTRYMETHOD								 + " , " //
+						+ COLUMN.EXITMETHOD								 + "   " //
+						+ " ) value ( "
+						+ "'" + code + "'"	 + ","
+						+ "'" + TODAY			+ "'"	 + ","
+						+ "'" + TODAY			+ "'"	 + ","
+						+ "1"							 + ","
+						+ nowClose							 + ","
+						+ "'" + type			+ "'"	 + ","
+						+ "'" + Lmethod			+ "'"	 + ","
+						+ "'" + Smethod			+ "'"	 + " "
+						+ ")";
+
+					s.freeUpdateQuery(SQL);
+					//買いサインログ
+					commonAP.writeInLog("買:" + Lmethod + ":" + code,logWriting.STOCK_RESULT_LOG_FLG);
+				}
+
+
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+			s.resetConnection();
+		}
+		s.closeConection();
 	}
 
 
@@ -77,10 +376,10 @@ public class CheckSign {
 		paraDTO.setWinWariai(2.1);
 		paraDTO.setLoseWariai(0.17);
 
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,STOCKList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,SATISTICSList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,INDEXList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,ETFNameList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,STOCKList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,SATISTICSList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,INDEXList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,ETFNameList);
 	}
 
 
@@ -99,11 +398,11 @@ public class CheckSign {
 		//損切ライン
 		paraDTO.setWinWariai(2.1);
 		paraDTO.setLoseWariai(0.47);
-
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,STOCKList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,SATISTICSList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,INDEXList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,ETFNameList);
+//
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,STOCKList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,SATISTICSList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,INDEXList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,ETFNameList);
 	}
 
 	private static void checkMACD_S(ArrayList<String[]> STOCKList,ArrayList<String[]> SATISTICSList,ArrayList<String[]> INDEXList,ArrayList<String[]> ETFNameList){
@@ -120,16 +419,16 @@ public class CheckSign {
 		paraDTO.setWinWariai(2.1);
 		paraDTO.setLoseWariai(0.47);
 
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,STOCKList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,SATISTICSList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,INDEXList);
-		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,ETFNameList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,STOCKList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,SATISTICSList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,INDEXList);
+//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,ETFNameList);
 
 
 	}
 
 	//nowDTOadressはなんでもいい
-	private static void checkTodaySignControll(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList){
+	private static void checkTodaySignControll(ArrayList<String> resultCodeList,String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList){
 		String check="";
 		if ( judge ){
 			//trueは買いフラグ
@@ -143,30 +442,8 @@ public class CheckSign {
 		 //01_stock_dd a
 		 //00_codelisttbl b
 		 //02_statistics_dd c
-		String day = "";
 		String cate = codeList.get(0)[1];
-		switch(cate){
-		case ReCord.CODE_01_STOCK:
-			day = controllDay.getMAX_DD_STOCK_ETF(s);
-			break;
-		case ReCord.CODE_02_SATISTICS:
-			day = controllDay.getMAX_DD_STATISTICS(s);
-			break;
-		case ReCord.CODE_03_INDEX:
-			day = controllDay.getMAX_DD_INDEX(s);
-			break;
-		case ReCord.CODE_04_ETF:
-			day = controllDay.getMAX_DD_STOCK_ETF(s);
-			break;
-		case ReCord.CODE_05_SAKIMONO:
-
-			break;
-		case ReCord.CODE_06_CURRENCY:
-
-			break;
-		default:
-			break;
-		}
+		String day = SQLChecker.getCateToday(cate,s);
 
 		//全銘柄でループする
 		for (int i=0;i< codeList.size();i++){
@@ -176,51 +453,48 @@ public class CheckSign {
 
 			if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,day,size,judge) == Technique98_CONST.TRADE_FLG ){
 
-				if (judge == false){
-
-					//持っている銘柄の場合は出力する。
-					for ( int n = 0; n < Technique98_CONST.getNowSTOCK().size() ; n++){
-						if (Technique98_CONST.getNowSTOCK().get(n).equals(code)){
-
-							commonAP.writeLog("【持ってる銘柄】",logWriting.STOCK_RESULT_LOG_FLG);
-							checkMotiResult = true;
-						}
-					}
-
-				}
-
-				if (judge ==true ){
-
-					boolean checkMoti = false;
-
-					for ( int n = 0; n < Technique98_CONST.getNowSTOCK().size() ; n++){
-						if (Technique98_CONST.getNowSTOCK().get(n).equals(code)){
-							checkMoti=true;
-							commonAP.writeLog("【持ってる銘柄】",logWriting.STOCK_RESULT_LOG_FLG);
-						}
-					}
-
-					if (checkMoti){
-						//持ってない銘柄が買いフラグ来た場合は追加する。
-						//持ってる場合はスキップ
-						Technique98_CONST.nowSTOCK.add(code);
-						checkMoti = false;
-					}
-
-//					System.out.println(Technique98_CONST.getNowSTOCK().size());
-				}
+//				if (judge == false){
+//
+//					//持っている銘柄の場合は出力する。
+//					for ( int n = 0; n < Technique98_CONST.getNowSTOCK().size() ; n++){
+//						if (Technique98_CONST.getNowSTOCK().get(n).equals(code)){
+//
+//							commonAP.writeLog("【持ってる銘柄】",logWriting.STOCK_RESULT_LOG_FLG);
+//							checkMotiResult = true;
+//						}
+//					}
+//
+//				}
+//
+//				if (judge ==true ){
+//
+//					boolean checkMoti = false;
+//
+//					for ( int n = 0; n < Technique98_CONST.getNowSTOCK().size() ; n++){
+//						if (Technique98_CONST.getNowSTOCK().get(n).equals(code)){
+//							checkMoti=true;
+//							commonAP.writeLog("【持ってる銘柄】",logWriting.STOCK_RESULT_LOG_FLG);
+//						}
+//					}
+//
+//					if (checkMoti){
+//						//持ってない銘柄が買いフラグ来た場合は追加する。
+//						//持ってる場合はスキップ
+//						Technique98_CONST.nowSTOCK.add(code);
+//						checkMoti = false;
+//					}
+//				}
 
 				if(judge){
-					//買いサイン表示
-					commonAP.writeInLog(check + ":" + packageName + "," + className + "," + methodName + ":" + code,logWriting.STOCK_RESULT_LOG_FLG);
-//					System.out.println(check + ":" + packageName + "," + className + "," + methodName + ":" + code);
+
+					resultCodeList.add(code);
+
 				}else{
 					//売りサイン表示
-					if (checkMotiResult){
-						//売りサインの出た持ってる銘柄だけ表示する。
-						commonAP.writeInLog(check + ":" + packageName + "," + className + "," + methodName + ":" + code,logWriting.STOCK_RESULT_LOG_FLG);
-//						System.out.println(check + ":" + packageName + "," + className + "," + methodName + ":" + code);
-					}
+//					if (checkMotiResult){
+
+						resultCodeList.add(code);
+//					}
 //					System.out.println(check + ":" + packageName + "," + className + "," + methodName + ":" + code);
 				}
 

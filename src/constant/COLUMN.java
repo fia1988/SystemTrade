@@ -540,12 +540,45 @@ public class COLUMN {
 	public static String ENTRYDAY												= "entryDay";
 	public static String ENTRYDAY_KATA											= ENTRYDAY  + " DATE not null ";
 
+	//前回購入日
+	public static String LASTENTRYDAY												= "lastEntryDay";
+	public static String LASTENTRYDAY_KATA											= LASTENTRYDAY  + " DATE not null ";
+
 	//購入回数
 	public static String ENTRYTIMES = "entryTimes";
 	public static String ENTRYTIMES_KATA = ENTRYTIMES + " smallint  unsigned ";
-//	 + " double unsigned  ";
 
+	//平均取得価格
+	public static String AVERAGEPRICE = "averagePrice";
+	public static String AVERAGEPRICE_KATA = AVERAGEPRICE + " double unsigned  ";
 
+	//タイプ。分足とか日足とかを区別
+	public static String TYPE = "type";
+	public static String TYPE_KATA = TYPE + " varchar(2)" ;
+
+	//エントリーmethod
+	public static String ENTRYMETHOD = "entryMethod";
+	public static String ENTRYMETHOD_KATA = ENTRYMETHOD + " varchar(100)" ;
+
+	//出口メソッド
+	public static String EXITMETHOD = "exitMethod";
+	public static String EXITMETHOD_KATA = EXITMETHOD + " varchar(100)" ;
+
+	//販売日、出口
+	public static String EXITDAY												= "exitDay";
+	public static String EXITDAY_KATA											= EXITDAY  + " DATE not null ";
+
+	//販売価格
+	public static String EXITPRICE = "exitPrice";
+	public static String EXITPRICE_KATA = EXITPRICE + " double unsigned  ";
+
+	//リターン
+	public static String RESULTRETURN								= "resultReturn";
+	public static String RESULTRETURN_KATA		 					= RESULTRETURN + " double ";
+
+	//保有期間
+	public static String KEEPTIME = "keepTime";
+	public static String KEEPTIME_KATA = KEEPTIME + " smallint unsigned   ";
 
 	//更新内容
 	public static String KOSIN													= "KOSIN";

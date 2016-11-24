@@ -76,7 +76,6 @@ public class Technique06 {
 				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 				return Technique98_CONST.TRADE_FLG;
 			}
-			return Technique98_CONST.TRADE_FLG;
 		}
 
 
@@ -145,7 +144,6 @@ public class Technique06 {
 				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 				return Technique98_CONST.TRADE_FLG;
 			}
-			return Technique98_CONST.TRADE_FLG;
 		}
 
 

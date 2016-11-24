@@ -25,9 +25,73 @@ public class createTBL {
 
 		createCodeList(s);
 
+		createKeepListTable(s);
+		createResulthistory(s);
+
 	}
 
-	public void createSEPARETE_DD(S s){
+	//保有銘柄一覧テーブル
+	private void createKeepListTable(S s){
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.ENTRYDAY_KATA									 + " , " //
+				+ COLUMN.LASTENTRYDAY_KATA								 + " , " //
+				+ COLUMN.ENTRYTIMES_KATA								 + " , " //
+				+ COLUMN.AVERAGEPRICE_KATA								 + " , " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ "primary key ("
+				+ COLUMN.CODE + " , " +  COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
+
+		SQL = create + TBL_Name.KEEPLISTTBL + colum;
+
+		s.freeUpdateQuery(SQL);
+
+	}
+
+	//
+	private void createResulthistory(S s){
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.ENTRYDAY_KATA									 + " , " //
+				+ COLUMN.EXITDAY_KATA									 + " , " //
+				+ COLUMN.AVERAGEPRICE_KATA								 + " , " //
+				+ COLUMN.EXITPRICE_KATA									 + " , " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.ENTRYTIMES_KATA								 + " , " //
+				+ COLUMN.RESULTRETURN_KATA									 + " , " //
+				+ COLUMN.KEEPTIME_KATA									 + " , " //
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ "primary key ("
+				+ COLUMN.CODE + " , " +  COLUMN.ENTRYDAY + " , " + COLUMN.ENTRYMETHOD + " , " + COLUMN.EXITMETHOD +  ")) ";
+
+		SQL = create + TBL_Name.RESULTHISTROYTBL + colum;
+
+		s.freeUpdateQuery(SQL);
+
+	}
+
+	private void createSEPARETE_DD(S s){
 		//SQL全文
 		String SQL;
 		//列名の取得

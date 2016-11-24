@@ -28,7 +28,7 @@ public class commonAP {
 	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
 //	static List<String[]> codeListwithiCate = new ArrayList<String>();
 
-	public static double countDay(String start,String end,S s){
+	public static int countDay(String start,String end,S s){
 
 		String SQL = " select count(" + COLUMN.DAYTIME + ")"
 					+" from " + TBL_Name.INDEX_DD
@@ -43,7 +43,7 @@ public class commonAP {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			s.rs.next();
 
-			return s.rs.getDouble(	"count(" + COLUMN.DAYTIME + ")"	);
+			return s.rs.getInt(	"count(" + COLUMN.DAYTIME + ")"	);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -257,7 +257,7 @@ public class commonAP {
 			return getDev(list,judge,a);
 		}
 
-		
+
 		List<Long> doubleListCopy = new ArrayList<Long>();
 		List<Long> doubleList = new ArrayList<Long>();
 

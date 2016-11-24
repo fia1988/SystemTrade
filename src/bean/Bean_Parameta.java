@@ -27,7 +27,7 @@ public class Bean_Parameta {
 	//一回のエントリーで支払う金額、単位万円
 	private double entryMoney = 1.2;
 	//観測期間。単位は日
-	private double obTerm = 10;
+	private int obTerm = 10;
 
 	//観測期間にかかわるデータ
 	private String obStartDay;
@@ -193,11 +193,11 @@ public class Bean_Parameta {
 		this.entryMoney = entryMoney;
 	}
 
-	public double getObTerm() {
+	public int getObTerm() {
 		return obTerm;
 	}
 
-	public void setObTerm(double obTerm) {
+	public void setObTerm(int obTerm) {
 		this.obTerm = obTerm;
 	}
 

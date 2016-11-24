@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import proparty.S;
 import proparty.TBL_Name;
+import proparty.controllDay;
 import constant.COLUMN;
 import constant.ReCord;
 
@@ -30,7 +31,33 @@ public class SQLChecker {
 		return SQL;
 	}
 
+	public static String getCateToday(String cate,S s){
+		String TODAY = "";
+		switch(cate){
+		case ReCord.CODE_01_STOCK:
+			TODAY = controllDay.getMAX_DD_STOCK_ETF(s);
+			break;
 
+		case ReCord.CODE_02_SATISTICS:
+			TODAY = controllDay.getMAX_DD_STATISTICS(s);
+			break;
+
+		case ReCord.CODE_03_INDEX:
+			TODAY = controllDay.getMAX_DD_INDEX(s);
+			break;
+
+		case ReCord.CODE_04_ETF:
+			TODAY = controllDay.getMAX_DD_STOCK_ETF(s);
+			break;
+
+		default:
+			System.out.println("SQLChecker.getCateTodayなんかよくわからないの来た：" + cate);
+			break;
+		}
+		
+		return TODAY;
+	}
+	
 	public static String getCate(String code,S s){
 
 		String SQL = " select "
