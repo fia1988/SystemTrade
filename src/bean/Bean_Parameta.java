@@ -8,6 +8,28 @@ public class Bean_Parameta {
 	//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
 	private boolean checkRenzokuSign = false;
 
+	//ランダム売買フラグ
+	private boolean rumFLG = false;
+	private int rumNumber = 0;
+
+
+	public boolean getRumFLG() {
+		return rumFLG;
+	}
+
+	public int getRumNumber() {
+
+		return rumNumber;
+	}
+
+	public void setRumNumber(int rumNumber) {
+		rumFLG = true;
+		this.rumNumber = rumNumber;
+	}
+
+
+
+
 	//勝った場合の値段の比率。
 	private Double winWariai	=	100.0;
 	private Double loseWariai	=	0.0001;

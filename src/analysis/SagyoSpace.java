@@ -267,7 +267,7 @@ public class SagyoSpace {
 				L_CLASS = methodList_L.get(b)[0];
 				L_METHOD = methodList_L.get(b)[1];
 
-				System.out.println(L_METHOD);
+
 
 				for (int c = 0 ;c < methodList_S.size() ; c++){
 					paraDTO = new Bean_Parameta();

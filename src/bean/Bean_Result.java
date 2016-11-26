@@ -444,6 +444,9 @@ public class Bean_Result {
 				//※上のhalfだけカットする。
 				double getCutAveEntryTimes	=	commonAP.getAverageCut(getEntryTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
 //				double getCutAveEntryTimes	=	commonAP.getDev(getEntryTimeList(),true,"",	half,half);
+				//上下カットリスク
+				double getCutAveRisk = commonAP.getDev(getReturnList(),		true,	half,half);
+
 				commonAP.writeInLog("" ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("Lメソッド：" + L_packageName + "." + L_className + "." + L_methodName ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("Sメソッド：" + S_packageName + "." + S_className + "." + S_methodName ,logWriting.BACKTEST_LOG_FLG);
@@ -475,7 +478,7 @@ public class Bean_Result {
 //				commonAP.writeInLog("上下1%カット見込みリターン："		+ ( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) ) / ( getReturnList().size() * (paraDTO.getCutWariai()) ),logWriting.BACKTEST_LOG_FLG);
 
 
-				commonAP.writeInLog("上下1%カットリスク："				+ commonAP.getDev(getReturnList(),		true,	half,half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下1%カットリスク："				+ ( getCutAveRisk * 100 ) +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("上" + half * 100 +  "%カット平均保有期間："			+ aveCutKeepDays,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("上下1%カット保有期間標準偏差："		+ commonAP.getDev(getKeepDayList(),		true,"",half,half),logWriting.BACKTEST_LOG_FLG);
 
@@ -507,7 +510,7 @@ public class Bean_Result {
 
 //					commonAP.writeInLog("想定金利："	+	( (100 * paraDTO.getEntryMoney() * getCutAveReturn * dayRightUpTimes * yearDay) /needMoney )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("想定金利："	+	( (100 *  getCutAveReturn * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
-
+					commonAP.writeInLog("想定リスク："	+	( (100 *  getCutAveRisk * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("開始時期：" + paraDTO.getObStartDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() + " 営業日",logWriting.BACKTEST_LOG_FLG);
