@@ -7,6 +7,7 @@ import java.util.List;
 import proparty.S;
 import proparty.TBL_Name;
 import accesarrySQL.SQLChecker;
+import analysis.SagyoSpace;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
@@ -52,11 +53,30 @@ public class CheckSign {
 		Technique98_CONST.setNowSTOCK();
 
 		commonAP.writeInLog("--------------買いフラグチェックここから------------------",logWriting.STOCK_RESULT_LOG_FLG);
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		List<Bean_nowRecord> nowDTOList = new ArrayList<>();
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		checkToday_L_Sign(1,"technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
 //		checkMACD_L_SMALL(STOCKList,SATISTICSList,INDEXList,ETFNameList);
 //		checkMACD_L(STOCKList,SATISTICSList,INDEXList,ETFNameList);
 		commonAP.writeInLog("--------------買いフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
+
+
 		commonAP.writeInLog("",logWriting.STOCK_RESULT_LOG_FLG);
+
+
 		commonAP.writeInLog("--------------売りフラグチェックここから------------------",logWriting.STOCK_RESULT_LOG_FLG);
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		nowDTOList = new ArrayList<>();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		checkToday_S_Sign(1,"technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
 //		checkMACD_S(STOCKList,SATISTICSList,INDEXList,ETFNameList);
 		commonAP.writeInLog("--------------売りフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
 
@@ -87,7 +107,7 @@ public class CheckSign {
 		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,ETFNameList);
 
 
-//		setEntryTBL(resultCodeList, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,"DD");
+		setEntryTBL(resultCodeList, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,"DD");
 	}
 
 
@@ -108,13 +128,13 @@ public class CheckSign {
 			ArrayList<String[]> ETFNameList){
 
 		ArrayList<String> resultCodeList = new ArrayList<String>();
-		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,STOCKList);
-		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
-		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
-		checkTodaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,ETFNameList);
+		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,STOCKList);
+		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
+		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
+		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,ETFNameList);
 
 
-//		setResultTBL(resultCodeList, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,"DD");
+		setResultTBL(resultCodeList, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,"DD");
 	}
 
 	public static void setResultTBL(List<String> codeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type){
@@ -488,7 +508,7 @@ public class CheckSign {
 				if(judge){
 
 					resultCodeList.add(code);
-
+					
 				}else{
 					//売りサイン表示
 //					if (checkMotiResult){

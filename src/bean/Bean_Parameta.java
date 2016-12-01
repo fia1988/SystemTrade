@@ -12,6 +12,46 @@ public class Bean_Parameta {
 	private boolean rumFLG = false;
 	private int rumNumber = 0;
 
+	
+	boolean stockFLG = false;
+	boolean indexFLG = false;
+	boolean satisFLG = false;
+	boolean etfFLG = false;
+	
+	
+	
+
+	public boolean isStockFLG() {
+		return stockFLG;
+	}
+
+	public void setStockFLG(boolean stockFLG) {
+		this.stockFLG = stockFLG;
+	}
+
+	public boolean isIndexFLG() {
+		return indexFLG;
+	}
+
+	public void setIndexFLG(boolean indexFLG) {
+		this.indexFLG = indexFLG;
+	}
+
+	public boolean isSatisFLG() {
+		return satisFLG;
+	}
+
+	public void setSatisFLG(boolean satisFLG) {
+		this.satisFLG = satisFLG;
+	}
+
+	public boolean isEtfFLG() {
+		return etfFLG;
+	}
+
+	public void setEtfFLG(boolean etfFLG) {
+		this.etfFLG = etfFLG;
+	}
 
 	public boolean getRumFLG() {
 		return rumFLG;

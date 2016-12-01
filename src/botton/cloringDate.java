@@ -2,6 +2,7 @@ package botton;
 
 import proparty.S;
 import proparty.controllDay;
+import technique.CheckSign;
 import accesarrySQL.OneRecord_Update;
 import accesarrySQL.SEPARATE_CHECK;
 
@@ -63,7 +64,7 @@ public class cloringDate {
 
 
 		//今日のサインの点灯をチェックする。
-//		CheckSign.checkTodaySign();
+		CheckSign.checkTodaySign();
 
 		s.closeConection();
 		long stop = System.currentTimeMillis();

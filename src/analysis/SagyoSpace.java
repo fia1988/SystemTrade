@@ -36,6 +36,8 @@ public class SagyoSpace {
 		paraDTO.setTesuRYO(0.012);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
+
+//		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		System.out.println("【出来高"+ i + "】");
 	}
 
@@ -50,14 +52,142 @@ public class SagyoSpace {
 	}
 
 	public static void testCase28(){
-		ArrayList<String> code = new ArrayList<String>();
-		code.add("I101");
-		code.add("I102");
-		code.add("I306");
-		code.add("1301―T");
-//		CheckSign.setEntryTBL(code,"technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S","DD");
+
+
+		long start = System.currentTimeMillis();
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		String startDD	=	"";
+		String endDD		=	"";
+		String L_CLASS = "";
+		String L_METHOD = "";
+
+
+//		List<Double> returnList = new ArrayList();
+		List<String[]> methodList_L = new ArrayList<String[]>();
+		String methodName[] = new String[2];
+		methodName[0] = "Technique04";
+		methodName[1] = "MACD_M_L_OVER0";
+		methodList_L.add(methodName.clone());
+
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L_OVER0";
+//		methodList_L.add(methodName.clone());
+
+		List<String[]> methodList_S = new ArrayList<String[]>();
+		String methodNameS[] = new String[2];
+		methodNameS[0] = "Technique08";
+		methodNameS[1] = "MACD_IDOHEIKIN_S";
+		methodList_S.add(methodNameS.clone());
+
+		methodNameS[0] = "Technique04";
+		methodNameS[1] = "MACD_M_L_OVER0";
+		methodList_S.add(methodNameS.clone());
+
+
+		List<String[]> checkDAYS = new ArrayList<String[]>();
+		String checkDAY[] = new String[3];
+//		checkDAY[0] = "2016-01-01";
+//		checkDAY[1] = "2016-10-31";
+//		checkDAY[2] = "直近";
+//		checkDAYS.add(checkDAY.clone());
 //
-//		CheckSign.setResultTBL(code,"technique","Technique06","idoHeikinTest_L","technique","Technique06","idoHeikinTest_S","DD");
+		checkDAY[0] = "2007-01-01";
+		checkDAY[1] = "2016-08-01";
+		checkDAY[2] = "歴史";
+		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2007-06-30";
+//		checkDAY[1] = "2009-07-01";
+//		checkDAY[2] = "リーマンショック";
+//		checkDAYS.add(checkDAY.clone());
+
+
+//		checkDAY[0] = "2007-01-01";
+//		checkDAY[1] = "2007-12-31";
+//		checkDAY[2] = "2007";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2008-01-01";
+//		checkDAY[1] = "2008-12-31";
+//		checkDAY[2] = "2008";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2009-01-01";
+//		checkDAY[1] = "2009-12-31";
+//		checkDAY[2] = "2009";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2010-01-01";
+//		checkDAY[1] = "2010-12-31";
+//		checkDAY[2] = "2010";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2011-01-01";
+//		checkDAY[1] = "2011-12-31";
+//		checkDAY[2] = "2011";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2012-01-01";
+//		checkDAY[1] = "2012-12-31";
+//		checkDAY[2] = "2012";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2013-01-01";
+//		checkDAY[1] = "2013-12-31";
+//		checkDAY[2] = "2013";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2014-01-01";
+//		checkDAY[1] = "2014-12-31";
+//		checkDAY[2] = "2014";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2015-01-01";
+//		checkDAY[1] = "2015-12-31";
+//		checkDAY[2] = "2015";
+//		checkDAYS.add(checkDAY.clone());
+//
+//		checkDAY[0] = "2016-01-01";
+//		checkDAY[1] = "2016-12-31";
+//		checkDAY[2] = "2016";
+//		checkDAYS.add(checkDAY.clone());
+
+
+		for (int a = 0 ;a < checkDAYS.size() ; a++){
+			System.out.println("");
+			System.out.println("--------" + checkDAYS.get(a)[2] + "--------");
+			startDD	=	checkDAYS.get(a)[0];
+			endDD		=	checkDAYS.get(a)[1];
+
+			for (int b = 0 ;b < methodList_L.size() ; b++){
+				L_CLASS = methodList_L.get(b)[0];
+				L_METHOD = methodList_L.get(b)[1];
+
+
+
+				for (int c = 0 ;c < methodList_S.size() ; c++){
+					paraDTO = new Bean_Parameta();
+					resultDTO = new Bean_Result();
+					nowDTO = new Bean_nowRecord();
+					shokisettei(paraDTO, nowDTO, resultDTO);
+//					paraDTO.getRumNumber(100);
+					paraDTO.setTesuRYO(0.0);
+					System.out.println("");
+					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+				}
+			}
+		}
+
+		long stop = System.currentTimeMillis();
+	    System.out.println("実行にかかった時間は " + (stop - start) + "ﾐﾘ秒です。");
+
 	}
 
 
@@ -100,59 +230,59 @@ public class SagyoSpace {
 //		List<Double> returnList = new ArrayList();
 		List<String[]> methodList_L = new ArrayList<String[]>();
 		String methodName[] = new String[2];
-		methodName[0] = "Technique04";
-		methodName[1] = "MACD_M_L_OVER0";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "idoHeikinTest_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique04";
-		methodName[1] = "MACD_M_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique08";
-		methodName[1] = "MACD_IDOHEIKIN_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_1_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_2_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_3_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_4_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_1_S";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_2_S";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_3_S";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L_OVER0";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "idoHeikinTest_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique08";
+//		methodName[1] = "MACD_IDOHEIKIN_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_1_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_2_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_3_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_4_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_1_S";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_2_S";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_3_S";
+//		methodList_L.add(methodName.clone());
 
 
 		methodName[0] = "Technique06";
@@ -163,64 +293,64 @@ public class SagyoSpace {
 
 		List<String[]> methodList_S = new ArrayList<String[]>();
 		String methodNameS[] = new String[2];
-		methodNameS[0] = "Technique08";
-		methodNameS[1] = "MACD_OR_IDOHEIKIN_S";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique08";
-		methodNameS[1] = "MACD_0_OR_IDOHEIKIN_S";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "idoHeikinTest_S";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique04";
-		methodNameS[1] = "MACD_M_S_OVER0";
-		methodList_S.add(methodNameS.clone());
-
-
-//		methodNameS[0] = "Technique04";
-//		methodNameS[1] = "MACD_M_S_14";
+//		methodNameS[0] = "Technique08";
+//		methodNameS[1] = "MACD_OR_IDOHEIKIN_S";
 //		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique04";
-		methodNameS[1] = "MACD_M_S";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique08";
-		methodNameS[1] = "MACD_IDOHEIKIN_S";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "IDO_HEKIN_1_L";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "IDO_HEKIN_2_L";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "IDO_HEKIN_3_L";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "IDO_HEKIN_4_L";
-		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "IDO_HEKIN_1_S";
-		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique08";
+//		methodNameS[1] = "MACD_0_OR_IDOHEIKIN_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "idoHeikinTest_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique04";
+//		methodNameS[1] = "MACD_M_S_OVER0";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+////		methodNameS[0] = "Technique04";
+////		methodNameS[1] = "MACD_M_S_14";
+////		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique04";
+//		methodNameS[1] = "MACD_M_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique08";
+//		methodNameS[1] = "MACD_IDOHEIKIN_S";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "IDO_HEKIN_1_L";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "IDO_HEKIN_2_L";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "IDO_HEKIN_3_L";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "IDO_HEKIN_4_L";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//		methodNameS[0] = "Technique06";
+//		methodNameS[1] = "IDO_HEKIN_1_S";
+//		methodList_S.add(methodNameS.clone());
 
 
 		methodNameS[0] = "Technique06";
@@ -241,10 +371,10 @@ public class SagyoSpace {
 
 		List<String[]> checkDAYS = new ArrayList<String[]>();
 		String checkDAY[] = new String[3];
-		checkDAY[0] = "2016-01-01";
-		checkDAY[1] = "2016-10-31";
-		checkDAY[2] = "直近";
-		checkDAYS.add(checkDAY.clone());
+//		checkDAY[0] = "2016-01-01";
+//		checkDAY[1] = "2016-10-31";
+//		checkDAY[2] = "直近";
+//		checkDAYS.add(checkDAY.clone());
 
 		checkDAY[0] = "2007-01-01";
 		checkDAY[1] = "2016-08-01";

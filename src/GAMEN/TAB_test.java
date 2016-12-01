@@ -159,6 +159,18 @@ public class TAB_test extends JPanel {
 		add(textField_1);
 		textField_1.setColumns(10);
 		textField_1.setText("testCase");
+		
+		JButton button_3 = new JButton("キープテーブル削除");
+		button_3.setBounds(594, 272, 119, 27);
+		add(button_3);
+		
+		JButton button_4 = new JButton("リザルトテーブル削除");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_4.setBounds(594, 230, 119, 27);
+		add(button_4);
 
 
 

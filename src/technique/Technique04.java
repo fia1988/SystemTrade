@@ -1,6 +1,7 @@
 package technique;
 
 import java.util.List;
+import java.util.Random;
 
 import bean.Bean_Parameta;
 import bean.Bean_Result;
@@ -395,6 +396,17 @@ public class Technique04 {
 
 
 		if ( P_MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG ){
+
+			//RUMフラグがtrueだったら一定確率でノーゲームを返す。
+			if ( paraDTO.getRumFLG() ) {
+				//Randomクラスのインスタンス化
+		        Random rnd = new Random();
+		        int ran = rnd.nextInt(paraDTO.getRumNumber()) + 1;
+		        if ( ran != paraDTO.getRumNumber()){
+		        	return Technique98_CONST.NO_GAME;
+		        }
+			}
+
 			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 			return Technique98_CONST.TRADE_FLG;
 		}

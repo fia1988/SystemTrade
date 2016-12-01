@@ -1,7 +1,6 @@
 package technique;
 
 import java.util.List;
-import java.util.Random;
 
 import bean.Bean_Parameta;
 import bean.Bean_Result;
@@ -66,15 +65,15 @@ public class Technique00_Common {
 		//NOGAMEで返す
 
 
-		//RUMフラグがtrueだったら一定確率でノーゲームを返す。
-		if ( paraDTO.getRumFLG() ) {
-			//Randomクラスのインスタンス化
-	        Random rnd = new Random();
-	        int ran = rnd.nextInt(paraDTO.getRumNumber());
-	        if ( ran != paraDTO.getRumNumber()){
-	        	return Technique98_CONST.NO_GAME;
-	        }			
-		}
+//		//RUMフラグがtrueだったら一定確率でノーゲームを返す。
+//		if ( paraDTO.getRumFLG() ) {
+//			//Randomクラスのインスタンス化
+//	        Random rnd = new Random();
+//	        int ran = rnd.nextInt(paraDTO.getRumNumber());
+//	        if ( ran != paraDTO.getRumNumber() + 1){
+//	        	return Technique98_CONST.NO_GAME;
+//	        }
+//		}
 
 		//取引量の少ない銘柄は計算しない
 		if (nowDTOList.get(nowDTOadress).getNowDEKI_01() < paraDTO.getMinDeki()	){

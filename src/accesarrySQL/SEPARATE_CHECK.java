@@ -104,6 +104,14 @@ public class SEPARATE_CHECK {
 
 					s.freeUpdateQuery(SQL);
 
+					//キープテーブルの更新をする。
+					SQL = " update " + TBL_Name.KEEPLISTTBL
+							+ " set "
+							+ getColumnSEPA(COLUMN.AVERAGEPRICE		,	RATE,	enXan_1) + " , "
+							+ " where "
+							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
+
+					s.freeUpdateQuery(SQL);
 
 					//2010-01-01以前、権利付最終売買日以後4営業日は取引期間後4営業日を営業停止期間としている。これのレコードを削除する。
 					if("2010-01-01".compareTo(day_kenri_last) > 0){
@@ -178,7 +186,7 @@ public class SEPARATE_CHECK {
 				e.printStackTrace();
 		}
 
-		
+
 		s.closeConection();
 
 
