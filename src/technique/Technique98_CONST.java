@@ -1,6 +1,5 @@
 package technique;
 
-import java.util.ArrayList;
 
 public class Technique98_CONST {
 	public static  final  int NO_RESULT			=	99999;
@@ -34,41 +33,6 @@ public class Technique98_CONST {
 	//ここからクラス名
 	public static final String CLASS_04 = "Technique04";
 
-	//今保持している銘柄
-	static ArrayList<String> nowSTOCK = new ArrayList<String>();
-	public static void setNowSTOCK() {
-		nowSTOCK = new ArrayList<String>();
 
-
-
-//		nowSTOCK.add("1352―T");
-//		nowSTOCK.add("1376―T");
-//		nowSTOCK.add("1377―T");
-//		nowSTOCK.add("1400―T");
-//		nowSTOCK.add("1414―T");
-//		nowSTOCK.add("1417―T");
-//		nowSTOCK.add("1418―T");
-//		nowSTOCK.add("1420―T");
-//		nowSTOCK.add("1429―T");
-//		nowSTOCK.add("1435―T");
-//		nowSTOCK.add("1514―T");
-//		nowSTOCK.add("1663―T");
-//		nowSTOCK.add("1712―T");
-//		nowSTOCK.add("1719―T");
-//		nowSTOCK.add("1720―T");
-//		nowSTOCK.add("1722―T");
-//		nowSTOCK.add("1762―T");
-//		nowSTOCK.add("1766―T");
-//		nowSTOCK.add("1775―T");
-//		nowSTOCK.add("1782―T");
-//		nowSTOCK.add("1780―T");
-//		nowSTOCK.add("1419―T");
-//		nowSTOCK.add("1737―T");
-
-
-	}
-	public static ArrayList<String> getNowSTOCK() {
-		return nowSTOCK;
-	}
 
 }

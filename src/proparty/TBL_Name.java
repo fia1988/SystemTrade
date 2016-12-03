@@ -17,6 +17,7 @@ public class TBL_Name {
 
 	public static String CODELISTTBL     = "00_codeListTBL";
 
+	public static String LASTORDER     = "95_lastOrderTBL";
 	public static String KEEPLISTTBL     = "96_keepListTBL";
 	public static String RESULTHISTROYTBL     = "97_resultHistryTBL";
 

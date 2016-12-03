@@ -580,6 +580,10 @@ public class COLUMN {
 	public static String KEEPTIME = "keepTime";
 	public static String KEEPTIME_KATA = KEEPTIME + " smallint unsigned   ";
 
+	//売買サインフラグ。true買い、false売り
+	public static String SIGN_FLG											= "sign_flg";
+	public static String SIGN_FLG_KATA 									= SIGN_FLG + " tinyint(1) ";
+
 	//更新内容
 	public static String KOSIN													= "KOSIN";
 	public static String KOSIN_KATA	 											= KOSIN + " varchar(30) ";

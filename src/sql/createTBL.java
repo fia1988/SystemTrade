@@ -27,7 +27,33 @@ public class createTBL {
 
 		createKeepListTable(s);
 		createResulthistory(s);
+		createLastOrderTable(s);
 
+	}
+
+	private void createLastOrderTable(S s){
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.DAYTIME_KATA									 + " , " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.CATE_FLG_KATA									 	 + " , " //
+				+ COLUMN.SIGN_FLG_KATA								 	 + " , " //売買サインフラグ。true買い、false売り
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ "primary key ("
+				+ COLUMN.CODE + " , "+ COLUMN.CATE_FLG + " , "+  COLUMN.DAYTIME + " , "+ COLUMN.SIGN_FLG + " , "+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
+
+		SQL = create + TBL_Name.LASTORDER + colum;
+
+		s.freeUpdateQuery(SQL);
 	}
 
 	//保有銘柄一覧テーブル
