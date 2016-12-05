@@ -18,8 +18,18 @@ public class Bean_Parameta {
 	boolean satisFLG = false;
 	boolean etfFLG = false;
 	
+	boolean eliteFLG = false;
 	
 	
+	
+
+	public boolean getEliteFLG() {
+		return eliteFLG;
+	}
+
+	public void setOnEliteFLG() {
+		this.eliteFLG = true;
+	}
 
 	public boolean isStockFLG() {
 		return stockFLG;

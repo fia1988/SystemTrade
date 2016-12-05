@@ -447,6 +447,8 @@ public class CheckSign {
 		for (int i = 0; i < codeList.size();i++){
 			String cate = codeList.get(i)[2];
 			String signDay = codeList.get(i)[5];
+			String TODAY = SQLChecker.getCateToday(cate,s);
+
 
 			String code = codeList.get(i)[0];
 			String TBL = SQLChecker.getTBL(cate);
@@ -489,7 +491,7 @@ public class CheckSign {
 				if ( s.rs2.next() ) {
 					//trueのとき、存在する。
 
-					if( !s.rs2.getString(COLUMN.LASTENTRYDAY).equals(signDay)){
+					if( !s.rs2.getString(COLUMN.LASTENTRYDAY).equals(TODAY)){
 						//一緒じゃない場合だけ動く
 
 						int beforeEntryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
@@ -507,7 +509,7 @@ public class CheckSign {
 								+ " set "
 								+ COLUMN.ENTRYTIMES + 	   " = " + ( beforeEntryTime + 1 ) + " , "
 								+ COLUMN.AVERAGEPRICE + 	   " = " + nowAveragePrice + " , "
-								+ COLUMN.LASTENTRYDAY + " = '" + signDay + "' "
+								+ COLUMN.LASTENTRYDAY + " = '" + TODAY + "' "
 								+ " where "
 								+ COLUMN.CODE + " = '" + code + "'"
 								+ " and "
@@ -537,8 +539,8 @@ public class CheckSign {
 								+ COLUMN.EXITMETHOD								 + "   " //
 								+ " ) value ( "
 								+ "'" + code + "'"	 + ","
-								+ "'" + signDay			+ "'"	 + ","
-								+ "'" + signDay			+ "'"	 + ","
+								+ "'" + TODAY			+ "'"	 + ","
+								+ "'" + TODAY			+ "'"	 + ","
 								+ "1"							 + ","
 								+ nowOpen							 + ","
 								+ "'" + type			+ "'"	 + ","

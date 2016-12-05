@@ -26,12 +26,12 @@ public class SagyoSpace {
 		resultDTO.setOffResultDay();
 //		resultDTO.setOffResultCode();
 //		resultDTO.setOnResultDay();
-//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1;
 		paraDTO.setMinDeki(i);
-		resultDTO.setShoritu(0.8);
-		resultDTO.setTotalGames(50);
+		resultDTO.setShoritu(0.90);
+		resultDTO.setTotalGames(25);
 		//手数料
 		paraDTO.setTesuRYO(0.012);
 		//統計データを使わない場合
@@ -65,26 +65,26 @@ public class SagyoSpace {
 		String endDD		=	"";
 		String L_CLASS = "";
 		String L_METHOD = "";
-		
+
 		List<String[]> methodList_L = new ArrayList<String[]>();
 		String methodName[] = new String[2];
 		methodName[0] = "Technique04";
 		methodName[1] = "MACD_M_L_OVER0";
 		methodList_L.add(methodName.clone());
-		
+
 		List<String[]> methodList_S = new ArrayList<String[]>();
 		String methodNameS[] = new String[2];
 		methodNameS[0] = "Technique08";
 		methodNameS[1] = "MACD_IDOHEIKIN_S";
 		methodList_S.add(methodNameS.clone());
-		
+
 		List<String[]> checkDAYS = new ArrayList<String[]>();
 		String checkDAY[] = new String[3];
 		checkDAY[0] = "2016-12-02";
 		checkDAY[1] = "2016-12-06";
 		checkDAY[2] = "直近";
 		checkDAYS.add(checkDAY.clone());
-		
+
 		for (int a = 0 ;a < checkDAYS.size() ; a++){
 			System.out.println("");
 			System.out.println("--------" + checkDAYS.get(a)[2] + "--------");
@@ -103,7 +103,8 @@ public class SagyoSpace {
 					nowDTO = new Bean_nowRecord();
 					shokisettei(paraDTO, nowDTO, resultDTO);
 //					paraDTO.getRumNumber(100);
-					paraDTO.setTesuRYO(0.0);
+//					paraDTO.setTesuRYO(0.0);
+					paraDTO.setOnEliteFLG();
 					System.out.println("");
 					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 
@@ -146,7 +147,7 @@ public class SagyoSpace {
 		methodList_S.add(methodNameS.clone());
 
 		methodNameS[0] = "Technique04";
-		methodNameS[1] = "MACD_M_L_OVER0";
+		methodNameS[1] = "MACD_M_S_OVER0";
 		methodList_S.add(methodNameS.clone());
 
 
@@ -157,65 +158,70 @@ public class SagyoSpace {
 //		checkDAY[2] = "直近";
 //		checkDAYS.add(checkDAY.clone());
 //
-		checkDAY[0] = "2007-01-01";
-		checkDAY[1] = "2016-08-01";
-		checkDAY[2] = "歴史";
-		checkDAYS.add(checkDAY.clone());
-//
+//		checkDAY[0] = "2007-01-01";
+//		checkDAY[1] = "2016-08-01";
+//		checkDAY[2] = "歴史";
+//		checkDAYS.add(checkDAY.clone());
+
 //		checkDAY[0] = "2007-06-30";
 //		checkDAY[1] = "2009-07-01";
 //		checkDAY[2] = "リーマンショック";
 //		checkDAYS.add(checkDAY.clone());
 
+//
+		checkDAY[0] = "2007-01-01";
+		checkDAY[1] = "2007-12-31";
+		checkDAY[2] = "2007";
+		checkDAYS.add(checkDAY.clone());
 
-//		checkDAY[0] = "2007-01-01";
-//		checkDAY[1] = "2007-12-31";
-//		checkDAY[2] = "2007";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2008-01-01";
-//		checkDAY[1] = "2008-12-31";
-//		checkDAY[2] = "2008";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2009-01-01";
-//		checkDAY[1] = "2009-12-31";
-//		checkDAY[2] = "2009";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2010-01-01";
-//		checkDAY[1] = "2010-12-31";
-//		checkDAY[2] = "2010";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2011-01-01";
-//		checkDAY[1] = "2011-12-31";
-//		checkDAY[2] = "2011";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2012-01-01";
-//		checkDAY[1] = "2012-12-31";
-//		checkDAY[2] = "2012";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2013-01-01";
-//		checkDAY[1] = "2013-12-31";
-//		checkDAY[2] = "2013";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2014-01-01";
-//		checkDAY[1] = "2014-12-31";
-//		checkDAY[2] = "2014";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2015-01-01";
-//		checkDAY[1] = "2015-12-31";
-//		checkDAY[2] = "2015";
-//		checkDAYS.add(checkDAY.clone());
-//
-//		checkDAY[0] = "2016-01-01";
-//		checkDAY[1] = "2016-12-31";
-//		checkDAY[2] = "2016";
+		checkDAY[0] = "2008-01-01";
+		checkDAY[1] = "2008-12-31";
+		checkDAY[2] = "2008";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2009-01-01";
+		checkDAY[1] = "2009-12-31";
+		checkDAY[2] = "2009";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2010-01-01";
+		checkDAY[1] = "2010-12-31";
+		checkDAY[2] = "2010";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2011-01-01";
+		checkDAY[1] = "2011-12-31";
+		checkDAY[2] = "2011";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2012-01-01";
+		checkDAY[1] = "2012-12-31";
+		checkDAY[2] = "2012";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2013-01-01";
+		checkDAY[1] = "2013-12-31";
+		checkDAY[2] = "2013";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2014-01-01";
+		checkDAY[1] = "2014-12-31";
+		checkDAY[2] = "2014";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2015-01-01";
+		checkDAY[1] = "2015-12-31";
+		checkDAY[2] = "2015";
+		checkDAYS.add(checkDAY.clone());
+
+		checkDAY[0] = "2016-01-01";
+		checkDAY[1] = "2016-11-30";
+		checkDAY[2] = "2016";
+		checkDAYS.add(checkDAY.clone());
+
+//		checkDAY[0] = "2007-06-30";
+//		checkDAY[1] = "2009-07-01";
+//		checkDAY[2] = "リーマンショック";
 //		checkDAYS.add(checkDAY.clone());
 
 
@@ -236,8 +242,9 @@ public class SagyoSpace {
 					resultDTO = new Bean_Result();
 					nowDTO = new Bean_nowRecord();
 					shokisettei(paraDTO, nowDTO, resultDTO);
-//					paraDTO.getRumNumber(100);
+//					paraDTO.setRumNumber(50);
 					paraDTO.setTesuRYO(0.0);
+//					paraDTO.setOnEliteFLG();
 					System.out.println("");
 					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 
