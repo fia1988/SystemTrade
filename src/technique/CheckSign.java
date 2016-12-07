@@ -330,6 +330,7 @@ public class CheckSign {
 			String cate = codeList.get(i)[2];
 			String code = codeList.get(i)[0];
 			String TBL = SQLChecker.getTBL(cate);
+			boolean exitCheck = false;
 
 			//最新日が売りサイン
 			String SQL = " select "
@@ -350,19 +351,20 @@ public class CheckSign {
 
 				if(s.rs2.next()){
 					nowOpen =s.rs2.getDouble(	COLUMN.OPEN	);
+					exitCheck = true;
 					System.out.println("setResultTBL:" + SQL);
 				};
 
-
-				SQL = "select * from " + TBL_Name.KEEPLISTTBL
-						+ " where "
-						+ COLUMN.CODE + " = '" + code + "'"
-						+ " and "
-						+ COLUMN.TYPE + " = '" + type + "'"
-						+ " and "
-						+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
-						+ " and "
-						+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+				if (exitCheck){
+					SQL = "select * from " + TBL_Name.KEEPLISTTBL
+							+ " where "
+							+ COLUMN.CODE + " = '" + code + "'"
+							+ " and "
+							+ COLUMN.TYPE + " = '" + type + "'"
+							+ " and "
+							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+							+ " and "
+							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
 
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
 
@@ -416,18 +418,17 @@ public class CheckSign {
 								+ " and "
 								+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
 						s.freeUpdateQuery(SQL);
-						commonAP.writeInLog("売:" + Lmethod + ":" + Smethod + ":" + signDay + ":" +  code,logWriting.STOCK_RESULT_LOG_FLG);
+						//commonAP.writeInLog("売:" + Lmethod + ":" + Smethod + ":" + signDay + ":" +  code,logWriting.STOCK_RESULT_LOG_FLG);
 					}else{
 						//falseのとき存在しない
 
 					}
-
+				}
 
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-
 
 		}
 

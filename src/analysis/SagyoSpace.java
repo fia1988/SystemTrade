@@ -26,7 +26,7 @@ public class SagyoSpace {
 		resultDTO.setOffResultDay();
 //		resultDTO.setOffResultCode();
 //		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
+//		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1;
 		paraDTO.setMinDeki(i);
@@ -158,17 +158,17 @@ public class SagyoSpace {
 //		checkDAY[2] = "直近";
 //		checkDAYS.add(checkDAY.clone());
 //
-//		checkDAY[0] = "2007-01-01";
-//		checkDAY[1] = "2016-08-01";
-//		checkDAY[2] = "歴史";
-//		checkDAYS.add(checkDAY.clone());
+		checkDAY[0] = "2007-01-01";
+		checkDAY[1] = "2016-08-01";
+		checkDAY[2] = "歴史";
+		checkDAYS.add(checkDAY.clone());
 
-//		checkDAY[0] = "2007-06-30";
-//		checkDAY[1] = "2009-07-01";
-//		checkDAY[2] = "リーマンショック";
-//		checkDAYS.add(checkDAY.clone());
+		checkDAY[0] = "2007-06-30";
+		checkDAY[1] = "2009-07-01";
+		checkDAY[2] = "リーマンショック";
+		checkDAYS.add(checkDAY.clone());
 
-//
+
 		checkDAY[0] = "2007-01-01";
 		checkDAY[1] = "2007-12-31";
 		checkDAY[2] = "2007";
@@ -243,8 +243,8 @@ public class SagyoSpace {
 					nowDTO = new Bean_nowRecord();
 					shokisettei(paraDTO, nowDTO, resultDTO);
 //					paraDTO.setRumNumber(50);
-					paraDTO.setTesuRYO(0.0);
-//					paraDTO.setOnEliteFLG();
+					paraDTO.setTesuRYO(0.012);
+					paraDTO.setOnEliteFLG();
 					System.out.println("");
 					Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 
