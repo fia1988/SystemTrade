@@ -14,6 +14,13 @@ public class Technique04 {
 	public static int MACD_M_L_OVER0_ENTRY(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
+		if ( judge ) {
+
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+		
 		boolean judgeSign = false;
 		try{
 //			for (int n = 0 ; n < paraDTO.getIntCount01() ; n++){
@@ -44,6 +51,14 @@ public class Technique04 {
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
 
+		if ( judge ) {
+
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+		
+		
 		try{
 //			for (int n = 0 ; n < paraDTO.getIntCount01() ; n++){
 			for (int n = paraDTO.getIntCount01() ; n > 0 ; n--){
@@ -74,6 +89,15 @@ public class Technique04 {
 
 	public static int testL(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 
+		
+		if ( judge ) {
+
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+		
+		
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 		switch(nowDTO.getCode_01()){
 			case "1312―T":
@@ -114,6 +138,13 @@ public class Technique04 {
 
 		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
 
+		if ( judge ) {
+
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+		
 		if (nowDTO.getNowSHORT_3_H_SIGMA_01() > nowDTO.getNowCLOSE_01() * 1.1 ) {
 			return Technique98_CONST.NO_GAME;
 		}
@@ -165,6 +196,13 @@ public class Technique04 {
 
 		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
 
+		if ( judge ) {
+
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+		
 		if (nowDTO.getNowSHORT_3_L_SIGMA_01() > nowDTO.getNowCLOSE_01() * 1.1 ) {
 			return Technique98_CONST.NO_GAME;
 		}
@@ -183,6 +221,8 @@ public class Technique04 {
 
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
+		
+		
 		if ( judge ) {
 
 			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
@@ -394,14 +434,14 @@ public class Technique04 {
 
 		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
 
-		nowDTO.setKeepDay(resultDTO.getKeepCount());
+//		nowDTO.setKeepDay(resultDTO.getKeepCount());
 
 //		if (nowDTO.getKeepDay() > 30){
 //
 //		}
-		if (resultDTO.getEntryTime() > 15){
-			return Technique98_CONST.NO_GAME;
-		}
+
+
+
 
 
 		//選ばれた銘柄のみ売買判断をする。
@@ -461,7 +501,6 @@ public class Technique04 {
 
 		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
 		if ( judge ) {
-
 			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
@@ -549,7 +588,12 @@ public class Technique04 {
 		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
 
 
+		if ( judge ) {
 
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
 
 //
 //		if ( 0 > nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){

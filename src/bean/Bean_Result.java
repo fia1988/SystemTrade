@@ -67,6 +67,7 @@ public class Bean_Result {
 
 	int loseCount=0;
 	int winCount=0;
+	//保有期間
 	int keepCount=0;
 
 //	Double entryPrice;

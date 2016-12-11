@@ -88,6 +88,59 @@ public class CheckSign {
 	}
 
 
+	//true:保有期間
+	//false:エントリー回数
+	private static int getKeepDayEntryTimes(boolean check,
+			String code,
+			String type,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName,S s){
+		String SQL = "";
+//		S s = new S();
+//		s.getCon();
+		int resultInt = 0;
+		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
+		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+
+		String column = COLUMN.ENTRYDAY;
+
+		if ( check = false ) {
+			column = COLUMN.ENTRYTIMES;
+		}
+
+		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
+				+ " where "
+				+ COLUMN.CODE + " = '" + code + "'"
+				+ " and "
+				+ COLUMN.TYPE + " = '" + type + "'"
+				+ " and "
+				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ " and "
+				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				
+		try {
+			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			if(s.rs2.next()){
+				
+			};
+			while(s.rs2.next()){
+				String codeStatus[] = new String[6];
+				codeStatus[0] = s.rs2.getString(	COLUMN.CODE	);
+			};
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		
+				
+		return resultInt;
+	}
+
 	private static void checkToday_L_Sign(
 			int size,
 			String type,

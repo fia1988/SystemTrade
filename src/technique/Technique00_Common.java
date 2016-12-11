@@ -75,6 +75,13 @@ public class Technique00_Common {
 //	        }
 //		}
 
+
+//		//エントリータイムが多すぎるとノーゲーム
+//		if (resultDTO.getEntryTime() > 6){
+//			return Technique98_CONST.NO_GAME;
+//		}
+
+
 		//取引量の少ない銘柄は計算しない
 		if (nowDTOList.get(nowDTOadress).getNowDEKI_01() < paraDTO.getMinDeki()	){
 
@@ -116,6 +123,18 @@ public class Technique00_Common {
 		if (checkPrice_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 			return Technique98_CONST.TRADE_FLG;
 		}
+
+
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+
+
+
+//		//保有期間が長くなると売る
+//		if (resultDTO.getKeepCount() > 14){
+//			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+//			return Technique98_CONST.TRADE_FLG;
+//		}
+
 
 //		if (checkPlunge_STOCK_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 //			return Technique98_CONST.TRADE_FLG;
