@@ -43,8 +43,7 @@ public class Technique07 {
 
 //		if ( nowDTO.getNowSTOCK_UPPRICE_IDO_LONG_CHANGERATE_01() > 1.5 ){
 		if ( nowDTO.getNowNIKKE_SATISTICS_STOCK_UPPRICE_IDO_LONG_CHANGERATE_01() > nowDTO.getNowNIKKE_SATISTICS_STOCK_UPPRICE_IDO_SHORT_CHANGERATE_01() ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -91,8 +90,7 @@ public class Technique07 {
 //		if ( nowDTO.getNowSTOCK_UPPRICE_IDO_LONG_CHANGERATE_01() < 0.5 ){
 		if ( nowDTO.getNowNIKKE_SATISTICS_STOCK_UPPRICE_IDO_LONG_CHANGERATE_01() < nowDTO.getNowNIKKE_SATISTICS_STOCK_UPPRICE_IDO_SHORT_CHANGERATE_01() ){
 //		if ( nowDTO.getNowNIKKE_SATISTICS_STOCK_UPPRICE_IDO_LONG_CHANGERATE_01() < 0.5 ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;

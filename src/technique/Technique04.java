@@ -20,7 +20,7 @@ public class Technique04 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		boolean judgeSign = false;
 		try{
 //			for (int n = 0 ; n < paraDTO.getIntCount01() ; n++){
@@ -57,8 +57,8 @@ public class Technique04 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
-		
+
+
 		try{
 //			for (int n = 0 ; n < paraDTO.getIntCount01() ; n++){
 			for (int n = paraDTO.getIntCount01() ; n > 0 ; n--){
@@ -79,8 +79,8 @@ public class Technique04 {
 
 
 		if ( MACD_M_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -89,15 +89,15 @@ public class Technique04 {
 
 	public static int testL(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 
-		
+
 		if ( judge ) {
 
 			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
-		
+
+
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 		switch(nowDTO.getCode_01()){
 			case "1312―T":
@@ -115,8 +115,8 @@ public class Technique04 {
 		}
 
 		if ( MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -126,8 +126,7 @@ public class Technique04 {
 
 
 		if ( MACD_M_S_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -144,14 +143,14 @@ public class Technique04 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		if (nowDTO.getNowSHORT_3_H_SIGMA_01() > nowDTO.getNowCLOSE_01() * 1.1 ) {
 			return Technique98_CONST.NO_GAME;
 		}
 
 		if ( MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -183,8 +182,7 @@ public class Technique04 {
 
 		//MACD
 		if ( P_MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -202,14 +200,13 @@ public class Technique04 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		if (nowDTO.getNowSHORT_3_L_SIGMA_01() > nowDTO.getNowCLOSE_01() * 1.1 ) {
 			return Technique98_CONST.NO_GAME;
 		}
 
 		if ( MACD_M_S_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -221,8 +218,8 @@ public class Technique04 {
 
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
-		
-		
+
+
 		if ( judge ) {
 
 			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
@@ -272,9 +269,7 @@ public class Technique04 {
 
 		if (nowDTO.getNowMIDDLE_MACD_01() < nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
 
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
@@ -297,8 +292,8 @@ public class Technique04 {
 		if ( nowDTO.getNowMIDDLE_MACD_SIGNAL_01() < 0 ){return Technique98_CONST.NO_GAME;}
 
 		if (nowDTO.getNowMIDDLE_MACD_01() > nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 
 
@@ -397,8 +392,8 @@ public class Technique04 {
 		if ( nowDTO.getNowMIDDLE_MACD_SIGNAL_01() < 0 ){return Technique98_CONST.NO_GAME;}
 
 		if (nowDTO.getNowMIDDLE_MACD_01() > nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
@@ -466,9 +461,8 @@ public class Technique04 {
 		        	return Technique98_CONST.NO_GAME;
 		        }
 			}
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -485,9 +479,7 @@ public class Technique04 {
 
 		if (nowDTO.getNowMIDDLE_MACD_01() < nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
 
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
@@ -512,8 +504,7 @@ public class Technique04 {
 		if ( nowDTO.getNowMIDDLE_MACD_SIGNAL_01() < 0 ){return Technique98_CONST.NO_GAME;}
 
 		if (nowDTO.getNowMIDDLE_MACD_01() > nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
@@ -569,9 +560,8 @@ public class Technique04 {
 
 		if (nowDTO.getNowMIDDLE_MACD_01() < nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
 
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
@@ -637,8 +627,8 @@ public class Technique04 {
 //		if ( nowDTO.getNowMIDDLE_MACD_SIGNAL_01() < 0 ){return Technique98_CONST.NO_GAME;}
 
 		if (nowDTO.getNowMIDDLE_MACD_01() > nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
@@ -676,8 +666,8 @@ public class Technique04 {
 		if ( nowDTO.getNowMIDDLE_MACD_SIGNAL_01() < 0 ){return Technique98_CONST.NO_GAME;}
 
 		if (nowDTO.getNowMIDDLE_MACD_01() > nowDTO.getNowMIDDLE_MACD_SIGNAL_01() ){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 

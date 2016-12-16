@@ -19,12 +19,13 @@ public class Technique03 {
 
 
 			if (nowDTO.getNowLONGIDO_01() < nowDTO.getNowSHORTIDO_01() ){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-				return Technique98_CONST.TRADE_FLG;
-			}else{
-				return Technique98_CONST.NO_GAME;
+
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 			}
+
+			return Technique98_CONST.NO_GAME;
+
 
 
 
@@ -43,12 +44,13 @@ public class Technique03 {
 
 
 			if (nowDTO.getNowLONGIDO_01() > nowDTO.getNowSHORTIDO_01() ){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-				return Technique98_CONST.TRADE_FLG;
-			}else{
-				return Technique98_CONST.NO_GAME;
+
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 			}
+
+				return Technique98_CONST.NO_GAME;
+
 
 	}
 
@@ -62,12 +64,12 @@ public class Technique03 {
 
 
 			if (nowDTO.getNowLONGIDO_01() < nowDTO.getNowMIDDLEIDO_01() ){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-				return Technique98_CONST.TRADE_FLG;
-			}else{
-				return Technique98_CONST.NO_GAME;
+
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 			}
+				return Technique98_CONST.NO_GAME;
+
 
 
 
@@ -84,9 +86,9 @@ public class Technique03 {
 
 
 			if (nowDTO.getNowLONGIDO_01() > nowDTO.getNowMIDDLEIDO_01() ){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-				return Technique98_CONST.TRADE_FLG;
+
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 			}else{
 				return Technique98_CONST.NO_GAME;
 			}
@@ -103,9 +105,9 @@ public class Technique03 {
 
 
 			if (nowDTO.getNowMIDDLEIDO_01() < nowDTO.getNowSHORTIDO_01() ){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-				return Technique98_CONST.TRADE_FLG;
+
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 			}else{
 				return Technique98_CONST.NO_GAME;
 			}
@@ -125,9 +127,9 @@ public class Technique03 {
 
 
 			if (nowDTO.getNowMIDDLEIDO_01() > nowDTO.getNowSHORTIDO_01() ){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-				return Technique98_CONST.TRADE_FLG;
+
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 			}else{
 				return Technique98_CONST.NO_GAME;
 			}

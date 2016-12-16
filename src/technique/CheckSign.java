@@ -121,11 +121,11 @@ public class CheckSign {
 				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
 				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
-				
+
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			if(s.rs2.next()){
-				
+
 			};
 			while(s.rs2.next()){
 				String codeStatus[] = new String[6];
@@ -136,8 +136,8 @@ public class CheckSign {
 			e.printStackTrace();
 		}
 
-		
-				
+
+
 		return resultInt;
 	}
 
@@ -383,6 +383,7 @@ public class CheckSign {
 			String cate = codeList.get(i)[2];
 			String code = codeList.get(i)[0];
 			String TBL = SQLChecker.getTBL(cate);
+			String TODAY = SQLChecker.getCateToday(cate,s);
 			boolean exitCheck = false;
 
 			//最新日が売りサイン
@@ -405,7 +406,7 @@ public class CheckSign {
 				if(s.rs2.next()){
 					nowOpen =s.rs2.getDouble(	COLUMN.OPEN	);
 					exitCheck = true;
-					System.out.println("setResultTBL:" + SQL);
+//					System.out.println("setResultTBL:" + SQL);
 				};
 
 				if (exitCheck){
@@ -447,7 +448,7 @@ public class CheckSign {
 								+ " ) value ( "
 								+ "'" + code + "'"	 + ","
 								+ "'" + entryDay			+ "'"	 + ","
-								+ "'" + signDay			+ "'"	 + ","
+								+ "'" + TODAY			+ "'"	 + ","
 								+ averagePrice						 + ","
 								+ nowOpen							 + ","
 								+ "'" + type			+ "'"	 + ","

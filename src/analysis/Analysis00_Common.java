@@ -214,6 +214,9 @@ public class Analysis00_Common {
 
 			boolean loopCheck = false;
 
+			//売買フラグチェックを外す。
+			paraDTO.setCheckFLG(false);
+			
 			try {
 //				System.out.println(SQL);
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -294,7 +297,9 @@ public class Analysis00_Common {
 									//下で一日増やすので減らしておく
 									i--;
 
-
+									//売買フラグチェックを外す。
+									paraDTO.setCheckFLG(false);
+									
 									break;
 
 								case Technique98_CONST.NO_RESULT:

@@ -20,8 +20,20 @@ public class Bean_Parameta {
 	
 	boolean eliteFLG = false;
 	
+	//ここだけ例外。どっちかというとnowDTOより
+	//過去のデータでフラグが立っていた場合に処理をする
+	boolean checkFLG = false;
 	
 	
+	
+
+	public boolean getCheckFLG() {
+		return checkFLG;
+	}
+
+	public void setCheckFLG(boolean checkFLG) {
+		this.checkFLG = checkFLG;
+	}
 
 	public boolean getEliteFLG() {
 		return eliteFLG;

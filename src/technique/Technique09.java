@@ -27,16 +27,16 @@ public class Technique09 {
 //		nowDTO.getNowSHORT_1_H_SIGMA_01();
 //		nowDTO.getNowMIDDLE_1_H_SIGMA_01();
 
-		
+
 		if (nowDTO.getNowSHORT_3_H_SIGMA_01() > nowDTO.getNowCLOSE_01() * 1.1 ) {
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 		return Technique98_CONST.NO_GAME;
 	}
-	
-	
-	
+
+
+
 	public static int BORIBAN_S(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
@@ -56,11 +56,12 @@ public class Technique09 {
 
 //		double kessaiKin =  resultDTO.getEntryAveragePrice();
 		if (nowDTO.getNowSHORT_3_L_SIGMA_01() > nowDTO.getNowCLOSE_01() * 1.1 ) {
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 		return Technique98_CONST.NO_GAME;
 	}
-	
-	
+
+
 }

@@ -12,9 +12,13 @@ public class Technique00_Common {
 
 
 
-	public static void setKessaiClose(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+	public static int setKessaiClose(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+
+
+
+
 
 
 		if (judge){
@@ -22,12 +26,11 @@ public class Technique00_Common {
 			try{
 				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress + 1).getNowDay_01());
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
+				return Technique98_CONST.TRADE_FLG;
 			}catch(ArrayIndexOutOfBoundsException e){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
+
 			}catch(IndexOutOfBoundsException a){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
+
 			}
 		}else{
 			//売り
@@ -35,18 +38,18 @@ public class Technique00_Common {
 				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress + 1).getNowDay_01());
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
 			}catch(ArrayIndexOutOfBoundsException e){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
+
 			}catch(IndexOutOfBoundsException a){
-				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
-				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
+//				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
+//				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
+
 			}
 		}
 
 //		nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
 //		nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
 
-
+		return Technique98_CONST.NO_GAME;
 	}
 
 

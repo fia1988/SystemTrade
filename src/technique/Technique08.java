@@ -15,13 +15,7 @@ public class Technique08 {
 
 
 		if ( Technique04.MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-
-//			if ( Technique07.torakuRatio_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-//
-				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-//
-//			}
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		};
 
 		return Technique98_CONST.NO_GAME;
@@ -31,14 +25,12 @@ public class Technique08 {
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
 		if ( Technique07.torakuRatio_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 
 		if ( Technique04.MACD_M_S_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		};
 
 		return Technique98_CONST.NO_GAME;
@@ -60,8 +52,8 @@ public class Technique08 {
 		}
 
 		if ( MACD_IDOHEIKIN_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -85,8 +77,7 @@ public class Technique08 {
 		}
 
 		if ( MACD_IDOHEIKIN_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -106,9 +97,8 @@ public class Technique08 {
 		if ( Technique04.MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 
 			if ( Technique06.idoHeikinTest_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 
-				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-				return Technique98_CONST.TRADE_FLG;
 			}
 
 		};
@@ -129,8 +119,7 @@ public class Technique08 {
 		if ( Technique04.MACD_M_S_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 
 			if ( Technique06.idoHeikinTest_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-				return Technique98_CONST.TRADE_FLG;
+				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 			}
 
 		};
@@ -151,13 +140,11 @@ public class Technique08 {
 
 
 		if ( Technique04.MACD_M_S_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-				return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		};
 
 		if ( Technique06.idoHeikinTest_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
 		return Technique98_CONST.NO_GAME;
@@ -175,13 +162,13 @@ public class Technique08 {
 
 
 		if ( Technique04.MACD_M_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-				return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		};
 
 		if ( Technique06.idoHeikinTest_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+
 		}
 
 		return Technique98_CONST.NO_GAME;
