@@ -693,6 +693,7 @@ public class CheckSign {
 	//nowDTOadressはなんでもいい
 	private static void checkTodaySignControll(ArrayList<String> resultCodeList,String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList){
 		String check="";
+		paraDTO.setRealTimeMode(true);
 		if ( judge ){
 			//trueは買いフラグ
 			check = "(買)";

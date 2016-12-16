@@ -21,6 +21,7 @@ public class Technique00_Common {
 
 
 
+
 		if (judge){
 			//買い
 			try{
@@ -28,9 +29,17 @@ public class Technique00_Common {
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
 				return Technique98_CONST.TRADE_FLG;
 			}catch(ArrayIndexOutOfBoundsException e){
-
+				if ( paraDTO.getRealTimeMode() ){
+					nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
+					nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowOpen_01() );
+					return Technique98_CONST.TRADE_FLG;
+				}
 			}catch(IndexOutOfBoundsException a){
-
+				if ( paraDTO.getRealTimeMode() ){
+					nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
+					nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowOpen_01() );
+					return Technique98_CONST.TRADE_FLG;
+				}
 			}
 		}else{
 			//売り
@@ -39,11 +48,19 @@ public class Technique00_Common {
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
 				return Technique98_CONST.TRADE_FLG;
 			}catch(ArrayIndexOutOfBoundsException e){
-
+				if ( paraDTO.getRealTimeMode() ){
+					nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
+					nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowOpen_01() );
+					return Technique98_CONST.TRADE_FLG;
+				}
 			}catch(IndexOutOfBoundsException a){
 //				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
 //				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );
-
+				if ( paraDTO.getRealTimeMode() ){
+					nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
+					nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowOpen_01() );
+					return Technique98_CONST.TRADE_FLG;
+				}
 			}
 		}
 

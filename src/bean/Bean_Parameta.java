@@ -12,20 +12,37 @@ public class Bean_Parameta {
 	private boolean rumFLG = false;
 	private int rumNumber = 0;
 
-	
+	//true;リアルタイム
+	//false;試験
+	private boolean realTimeMode = false;
+
+
+
+
+	public boolean getRealTimeMode() {
+		return realTimeMode;
+	}
+
+	public void setRealTimeMode(boolean realTimeMode) {
+		this.realTimeMode = realTimeMode;
+	}
+
+
+
+
 	boolean stockFLG = false;
 	boolean indexFLG = false;
 	boolean satisFLG = false;
 	boolean etfFLG = false;
-	
+
 	boolean eliteFLG = false;
-	
+
 	//ここだけ例外。どっちかというとnowDTOより
 	//過去のデータでフラグが立っていた場合に処理をする
 	boolean checkFLG = false;
-	
-	
-	
+
+
+
 
 	public boolean getCheckFLG() {
 		return checkFLG;
