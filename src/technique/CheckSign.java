@@ -430,7 +430,7 @@ public class CheckSign {
 						int entryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
 						double averagePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
 						double RETURN = ( nowOpen - averagePrice ) / averagePrice;
-						int keepTime = commonAP.countDay(entryDay,signDay, s) - 1;
+						int keepTime = commonAP.countDay(entryDay,signDay, s) ;
 
 						SQL ="insert into " + TBL_Name.RESULTHISTROYTBL
 								+ " ( "

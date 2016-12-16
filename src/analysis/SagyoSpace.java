@@ -193,10 +193,10 @@ public class SagyoSpace {
 					nowDTO = new Bean_nowRecord();
 					shokisettei(paraDTO, nowDTO, resultDTO);
 //					paraDTO.getRumNumber(100);
-//					paraDTO.setTesuRYO(0.0);
+					paraDTO.setTesuRYO(0.0);
 //					paraDTO.setOnEliteFLG();
 					System.out.println("");
-
+					resultDTO.setOnResultDay();
 
 						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 
