@@ -30,12 +30,14 @@ public class SagyoSpace {
 		resultDTO.setOnResultTotal();
 		int i = 1;
 		paraDTO.setMinDeki(i);
-		resultDTO.setShoritu(0.95);
-		resultDTO.setTotalGames(35);
+		resultDTO.setShoritu(0.85);
+		resultDTO.setTotalGames(25);
 		//手数料
-		paraDTO.setTesuRYO(0.012);
+		paraDTO.setTesuRYO(0.022);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
+		//一回当たりエントリー金額（単位：万円）
+//		paraDTO.setEntryMoney(0.83);
 
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		System.out.println("【出来高"+ i + "】");
@@ -123,7 +125,7 @@ public class SagyoSpace {
 
 					if (!(L_METHOD.equals(methodList_S.get(c)[1]))){
 						System.out.println("");
-						
+
 						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 					}
 
@@ -391,9 +393,9 @@ public class SagyoSpace {
 //		List<Double> returnList = new ArrayList();
 		List<String[]> methodList_L = new ArrayList<String[]>();
 		String methodName[] = new String[2];
-		methodName[0] = "Technique04";
-		methodName[1] = "MACD_M_L_OVER0";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L_OVER0";
+//		methodList_L.add(methodName.clone());
 
 
 		methodName[0] = "Technique06";
@@ -563,19 +565,19 @@ public class SagyoSpace {
 				for (int c = 0 ;c < methodList_S.size() ; c++){
 
 					System.out.println("");
-					
+
 					paraDTO = new Bean_Parameta();
 					resultDTO = new Bean_Result();
 					nowDTO = new Bean_nowRecord();
 					shokisettei(paraDTO, nowDTO, resultDTO);
 //					paraDTO.setTesuRYO(0.0);
-					
-					
+
+
 					if (!(L_METHOD.equals(methodList_S.get(c)[1]))){
 						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
 					}
-					
-					
+
+
 
 				}
 			}

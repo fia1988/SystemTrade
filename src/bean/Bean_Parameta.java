@@ -290,7 +290,7 @@ public class Bean_Parameta {
 		return entryMoney;
 	}
 
-	public void setEntryMoney(int entryMoney) {
+	public void setEntryMoney(double entryMoney) {
 		this.entryMoney = entryMoney;
 	}
 
