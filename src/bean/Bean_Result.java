@@ -449,8 +449,8 @@ public class Bean_Result {
 				double getCutAveRisk = commonAP.getDev(getReturnList(),		true,	half,half);
 
 				commonAP.writeInLog("" ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("Lメソッド：" + L_packageName + "." + L_className + "." + L_methodName ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("Sメソッド：" + S_packageName + "." + S_className + "." + S_methodName ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("Lメソッド：" + paraDTO.getLMETHOD() ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("Sメソッド：" + paraDTO.getSMETHOD() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝：" + getTOTAL_WIN(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負：" + getTOTAL_LOSE(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("売却できず：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);

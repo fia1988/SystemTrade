@@ -205,6 +205,10 @@ public class Analysis00_Common {
 		String kessaiDay01;
 		String kessaiDay02;
 		int keepTime;
+		
+		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
+		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
+		
 		try {
 
 

@@ -16,8 +16,31 @@ public class Bean_Parameta {
 	//false;試験
 	private boolean realTimeMode = false;
 
+	//Lメソッド
+	//Sメソッド
+	//パッケージ.クラス.メソッド
+	private String LMETHOD = "";
+	private String SMETHOD = "";
+	
+	
 
 
+
+	public String getLMETHOD() {
+		return LMETHOD;
+	}
+
+	public void setLMETHOD(String lMETHOD) {
+		LMETHOD = lMETHOD;
+	}
+
+	public String getSMETHOD() {
+		return SMETHOD;
+	}
+
+	public void setSMETHOD(String sMETHOD) {
+		SMETHOD = sMETHOD;
+	}
 
 	public boolean getRealTimeMode() {
 		return realTimeMode;
