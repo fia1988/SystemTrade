@@ -102,7 +102,7 @@ public class Techinique_COMMON_METHOD {
 	//パッケージ名とDTOとコードとtrue,falseをいれる
 	//例）Techinique_COMMON_METHOD.codeMethodMove("technique","Technique04","MACD_L",paraDTO,nowDTOList,8,resultDTO,"9994―T","2016-06-06",5,true);
 	//nowDTOadressの値はなんでもよい
-	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String dayTime,int size,boolean entryCheck){
+	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,String dayTime,int size,boolean entryCheck){
 		S this_s = new S ();
 		ResultSet this_rs=null;
 
@@ -118,11 +118,14 @@ public class Techinique_COMMON_METHOD {
 		try {
 
 			List<Bean_nowRecord> thisNowDTOList = new ArrayList<>();
-			String cate = SQLChecker.getCate(code, this_s);
+//			String cate = SQLChecker.getCate(code, this_s);
 
 //			String SQL = " select *  from " + SQLChecker.getTBL(cate) + " where " + COLUMN.DAYTIME + " <= '" + dayTime +  "' and " + COLUMN.CODE  + "='" + code +  "' order by daytime desc limit " + size;
 
 			String SQL = Analysis00_Common.makekabuSQL(code, this_s);
+
+
+
 			switch(cate){
 				case ReCord.CODE_01_STOCK:
 					SQL = SQL + " order by " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME +  " desc limit " + size;

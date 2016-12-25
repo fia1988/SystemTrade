@@ -55,84 +55,148 @@ public class SagyoSpace {
 
 	public static void testCase30(){
 
-
-		long start = System.currentTimeMillis();
-
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		String startDD	=	"2007-01-04";
+		String endDD		=	"2016-08-01";
+//		String startDD	=	"2007-06-30";
+//		String endDD		=	"2009-07-01";
+
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
-		String startDD	=	"";
-		String endDD		=	"";
-		String L_CLASS = "";
-		String L_METHOD = "";
-
-		List<String[]> methodList_L = new ArrayList<String[]>();
-
-		String methodName[] = new String[2];
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
-		methodName[0] = "Technique06";
-		methodName[1] = "idoHeikinTest_L";
-		methodList_L.add(methodName.clone());
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","idoHeikinTest_L","technique","Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
-
-		List<String[]> methodList_S = new ArrayList<String[]>();
-		methodName[0] = "Technique06";
-		methodName[1] = "idoHeikinTest_S";
-		methodList_S.add(methodName.clone());
-
-
-
-		List<String[]> checkDAYS = new ArrayList<String[]>();
-		String checkDAY[] = new String[3];
-
-		checkDAY[0] = "2007-01-01";
-		checkDAY[1] = "2016-08-01";
-		checkDAY[2] = "歴史";
-		checkDAYS.add(checkDAY.clone());
-
-//		checkDAY[0] = "2007-01-01";
-//		checkDAY[1] = "2016-08-01";
-//		checkDAY[2] = "直近";
-//		checkDAYS.add(checkDAY.clone());
-
-		for (int a = 0 ;a < checkDAYS.size() ; a++){
-			System.out.println("");
-			System.out.println("--------" + checkDAYS.get(a)[2] + "--------");
-			startDD	=	checkDAYS.get(a)[0];
-			endDD		=	checkDAYS.get(a)[1];
-
-			for (int b = 0 ;b < methodList_L.size() ; b++){
-				L_CLASS = methodList_L.get(b)[0];
-				L_METHOD = methodList_L.get(b)[1];
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
-				for (int c = 0 ;c < methodList_S.size() ; c++){
-					paraDTO = new Bean_Parameta();
-					resultDTO = new Bean_Result();
-					nowDTO = new Bean_nowRecord();
-					shokisettei(paraDTO, nowDTO, resultDTO);
-//					paraDTO.getRumNumber(100);
-//					paraDTO.setTesuRYO(0.0);
-//					paraDTO.setOnEliteFLG();
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
-					if (!(L_METHOD.equals(methodList_S.get(c)[1]))){
-						System.out.println("");
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
-						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);
-					}
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique08","MACD_IDOHEIKIN_L","technique","Technique06","IDO_HEKIN_4_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
-				}
-			}
-		}
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_1_L","technique","Technique06","idoHeikinTest_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_1_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_1_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_1_S","technique","Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setOnEliteFLG();
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
 	}
 
 
@@ -173,7 +237,7 @@ public class SagyoSpace {
 		List<String[]> checkDAYS = new ArrayList<String[]>();
 		String checkDAY[] = new String[3];
 		checkDAY[0] = "2016-12-12";
-		checkDAY[1] = "2016-12-23";
+		checkDAY[1] = "2016-12-22";
 		checkDAY[2] = "直近";
 		checkDAYS.add(checkDAY.clone());
 
@@ -398,54 +462,54 @@ public class SagyoSpace {
 //		methodList_L.add(methodName.clone());
 
 
-		methodName[0] = "Technique06";
-		methodName[1] = "idoHeikinTest_L";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique06";
+//		methodName[1] = "idoHeikinTest_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique04";
+//		methodName[1] = "MACD_M_L";
+//		methodList_L.add(methodName.clone());
 
 
-		methodName[0] = "Technique04";
-		methodName[1] = "MACD_M_L";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique08";
+//		methodName[1] = "MACD_IDOHEIKIN_L";
+//		methodList_L.add(methodName.clone());
 
 
-		methodName[0] = "Technique08";
-		methodName[1] = "MACD_IDOHEIKIN_L";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_1_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_2_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_3_L";
+//		methodList_L.add(methodName.clone());
 
 
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_1_L";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_4_L";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_1_S";
+//		methodList_L.add(methodName.clone());
+//
+//
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_2_S";
+//		methodList_L.add(methodName.clone());
 
 
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_2_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_3_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_4_L";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_1_S";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_2_S";
-		methodList_L.add(methodName.clone());
-
-
-		methodName[0] = "Technique06";
-		methodName[1] = "IDO_HEKIN_3_S";
-		methodList_L.add(methodName.clone());
+//		methodName[0] = "Technique06";
+//		methodName[1] = "IDO_HEKIN_3_S";
+//		methodList_L.add(methodName.clone());
 
 
 		methodName[0] = "Technique06";

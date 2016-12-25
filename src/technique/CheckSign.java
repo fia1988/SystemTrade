@@ -32,6 +32,9 @@ public class CheckSign {
 		ArrayList<String[]> INDEXList = new ArrayList<String[]>();
 		ArrayList<String[]> ETFNameList = new ArrayList<String[]>();
 
+		ArrayList<String[]> keepStockList = new ArrayList<String[]>();
+
+
 
 		//全銘柄をリストに入れる
 		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
@@ -45,6 +48,11 @@ public class CheckSign {
 
 		commonAP.setCodeList(ReCord.CODE_04_ETF,s);
 		ETFNameList = commonAP.getCodeList();
+
+		//キープテーブルのリストを取得
+		commonAP.setKeepCodeList(s);
+		keepStockList = commonAP.getCodeList();
+
 
 		//別メソッドを動かす前にメモリ解放
 		s.closeConection();
@@ -75,7 +83,8 @@ public class CheckSign {
 		nowDTO = new Bean_nowRecord();
 		nowDTOList = new ArrayList<>();
 		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		checkToday_S_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//		checkToday_S_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+		checkToday_S_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
 //		checkMACD_S(STOCKList,SATISTICSList,INDEXList,ETFNameList);
 		commonAP.writeInLog("--------------売りフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
 
@@ -103,8 +112,8 @@ public class CheckSign {
 //		S s = new S();
 //		s.getCon();
 		int resultInt = 0;
-		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
-		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
 		String column = COLUMN.ENTRYDAY;
 
@@ -200,7 +209,8 @@ public class CheckSign {
 			ArrayList<String[]> STOCKList,
 			ArrayList<String[]> SATISTICSList,
 			ArrayList<String[]> INDEXList,
-			ArrayList<String[]> ETFNameList){
+			ArrayList<String[]> ETFNameList,
+			ArrayList<String[]> keepCodeList){
 
 
 		//前日の分を売る
@@ -210,10 +220,11 @@ public class CheckSign {
 
 		//今日のサインを調べる
 		ArrayList<String> resultCodeList = new ArrayList<String>();
-		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,STOCKList);
-		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
-		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
-		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,ETFNameList);
+//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,STOCKList);
+//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
+//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
+//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,ETFNameList);
+		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,keepCodeList);
 
 		//今日のサインをオーダーに入れる
 		setLastOrderTBL(resultCodeList,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,type,false);
@@ -230,9 +241,9 @@ public class CheckSign {
 	private static void makeLastOrderCodeList(List<String[]> lastOrderCodeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type,boolean signFlg){
 		S s = new S();
 		s.getCon();
-
-		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
-		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+		
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
 
 
@@ -281,8 +292,8 @@ public class CheckSign {
 		S s = new S();
 		s.getCon();
 
-		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
-		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
 		String SQL = "";
 
@@ -374,8 +385,8 @@ public class CheckSign {
 	public static void setResultTBL(List<String[]> codeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type){
 		S s = new S();
 		s.getCon();
-		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
-		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
 
 		for (int i = 0; i < codeList.size();i++){
@@ -491,11 +502,11 @@ public class CheckSign {
 
 	public static void setEntryTBL(List<String[]> codeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type){
 
-
+		
 		S s = new S();
 		s.getCon();
-		String Lmethod = L_packageName + "_" + L_className + "_" + L_methodName;
-		String Smethod = S_packageName + "_" + S_className + "_" + S_methodName;
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
 
 //		String TODAY = controllDay.getMAX_DD_INDEX(s);
@@ -714,7 +725,7 @@ public class CheckSign {
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
 
-			if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,day,size,judge) == Technique98_CONST.TRADE_FLG ){
+			if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
 
 //				if (judge == false){
 //

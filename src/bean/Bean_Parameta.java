@@ -21,8 +21,8 @@ public class Bean_Parameta {
 	//パッケージ.クラス.メソッド
 	private String LMETHOD = "";
 	private String SMETHOD = "";
-	
-	
+
+
 
 
 
@@ -75,8 +75,16 @@ public class Bean_Parameta {
 		this.checkFLG = checkFLG;
 	}
 
-	public boolean getEliteFLG() {
-		return eliteFLG;
+
+	//judgeがtrueのときは買い、falseの時は売り。falseの時は必ずfalseを返す
+	public boolean getEliteFLG(boolean judge) {
+		if (judge){
+			return eliteFLG;
+		}else{
+			//judgeがfalse
+			return false;
+		}
+
 	}
 
 	public void setOnEliteFLG() {

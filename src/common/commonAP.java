@@ -9,6 +9,7 @@ import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
+import accesarrySQL.SQLChecker;
 import constant.COLUMN;
 import constant.ReCord;
 import constant.logWriting;
@@ -431,6 +432,34 @@ public class commonAP {
 				codeSingle[1]=s.rs.getString(COLUMN.CATE_FLG);
 
 				codeListwithiCate.add(codeSingle);
+
+			}
+
+		} catch (SQLException e) {
+
+		}
+
+	}
+
+	public static void setKeepCodeList(S s){
+		codeListwithiCate = new ArrayList<String[]>();
+		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.KEEPLISTTBL;
+
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				codeSingle = new String[2];
+				String code = s.rs.getString(COLUMN.CODE);
+//				String cate = SQLChecker.getCate(code, s);
+				codeSingle[0]=code;
+//				codeSingle[1]=cate;
+				codeListwithiCate.add(codeSingle);
+			}
+
+			for ( int i = 0; i < codeListwithiCate.size() ; i++){
+//				System.out.println(codeListwithiCate.get(i)[0]);
+				codeListwithiCate.get(i)[1]=SQLChecker.getCate(codeListwithiCate.get(i)[0], s);
 
 			}
 
