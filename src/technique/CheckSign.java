@@ -58,42 +58,84 @@ public class CheckSign {
 		s.closeConection();
 
 
-
-		commonAP.writeInLog("--------------買いフラグチェックここから------------------",logWriting.STOCK_RESULT_LOG_FLG);
-		Bean_Parameta paraDTO = new Bean_Parameta();
-		Bean_Result resultDTO = new Bean_Result();
-		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		List<Bean_nowRecord> nowDTOList = new ArrayList<>();
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		checkToday_L_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-//		checkMACD_L_SMALL(STOCKList,SATISTICSList,INDEXList,ETFNameList);
-//		checkMACD_L(STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		commonAP.writeInLog("--------------買いフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		nowDTOList = new ArrayList<>();
+//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+		checkToday_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
 
 
-		commonAP.writeInLog("",logWriting.STOCK_RESULT_LOG_FLG);
+////		paraDTO = new Bean_Parameta();
+////		resultDTO = new Bean_Result();
+////		nowDTO = new Bean_nowRecord();
+////		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+////		paraDTO.setOnEliteFLG();
+////		checkToday_L_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		nowDTOList = new ArrayList<>();
+//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+//		checkToday_L_Sign(1,"DD","technique","Technique06","idoHeikinTest_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		nowDTOList = new ArrayList<>();
+//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+//		checkToday_L_Sign(1,"DD","technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_OVER0",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		nowDTOList = new ArrayList<>();
+//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+//		checkToday_L_Sign(1,"DD","technique","Technique04","MACD_M_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//
+//
+////		paraDTO = new Bean_Parameta();
+////		resultDTO = new Bean_Result();
+////		nowDTO = new Bean_nowRecord();
+////		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+////		paraDTO.setOnEliteFLG();
+////		checkToday_L_Sign(1,"DD","technique","Technique06","IDO_HEKIN_1_S","technique","Technique04","MACD_M_S_OVER0",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		nowDTOList = new ArrayList<>();
+//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+//		checkToday_L_Sign(1,"DD","technique","Technique06","IDO_HEKIN_1_S","technique","Technique06","IDO_HEKIN_2_L",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
 
 
-		commonAP.writeInLog("--------------売りフラグチェックここから------------------",logWriting.STOCK_RESULT_LOG_FLG);
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		nowDTOList = new ArrayList<>();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-//		checkToday_S_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		checkToday_S_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
-//		checkMACD_S(STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		commonAP.writeInLog("--------------売りフラグチェックここまで------------------",logWriting.STOCK_RESULT_LOG_FLG);
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		nowDTOList = new ArrayList<>();
+//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+		checkToday_Sign(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
+
+
 
 		//メモリの解放
 		STOCKList = new ArrayList<String[]>();
 		SATISTICSList = new ArrayList<String[]>();
 		INDEXList = new ArrayList<String[]>();
 		ETFNameList = new ArrayList<String[]>();
-		s.closeConection();
+		keepStockList = new ArrayList<String[]>();
+
 	}
 
 
@@ -107,14 +149,16 @@ public class CheckSign {
 			String L_methodName,
 			String S_packageName,
 			String S_className,
-			String S_methodName,S s){
+			String S_methodName){
 		String SQL = "";
-//		S s = new S();
-//		s.getCon();
+		S s = new S();
+		s.getCon();
 		int resultInt = 0;
 		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
+		//true:保有期間
+		//false:エントリー回数
 		String column = COLUMN.ENTRYDAY;
 
 		if ( check = false ) {
@@ -131,15 +175,120 @@ public class CheckSign {
 				+ " and "
 				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
 
+				try {
+					s.rs2 = s.sqlGetter().executeQuery(SQL);
+					//				if(s.rs2.next()){
+					//
+					//				};
+					while(s.rs2.next()){
+						//					String codeStatus[] = new String[6];
+						resultInt = s.rs2.getInt(	column	);
+					};
+				} catch (SQLException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+
+				s.closeConection();
+				return resultInt;
+	}
+
+	private static void checkToday_Sign(
+			int size,
+			String type,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName,
+			ArrayList<String[]> STOCKList,
+			ArrayList<String[]> SATISTICSList,
+			ArrayList<String[]> INDEXList,
+			ArrayList<String[]> ETFNameList,
+			ArrayList<String[]> keepCodeList){
+
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		List<Bean_nowRecord> nowDTOList = new ArrayList<>();
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		nowDTOList = new ArrayList<>();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+
+		checkToday_L_Sign(size,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		nowDTOList = new ArrayList<>();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setOnEliteFLG();
+		checkToday_S_Sign(size,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepCodeList);
+
+
+		//同日に売りと買いが同時に出ていないかチェック。存在する場合、買いログに出力する。
+		checkWsign(type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName);
+
+		//メモリの解放
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		nowDTOList = new ArrayList<>();
+
+	}
+
+	private static void checkWsign(String type,String L_packageName,String L_className,	String L_methodName,String S_packageName,String S_className,String S_methodName){
+
+		S s = new S();
+		s.getCon();
+
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
+
+		//複数行あるレコードのみ抽出
+//		select code from 95_lastordertbl where entrymethod = 'technique.Technique04.MACD_M_L_OVER0' group by code having count(code) > 1
+		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.LASTORDER
+				+ " where "
+				+ COLUMN.TYPE + " = '" + type + "'"
+				+ " and "
+				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ " and "
+				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+				+ " group by " + COLUMN.CODE
+				+ " having count(" + COLUMN.CODE + ") > 1";
+
+
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
-			if(s.rs2.next()){
 
-			};
+
 			while(s.rs2.next()){
-				String codeStatus[] = new String[6];
-				codeStatus[0] = s.rs2.getString(	COLUMN.CODE	);
+				//買いを消す。
+				String code = s.rs2.getString(	COLUMN.CODE	);
+				String SQL2 = " delete from " + TBL_Name.LASTORDER
+							+ " where "
+							+ COLUMN.CODE + " = '" + code + "'"
+							+ " and "
+							+ COLUMN.TYPE + " = '" + type + "'"
+							+ " and "
+							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+							+ " and "
+							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+							+ " and "
+							+ COLUMN.SIGN_FLG + " is true";
+//				s.freeUpdateQuery(SQL2);
+				System.out.println("【重要！】：" + SQL2);
+
+				//買いログに出す
+				commonAP.writeInLog("【重要！】," + code + "が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.STOCK_RESULT_LOG_FLG_L);
 			};
+
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -147,7 +296,11 @@ public class CheckSign {
 
 
 
-		return resultInt;
+
+
+
+
+		s.closeConection();
 	}
 
 	private static void checkToday_L_Sign(
@@ -241,7 +394,7 @@ public class CheckSign {
 	private static void makeLastOrderCodeList(List<String[]> lastOrderCodeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type,boolean signFlg){
 		S s = new S();
 		s.getCon();
-		
+
 		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
@@ -300,7 +453,14 @@ public class CheckSign {
 		//まずはラストオーダーを前日の分を削除する。
 		SQL = " delete from " + TBL_Name.LASTORDER
 			+ " where "
-			+ COLUMN.SIGN_FLG + " is " + signFlg;
+			+ COLUMN.SIGN_FLG + " is " + signFlg
+			+ " and "
+			+ COLUMN.TYPE + " = '" + type + "'"
+			+ " and "
+			+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+			+ " and "
+			+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+			;
 		s.freeUpdateQuery(SQL);
 
 
@@ -371,7 +531,12 @@ public class CheckSign {
 
 			s.freeUpdateQuery(SQL);
 			//サインの出た持ってる銘柄だけ表示する。ログ
-			commonAP.writeInLog(check + ":" + TODAY + ":" +  code + ":" + Lmethod + ":" + Smethod,logWriting.STOCK_RESULT_LOG_FLG);
+			if (signFlg){
+				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_L);
+			}else{
+				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_S);
+			}
+
 		}
 
 
@@ -397,7 +562,7 @@ public class CheckSign {
 			String TODAY = SQLChecker.getCateToday(cate,s);
 			boolean exitCheck = false;
 
-			//最新日が売りサイン
+			//最新日が売りサイン実行日
 			String SQL = " select "
 						+ COLUMN.DAYTIME + "," + COLUMN.OPEN
 						+ " from "
@@ -502,12 +667,15 @@ public class CheckSign {
 
 	public static void setEntryTBL(List<String[]> codeList,String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type){
 
-		
+
 		S s = new S();
 		s.getCon();
 		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
+		if (codeList.size()==0){
+			return;
+		}
 
 //		String TODAY = controllDay.getMAX_DD_INDEX(s);
 		for (int i = 0; i < codeList.size();i++){
@@ -520,7 +688,7 @@ public class CheckSign {
 			String TBL = SQLChecker.getTBL(cate);
 
 
-			//最新日が買いサイン
+			//最新日が買いサイン実行日
 			String SQL = " select "
 						+ COLUMN.DAYTIME + "," + COLUMN.OPEN
 						+ " from "
@@ -635,71 +803,6 @@ public class CheckSign {
 
 
 
-	private static void checkMACD_L_SMALL(ArrayList<String[]> STOCKList,ArrayList<String[]> SATISTICSList,ArrayList<String[]> INDEXList,ArrayList<String[]> ETFNameList){
-
-		Bean_Parameta paraDTO = new Bean_Parameta();
-		Bean_Result resultDTO = new Bean_Result();
-		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		List<Bean_nowRecord> nowDTOList = new ArrayList<>();
-		String methodName = Technique98_CONST.MACD_M_L_SMALL;
-		//結論の出力方法
-		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
-		resultDTO.setOnResultTotal();
-		//損切ライン
-		paraDTO.setWinWariai(2.1);
-		paraDTO.setLoseWariai(0.17);
-
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,STOCKList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,SATISTICSList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,INDEXList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,methodName,paraDTO,nowDTOList,0,resultDTO,1,true,ETFNameList);
-	}
-
-
-	//今日のサインチェック
-	//sizeはメソッドごとに何日前までみるかを見る
-	private static void checkMACD_L(ArrayList<String[]> STOCKList,ArrayList<String[]> SATISTICSList,ArrayList<String[]> INDEXList,ArrayList<String[]> ETFNameList){
-
-		Bean_Parameta paraDTO = new Bean_Parameta();
-		Bean_Result resultDTO = new Bean_Result();
-		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		List<Bean_nowRecord> nowDTOList = new ArrayList<>();
-		//結論の出力方法
-		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
-		resultDTO.setOnResultTotal();
-		//損切ライン
-		paraDTO.setWinWariai(2.1);
-		paraDTO.setLoseWariai(0.47);
-//
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,STOCKList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,SATISTICSList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,INDEXList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_L,paraDTO,nowDTOList,0,resultDTO,1,true,ETFNameList);
-	}
-
-	private static void checkMACD_S(ArrayList<String[]> STOCKList,ArrayList<String[]> SATISTICSList,ArrayList<String[]> INDEXList,ArrayList<String[]> ETFNameList){
-
-		Bean_Parameta paraDTO = new Bean_Parameta();
-		Bean_Result resultDTO = new Bean_Result();
-		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		List<Bean_nowRecord> nowDTOList = new ArrayList<>();
-		//結論の出力方法
-		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
-		resultDTO.setOnResultTotal();
-		//損切ライン
-		paraDTO.setWinWariai(2.1);
-		paraDTO.setLoseWariai(0.47);
-
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,STOCKList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,SATISTICSList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,INDEXList);
-//		checkTodaySignControll(Technique98_CONST.PACKAGE_01,Technique98_CONST.CLASS_04,Technique98_CONST.MACD_M_S_14,paraDTO,nowDTOList,0,resultDTO,1,false,ETFNameList);
-
-
-	}
 
 	//nowDTOadressはなんでもいい
 	private static void checkTodaySignControll(ArrayList<String> resultCodeList,String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList){
@@ -711,6 +814,11 @@ public class CheckSign {
 		}else{
 			check = "(売)";
 		}
+
+		if (codeList.size()==0){
+			return;
+		}
+
 		S s = new S();
 		s.getCon();
 		 //01_stock_dd a

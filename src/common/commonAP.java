@@ -64,6 +64,12 @@ public class commonAP {
 			case logWriting.STOCK_RESULT_LOG_FLG:
 				System.out.print(writeType);
 				break;
+			case logWriting.STOCK_RESULT_LOG_FLG_L:
+				System.out.print(writeType);
+				break;
+			case logWriting.STOCK_RESULT_LOG_FLG_S:
+				System.out.print(writeType);
+				break;
 			case logWriting.BACKTEST_LOG_FLG:
 				System.out.print(writeType);
 				break;
@@ -84,6 +90,12 @@ public class commonAP {
 			System.out.print(writeType);
 			break;
 		case logWriting.STOCK_RESULT_LOG_FLG:
+			System.out.print(writeType);
+			break;
+		case logWriting.STOCK_RESULT_LOG_FLG_L:
+			System.out.print(writeType);
+			break;
+		case logWriting.STOCK_RESULT_LOG_FLG_S:
 			System.out.print(writeType);
 			break;
 		case logWriting.BACKTEST_LOG_FLG:

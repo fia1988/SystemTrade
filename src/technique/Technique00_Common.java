@@ -1,10 +1,14 @@
 package technique;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import proparty.S;
+import proparty.TBL_Name;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
+import constant.COLUMN;
 import constant.ReCord;
 
 public class Technique00_Common {
@@ -97,10 +101,26 @@ public class Technique00_Common {
 //		}
 
 
-//		//エントリータイムが多すぎるとノーゲーム
-//		if (resultDTO.getEntryTime() > 6){
-//			return Technique98_CONST.NO_GAME;
-//		}
+		if ( paraDTO.getRealTimeMode() ){
+			//本番
+
+//			Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+//			int entryTime = getKeepDayEntryTimes(true,nowDTO.getCode_01(),"DD",paraDTO.getLMETHOD(),paraDTO.getSMETHOD());
+//			//エントリータイムが多すぎるとノーゲーム
+//			if (entryTime >= paraDTO.getMaxKeepDays()){
+//				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+//				return Technique98_CONST.TRADE_FLG;
+//			}
+		}else{
+			//バックテスト
+
+			//エントリータイムが多すぎるとノーゲーム
+			if (resultDTO.getEntryTime() >= paraDTO.getMaxEntryTimes()){
+				return Technique98_CONST.NO_GAME;
+			}
+		}
+
+
 
 
 		//取引量の少ない銘柄は計算しない
@@ -146,15 +166,32 @@ public class Technique00_Common {
 		}
 
 
-		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
 
 
-//		//保有期間が長くなると売る
-//		if (resultDTO.getKeepCount() > 14){
-//			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-//			return Technique98_CONST.TRADE_FLG;
-//		}
+
+
+		if ( paraDTO.getRealTimeMode() ){
+			//本番
+
+//			Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+//			int keepTime = getKeepDayEntryTimes(true,nowDTO.getCode_01(),"DD",paraDTO.getLMETHOD(),paraDTO.getSMETHOD());
+//			//保有期間が長くなると売る
+//			if (keepTime >= paraDTO.getMaxKeepDays()){
+//				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+//				return Technique98_CONST.TRADE_FLG;
+//			}
+
+		}else{
+			//バックテスト
+
+			//保有期間が長くなると売る
+			if (resultDTO.getKeepCount() >= paraDTO.getMaxKeepDays()){
+				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+				return Technique98_CONST.TRADE_FLG;
+			}
+		}
+
 
 
 //		if (checkPlunge_STOCK_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
@@ -163,6 +200,57 @@ public class Technique00_Common {
 
 		return Technique98_CONST.NO_GAME;
 
+	}
+
+	//true:保有期間
+	//false:エントリー回数
+	private static int getKeepDayEntryTimes(boolean check,
+			String code,
+			String type,
+			String Lmethod,
+			String Smethod){
+		String SQL = "";
+		S s = new S();
+		s.getCon();
+		int resultInt = 0;
+//		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+//		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
+
+		//true:保有期間
+		//false:エントリー回数
+		String column = COLUMN.ENTRYDAY;
+
+		if ( check = false ) {
+			column = COLUMN.ENTRYTIMES;
+		}
+
+		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
+				+ " where "
+				+ COLUMN.CODE + " = '" + code + "'"
+				+ " and "
+				+ COLUMN.TYPE + " = '" + type + "'"
+				+ " and "
+				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ " and "
+				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+
+				try {
+					s.rs2 = s.sqlGetter().executeQuery(SQL);
+					//				if(s.rs2.next()){
+					//
+					//				};
+					while(s.rs2.next()){
+						//					String codeStatus[] = new String[6];
+						resultInt = s.rs2.getInt(	column	);
+					};
+				} catch (SQLException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+
+				s.closeConection();
+				return resultInt;
 	}
 
 	//急落したら売り出す

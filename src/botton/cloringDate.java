@@ -18,6 +18,12 @@ public class cloringDate {
 		GetCodeList a = new GetCodeList();
 		CONTOLLBOTTON CB = new CONTOLLBOTTON();
 		long start = System.currentTimeMillis();
+
+
+//		if (checkPreTodayLog()==false){
+//			return;
+//		}
+
 		S s = new S();
 		//コードリストテーブルを作る、日々の更新をする。
 
@@ -59,6 +65,11 @@ public class cloringDate {
 
 		s.closeConection();
 
+		if ( checkTodayLog() ==false ){
+			//一致しない場合は終了する。
+			return;
+		}
+
 		//分割チェック。sはこの中で独自に作る。
 		SEPARATE_CHECK.checkSEPARATE_controll();
 
@@ -70,5 +81,48 @@ public class cloringDate {
 		long stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 
+	}
+
+
+	//株と指数の更新日付、出力ログをみて実行するか否かを判断する。
+	private boolean checkPreTodayLog(){
+		S s = new S();
+		s.getCon();
+
+		//更新日付が同じであるかをチェック
+		//同じであれば、ログが出力されているかを調べる。
+		//ログが存在すれば処理しない。falseを返す。
+		if ( controllDay.getMAX_DD_INDEX(s).equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
+			//一致して、なおかつファイルが存在する場合はfalse
+
+			s.closeConection();
+			return false;
+		}
+
+		s.closeConection();
+		return true;
+	}
+
+	//株と指数の更新日付が同じなら処理しない。
+	private boolean checkTodayLog(){
+		S s = new S();
+		s.getCon();
+
+		if ( controllDay.getMAX_DD_INDEX(s).equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
+			//一致する場合、ヘッダを出力する。
+			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_L);
+			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_S);
+
+			s.closeConection();
+
+		}else{
+			//一致しないエラーを出す。
+			System.out.println("株か指数かどっちかが更新できず。");
+			s.closeConection();
+			return false;
+		};
+
+
+		return true;
 	}
 }

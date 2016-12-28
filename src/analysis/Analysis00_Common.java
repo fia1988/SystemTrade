@@ -205,10 +205,10 @@ public class Analysis00_Common {
 		String kessaiDay01;
 		String kessaiDay02;
 		int keepTime;
-		
+
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
-		
+
 		try {
 
 
@@ -220,7 +220,7 @@ public class Analysis00_Common {
 
 			//売買フラグチェックを外す。
 			paraDTO.setCheckFLG(false);
-			
+
 			try {
 //				System.out.println(SQL);
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -303,7 +303,7 @@ public class Analysis00_Common {
 
 									//売買フラグチェックを外す。
 									paraDTO.setCheckFLG(false);
-									
+
 									break;
 
 								case Technique98_CONST.NO_RESULT:

@@ -24,7 +24,27 @@ public class Bean_Parameta {
 
 
 
+	private int maxEntryTimes = 2000;
+	private int maxKeepDays = 2000;
 
+
+
+
+	public int getMaxEntryTimes() {
+		return maxEntryTimes;
+	}
+
+	public void setMaxEntryTimes(int maxEntryTimes) {
+		this.maxEntryTimes = maxEntryTimes;
+	}
+
+	public int getMaxKeepDays() {
+		return maxKeepDays;
+	}
+
+	public void setMaxKeepDays(int maxKeepDays) {
+		this.maxKeepDays = maxKeepDays;
+	}
 
 	public String getLMETHOD() {
 		return LMETHOD;
