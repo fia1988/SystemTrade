@@ -1,6 +1,8 @@
 package botton;
 
+import proparty.PROPARTY;
 import proparty.S;
+import proparty.TBL_Name;
 import proparty.controllDay;
 import technique.CheckSign;
 import accesarrySQL.OneRecord_Update;
@@ -8,6 +10,7 @@ import accesarrySQL.SEPARATE_CHECK;
 
 import common.commonAP;
 
+import constant.COLUMN;
 import constant.ReCord;
 import constant.logWriting;
 import controller.CONTOLLBOTTON;
@@ -19,8 +22,11 @@ public class cloringDate {
 		CONTOLLBOTTON CB = new CONTOLLBOTTON();
 		long start = System.currentTimeMillis();
 
+		//日々ファイルの出力先
+		String folderPath = "D:" + PROPARTY.SQL_SEPA + "orderList";
 
-//		if (checkPreTodayLog()==false){
+		//前日動かしたかどうかのチェック
+//		if (checkPreTodayLog(folderPath)==false){
 //			return;
 //		}
 
@@ -77,6 +83,24 @@ public class cloringDate {
 		//今日のサインの点灯をチェックする。
 		CheckSign.checkTodaySign();
 
+		//最後に今日の売買ファイルを出力する。
+
+		switch (outPutKeepTable(folderPath)) {
+			case 0:
+				//成功
+				break;
+			case 1086:
+				//ファイルが既に存在する
+				break;
+			case 1:
+				//指定したディレクトリが存在しない
+				System.out.println(folderPath+"が存在しない");
+				break;
+			default:
+				System.out.println("なんかエラー");
+				break;
+		}
+
 		s.closeConection();
 		long stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
@@ -84,19 +108,94 @@ public class cloringDate {
 	}
 
 
-	//株と指数の更新日付、出力ログをみて実行するか否かを判断する。
-	private boolean checkPreTodayLog(){
+
+	//今日の注文をログファイルとして出力
+	private int outPutKeepTable(String folderPath){
+		String SQL = "";
 		S s = new S();
 		s.getCon();
+		int resultInt = 0;
+
+
+		String fileNameL;
+		String fileNameS;
+		String filePath;
+		String column = COLUMN.CODE			 	+ " , " //
+						+ COLUMN.DAYTIME		+ " , " //
+						+ COLUMN.TYPE			+ " , " //
+						+ COLUMN.ENTRYMETHOD	+ " , " //
+						+ COLUMN.EXITMETHOD		+ " " ;
+
+		String heddaColumn = "'" +  COLUMN.CODE		 	+ "' , " //
+						   + "'" +  COLUMN.DAYTIME		+ "' , " //
+						   + "'" +  COLUMN.TYPE			+ "' , " //
+						   + "'" +  COLUMN.ENTRYMETHOD	+ "' , " //
+						   + "'" +  COLUMN.EXITMETHOD	+ "' " ;;
+
+
+		String today = controllDay.getMAX_DD_INDEX(s);
+		fileNameL = today + "_" + "L.csv";
+		fileNameS = today + "_" + "S.csv";
+
+		filePath = folderPath + PROPARTY.SQL_SEPA + fileNameL;
+
+		SQL =	" SELECT "
+				+ heddaColumn
+				+ " union "
+				+ " SELECT "
+				+ column
+				+ " FROM " + TBL_Name.LASTORDER
+				+	" where "
+				+	COLUMN.SIGN_FLG  + " is true "
+				+	" INTO OUTFILE '" + filePath +  "'"
+				+	" FIELDS TERMINATED BY ','"
+				+	" OPTIONALLY ENCLOSED BY '\"'";
+
+		//戻り値1086の時はファイルが存在する
+		s.exportFile(SQL);
+
+		filePath = folderPath + PROPARTY.SQL_SEPA + fileNameS;
+		SQL =	" SELECT "
+				+ heddaColumn
+				+ " union "
+				+ " SELECT "
+				+ column
+				+ " FROM " + TBL_Name.LASTORDER
+				+	" where "
+				+	COLUMN.SIGN_FLG  + " is false "
+				+	" INTO OUTFILE '" + filePath +  "'"
+				+	" FIELDS TERMINATED BY ','"
+				+	" OPTIONALLY ENCLOSED BY '\"'";
+
+		resultInt = s.exportFile(SQL);
+
+		s.closeConection();
+		return resultInt;
+	}
+
+
+	//株と指数の更新日付、出力ログをみて実行するか否かを判断する。
+	private boolean checkPreTodayLog(String folderPath){
+		S s = new S();
+		s.getCon();
+		String today = controllDay.getMAX_DD_INDEX(s);
 
 		//更新日付が同じであるかをチェック
-		//同じであれば、ログが出力されているかを調べる。
-		//ログが存在すれば処理しない。falseを返す。
-		if ( controllDay.getMAX_DD_INDEX(s).equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
+		//同じであれば、売買ファイルが出力されているかを調べる。
+		//売買ファイルが存在すれば処理しない。falseを返す。
+		if ( today.equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
 			//一致して、なおかつファイルが存在する場合はfalse
 
-			s.closeConection();
-			return false;
+
+
+			//戻り値1086の時はファイルが存在する
+			if(outPutKeepTable(folderPath)==1086){
+				System.out.println("ファイルあり");
+				s.closeConection();
+				return false;
+			}
+
+
 		}
 
 		s.closeConection();
@@ -107,11 +206,12 @@ public class cloringDate {
 	private boolean checkTodayLog(){
 		S s = new S();
 		s.getCon();
+		String today = controllDay.getMAX_DD_INDEX(s);
 
-		if ( controllDay.getMAX_DD_INDEX(s).equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
+		if ( today.equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
 			//一致する場合、ヘッダを出力する。
-			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_L);
-			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_S);
+//			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_L);
+//			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_S);
 
 			s.closeConection();
 

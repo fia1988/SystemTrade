@@ -128,6 +128,8 @@ public class CheckSign {
 		checkToday_Sign(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
 
 
+		
+
 
 		//メモリの解放
 		STOCKList = new ArrayList<String[]>();
@@ -137,8 +139,7 @@ public class CheckSign {
 		keepStockList = new ArrayList<String[]>();
 
 	}
-
-
+	
 	//true:保有期間
 	//false:エントリー回数
 	private static int getKeepDayEntryTimes(boolean check,
@@ -265,29 +266,49 @@ public class CheckSign {
 
 
 		try {
+
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			SQL = " delete from " + TBL_Name.LASTORDER
+				+ " where "
+				+ COLUMN.SIGN_FLG + " is true"
+				+ " and "
+				+ COLUMN.CODE
+				+ " in "
+				+ " ( "
+				+ " select * from "
+				+ " ( "
+				+ SQL
+				+ " ) "
+				+ " as sub "
+				+ " ) ";
 
-
-			while(s.rs2.next()){
-				//買いを消す。
-				String code = s.rs2.getString(	COLUMN.CODE	);
-				String SQL2 = " delete from " + TBL_Name.LASTORDER
-							+ " where "
-							+ COLUMN.CODE + " = '" + code + "'"
-							+ " and "
-							+ COLUMN.TYPE + " = '" + type + "'"
-							+ " and "
-							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
-							+ " and "
-							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
-							+ " and "
-							+ COLUMN.SIGN_FLG + " is true";
-//				s.freeUpdateQuery(SQL2);
-				System.out.println("【重要！】：" + SQL2);
-
-				//買いログに出す
-				commonAP.writeInLog("【重要！】," + code + "が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.STOCK_RESULT_LOG_FLG_L);
+			if (s.rs2.next()){
+				//存在する場合はここを通る。
+				System.out.println(SQL);
+//				s.freeUpdateQuery(SQL);
+				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.STOCK_RESULT_LOG_FLG_L);
 			};
+
+//			while(s.rs2.next()){
+//				//売り買い同時に存在する場合、ラストオーダーから買いを消す。
+//				String code = s.rs2.getString(	COLUMN.CODE	);
+//				String SQL2 = " delete from " + TBL_Name.LASTORDER
+//							+ " where "
+//							+ COLUMN.CODE + " = '" + code + "'"
+//							+ " and "
+//							+ COLUMN.TYPE + " = '" + type + "'"
+//							+ " and "
+//							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+//							+ " and "
+//							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+//							+ " and "
+//							+ COLUMN.SIGN_FLG + " is true";
+////				s.freeUpdateQuery(SQL2);
+//				System.out.println("【重要！】：" + SQL2);
+//
+//				//買いログに出す
+//				commonAP.writeInLog("【重要！】," + code + "が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.STOCK_RESULT_LOG_FLG_L);
+//			};
 
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -531,11 +552,11 @@ public class CheckSign {
 
 			s.freeUpdateQuery(SQL);
 			//サインの出た持ってる銘柄だけ表示する。ログ
-			if (signFlg){
-				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_L);
-			}else{
-				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_S);
-			}
+//			if (signFlg){
+//				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_L);
+//			}else{
+//				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_S);
+//			}
 
 		}
 

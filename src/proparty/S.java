@@ -98,7 +98,7 @@ public class S {
 	//sql文を入力するとSQLを実行できる。
 	//使い回し可能。
 	//ただし適当なタイミングでS.P_createclose()すべし。
-	public static void freeUpdateQuery(String sql){
+	public static int freeUpdateQuery(String sql){
 		try {
 
 			pstmt = con.prepareStatement(sql);
@@ -116,13 +116,52 @@ public class S {
 				e.printStackTrace();
 				System.out.println(sql);
 				System.out.println(e.getErrorCode());
+				return e.getErrorCode();
+			}else{
+				return e.getErrorCode();
 			}
 
 
 
 		}
+
+		return 0;
 	}
 
+	//ファイルをエクスポートするときに使う。
+	//使用例：s.exportFile(SQL)
+	public int exportFile(String SQL){
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeQuery(SQL);
+
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+
+
+			switch (e.getErrorCode()) {
+			case 1086:
+				//ファイルが既に存在する
+				return e.getErrorCode();
+			case 1:
+				//ディレクトリが存在しない
+				return e.getErrorCode();
+
+			default:
+				//そのほかのエラー
+				e.printStackTrace();
+				return e.getErrorCode();
+			}
+
+
+		}
+
+
+
+		return 0;
+	}
 
 	//使うときはこんな感じ
 //	S.sqlGetter().executeUpdate("CREATE DATABASE db_User");
@@ -146,6 +185,7 @@ public class S {
 					"    SQLState: " + e1.getSQLState());
 				System.out.println(
 					" VendorError: " + e1.getErrorCode());
+
 			} catch (Exception e2) {
 				System.out.println(
 					"Exception: " + e2.getMessage());
