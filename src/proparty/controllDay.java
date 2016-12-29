@@ -35,8 +35,7 @@ public class controllDay {
 		calendar.add(Calendar.DAY_OF_MONTH, PROPARTY.HISABISADAY_STATISTICS);
 		COMDAY = sdf1.format(calendar.getTime());
 
-
-
+		//COMDAYとTODAYを比較して過去の方をリターンする。
 		if(COMDAY.compareTo(getTODAY())<=0){
 
 			return COMDAY;
@@ -66,7 +65,7 @@ public class controllDay {
 		COMDAY = sdf1.format(calendar.getTime());
 
 
-
+		//COMDAYとTODAYを比較して過去の方をリターンする。
 		if(COMDAY.compareTo(getTODAY())<=0){
 
 			return COMDAY;
@@ -96,7 +95,7 @@ public class controllDay {
 		COMDAY = sdf1.format(calendar.getTime());
 
 
-
+		//COMDAYとTODAYを比較して過去の方をリターンする。
 		if(COMDAY.compareTo(getTODAY())<=0){
 
 			return COMDAY;

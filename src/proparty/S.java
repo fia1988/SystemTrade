@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import constant.ReturnCodeConst;
+
 public class S {
 	public static Connection con = null;
 	public static ResultSet rs = null;
@@ -125,7 +127,7 @@ public class S {
 
 		}
 
-		return 0;
+		return ReturnCodeConst.SQL_ERR_0;
 	}
 
 	//ファイルをエクスポートするときに使う。
@@ -142,10 +144,10 @@ public class S {
 
 
 			switch (e.getErrorCode()) {
-			case 1086:
+			case ReturnCodeConst.SQL_ERR_1086:
 				//ファイルが既に存在する
 				return e.getErrorCode();
-			case 1:
+			case ReturnCodeConst.SQL_ERR_1:
 				//ディレクトリが存在しない
 				return e.getErrorCode();
 
@@ -160,7 +162,7 @@ public class S {
 
 
 
-		return 0;
+		return ReturnCodeConst.SQL_ERR_0;
 	}
 
 	//使うときはこんな感じ

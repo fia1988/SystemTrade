@@ -11,8 +11,6 @@ public class PROPARTY {
 	//サイトに株価更新時間
 	public static String UPDATETIME = "15:30:00";
 
-	//SQL文用のセパレータ
-	final public static String SQL_SEPA = "/";
 
 	//連続アクセスを防ぐﾐﾘ秒数
 	public static int SLEEPTIME = 3600000;

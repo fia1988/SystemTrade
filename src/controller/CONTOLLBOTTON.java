@@ -17,118 +17,120 @@ import bean.Bean_CodeList;
 import common.commonAP;
 
 import constant.ReCord;
+import constant.ReturnCodeConst;
 import constant.logWriting;
 import createTBL.GetCodeTBL;
 
 public class CONTOLLBOTTON {
 
-	public void everyDayBottonContoroll(String MAXDAY ,String TODAY,String cate,S s){
+	public int everyDayBottonContoroll(String MAXDAY ,String TODAY,String cate,S s){
 
-		if(commonAP.getTODAY().equals(MAXDAY)){
-			//更新日と今日の日付が同じ場合
-			switch(cate){
-			case ReCord.CODE_01_STOCK:
-				commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
+
+
+		//日々テーブルの更新
+		int hibiResult;
+		hibiResult = hisabisaDayBotton(MAXDAY, TODAY, cate, s);
+
+		switch (hibiResult){
+			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
+				//成功時は抜ける
 				break;
-			case ReCord.CODE_02_SATISTICS:
-				commonAP.writeInLog("統計更新なし",logWriting.DATEDATE_LOG_FLG);
-				break;
-			case ReCord.CODE_03_INDEX:
-				commonAP.writeInLog("指数更新梨",logWriting.DATEDATE_LOG_FLG);
-				break;
-			case ReCord.CODE_04_ETF:
-				commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
-				break;
-			case ReCord.CODE_05_SAKIMONO:
-				break;
-			case ReCord.CODE_06_CURRENCY:
-				break;
+			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
+				s.resetConnection();
+				return hibiResult;
+			case ReturnCodeConst.EVERY_UPDATE_ERR:
+				commonAP.writeInLog("こりゃだめだcate：" + cate,logWriting.DATEDATE_LOG_FLG);
+				s.resetConnection();
+				return hibiResult;
 			default:
-				System.out.println("なんかよくわからないの来た：");
-				break;
-			}
-
-			s.resetConnection();
-			return;
+				commonAP.writeInLog("なんかよくわからないの来た：" + cate,logWriting.DATEDATE_LOG_FLG);
+				s.resetConnection();
+				return hibiResult;
 		}
+
+
 
 		//リストを作る
-		everyDayBotton(commonAP.getTODAY(),cate,s);
-		//日々テーブルの更新
-		hisabisaDayBotton(MAXDAY, TODAY, cate, s);
+		if ( everyDayBotton(commonAP.getTODAY(),cate,s) == ReturnCodeConst.EVERY_UPDATE_ERR){
+			commonAP.writeInLog("リスト作り失敗：" + cate,logWriting.DATEDATE_LOG_FLG);
+			s.resetConnection();
+			return ReturnCodeConst.EVERY_UPDATE_ERR;
+		};
+
 		s.resetConnection();
+		return hibiResult;
 	}
 
-	public void everyDayBottonContoroll_STOCK_ETF(String MAXDAY ,String TODAY,S s){
+//	public void everyDayBottonContoroll_STOCK_ETF(String MAXDAY ,String TODAY,S s){
+//
+//
+//		//更新日が昨日と同じ場合、今日の分だけ更新する。月曜日の場合はあきらめる。
+//		if(commonAP.getTODAY(-1).equals(MAXDAY)){
+//
+//			//リストを作る
+////			everyDayBotton_STOCK_ETF(commonAP.getTODAY(-1),s);
+//			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_01_STOCK,s);
+//			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
+//
+//		}else if(commonAP.getTODAY().equals(MAXDAY)){
+//			commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
+//		}else{
+//
+////			hisabisaDayBottonContoroll_STOCK_ETF(MAXDAY,TODAY,s);
+//
+//		}
+//		hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_01_STOCK, s);
+//		s.resetConnection();
+//
+//	}
 
+//	public void everyDayBottonContoroll_STATISTICS(String MAXDAY ,String TODAY,S s){
+//
+//		if(commonAP.getTODAY(-1).equals(MAXDAY)){
+//
+//			//リストを作る
+////			everyDayBotton_STATISTICS(commonAP.getTODAY(-1),s);
+//			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_02_SATISTICS,s);
+//			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
+//
+//		}else if(commonAP.getTODAY().equals(MAXDAY)){
+//			//更新日とボタン実行日が同じならここ
+//			commonAP.writeInLog("統計更新なし",logWriting.DATEDATE_LOG_FLG);
+//		}else{
+//
+////			hisabisaDayBottonContoroll_STATISTICS(MAXDAY,TODAY,s);
+//
+//
+//		}
+//		hisabisaDayBotton(MAXDAY,TODAY,ReCord.CODE_02_SATISTICS,s);
+//		s.resetConnection();
+//	}
 
-		//更新日が昨日と同じ場合、今日の分だけ更新する。月曜日の場合はあきらめる。
-		if(commonAP.getTODAY(-1).equals(MAXDAY)){
+//	public void everyDayBottonContoroll_INDEX(String MAXDAY ,String TODAY,S s){
+//
+//
+//		//更新日が昨日と同じ場合、今日の分だけ更新する。月曜日の場合はあきらめる。
+//		if(commonAP.getTODAY(-1).equals(MAXDAY)){
+//
+//
+////			everyDayBotton_INDEX(commonAP.getTODAY(-1),s);
+//			//リストを作る
+//			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_03_INDEX,s);
+//			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
+//
+//		}else if(commonAP.getTODAY().equals(MAXDAY)){
+//			commonAP.writeInLog("指数更新梨",logWriting.DATEDATE_LOG_FLG);
+//		}else{
+//
+////			hisabisaDayBottonContoroll_INDEX(MAXDAY,TODAY,s);
+//
+//		}
+//		hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_03_INDEX, s);
+//		s.resetConnection();
+//
+//	}
 
-			//リストを作る
-//			everyDayBotton_STOCK_ETF(commonAP.getTODAY(-1),s);
-			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_01_STOCK,s);
-			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
-
-		}else if(commonAP.getTODAY().equals(MAXDAY)){
-			commonAP.writeInLog("株更新梨",logWriting.DATEDATE_LOG_FLG);
-		}else{
-
-//			hisabisaDayBottonContoroll_STOCK_ETF(MAXDAY,TODAY,s);
-
-		}
-		hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_01_STOCK, s);
-		s.resetConnection();
-
-	}
-
-	public void everyDayBottonContoroll_STATISTICS(String MAXDAY ,String TODAY,S s){
-
-		if(commonAP.getTODAY(-1).equals(MAXDAY)){
-
-			//リストを作る
-//			everyDayBotton_STATISTICS(commonAP.getTODAY(-1),s);
-			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_02_SATISTICS,s);
-			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
-
-		}else if(commonAP.getTODAY().equals(MAXDAY)){
-			//更新日とボタン実行日が同じならここ
-			commonAP.writeInLog("統計更新なし",logWriting.DATEDATE_LOG_FLG);
-		}else{
-
-//			hisabisaDayBottonContoroll_STATISTICS(MAXDAY,TODAY,s);
-
-
-		}
-		hisabisaDayBotton(MAXDAY,TODAY,ReCord.CODE_02_SATISTICS,s);
-		s.resetConnection();
-	}
-
-	public void everyDayBottonContoroll_INDEX(String MAXDAY ,String TODAY,S s){
-
-
-		//更新日が昨日と同じ場合、今日の分だけ更新する。月曜日の場合はあきらめる。
-		if(commonAP.getTODAY(-1).equals(MAXDAY)){
-
-
-//			everyDayBotton_INDEX(commonAP.getTODAY(-1),s);
-			//リストを作る
-			everyDayBotton(commonAP.getTODAY(),ReCord.CODE_03_INDEX,s);
-			commonAP.writeInLog("こことおる",logWriting.DATEDATE_LOG_FLG);
-
-		}else if(commonAP.getTODAY().equals(MAXDAY)){
-			commonAP.writeInLog("指数更新梨",logWriting.DATEDATE_LOG_FLG);
-		}else{
-
-//			hisabisaDayBottonContoroll_INDEX(MAXDAY,TODAY,s);
-
-		}
-		hisabisaDayBotton(MAXDAY, TODAY, ReCord.CODE_03_INDEX, s);
-		s.resetConnection();
-
-	}
-
-	private void everyDayBotton(String TODAY,String cate,S s){
+	private int everyDayBotton(String TODAY,String cate,S s){
 
 //	    DateFormat format = new SimpleDateFormat("HH:mm:ss");
 //	    Date nowDate = new Date();
@@ -154,7 +156,7 @@ public class CONTOLLBOTTON {
 		case ReCord.CODE_01_STOCK:
 			if(NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0) == false){
 				commonAP.writeInLog("株のリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
-				return;
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
 			}
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),TODAY,0);
@@ -166,7 +168,7 @@ public class CONTOLLBOTTON {
 			if(NB.setUrlCsv(URL , 1) == false){
 
 				commonAP.writeInLog("統計のリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
-				return;
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
 			}
 			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
 //			//取得したDTOをリストTBLに挿入する。
@@ -177,7 +179,7 @@ public class CONTOLLBOTTON {
 		case ReCord.CODE_03_INDEX:
 			if( NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0) == false ){
 				commonAP.writeInLog("INDEXのリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
-				return;
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
 			}
 			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),TODAY,0);
 			InsertList_CreateTBL_DD_InsertDD_TODAY_INDEX(bbb.getList_CSVtoDTO_INDEX(),TODAY, s);
@@ -185,7 +187,7 @@ public class CONTOLLBOTTON {
 		case ReCord.CODE_04_ETF:
 			if(NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0) == false){
 				commonAP.writeInLog("株のリスト作るの失敗",logWriting.DATEDATE_LOG_FLG);
-				return;
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
 			}
 			//CSVをDTOにする
 			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),TODAY,0);
@@ -204,40 +206,31 @@ public class CONTOLLBOTTON {
 			break;
 		}
 
-
+		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
-	private void hisabisaDayBotton(String MAXDAY,String TODAY,String cate,S s){
+	private int hisabisaDayBotton(String MAXDAY,String TODAY,String cate,S s){
 
 		NetBean NB = new NetBean();
 		Bean_Bean bbb = new Bean_Bean();
-
+		int resultInsert = 0;
 		//リスト作る。
 //		everyDayBotton(TODAY,cate,s);
 
+
 		switch(cate){
 		case ReCord.CODE_01_STOCK:
-			if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)==false){
+			resultInsert=insertDD_STOCK_ETF(MAXDAY,TODAY,s);
 
-				commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
-			}
 			break;
 		case ReCord.CODE_02_SATISTICS:
-			if(insertDD_STATISTICS(MAXDAY,TODAY,s)==false){
-
-				commonAP.writeInLog("こりゃだめだ：統計",logWriting.DATEDATE_LOG_FLG);
-			}
+			resultInsert=insertDD_STATISTICS(MAXDAY,TODAY,s);
 			break;
 		case ReCord.CODE_03_INDEX:
-			if(insertDD_INDEX(MAXDAY,TODAY,s)==false){
-
-				commonAP.writeInLog("こりゃだめだ：INDEX",logWriting.DATEDATE_LOG_FLG);
-			}
+			resultInsert=insertDD_INDEX(MAXDAY,TODAY,s);
 			break;
 		case ReCord.CODE_04_ETF:
-			if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)==false){
-				commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
-			}
+			resultInsert=(insertDD_STOCK_ETF(MAXDAY,TODAY,s));
 
 			break;
 		case ReCord.CODE_05_SAKIMONO:
@@ -252,91 +245,106 @@ public class CONTOLLBOTTON {
 		}
 
 
-	}
+//		switch (resultInsert){
+//			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
+//				return resultInsert;
+//			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
+//				return resultInsert;
+//			case ReturnCodeConst.EVERY_UPDATE_ERR:
+//				System.out.println("なんかエラー1");
+//				return resultInsert;
+//			default:
+//				System.out.println("なんかエラー2");
+//				return resultInsert;
+//		}
 
-	private void everyDayBotton_STATISTICS(String TODAY,S s){
-		NetBean NB = new NetBean();
-
-		//統計指標
-		Bean_Bean bbb = new Bean_Bean();
-
-
-//		CSVを取得
-		try{
-			NB.setUrlCsv(Net_Adress.STATISTICS_LIST , 1);
-		}catch(Exception o){
-
-			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
-			o.printStackTrace();
-			return;
-		}
-
-
-		try{
-			//CSVをDTOにする
-			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
-		}catch(NullPointerException nu){
-			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
-
-			return;
-		}catch(Exception e){
-
-			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
-			e.printStackTrace();
-			return;
-		}
-
-
-		//取得したDTOをリストTBLに挿入する。
-		//取得したDTOをもとに日々テーブルを作る
-		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
-		InsertList_CreateTBL_DD_InsertDD_TODAY_STATISTICS(bbb.getList_CSVtoDTO_STATISTICA(),TODAY, s);
-
+		return resultInsert;
 
 	}
 
+//	private void everyDayBotton_STATISTICS(String TODAY,S s){
+//		NetBean NB = new NetBean();
+//
+//		//統計指標
+//		Bean_Bean bbb = new Bean_Bean();
+//
+//
+////		CSVを取得
+//		try{
+//			NB.setUrlCsv(Net_Adress.STATISTICS_LIST , 1);
+//		}catch(Exception o){
+//
+//			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
+//			o.printStackTrace();
+//			return;
+//		}
+//
+//
+//		try{
+//			//CSVをDTOにする
+//			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
+//		}catch(NullPointerException nu){
+//			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+//
+//			return;
+//		}catch(Exception e){
+//
+//			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//
+//		//取得したDTOをリストTBLに挿入する。
+//		//取得したDTOをもとに日々テーブルを作る
+//		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
+//		InsertList_CreateTBL_DD_InsertDD_TODAY_STATISTICS(bbb.getList_CSVtoDTO_STATISTICA(),TODAY, s);
+//
+//
+//	}
 
-//	リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
-	//ただし、リストテーブルの更新日が昨日ではないときのみ実行する。
-	private void hisabisaDayBottonContoroll_STATISTICS(String MAXDAY , String TODAY , S s){
-		NetBean NB = new NetBean();
 
-		//統計指標
-		Bean_Bean bbb = new Bean_Bean();
+////	リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
+//	//ただし、リストテーブルの更新日が昨日ではないときのみ実行する。
+//	private void hisabisaDayBottonContoroll_STATISTICS(String MAXDAY , String TODAY , S s){
+//		NetBean NB = new NetBean();
+//
+//		//統計指標
+//		Bean_Bean bbb = new Bean_Bean();
+//
+////		CSVを取得
+//		try{
+//
+//			NB.setUrlCsv(Net_Adress.STATISTICS_LIST,1);
+//		}catch(Exception o){
+//			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
+//			o.printStackTrace();
+//			return;
+//		}
+//
+//
+//		try{
+//			//CSVをDTOにする
+//			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
+//		}catch(NullPointerException nu){
+//			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+//			return;
+//		}catch(Exception e){
+//
+//			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//		//取得したDTOをリストTBLに挿入する。
+//		//取得したDTOをもとに日々テーブルを作る
+//		InsertList_CreateTBL_DD_hisabisa(bbb.getList_CSVtoDTO_STATISTICA(), s);
+//
+//		insertDD_STATISTICS(MAXDAY,TODAY,s);
+//
+//	}
 
-//		CSVを取得
-		try{
-
-			NB.setUrlCsv(Net_Adress.STATISTICS_LIST,1);
-		}catch(Exception o){
-			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
-			o.printStackTrace();
-			return;
-		}
-
-
-		try{
-			//CSVをDTOにする
-			bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),TODAY,0);
-		}catch(NullPointerException nu){
-			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
-			return;
-		}catch(Exception e){
-
-			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
-			e.printStackTrace();
-			return;
-		}
-
-		//取得したDTOをリストTBLに挿入する。
-		//取得したDTOをもとに日々テーブルを作る
-		InsertList_CreateTBL_DD_hisabisa(bbb.getList_CSVtoDTO_STATISTICA(), s);
-
-		insertDD_STATISTICS(MAXDAY,TODAY,s);
-
-	}
-
-	private boolean insertDD_STATISTICS(String MAXDAY,String TODAY,S s){
+	private int insertDD_STATISTICS(String MAXDAY,String TODAY,S s){
 		NC_Controller NC = new NC_Controller();
 
 		commonAP cAP = new commonAP();
@@ -356,6 +364,7 @@ public class CONTOLLBOTTON {
 		MAXDAY = sdf1.format(calendar.getTime());
 
 		int check = 0;
+		boolean noSetUrlCsv = false;
 		while(cAP.checkDay(TODAY, MAXDAY)){
 
 			//CSVゲット
@@ -371,11 +380,14 @@ public class CONTOLLBOTTON {
 				InsertDay i_d = new InsertDay();
 				i_d.InsertDD_STATISTICS(B_B.getList_CSVtoDTO_STATISTICA(),MAXDAY, s);
 				check = 0;
+
+				//一回でも通ればtrueにする。
+				noSetUrlCsv = true;
 			}else{
 
 				check++;
 				if ( check > 30 ) {
-					return false;
+					return ReturnCodeConst.EVERY_UPDATE_ERR;
 				}
 			}
 
@@ -383,105 +395,110 @@ public class CONTOLLBOTTON {
 			MAXDAY = sdf1.format(calendar.getTime());
 		}
 
-		return true;
+		if (noSetUrlCsv == false){
+			//一回も更新処理をしていない場合はfalseなので更新なしを返す
+			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+		}
+
+		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 
 	}
 
 
 
-	//リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
-	//ただし、リストテーブルの更新日が昨日ではないときのみ実行する。
-	private void hisabisaDayBottonContoroll_STOCK_ETF(String MAXDAY , String TODAY , S s){
+//	//リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
+//	//ただし、リストテーブルの更新日が昨日ではないときのみ実行する。
+//	private void hisabisaDayBottonContoroll_STOCK_ETF(String MAXDAY , String TODAY , S s){
+//
+//		NetBean NB = new NetBean();
+//
+//		//株と指数
+//		Bean_Bean bbb = new Bean_Bean();
+//
+//
+////		CSVを取得
+//		try{
+//			NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0);
+//		}catch(Exception o){
+//
+//			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
+//			o.printStackTrace();
+//			return;
+//		}
+//
+//		try{
+//			//CSVをDTOにする
+//			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),TODAY,0);
+//		}catch(NullPointerException nu){
+//
+//			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+//			return;
+//		}catch(Exception e){
+//
+//			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//
+//		//取得したDTOをリストTBLに挿入する。
+//		//取得したDTOをもとに日々テーブルを作る
+//		InsertList_CreateTBL_DD_hisabisa(bbb.getList_CSVtoDTO_STOCK_ETF(), s);
+//
+//
+//		//MAXDAYから今日までのデータをインサート開始。ストック、インデックス、統計も全部
+//
+//		if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)){
+//
+//		}else{
+//
+//			commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
+//		}
+//	}
 
-		NetBean NB = new NetBean();
+//	//リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
+//	//ただし、リストテーブルの更新日が昨日であるときのみ実行する。
+//	private void everyDayBotton_STOCK_ETF(String DAY,S s){
+//
+//		NetBean NB = new NetBean();
+//
+//		//統計指標
+//		Bean_Bean bbb = new Bean_Bean();
+//
+//
+////		CSVを取得
+//		try{
+//			NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0);
+//		}catch(Exception o){
+//
+//			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
+//			o.printStackTrace();
+//			return;
+//		}
+//
+//		try{
+//			//CSVをDTOにする
+//			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),DAY,0);
+//		}catch(NullPointerException nu){
+//
+//			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+//			return;
+//		}catch(Exception e){
+//
+//			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//		//取得したDTOをリストTBLに挿入する。
+//		//取得したDTOをもとに日々テーブルを作る
+//		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
+//		InsertList_CreateTBL_DD_InsertDD_TODAY_STOCK_ETF(bbb.getList_CSVtoDTO_STOCK_ETF(),DAY, s);
+//
+//
+//	}
 
-		//株と指数
-		Bean_Bean bbb = new Bean_Bean();
-
-
-//		CSVを取得
-		try{
-			NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0);
-		}catch(Exception o){
-
-			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
-			o.printStackTrace();
-			return;
-		}
-
-		try{
-			//CSVをDTOにする
-			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),TODAY,0);
-		}catch(NullPointerException nu){
-
-			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
-			return;
-		}catch(Exception e){
-
-			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
-			e.printStackTrace();
-			return;
-		}
-
-
-		//取得したDTOをリストTBLに挿入する。
-		//取得したDTOをもとに日々テーブルを作る
-		InsertList_CreateTBL_DD_hisabisa(bbb.getList_CSVtoDTO_STOCK_ETF(), s);
-
-
-		//MAXDAYから今日までのデータをインサート開始。ストック、インデックス、統計も全部
-
-		if(insertDD_STOCK_ETF(MAXDAY,TODAY,s)){
-
-		}else{
-
-			commonAP.writeInLog("こりゃだめだ：株ETF",logWriting.DATEDATE_LOG_FLG);
-		}
-	}
-
-	//リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
-	//ただし、リストテーブルの更新日が昨日であるときのみ実行する。
-	private void everyDayBotton_STOCK_ETF(String DAY,S s){
-
-		NetBean NB = new NetBean();
-
-		//統計指標
-		Bean_Bean bbb = new Bean_Bean();
-
-
-//		CSVを取得
-		try{
-			NB.setUrlCsv(Net_Adress.STOCK_LIST + Net_Adress.DOWN_ITEM_9, 0);
-		}catch(Exception o){
-
-			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
-			o.printStackTrace();
-			return;
-		}
-
-		try{
-			//CSVをDTOにする
-			bbb.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),DAY,0);
-		}catch(NullPointerException nu){
-
-			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
-			return;
-		}catch(Exception e){
-
-			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
-			e.printStackTrace();
-			return;
-		}
-
-		//取得したDTOをリストTBLに挿入する。
-		//取得したDTOをもとに日々テーブルを作る
-		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
-		InsertList_CreateTBL_DD_InsertDD_TODAY_STOCK_ETF(bbb.getList_CSVtoDTO_STOCK_ETF(),DAY, s);
-
-
-	}
-
-	private boolean insertDD_STOCK_ETF(String MAXDAY,String TODAY,S s){
+	private int insertDD_STOCK_ETF(String MAXDAY,String TODAY,S s){
 		NC_Controller NC = new NC_Controller();
 
 		commonAP cAP = new commonAP();
@@ -501,6 +518,7 @@ public class CONTOLLBOTTON {
 		MAXDAY = sdf1.format(calendar.getTime());
 		commonAP.writeInLog("今から株ETFの更新：insertDD_STOCK_ETF",logWriting.DATEDATE_LOG_FLG);
 
+		boolean noSetUrlCsv = false;
 
 		int check = 0;
 		while(cAP.checkDay(TODAY, MAXDAY)){
@@ -510,18 +528,20 @@ public class CONTOLLBOTTON {
 			Bean_Bean B_B = new Bean_Bean();
 			//CSVの中身がnullではない場合、続行CSVをDTOにしてインサート
 			if(NB.setUrlCsv(Net_Adress.STOCK_LIST_DD + MAXDAY + Net_Adress.DOWN_CSV + Net_Adress.DOWN_ITEM_9,0)){
-
 				//CSV→DTO
 				B_B.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),MAXDAY,0);
 				//インサート
 				InsertDay i_d = new InsertDay();
 				i_d.InsertDD_STOCK_ETF(B_B.getList_CSVtoDTO_STOCK_ETF(),MAXDAY, s);
-
 				check = 0;
+
+				//一回でも通ればtrueにする。
+				noSetUrlCsv = true;
 			}else{
+
 				check++;
 				if ( check > 30 ) {
-					return false;
+					return ReturnCodeConst.EVERY_UPDATE_ERR;
 				}
 			}
 
@@ -530,102 +550,106 @@ public class CONTOLLBOTTON {
 			MAXDAY = sdf1.format(calendar.getTime());
 		}
 
+		if (noSetUrlCsv == false){
+			//一回も更新処理をしていない場合はfalseなので更新なしを返す
+			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+		}
 
-		return true;
+		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 
 	}
 
 
 
 
-	//リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
-	//ただし、リストテーブルの更新日が昨日であるときのみ実行する。
-	private void everyDayBotton_INDEX(String DAY,S s){
+//	//リストTBLに挿入し、テーブルを作り、日々データも入れる。毎日動かすイメージ
+//	//ただし、リストテーブルの更新日が昨日であるときのみ実行する。
+//	private void everyDayBotton_INDEX(String DAY,S s){
+//
+//		NetBean NB = new NetBean();
+//
+//		//統計指標
+//		Bean_Bean bbb = new Bean_Bean();
+//
+//
+//		//			CSVを取得
+//		try{
+//			NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0);
+//		}catch(Exception o){
+//
+//			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
+//			o.printStackTrace();
+//			return;
+//		}
+//
+//		try{
+//			//CSVをDTOにする
+//			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),DAY,0);
+//		}catch(NullPointerException nu){
+//
+//			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+//			return;
+//		}catch(Exception e){
+//
+//			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//		//取得したDTOをリストTBLに挿入する。
+//		//取得したDTOをもとに日々テーブルを作る
+//		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
+//		InsertList_CreateTBL_DD_InsertDD_TODAY_INDEX(bbb.getList_CSVtoDTO_INDEX(),DAY, s);
+//
+//	}
 
-		NetBean NB = new NetBean();
+//	private void hisabisaDayBottonContoroll_INDEX(String MAXDAY , String TODAY , S s){
+//
+//		NetBean NB = new NetBean();
+//
+//		//株と指数
+//		Bean_Bean bbb = new Bean_Bean();
+//
+//
+////		CSVを取得
+//		try{
+//			NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0);
+//		}catch(Exception o){
+//
+//			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
+//			o.printStackTrace();
+//			return;
+//		}
+//
+//		try{
+//			//CSVをDTOにする
+//			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),TODAY,0);
+//		}catch(NullPointerException nu){
+//			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
+//			return;
+//		}catch(Exception e){
+//			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//
+//		//取得したDTOをリストTBLに挿入する。
+//		//取得したDTOをもとに日々テーブルを作る
+//		InsertList_CreateTBL_DD_hisabisa(bbb.getList_CSVtoDTO_INDEX(), s);
+//
+//
+//		//MAXDAYから今日までのデータをインサート開始。ストック、インデックス、統計も全部
+//
+//		if(insertDD_INDEX(MAXDAY,TODAY,s)){
+//
+//		}else{
+//			commonAP.writeInLog("こりゃだめだ：指数",logWriting.DATEDATE_LOG_FLG);
+//
+//		}
+//	}
 
-		//統計指標
-		Bean_Bean bbb = new Bean_Bean();
-
-
-		//			CSVを取得
-		try{
-			NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0);
-		}catch(Exception o){
-
-			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
-			o.printStackTrace();
-			return;
-		}
-
-		try{
-			//CSVをDTOにする
-			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),DAY,0);
-		}catch(NullPointerException nu){
-
-			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
-			return;
-		}catch(Exception e){
-
-			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
-			e.printStackTrace();
-			return;
-		}
-
-		//取得したDTOをリストTBLに挿入する。
-		//取得したDTOをもとに日々テーブルを作る
-		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
-		InsertList_CreateTBL_DD_InsertDD_TODAY_INDEX(bbb.getList_CSVtoDTO_INDEX(),DAY, s);
-
-	}
-
-	private void hisabisaDayBottonContoroll_INDEX(String MAXDAY , String TODAY , S s){
-
-		NetBean NB = new NetBean();
-
-		//株と指数
-		Bean_Bean bbb = new Bean_Bean();
-
-
-//		CSVを取得
-		try{
-			NB.setUrlCsv(Net_Adress.INDEX_LIST + Net_Adress.DOWN_ITEM_9, 0);
-		}catch(Exception o){
-
-			commonAP.writeInLog("たぶん何かのえらー",logWriting.DATEDATE_LOG_FLG);
-			o.printStackTrace();
-			return;
-		}
-
-		try{
-			//CSVをDTOにする
-			bbb.setList_CSVtoDTO_INDEX(NB.getUrlCsv(),TODAY,0);
-		}catch(NullPointerException nu){
-			commonAP.writeInLog("なんかヌルポ",logWriting.DATEDATE_LOG_FLG);
-			return;
-		}catch(Exception e){
-			commonAP.writeInLog("原因不明",logWriting.DATEDATE_LOG_FLG);
-			e.printStackTrace();
-			return;
-		}
-
-
-		//取得したDTOをリストTBLに挿入する。
-		//取得したDTOをもとに日々テーブルを作る
-		InsertList_CreateTBL_DD_hisabisa(bbb.getList_CSVtoDTO_INDEX(), s);
-
-
-		//MAXDAYから今日までのデータをインサート開始。ストック、インデックス、統計も全部
-
-		if(insertDD_INDEX(MAXDAY,TODAY,s)){
-
-		}else{
-			commonAP.writeInLog("こりゃだめだ：指数",logWriting.DATEDATE_LOG_FLG);
-
-		}
-	}
-
-	private boolean insertDD_INDEX(String MAXDAY,String TODAY,S s){
+	private int insertDD_INDEX(String MAXDAY,String TODAY,S s){
 		NC_Controller NC = new NC_Controller();
 
 		commonAP cAP = new commonAP();
@@ -646,6 +670,7 @@ public class CONTOLLBOTTON {
 
 		commonAP.writeInLog("今からINDEXの更新：insertDD_INDEX",logWriting.DATEDATE_LOG_FLG);
 		int check = 0;
+		boolean noSetUrlCsv = false;
 		while(cAP.checkDay(TODAY, MAXDAY)){
 
 			//CSVゲット
@@ -661,10 +686,13 @@ public class CONTOLLBOTTON {
 				i_d.InsertDD_INDEX(B_B.getList_CSVtoDTO_INDEX(),MAXDAY, s);
 
 				check = 0;
+
+				//一回でも通ればtrueにする。
+				noSetUrlCsv = true;
 			}else{
 				check++;
 				if ( check > 30 ) {
-					return false;
+					return ReturnCodeConst.EVERY_UPDATE_ERR;
 				}
 			}
 
@@ -674,7 +702,12 @@ public class CONTOLLBOTTON {
 		}
 
 
-		return true;
+		if (noSetUrlCsv == false){
+			//一回も更新処理をしていない場合はfalseなので更新なしを返す
+			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+		}
+
+		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 
 	}
 

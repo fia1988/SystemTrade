@@ -128,7 +128,7 @@ public class CheckSign {
 		checkToday_Sign(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
 
 
-		
+
 
 
 		//メモリの解放
@@ -139,7 +139,7 @@ public class CheckSign {
 		keepStockList = new ArrayList<String[]>();
 
 	}
-	
+
 	//true:保有期間
 	//false:エントリー回数
 	private static int getKeepDayEntryTimes(boolean check,
@@ -708,7 +708,6 @@ public class CheckSign {
 			String code = codeList.get(i)[0];
 			String TBL = SQLChecker.getTBL(cate);
 
-
 			//最新日が買いサイン実行日
 			String SQL = " select "
 						+ COLUMN.DAYTIME + "," + COLUMN.OPEN
@@ -729,6 +728,7 @@ public class CheckSign {
 					nowOpen =s.rs2.getDouble(	COLUMN.OPEN	);
 					existCheck = true;
 				};
+
 
 				SQL = "select * from " + TBL_Name.KEEPLISTTBL
 					+ " where "

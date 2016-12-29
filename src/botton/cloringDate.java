@@ -1,6 +1,5 @@
 package botton;
 
-import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
@@ -12,64 +11,40 @@ import common.commonAP;
 
 import constant.COLUMN;
 import constant.ReCord;
+import constant.ReturnCodeConst;
 import constant.logWriting;
 import controller.CONTOLLBOTTON;
-import controller.GetCodeList;
 
 public class cloringDate {
 	public void getDayDate(){
-		GetCodeList a = new GetCodeList();
-		CONTOLLBOTTON CB = new CONTOLLBOTTON();
+//		GetCodeList a = new GetCodeList();
+
 		long start = System.currentTimeMillis();
 
 		//日々ファイルの出力先
-		String folderPath = "D:" + PROPARTY.SQL_SEPA + "orderList";
+		String folderPath = "D:" + ReturnCodeConst.SQL_SEPA + "orderList";
 
 		//前日動かしたかどうかのチェック
 //		if (checkPreTodayLog(folderPath)==false){
 //			return;
 //		}
 
-		S s = new S();
-		//コードリストテーブルを作る、日々の更新をする。
-
-		s.getCon();
-		//統計
-		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STATISTICS(s) 		,
-										controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
-										ReCord.CODE_02_SATISTICS					,
-										s											);
-
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-		s.resetConnection();
-
-
-		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STOCK_ETF(s) 			,
-										controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
-										ReCord.CODE_01_STOCK						,
-										s											);
-
-		s.resetConnection();
+		//時系列データの更新
+		switch (zikeiretuDataUpdate()){
+			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
+				break;
+			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
+				System.out.println("アップデートなし");
+				return;
+			case ReturnCodeConst.EVERY_UPDATE_ERR:
+				System.out.println("なんかエラー1");
+				return;
+			default:
+				System.out.println("なんかエラー2");
+				return;
+		}
 
 
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-		CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,
-										controllDay.getAJUSTMAXDAY_INDEX(s)			,
-										ReCord.CODE_03_INDEX						,
-										s											);
-
-
-
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-
-
-		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
-		OneRecord_Update.OneRecord(s);
-
-		s.closeConection();
 
 		if ( checkTodayLog() ==false ){
 			//一致しない場合は終了する。
@@ -86,13 +61,13 @@ public class cloringDate {
 		//最後に今日の売買ファイルを出力する。
 
 		switch (outPutKeepTable(folderPath)) {
-			case 0:
+			case ReturnCodeConst.SQL_ERR_0:
 				//成功
 				break;
-			case 1086:
+			case ReturnCodeConst.SQL_ERR_1086:
 				//ファイルが既に存在する
 				break;
-			case 1:
+			case ReturnCodeConst.SQL_ERR_1:
 				//指定したディレクトリが存在しない
 				System.out.println(folderPath+"が存在しない");
 				break;
@@ -101,13 +76,81 @@ public class cloringDate {
 				break;
 		}
 
-		s.closeConection();
+
 		long stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 
 	}
 
 
+	//時系列データの更新
+	private int zikeiretuDataUpdate(){
+		CONTOLLBOTTON CB = new CONTOLLBOTTON();
+		S s = new S();
+		s.getCon();
+
+		int stockResult;
+		int statisticsResult;
+		int indexResult;
+
+		//コードリストテーブルを作る、日々の更新をする。
+		//統計
+		statisticsResult = CB.everyDayBottonContoroll(	controllDay.getMAX_DD_STATISTICS(s) 		,
+														controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
+														ReCord.CODE_02_SATISTICS					,
+														s											);
+
+		//CBのなかを破棄する。メモリ解放
+		CB = new CONTOLLBOTTON();
+		s.resetConnection();
+
+
+		stockResult = CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STOCK_ETF(s) 			,
+														controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
+														ReCord.CODE_01_STOCK						,
+														s											);
+
+		s.resetConnection();
+
+
+		//CBのなかを破棄する。メモリ解放
+		CB = new CONTOLLBOTTON();
+		indexResult = CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,
+														controllDay.getAJUSTMAXDAY_INDEX(s)			,
+														ReCord.CODE_03_INDEX						,
+														s											);
+
+
+
+		//CBのなかを破棄する。メモリ解放
+		CB = new CONTOLLBOTTON();
+		s.resetConnection();
+
+		//一つでも異常があれば停止する。
+		if ( stockResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+			return ReturnCodeConst.EVERY_UPDATE_ERR;
+		}
+
+		if ( statisticsResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+			return ReturnCodeConst.EVERY_UPDATE_ERR;
+		}
+
+		if ( indexResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+			return ReturnCodeConst.EVERY_UPDATE_ERR;
+		}
+
+		//３つとも更新なしなら更新なし
+		if ( indexResult == stockResult && stockResult == statisticsResult && statisticsResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
+			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+		}
+
+		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
+		OneRecord_Update.OneRecord(s);
+
+		s.closeConection();
+
+		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
+	}
 
 	//今日の注文をログファイルとして出力
 	private int outPutKeepTable(String folderPath){
@@ -137,7 +180,7 @@ public class cloringDate {
 		fileNameL = today + "_" + "L.csv";
 		fileNameS = today + "_" + "S.csv";
 
-		filePath = folderPath + PROPARTY.SQL_SEPA + fileNameL;
+		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
 
 		SQL =	" SELECT "
 				+ heddaColumn
@@ -154,7 +197,7 @@ public class cloringDate {
 		//戻り値1086の時はファイルが存在する
 		s.exportFile(SQL);
 
-		filePath = folderPath + PROPARTY.SQL_SEPA + fileNameS;
+		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
 		SQL =	" SELECT "
 				+ heddaColumn
 				+ " union "
@@ -189,7 +232,7 @@ public class cloringDate {
 
 
 			//戻り値1086の時はファイルが存在する
-			if(outPutKeepTable(folderPath)==1086){
+			if(outPutKeepTable(folderPath)==ReturnCodeConst.SQL_ERR_1086){
 				System.out.println("ファイルあり");
 				s.closeConection();
 				return false;
@@ -212,7 +255,7 @@ public class cloringDate {
 			//一致する場合、ヘッダを出力する。
 //			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_L);
 //			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_S);
-
+			//更新日付を更新する。
 			s.closeConection();
 
 		}else{

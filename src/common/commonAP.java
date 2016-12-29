@@ -385,6 +385,7 @@ public class commonAP {
 	}
 
 	//TODAYとMAXDAYを比較して、TODAYがMAX以後ならTRUE、以前ならfalse
+	//同日はtrueっぽい
 	public boolean checkDay(String TODAY,String MAXDAY){
 
 		if(TODAY.compareTo(MAXDAY)<0){
