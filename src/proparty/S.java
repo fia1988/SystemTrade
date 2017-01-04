@@ -49,14 +49,23 @@ public class S {
 		getCon();
 	}
 
-	public void getCon(){
+	public int getCon(){
 		try {
 			con = DriverManager.getConnection(
 				    "jdbc:mysql://localhost/kabudata", PROPARTY.DBUSER, PROPARTY.DBPASS);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+
+			if (e.getErrorCode()==ReturnCodeConst.SQL_ERR_1045){
+				return e.getErrorCode();
+			}else{
+				e.printStackTrace();
+				return e.getErrorCode();
+			}
+
 		}
+
+		return ReturnCodeConst.SQL_ERR_0;
 	}
 
 
@@ -114,14 +123,20 @@ public class S {
 //			System.out.println("S:普通のテーブル重複");
 			//同じテーブルが存在した以外のエラーの場合以下を処理する。
 			//1062エラーも一応出す
-			if(e.getErrorCode()!=1050){
-				e.printStackTrace();
-				System.out.println(sql);
-				System.out.println(e.getErrorCode());
-				return e.getErrorCode();
-			}else{
-				return e.getErrorCode();
+			switch (e.getErrorCode()) {
+				case ReturnCodeConst.SQL_ERR_1062:
+					return e.getErrorCode();
+
+				case ReturnCodeConst.SQL_ERR_1050:
+					return e.getErrorCode();
+
+				default:
+					System.out.println(sql);
+					System.out.println(e.getErrorCode());
+					return e.getErrorCode();
 			}
+
+
 
 
 

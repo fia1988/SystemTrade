@@ -7,6 +7,8 @@ import sql.createTBL;
 
 public class Create {
 	String SQL;
+	
+	
 	public void createDB_CodeTBL(){
 
 		createTBL a = new createTBL();

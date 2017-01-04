@@ -2,10 +2,7 @@ package proparty;
 
 public class PROPARTY {
 
-//	DBのID
-	public static String DBUSER = "";
-//	DBのパス。
-	public static String DBPASS = "";
+
 //  集計する年数
 	public static int COLLECTYEAR = 100;
 	//サイトに株価更新時間
@@ -28,5 +25,11 @@ public class PROPARTY {
 	public static String NAZO = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">";
 	public static String NAZO2 = "<HTML><HEAD><TITLE>Service Unavailable</TITLE>";
 
+	//ここら辺は画面で設定する箇所
+	public static String LOG_FILE_OUT = "aaa";
+//	DBのID
+	public static String DBUSER = "";
+//	DBのパス。
+	public static String DBPASS = "";
 
 }

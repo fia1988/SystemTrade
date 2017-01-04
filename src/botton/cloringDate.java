@@ -36,6 +36,7 @@ public class cloringDate {
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				System.out.println("アップデートなし");
 				return;
+//				break;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
 				System.out.println("なんかエラー1");
 				return;
@@ -46,7 +47,7 @@ public class cloringDate {
 
 
 
-		if ( checkTodayLog() ==false ){
+		if ( checkTodayLog() == false ){
 			//一致しない場合は終了する。
 			return;
 		}
@@ -128,21 +129,30 @@ public class cloringDate {
 
 		//一つでも異常があれば停止する。
 		if ( stockResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+			s.closeConection();
 			return ReturnCodeConst.EVERY_UPDATE_ERR;
 		}
 
 		if ( statisticsResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+			s.closeConection();
 			return ReturnCodeConst.EVERY_UPDATE_ERR;
 		}
 
 		if ( indexResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+			s.closeConection();
 			return ReturnCodeConst.EVERY_UPDATE_ERR;
 		}
 
 		//３つとも更新なしなら更新なし
 		if ( indexResult == stockResult && stockResult == statisticsResult && statisticsResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
+			s.closeConection();
 			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
 		}
+
+//		//一部分しか更新がなかった
+//		if ( indexResult == stockResult && stockResult == statisticsResult && statisticsResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
+//			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+//		}
 
 		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
 		OneRecord_Update.OneRecord(s);

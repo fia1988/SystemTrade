@@ -268,24 +268,26 @@ public class CheckSign {
 		try {
 
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
-			SQL = " delete from " + TBL_Name.LASTORDER
-				+ " where "
-				+ COLUMN.SIGN_FLG + " is true"
-				+ " and "
-				+ COLUMN.CODE
-				+ " in "
-				+ " ( "
-				+ " select * from "
-				+ " ( "
-				+ SQL
-				+ " ) "
-				+ " as sub "
-				+ " ) ";
+
 
 			if (s.rs2.next()){
 				//存在する場合はここを通る。
-				System.out.println(SQL);
-//				s.freeUpdateQuery(SQL);
+				SQL = " delete from " + TBL_Name.LASTORDER
+						+ " where "
+						+ COLUMN.SIGN_FLG + " is true"
+						+ " and "
+						+ COLUMN.CODE
+						+ " in "
+						+ " ( "
+						+ " select * from "
+						+ " ( "
+						+ SQL
+						+ " ) "
+						+ " as sub "
+						+ " ) ";
+
+//				System.out.println(SQL);
+				s.freeUpdateQuery(SQL);
 				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.STOCK_RESULT_LOG_FLG_L);
 			};
 
@@ -483,7 +485,7 @@ public class CheckSign {
 			+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
 			;
 		s.freeUpdateQuery(SQL);
-
+		System.out.println("setLastOrderTBL:" + SQL);
 
 		List<String> thisResultCodeList = new ArrayList<String>();
 

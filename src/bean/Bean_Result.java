@@ -253,7 +253,6 @@ public class Bean_Result {
 		//同日の場合は買った日のエントリーを取り消す。
 		//これでentryDayListのレコードが0になるとメソッドの処理を中断する。
 		if ( checkSameDay() == false ){
-
 			return;
 		};
 

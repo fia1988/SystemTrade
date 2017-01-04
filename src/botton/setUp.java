@@ -1,9 +1,60 @@
 package botton;
 
+import proparty.S;
+import sql.createTBL;
+import GamenDTO.TAB_MainDTO;
+import constant.nyuryokuCheckResultConst;
 import controller.Create;
 import controller.GetCodeList;
 
 public class setUp {
+
+
+
+	public String nyuryokuChecker(TAB_MainDTO mainDTO){
+
+		//タイマーチェック
+		//TRUEのときはタイマー起動中なのでオフを返す。
+		if(mainDTO.isJudgeTimer()==true){
+			return nyuryokuCheckResultConst.ON_TIMER_ERR;
+		}
+
+
+		return nyuryokuCheckResultConst.SUCCESS;
+	}
+
+
+	public void createDB(){
+		S s = new S();
+		s.getCon();
+
+//
+//		try {
+//			s.sqlGetter().executeUpdate("CREATE DATABASE kabudata");
+//		} catch (SQLException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//			e.getErrorCode();
+//		}
+
+
+
+		s.closeConection();
+	}
+
+
+	public void createTBL(){
+		createTBL a = new createTBL();
+		S s = new S();
+		s.getCon();
+
+		//初期テーブルを作る
+		a.createStartTBL(s);
+
+		s.closeConection();
+	}
+
+
 	public void firstSetUp(){
 		long start = System.currentTimeMillis();
 		GetCodeList GC = new GetCodeList();
