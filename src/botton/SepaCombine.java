@@ -1,8 +1,10 @@
 package botton;
 
 import java.io.File;
+import java.sql.SQLException;
 
 import proparty.S;
+import proparty.TBL_Name;
 import GamenDTO.TAB_MainDTO;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
@@ -35,24 +37,25 @@ public class SepaCombine {
 
 	public int loadSepaCombineFile(TAB_MainDTO mainDTO){
 
-//		System.out.println(File.separator);
-//		System.out.println(mainDTO.getSepaCombineFilePath());
-//		String filePath = mainDTO.getSepaCombineFilePath().replaceAll(File.separator,ReturnCodeConst.SQL_SEPA);
-//		String filePath = mainDTO.getSepaCombineFilePath();
-//		String SQL = "LOAD DATA INFILE \"" + filePath + "\" ignore INTO TABLE " + TBL_Name.SEPARATE_DD + " FIELDS TERMINATED BY ','";
+
+
+		String filePath = mainDTO.getSepaCombineFilePath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
+
+		String SQL = "LOAD DATA INFILE \"" + filePath + "\" ignore INTO TABLE " + TBL_Name.SEPARATE_DD + " FIELDS TERMINATED BY ','";
 //
+
 		S s = new S();
 		s.getCon();
 //		System.out.println(SQL);
 //
-//		try {
-//			s.sqlGetter().executeUpdate(SQL);
-//		} catch (SQLException e) {
-//			// TODO 自動生成された catch ブロック
-//			e.printStackTrace();
-//			s.closeConection();
-//			return e.getErrorCode();
-//		}
+		try {
+			s.sqlGetter().executeUpdate(SQL);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			s.closeConection();
+			return e.getErrorCode();
+		}
 
 
 		s.closeConection();

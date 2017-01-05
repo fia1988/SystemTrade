@@ -275,7 +275,7 @@ public class TAB_test extends JPanel {
 			cloringDate C_D = new cloringDate();
 //			S s = new S();
 //			s.getCon();
-			C_D.getDayDate();
+//			C_D.getDayDate();
 
 		}
 	}

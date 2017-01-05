@@ -288,7 +288,7 @@ public class CheckSign {
 
 //				System.out.println(SQL);
 				s.freeUpdateQuery(SQL);
-				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.STOCK_RESULT_LOG_FLG_L);
+				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.DATEDATE_LOG_FLG);
 			};
 
 //			while(s.rs2.next()){

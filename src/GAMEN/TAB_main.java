@@ -8,10 +8,11 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import proparty.PROPARTY;
+import proparty.TBL_Name;
 import GamenDTO.TAB_MainDTO;
 import GamenNyuryokuCheck.nyuryokuCheck;
 import botton.BackUp;
@@ -28,10 +29,10 @@ public class TAB_main extends JPanel {
 
 
 	private JTextField mysqlID;
-	private JTextField mysqlPass;
+	private JPasswordField mysqlPassMask;
+	private JTextField logFolderPath;
 	private JTextField entryFolderPath;
 	private JTextField sepaComFolderPath;
-	private JTextField logFolderPath;
 	private JTextField outBackUplogFolderPath;
 	private JTextField inBackUplogFilePath;
 
@@ -44,7 +45,7 @@ public class TAB_main extends JPanel {
 	JLabel createTBLresult = new JLabel("成／否");
 	JLabel inBackupResult = new JLabel("成／否");
 	JLabel outBackupResult = new JLabel("成／否");
-
+	JLabel timerResult = new JLabel("ボタンを押してね");
 
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
@@ -55,6 +56,9 @@ public class TAB_main extends JPanel {
 	private final Action action_6 = new SwingAction_6();
 	private final Action action_7 = new SwingAction_7();
 	private final Action action_8 = new SwingAction_8();
+	private final Action action_9 = new SwingAction_9();
+	private final Action action_10 = new SwingAction_10();
+
 	/**
 	 * Create the panel.
 	 */
@@ -101,11 +105,6 @@ public class TAB_main extends JPanel {
 		lblMysql.setBounds(42, 176, 142, 19);
 		add(lblMysql);
 
-		mysqlPass = new JTextField();
-		mysqlPass.setColumns(10);
-		mysqlPass.setBounds(95, 244, 136, 25);
-		add(mysqlPass);
-
 		JLabel lblId = new JLabel("ID:");
 		lblId.setBounds(42, 213, 52, 19);
 		add(lblId);
@@ -114,7 +113,7 @@ public class TAB_main extends JPanel {
 		lblPass.setBounds(42, 247, 52, 19);
 		add(lblPass);
 
-		JLabel timerResult = new JLabel("ボタンを押してね");
+		
 		timerResult.setBounds(42, 121, 375, 19);
 		add(timerResult);
 
@@ -197,10 +196,10 @@ public class TAB_main extends JPanel {
 		label_8.setBounds(434, 457, 60, 19);
 		add(label_8);
 
-		outBackupResult.setBounds(488, 312, 139, 19);
+		outBackupResult.setBounds(488, 312, 307, 19);
 		add(outBackupResult);
 
-		inBackupResult.setBounds(488, 457, 139, 19);
+		inBackupResult.setBounds(488, 457, 307, 19);
 		add(inBackupResult);
 
 		JLabel label_11 = new JLabel("初期設定");
@@ -228,10 +227,10 @@ public class TAB_main extends JPanel {
 		label_13.setBounds(831, 196, 60, 19);
 		add(label_13);
 
-		deleteDBresult.setBounds(885, 402, 139, 19);
+		deleteDBresult.setBounds(885, 402, 278, 19);
 		add(deleteDBresult);
 
-		createTBLresult.setBounds(885, 197, 139, 19);
+		createTBLresult.setBounds(885, 197, 278, 19);
 		add(createTBLresult);
 
 		JLabel label_16 = new JLabel("リセット処理 ※操作注意");
@@ -274,18 +273,18 @@ public class TAB_main extends JPanel {
 		label_20.setBounds(831, 607, 60, 19);
 		add(label_20);
 
-		JLabel lblCreateDatabaseKabudata = new JLabel("CREATE DATABASE kabudata");
+		JLabel lblCreateDatabaseKabudata = new JLabel("CREATE DATABASE " + TBL_Name.KABU_DB );
 		lblCreateDatabaseKabudata.setBounds(831, 113, 266, 19);
 		add(lblCreateDatabaseKabudata);
 
 
-		deleteRecordResult.setBounds(885, 469, 139, 19);
+		deleteRecordResult.setBounds(885, 469, 278, 19);
 		add(deleteRecordResult);
 
-		deleteS_Cresult.setBounds(885, 536, 139, 19);
+		deleteS_Cresult.setBounds(885, 536, 278, 19);
 		add(deleteS_Cresult);
 
-		deleteKeepResult.setBounds(885, 607, 139, 19);
+		deleteKeepResult.setBounds(885, 607, 278, 19);
 		add(deleteKeepResult);
 
 		JLabel label_17 = new JLabel("バックアップ出力先フォルダパス");
@@ -296,14 +295,18 @@ public class TAB_main extends JPanel {
 		label_21.setBounds(434, 346, 239, 19);
 		add(label_21);
 
+		mysqlPassMask = new JPasswordField();
+		mysqlPassMask.setBounds(95, 250, 136, 25);
+		add(mysqlPassMask);
+
 
 
 	}
 
 
-	TimeClornigDate TCD = new TimeClornigDate();
-	private final Action action_9 = new SwingAction_9();
-	private final Action action_10 = new SwingAction_10();
+	TimeClornigDate TCD = null;
+
+
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "タイマーオン");
@@ -318,7 +321,8 @@ public class TAB_main extends JPanel {
 			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -326,23 +330,47 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 
 
-
-			if ( mainDTO.isJudgeTimer() ==true ){
-				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			String checkResult = check.nyuryokuChecker(mainDTO);
+			
+			switch (checkResult) {
+			case nyuryokuCheckResultConst.SUCCESS:
+				timerCheck.setText("true") ;
+				break;
+			case nyuryokuCheckResultConst.ON_TIMER_ERR:
+				timerResult.setText(checkResult);
+				return;
+			case nyuryokuCheckResultConst.MYSQL_ERR:
+				timerResult.setText(checkResult);
+				return;
+			case nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR:
+				timerResult.setText(checkResult);
+				return;
+			case nyuryokuCheckResultConst.NO_ENTRY_FOLDER_ERR:
+				timerResult.setText(checkResult);
+				return;
+			default:
+				timerResult.setText("そのほかエラー");
 				return;
 			}
+			
+
+
+//			Calendar now = Calendar.getInstance(); //インスタンス化
+//
+//			int h = now.get(now.HOUR_OF_DAY);//時を取得
+//			int m = now.get(now.MINUTE);     //分を取得
+//			int s = now.get(now.SECOND);      //秒を取得
+//
+//			int y = now.get(Calendar.YEAR);  //年を取得
+//			int mo = now.get(Calendar.MONTH);//月を取得 
+//			int d = now.get(Calendar.DATE); //現在の日を取得
+//			System.out.println(h+"時"+m+"分"+s+"秒");
 
 
 
-			timerCheck.setText("true") ;
-
-			System.out.println(PROPARTY.LOG_FILE_OUT);
-//			PROPARTY.LOG_FILE_OUT = "aabbbba";
-			System.out.println(PROPARTY.LOG_FILE_OUT);
-
-
-
-			System.out.println( Boolean.valueOf(  timerCheck.getText() ) );
+//			System.out.println( Boolean.valueOf(  timerCheck.getText() ) );
+			
+			TCD = new TimeClornigDate();
 			TCD.getEveryDay(mainDTO);
 		}
 	}
@@ -377,9 +405,11 @@ public class TAB_main extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -428,9 +458,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -471,9 +503,11 @@ public class TAB_main extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -510,9 +544,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -549,9 +585,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -588,9 +626,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -631,9 +671,11 @@ public class TAB_main extends JPanel {
 			BackUp BU = new BackUp();
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -656,11 +698,11 @@ public class TAB_main extends JPanel {
 				default:
 					return;
 			}
-			
-			
-			
+
+
+
 			outBackupResult.setText(checkNyuryoku);
-			
+
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();
 		}
@@ -673,9 +715,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			BackUp BU = new BackUp();
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
 			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPass.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
 			mainDTO.setLogFilePath(logFolderPath.getText());
 			mainDTO.setEntryFolderPath(entryFolderPath.getText());
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
@@ -698,10 +742,10 @@ public class TAB_main extends JPanel {
 				default:
 					return;
 			}
-			
-			
+
+
 			inBackupResult.setText(checkNyuryoku);
-			
+
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();
 		}

@@ -1,9 +1,12 @@
 package botton;
 
+import java.io.File;
+
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
 import technique.CheckSign;
+import GamenDTO.TAB_MainDTO;
 import accesarrySQL.OneRecord_Update;
 import accesarrySQL.SEPARATE_CHECK;
 
@@ -12,18 +15,22 @@ import common.commonAP;
 import constant.COLUMN;
 import constant.ReCord;
 import constant.ReturnCodeConst;
+import constant.TimerShoriConst;
 import constant.logWriting;
 import controller.CONTOLLBOTTON;
 
 public class cloringDate {
-	public void getDayDate(){
+	public String getDayDate(TAB_MainDTO mainDTO){
 //		GetCodeList a = new GetCodeList();
 
 		long start = System.currentTimeMillis();
 
-		//日々ファイルの出力先
-		String folderPath = "D:" + ReturnCodeConst.SQL_SEPA + "orderList";
+		//日々売買ファイルの出力先
 
+		String folderPath = mainDTO.getEntryFolderPath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
+//		String folderPath = "D:" + ReturnCodeConst.SQL_SEPA + "orderList";
+//		String folderPath = "C:" + ReturnCodeConst.SQL_SEPA + "Users" + ReturnCodeConst.SQL_SEPA + "NOBORU1988" + ReturnCodeConst.SQL_SEPA + "Dropbox" + ReturnCodeConst.SQL_SEPA + "everyfolder";
+//		String folderPath = "D:" + ReturnCodeConst.SQL_SEPA + "orderList";
 		//前日動かしたかどうかのチェック
 //		if (checkPreTodayLog(folderPath)==false){
 //			return;
@@ -35,21 +42,21 @@ public class cloringDate {
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				System.out.println("アップデートなし");
-				return;
+				return TimerShoriConst.NO_UPDATE;
 //				break;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
 				System.out.println("なんかエラー1");
-				return;
+				return TimerShoriConst.ERR_1;
 			default:
 				System.out.println("なんかエラー2");
-				return;
+				return TimerShoriConst.ERR_2;
 		}
 
 
 
 		if ( checkTodayLog() == false ){
-			//一致しない場合は終了する。
-			return;
+			//更新日が一致しない場合は終了する。
+			return TimerShoriConst.UPDATE_BARABARA;
 		}
 
 		//分割チェック。sはこの中で独自に作る。
@@ -80,6 +87,8 @@ public class cloringDate {
 
 		long stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
+
+		return TimerShoriConst.SUCCESS;
 
 	}
 
@@ -191,23 +200,22 @@ public class cloringDate {
 		fileNameS = today + "_" + "S.csv";
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
-
-		SQL =	" SELECT "
-				+ heddaColumn
-				+ " union "
-				+ " SELECT "
-				+ column
-				+ " FROM " + TBL_Name.LASTORDER
-				+	" where "
-				+	COLUMN.SIGN_FLG  + " is true "
-				+	" INTO OUTFILE '" + filePath +  "'"
-				+	" FIELDS TERMINATED BY ','"
-				+	" OPTIONALLY ENCLOSED BY '\"'";
-
+		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
 		s.exportFile(SQL);
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
+		SQL = getOutFileSQL(heddaColumn, column, filePath, "false");
+
+		resultInt = s.exportFile(SQL);
+//		System.out.println(SQL);
+		s.closeConection();
+		return resultInt;
+	}
+
+	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge){
+		String SQL;
+
 		SQL =	" SELECT "
 				+ heddaColumn
 				+ " union "
@@ -215,15 +223,12 @@ public class cloringDate {
 				+ column
 				+ " FROM " + TBL_Name.LASTORDER
 				+	" where "
-				+	COLUMN.SIGN_FLG  + " is false "
+				+	COLUMN.SIGN_FLG  + " is  " + judge + " "
 				+	" INTO OUTFILE '" + filePath +  "'"
 				+	" FIELDS TERMINATED BY ','"
 				+	" OPTIONALLY ENCLOSED BY '\"'";
 
-		resultInt = s.exportFile(SQL);
-
-		s.closeConection();
-		return resultInt;
+		return SQL;
 	}
 
 

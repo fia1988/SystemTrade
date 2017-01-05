@@ -55,19 +55,22 @@ public class commonAP {
 	}
 
 	public static void writeInLog(String writing,int writeType){
-
+//		Calendar now = Calendar.getInstance(); //インスタンス化
+//
+//		int h = now.get(now.HOUR_OF_DAY);//時を取得
+//		int m = now.get(now.MINUTE);     //分を取得
+//		int s = now.get(now.SECOND);      //秒を取得
+//
+//		int y = now.get(Calendar.YEAR);  //年を取得
+//		int mo = now.get(Calendar.MONTH);//月を取得
+//		int d = now.get(Calendar.DATE); //現在の日を取得
+//		System.out.println(y+"/"+mo + "/" + d + "_" +h + ":"+m+":"+s+":");
 
 		switch (writeType) {
 			case logWriting.DATEDATE_LOG_FLG:
 				System.out.print(writeType);
 				break;
 			case logWriting.STOCK_RESULT_LOG_FLG:
-				System.out.print(writeType);
-				break;
-			case logWriting.STOCK_RESULT_LOG_FLG_L:
-				System.out.print(writeType);
-				break;
-			case logWriting.STOCK_RESULT_LOG_FLG_S:
 				System.out.print(writeType);
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
@@ -90,12 +93,6 @@ public class commonAP {
 			System.out.print(writeType);
 			break;
 		case logWriting.STOCK_RESULT_LOG_FLG:
-			System.out.print(writeType);
-			break;
-		case logWriting.STOCK_RESULT_LOG_FLG_L:
-			System.out.print(writeType);
-			break;
-		case logWriting.STOCK_RESULT_LOG_FLG_S:
 			System.out.print(writeType);
 			break;
 		case logWriting.BACKTEST_LOG_FLG:

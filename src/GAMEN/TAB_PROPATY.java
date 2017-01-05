@@ -8,9 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import proparty.S;
-import sql.createDB;
-
 public class TAB_PROPATY extends JPanel {
 	static JTextField textField;
 	private final Action action = new SwingAction();
@@ -38,9 +35,9 @@ public class TAB_PROPATY extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			S s = new S();
-			createDB a = new createDB();
-			a.CreateDB(s);
+//			S s = new S();
+//			createDB a = new createDB();
+//			a.CreateDB(s);
 
 		}
 	}
