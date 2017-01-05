@@ -4,11 +4,13 @@ import proparty.S;
 import proparty.TBL_Name;
 import constant.COLUMN;
 import constant.ReCord;
+import constant.ReturnCodeConst;
+import constant.nyuryokuCheckResultConst;
 
 public class createTBL {
 
 
-	public void createStartTBL(S s){
+	public String createStartTBL(S s){
 
 		createSTOCK_1_DD(s);
 
@@ -27,11 +29,12 @@ public class createTBL {
 
 		createKeepListTable(s);
 		createResulthistory(s);
-		createLastOrderTable(s);
 
+
+		return createLastOrderTable(s);
 	}
 
-	private void createLastOrderTable(S s){
+	private String createLastOrderTable(S s){
 		//SQL全文
 		String SQL;
 		//列名の取得
@@ -53,7 +56,18 @@ public class createTBL {
 
 		SQL = create + TBL_Name.LASTORDER + colum;
 
-		s.freeUpdateQuery(SQL);
+		int intResult = s.freeUpdateQuery(SQL);
+
+		switch (s.freeUpdateQuery(SQL)) {
+			case ReturnCodeConst.SQL_ERR_0:
+				return nyuryokuCheckResultConst.SUCCESS;
+			case ReturnCodeConst.SQL_ERR_1050:
+				return nyuryokuCheckResultConst.SUCCESS;
+			default:
+
+				return nyuryokuCheckResultConst.NO_DB;
+		}
+
 	}
 
 	//保有銘柄一覧テーブル

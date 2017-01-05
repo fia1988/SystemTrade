@@ -3,6 +3,7 @@ package botton;
 import proparty.S;
 import sql.createTBL;
 import GamenDTO.TAB_MainDTO;
+import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
 import controller.Create;
 import controller.GetCodeList;
@@ -18,7 +19,12 @@ public class setUp {
 		if(mainDTO.isJudgeTimer()==true){
 			return nyuryokuCheckResultConst.ON_TIMER_ERR;
 		}
-
+		//MYSQLのアカウントチェック
+		S s = new S();
+		if ( s.getCon() != ReturnCodeConst.SQL_ERR_0){
+			return nyuryokuCheckResultConst.MYSQL_ERR;
+		};
+		s.closeConection();
 
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
@@ -43,15 +49,16 @@ public class setUp {
 	}
 
 
-	public void createTBL(){
+	public String createTBL(){
 		createTBL a = new createTBL();
 		S s = new S();
 		s.getCon();
 
 		//初期テーブルを作る
-		a.createStartTBL(s);
+		String resultStr = a.createStartTBL(s);
 
 		s.closeConection();
+		return resultStr;
 	}
 
 

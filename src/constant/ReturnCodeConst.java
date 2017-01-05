@@ -10,7 +10,7 @@ public class ReturnCodeConst {
 	final public static int SQL_ERR_0 = 0;
 	//ディレクトリが存在しない
 	final public static int SQL_ERR_1 = 1;
-	//LOAD失敗
+	//LOAD失敗。ファイルが存在しないとか？
 	final public static int SQL_ERR_29 = 29;
 	//ユーザー名、パスワードエラー
 	final public static int SQL_ERR_1045 = 1045;

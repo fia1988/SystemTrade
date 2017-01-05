@@ -38,6 +38,7 @@ public class SepaCombine {
 //		System.out.println(File.separator);
 //		System.out.println(mainDTO.getSepaCombineFilePath());
 //		String filePath = mainDTO.getSepaCombineFilePath().replaceAll(File.separator,ReturnCodeConst.SQL_SEPA);
+//		String filePath = mainDTO.getSepaCombineFilePath();
 //		String SQL = "LOAD DATA INFILE \"" + filePath + "\" ignore INTO TABLE " + TBL_Name.SEPARATE_DD + " FIELDS TERMINATED BY ','";
 //
 		S s = new S();

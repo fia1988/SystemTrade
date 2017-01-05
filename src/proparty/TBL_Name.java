@@ -7,19 +7,21 @@ import java.util.List;
 
 public class TBL_Name {
 
-	public static String TAIL_MONTH      = "_MM";
-	public static String TAIL_WEEK       = "_WW";
-	public static String TAIL_DAY        = "_DD";
-	public static String TAIL_HOUR       = "_HH";
-	public static String TAIL_5Minite    = "_5M";
-	public static String TAIL_Accessories   = "_AC";
+	final public static String KABU_DB = "kabudata";
+	
+	final public static String TAIL_MONTH      = "_MM";
+	final public static String TAIL_WEEK       = "_WW";
+	final public static String TAIL_DAY        = "_DD";
+	final public static String TAIL_HOUR       = "_HH";
+	final public static String TAIL_5Minite    = "_5M";
+	final public static String TAIL_Accessories   = "_AC";
 
 
-	public static String CODELISTTBL     = "00_codeListTBL";
+	final public static String CODELISTTBL     = "00_codeListTBL";
 
-	public static String LASTORDER     = "95_lastOrderTBL";
-	public static String KEEPLISTTBL     = "96_keepListTBL";
-	public static String RESULTHISTROYTBL     = "97_resultHistryTBL";
+	final public static String LASTORDER     = "95_lastOrderTBL";
+	final public static String KEEPLISTTBL     = "96_keepListTBL";
+	final public static String RESULTHISTROYTBL     = "97_resultHistryTBL";
 
 	//個別銘柄・・・1
 	//統計・・・2
@@ -27,16 +29,16 @@ public class TBL_Name {
 	//ETF・・・4
 	//先物・・・5
 	//通貨・・・6
-	public static String STOCK_DD	     = "01_STOCK" 			+ TAIL_DAY;
-	public static String STATISTICS_DD	 = "02_statistics"		+ TAIL_DAY;
-	public static String INDEX_DD	     = "03_INDEX"			+ TAIL_DAY;
-	public static String ETF_DD			 = "04_ETF"				+ TAIL_DAY;
-	public static String SAKIMONO_DD	 = "05_sakimono"		+ TAIL_DAY;
-	public static String CURRENCY_DD	 = "06_currency"		+ TAIL_DAY;
+	final public static String STOCK_DD	     = "01_STOCK" 			+ TAIL_DAY;
+	final public static String STATISTICS_DD	 = "02_statistics"		+ TAIL_DAY;
+	final public static String INDEX_DD	     = "03_INDEX"			+ TAIL_DAY;
+	final public static String ETF_DD			 = "04_ETF"				+ TAIL_DAY;
+	final public static String SAKIMONO_DD	 = "05_sakimono"		+ TAIL_DAY;
+	final public static String CURRENCY_DD	 = "06_currency"		+ TAIL_DAY;
 	//更新日管理
-	public static String UPDATE_MANAGE	 = "98_UPDATE_MANAGE"	+ TAIL_DAY;
+	final public static String UPDATE_MANAGE	 = "98_UPDATE_MANAGE"	+ TAIL_DAY;
 	//株の分割とか収束を管理するテーブル
-	public static String SEPARATE_DD	 = "99_separate"		+ TAIL_DAY;
+	final public static String SEPARATE_DD	 = "99_separate"		+ TAIL_DAY;
 
 	private static List<String> codeNewList = new ArrayList<String>(); //コードリストテーブルのうち、日付の新しいものをとる。
 	private static List<String> codeAllList = new ArrayList<String>();

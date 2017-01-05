@@ -14,6 +14,7 @@ import javax.swing.JTextPane;
 import proparty.PROPARTY;
 import GamenDTO.TAB_MainDTO;
 import GamenNyuryokuCheck.nyuryokuCheck;
+import botton.BackUp;
 import botton.ResetShori;
 import botton.SepaCombine;
 import botton.TimeClornigDate;
@@ -24,7 +25,7 @@ import constant.nyuryokuCheckResultConst;
 public class TAB_main extends JPanel {
 
 
-	TimeClornigDate a = new TimeClornigDate();
+
 
 	private JTextField mysqlID;
 	private JTextField mysqlPass;
@@ -39,8 +40,8 @@ public class TAB_main extends JPanel {
 	JLabel deleteS_Cresult = new JLabel("成／否");
 	JLabel deleteKeepResult = new JLabel("成／否");
 	JLabel deleteRecordResult = new JLabel("成／否");
-	JLabel createTBLresult = new JLabel("成／否");
 	JLabel deleteDBresult = new JLabel("成／否");
+	JLabel createTBLresult = new JLabel("成／否");
 	JLabel inBackupResult = new JLabel("成／否");
 	JLabel outBackupResult = new JLabel("成／否");
 
@@ -179,10 +180,12 @@ public class TAB_main extends JPanel {
 		add(inBackUplogFilePath);
 
 		JButton button_1 = new JButton("test");
+		button_1.setAction(action_9);
 		button_1.setBounds(434, 270, 165, 27);
 		add(button_1);
 
 		JButton button_2 = new JButton("test");
+		button_2.setAction(action_10);
 		button_2.setBounds(434, 415, 165, 27);
 		add(button_2);
 
@@ -296,6 +299,11 @@ public class TAB_main extends JPanel {
 
 
 	}
+
+
+	TimeClornigDate TCD = new TimeClornigDate();
+	private final Action action_9 = new SwingAction_9();
+	private final Action action_10 = new SwingAction_10();
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "タイマーオン");
@@ -335,9 +343,11 @@ public class TAB_main extends JPanel {
 
 
 			System.out.println( Boolean.valueOf(  timerCheck.getText() ) );
-//			a.getEveryDay(mainDTO);
+			TCD.getEveryDay(mainDTO);
 		}
 	}
+
+
 	private class SwingAction_1 extends AbstractAction {
 		public SwingAction_1() {
 			putValue(NAME, "タイマーオフ");
@@ -345,7 +355,7 @@ public class TAB_main extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			timerCheck.setText("false") ;
-			a.cancelEveryDay();
+			TCD.cancelEveryDay();
 
 //			a = new TimeClornigDate();
 		}
@@ -395,15 +405,17 @@ public class TAB_main extends JPanel {
 			}
 
 
+
+
 			int resultSC = SC.loadSepaCombineFile(mainDTO) ;
 			if( resultSC == ReturnCodeConst.SQL_ERR_0 ){
 				//インポート成功
-				System.out.println(resultSC);
+				sepaComResult.setText(checkNyuryoku);
 			}else{
 				//インポート失敗
-				System.out.println(resultSC);
+				sepaComResult.setText("インポート失敗");
 			}
-
+			//29:ファイルが存在しない
 			mainDTO = new TAB_MainDTO();
 			SC = new SepaCombine();
 		}
@@ -414,9 +426,42 @@ public class TAB_main extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			ResetShori a = new ResetShori();
-			a.resetDB();
-			a = new ResetShori();
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+			ResetShori RS = new ResetShori();
+			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
+
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					deleteDBresult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					deleteDBresult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.NO_FILE_ERR:
+					deleteDBresult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+
+			if ( RS.resetDB() != ReturnCodeConst.SQL_ERR_0){
+				deleteDBresult.setText("失敗。DBが存在しないのかも。");
+			};
+
+			deleteDBresult.setText(checkNyuryoku);
+			RS = new ResetShori();
 		}
 	}
 	private class SwingAction_5 extends AbstractAction {
@@ -425,9 +470,36 @@ public class TAB_main extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			ResetShori a = new ResetShori();
-			a.resetRecord();
-			a = new ResetShori();
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+			ResetShori RS = new ResetShori();
+
+			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
+
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					deleteRecordResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					deleteRecordResult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+
+			deleteRecordResult.setText(checkNyuryoku);
+			RS.resetRecord();
+			RS = new ResetShori();
 		}
 	}
 	private class SwingAction_6 extends AbstractAction {
@@ -436,9 +508,37 @@ public class TAB_main extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			ResetShori a = new ResetShori();
-			a.resetSepaCombine();
-			a = new ResetShori();
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+
+			ResetShori RS = new ResetShori();
+			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					deleteS_Cresult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					deleteS_Cresult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+
+
+			deleteS_Cresult.setText(checkNyuryoku);
+			RS.resetSepaCombine();
+			RS = new ResetShori();
 		}
 	}
 	private class SwingAction_7 extends AbstractAction {
@@ -447,9 +547,37 @@ public class TAB_main extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			ResetShori a = new ResetShori();
-			a.resetKeepResult();
-			a = new ResetShori();
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+
+			ResetShori RS = new ResetShori();
+			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					deleteKeepResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					deleteKeepResult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+			deleteKeepResult.setText(checkNyuryoku);
+
+			RS.resetKeepResult();
+			RS = new ResetShori();
+			mainDTO = new TAB_MainDTO();
 		}
 	}
 	private class SwingAction_8 extends AbstractAction {
@@ -458,9 +586,124 @@ public class TAB_main extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			setUp a = new setUp();
-			a.createTBL();
-			a = new setUp();
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+
+
+			setUp SU = new setUp();
+
+			String checkNyuryoku = SU.nyuryokuChecker(mainDTO);
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					createTBLresult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					createTBLresult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+
+			createTBLresult.setText(checkNyuryoku);
+
+			createTBLresult.setText(SU.createTBL());
+			SU = new setUp();
+			mainDTO = new TAB_MainDTO();
+		}
+	}
+	private class SwingAction_9 extends AbstractAction {
+		public SwingAction_9() {
+			putValue(NAME, "バックアップ開始");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			BackUp BU = new BackUp();
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+			String checkNyuryoku = BU.nyuryokuCheckerOut(mainDTO);
+
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					outBackupResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					outBackupResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.NO_FOLDER_ERR:
+					outBackupResult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+			
+			
+			
+			outBackupResult.setText(checkNyuryoku);
+			
+			BU = new BackUp();
+			mainDTO = new TAB_MainDTO();
+		}
+	}
+	private class SwingAction_10 extends AbstractAction {
+		public SwingAction_10() {
+			putValue(NAME, "バックアップ取込");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			BackUp BU = new BackUp();
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+			String checkNyuryoku = BU.nyuryokuCheckerIn(mainDTO);
+
+			switch (checkNyuryoku) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					break;
+				case nyuryokuCheckResultConst.ON_TIMER_ERR:
+					inBackupResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.MYSQL_ERR:
+					inBackupResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.NO_FILE_ERR:
+					inBackupResult.setText(checkNyuryoku);
+					return;
+				default:
+					return;
+			}
+			
+			
+			inBackupResult.setText(checkNyuryoku);
+			
+			BU = new BackUp();
+			mainDTO = new TAB_MainDTO();
 		}
 	}
 }

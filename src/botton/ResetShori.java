@@ -1,13 +1,13 @@
 package botton;
 
-import java.sql.SQLException;
-
 import proparty.S;
 import GamenDTO.TAB_MainDTO;
+import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
 
 public class ResetShori {
 	public String nyuryokuChecker(TAB_MainDTO mainDTO){
+
 
 		//タイマーチェック
 		//TRUEのときはタイマー起動中なのでオフを返す。
@@ -15,25 +15,33 @@ public class ResetShori {
 			return nyuryokuCheckResultConst.ON_TIMER_ERR;
 		}
 
+		//MYSQLのアカウントチェック
+		S s = new S();
+		if ( s.getCon() != ReturnCodeConst.SQL_ERR_0){
+			return nyuryokuCheckResultConst.MYSQL_ERR;
+		};
+		s.closeConection();
 
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 
-	public void resetDB(){
+	public int resetDB(){
 		S s = new S();
 		s.getCon();
 
-
-		try {
-			s.sqlGetter().executeUpdate("drop DATABASE kabudata");
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			e.getErrorCode();
-		}
+//
+//		try {
+//			s.sqlGetter().executeUpdate("drop DATABASE "  + TBL_Name.KABU_DB);
+//		} catch (SQLException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//			s.closeConection();
+//			return e.getErrorCode();
+//		}
 
 
 		s.closeConection();
+		return ReturnCodeConst.SQL_ERR_0;
 	}
 
 	public void resetRecord(){
