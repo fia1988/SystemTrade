@@ -1,6 +1,7 @@
 package botton;
 
 import proparty.S;
+import proparty.TBL_Name;
 import GamenDTO.TAB_MainDTO;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
@@ -50,32 +51,35 @@ public class ResetShori {
 
 		String SQL;
 
-//		SQL = "delete from " + TBL_Name.CODELISTTBL;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.STOCK_DD;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.STATISTICS_DD;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.INDEX_DD;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.ETF_DD;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.LASTORDER;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.KEEPLISTTBL;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.RESULTHISTROYTBL;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
-//		s.freeUpdateQuery(SQL);
+		SQL = "delete from " + TBL_Name.CODELISTTBL;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.STOCK_DD;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.STATISTICS_DD;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.INDEX_DD;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.ETF_DD;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.LASTORDER;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.KEEPLISTTBL;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.RESULTHISTROYTBL;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.SEPARATE_DD;
+		s.freeUpdateQuery(SQL);
 //		//分割情報のみをリセット
 //		SQL = " update " + TBL_Name.STOCK_DD	+ " set "
 //						 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "

@@ -26,7 +26,7 @@ public class PROPARTY {
 	public static String NAZO2 = "<HTML><HEAD><TITLE>Service Unavailable</TITLE>";
 
 	//ここら辺は画面で設定する箇所
-	public static String LOG_FILE_OUT = "aaa";
+	public static String LOG_FILE_OUT = "";
 //	DBのID
 	public static String DBUSER = "";
 //	DBのパス。

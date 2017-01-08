@@ -113,7 +113,7 @@ public class TAB_main extends JPanel {
 		lblPass.setBounds(42, 247, 52, 19);
 		add(lblPass);
 
-		
+
 		timerResult.setBounds(42, 121, 375, 19);
 		add(timerResult);
 
@@ -331,7 +331,7 @@ public class TAB_main extends JPanel {
 
 
 			String checkResult = check.nyuryokuChecker(mainDTO);
-			
+
 			switch (checkResult) {
 			case nyuryokuCheckResultConst.SUCCESS:
 				timerCheck.setText("true") ;
@@ -352,7 +352,7 @@ public class TAB_main extends JPanel {
 				timerResult.setText("そのほかエラー");
 				return;
 			}
-			
+
 
 
 //			Calendar now = Calendar.getInstance(); //インスタンス化
@@ -362,14 +362,14 @@ public class TAB_main extends JPanel {
 //			int s = now.get(now.SECOND);      //秒を取得
 //
 //			int y = now.get(Calendar.YEAR);  //年を取得
-//			int mo = now.get(Calendar.MONTH);//月を取得 
+//			int mo = now.get(Calendar.MONTH);//月を取得
 //			int d = now.get(Calendar.DATE); //現在の日を取得
 //			System.out.println(h+"時"+m+"分"+s+"秒");
 
 
 
 //			System.out.println( Boolean.valueOf(  timerCheck.getText() ) );
-			
+
 			TCD = new TimeClornigDate();
 			TCD.getEveryDay(mainDTO);
 		}
@@ -416,7 +416,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			SepaCombine SC = new SepaCombine();
-
+			sepaComResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = SC.nyuryokuChecker(mainDTO);
 			switch (checkNyuryoku) {
 				case nyuryokuCheckResultConst.SUCCESS:
@@ -435,12 +435,16 @@ public class TAB_main extends JPanel {
 			}
 
 
-
+			int beforeRecord = SC.getSepaTBLCount();
+			int afterRecord = 0;
 
 			int resultSC = SC.loadSepaCombineFile(mainDTO) ;
 			if( resultSC == ReturnCodeConst.SQL_ERR_0 ){
 				//インポート成功
-				sepaComResult.setText(checkNyuryoku);
+				afterRecord = SC.getSepaTBLCount();
+				afterRecord = afterRecord - beforeRecord;
+
+				sepaComResult.setText(checkNyuryoku + ":" + afterRecord + "件追加");
 			}else{
 				//インポート失敗
 				sepaComResult.setText("インポート失敗");
@@ -470,6 +474,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 
 			ResetShori RS = new ResetShori();
+			deleteDBresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
 
 			switch (checkNyuryoku) {
@@ -515,6 +520,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 
 			ResetShori RS = new ResetShori();
+			deleteRecordResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
 
@@ -554,7 +560,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-
+			deleteS_Cresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			ResetShori RS = new ResetShori();
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
@@ -595,7 +601,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-
+			deleteKeepResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			ResetShori RS = new ResetShori();
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
@@ -636,7 +642,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-
+			createTBLresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 
 			setUp SU = new setUp();
@@ -681,6 +687,9 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+			outBackupResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
+
 			String checkNyuryoku = BU.nyuryokuCheckerOut(mainDTO);
 
 			switch (checkNyuryoku) {
@@ -695,13 +704,23 @@ public class TAB_main extends JPanel {
 				case nyuryokuCheckResultConst.NO_FOLDER_ERR:
 					outBackupResult.setText(checkNyuryoku);
 					return;
+				case nyuryokuCheckResultConst.EXACT_BACK_UP_FILE_ERR:
+					outBackupResult.setText(checkNyuryoku);
+					return;
 				default:
 					return;
 			}
 
 
-
-			outBackupResult.setText(checkNyuryoku);
+			String resultBackUpOut = BU.backUpOut(mainDTO);
+			switch (resultBackUpOut) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					outBackupResult.setText(resultBackUpOut);
+					return;
+				default:
+					outBackupResult.setText(resultBackUpOut);
+				break;
+			}
 
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();
@@ -727,6 +746,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			String checkNyuryoku = BU.nyuryokuCheckerIn(mainDTO);
 
+			inBackupResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
+
 			switch (checkNyuryoku) {
 				case nyuryokuCheckResultConst.SUCCESS:
 					break;
@@ -744,7 +765,16 @@ public class TAB_main extends JPanel {
 			}
 
 
-			inBackupResult.setText(checkNyuryoku);
+			String resultBackUpIn = BU.backUpIn(mainDTO);
+
+			switch (resultBackUpIn) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					inBackupResult.setText(resultBackUpIn);
+					return;
+				default:
+					inBackupResult.setText(resultBackUpIn);
+				break;
+			}
 
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();

@@ -17,6 +17,8 @@ public class TAB_MainDTO {
 	private String sepaCombineFilePath;
 	//バックアップ出力フォルダパス
 	private String outBackUpFolderPath;
+	//バックアップ出力ファイルパス
+	private String outBackUpFilePath;
 	//バックアップ入力ファイルパス
 	private String inBackUpFilePath;
 
@@ -25,6 +27,12 @@ public class TAB_MainDTO {
 
 
 
+	public String getOutBackUpFilePath() {
+		return outBackUpFilePath;
+	}
+	public void setOutBackUpFilePath(String outBackUpFilePath) {
+		this.outBackUpFilePath = outBackUpFilePath;
+	}
 	public String getEntryFolderPath() {
 		return entryFolderPath;
 	}

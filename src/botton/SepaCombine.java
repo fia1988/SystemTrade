@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import proparty.S;
 import proparty.TBL_Name;
 import GamenDTO.TAB_MainDTO;
+import constant.COLUMN;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
 
@@ -61,5 +62,26 @@ public class SepaCombine {
 		s.closeConection();
 
 		return ReturnCodeConst.SQL_ERR_0;
+	}
+
+	public int getSepaTBLCount(){
+
+		S s = new S();
+		s.getCon();
+		String SQL = "select count(" + COLUMN.CODE + ") from " + TBL_Name.SEPARATE_DD ;
+		int counter = 0;
+
+		try {
+			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			if (s.rs2.next()){
+				counter = s.rs2.getInt(	"count(" + COLUMN.CODE + ")"	);
+			}
+		} catch (SQLException e) {
+
+		}
+
+		s.closeConection();
+
+		return counter;
 	}
 }

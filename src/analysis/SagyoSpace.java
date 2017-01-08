@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import proparty.PROPARTY;
 import proparty.S;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
@@ -241,16 +242,17 @@ public class SagyoSpace {
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
-//		String startDD	=	"2017-01-04";
-//		String endDD		=	"2017-01-11";
-		String startDD	=	"2016-12-26";
-		String endDD		=	"2017-01-04";
+		String startDD	=	"2017-01-04";
+		String endDD		=	"2017-01-06";
+//		String startDD	=	"2016-12-26";
+//		String endDD		=	"2017-01-04";
 		String L_CLASS = "";
 		String L_METHOD = "";
 //		startDD	=	"2016-10-26";
 //		endDD		=	"2016-12-28";
 		List<String[]> methodList_L = new ArrayList<String[]>();
-
+		PROPARTY.DBUSER = "";
+		PROPARTY.DBPASS = "";
 
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();

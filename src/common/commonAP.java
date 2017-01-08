@@ -1,5 +1,8 @@
 package common;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +10,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import accesarrySQL.SQLChecker;
@@ -66,24 +70,48 @@ public class commonAP {
 //		int d = now.get(Calendar.DATE); //現在の日を取得
 //		System.out.println(y+"/"+mo + "/" + d + "_" +h + ":"+m+":"+s+":");
 
+
+		String fileName = "sys.log";
 		switch (writeType) {
 			case logWriting.DATEDATE_LOG_FLG:
-				System.out.print(writeType);
+				fileName = "sys.log";
 				break;
 			case logWriting.STOCK_RESULT_LOG_FLG:
-				System.out.print(writeType);
+				fileName = "sys.log";
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
-				System.out.print(writeType);
+				fileName = "sys.log";
 				break;
 			case logWriting.ANOTHER_RROR_LOG_FLG:
-				System.out.print(writeType);
+				fileName = "sys.log";
 				break;
 			default:
 			break;
 		}
 
-		System.out.println(":" + writing);
+
+		String logFileFolderPath = PROPARTY.LOG_FILE_OUT;
+		File file = new File(logFileFolderPath + File.separator + fileName);
+//			File folder = new File(file_name);
+//			folder.mkdirs();
+
+		try {
+			file.createNewFile();
+		} catch (IOException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		try{
+		//				File file = new File(newFile);
+
+			FileWriter filewriter = new FileWriter(file,true);
+			filewriter.write(writeType + ":" + writing + "\r\n");
+			filewriter.close();
+		}catch(IOException e){
+			System.out.println(e);
+		}
+
+		System.out.println(writeType + ":" + writing);
 	}
 
 	public static void writeLog(String writing,int writeType){

@@ -38,8 +38,13 @@ public class TimeClornigDate {
 	private TimerTask task = new TimerTask(){
 		public void run(){
 			cloringDate C_D = new cloringDate();
-			
-			C_D.getDayDate(MainDTO);
+
+			try {
+				C_D.getDayDate(MainDTO);
+			} catch (Exception e) {
+
+			}
+
 			//メモリの解放
 			C_D = new cloringDate();
 		}
