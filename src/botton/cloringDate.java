@@ -56,6 +56,7 @@ public class cloringDate {
 
 		if ( checkTodayLog() == false ){
 			//更新日が一致しない場合は終了する。
+			commonAP.writeInLog("一部分のみが更新されている。" ,logWriting.DATEDATE_LOG_FLG);
 			return TimerShoriConst.UPDATE_BARABARA;
 		}
 

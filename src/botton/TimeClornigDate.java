@@ -19,7 +19,7 @@ public class TimeClornigDate {
 		try {
 			timer = new Timer();
 			this.MainDTO = mainDTO;
-			timer.scheduleAtFixedRate(task,0, 3600000);
+			timer.scheduleAtFixedRate(task,0, 1800000);
 //			timer.scheduleWithFixedDelay(task,0,0);
 		} catch (Exception e) {
 			e.printStackTrace();
