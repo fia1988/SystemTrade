@@ -130,14 +130,14 @@ public class ResetShori {
 
 		String SQL;
 
-//		SQL = "delete from " + TBL_Name.LASTORDER;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.KEEPLISTTBL;
-//		s.freeUpdateQuery(SQL);
-//
-//		SQL = "delete from " + TBL_Name.RESULTHISTROYTBL;
-//		s.freeUpdateQuery(SQL);
+		SQL = "delete from " + TBL_Name.LASTORDER;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.KEEPLISTTBL;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.RESULTHISTROYTBL;
+		s.freeUpdateQuery(SQL);
 
 		s.closeConection();
 	}

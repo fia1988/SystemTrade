@@ -41,14 +41,14 @@ public class cloringDate {
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
-				System.out.println("アップデートなし");
+				commonAP.writeInLog("アップデートなし" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
 //				break;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
-				System.out.println("なんかエラー1");
+				commonAP.writeInLog("なんかエラー1" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_1;
 			default:
-				System.out.println("なんかエラー2");
+				commonAP.writeInLog("なんかエラー2" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_2;
 		}
 

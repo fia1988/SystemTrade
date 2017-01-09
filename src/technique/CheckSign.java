@@ -23,7 +23,7 @@ public class CheckSign {
 
 	public static void checkTodaySign(){
 
-		commonAP.writeInLog("サイン点灯をチェックします。",logWriting.STOCK_RESULT_LOG_FLG);
+//		commonAP.writeInLog("サイン点灯をチェックします。",logWriting.STOCK_RESULT_LOG_FLG);
 		S s = new S();
 		s.getCon();
 
@@ -64,7 +64,7 @@ public class CheckSign {
 //		nowDTOList = new ArrayList<>();
 //		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		checkToday_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
+//		checkToday_Sign(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
 
 
 ////		paraDTO = new Bean_Parameta();

@@ -59,7 +59,8 @@ public class commonAP {
 	}
 
 	public static void writeInLog(String writing,int writeType){
-//		Calendar now = Calendar.getInstance(); //インスタンス化
+		Calendar now = Calendar.getInstance(); //インスタンス化
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //
 //		int h = now.get(now.HOUR_OF_DAY);//時を取得
 //		int m = now.get(now.MINUTE);     //分を取得
@@ -68,6 +69,9 @@ public class commonAP {
 //		int y = now.get(Calendar.YEAR);  //年を取得
 //		int mo = now.get(Calendar.MONTH);//月を取得
 //		int d = now.get(Calendar.DATE); //現在の日を取得
+//		String nowTime = y+"/"+mo + "/" + d + "　" +h + ":"+m+":"+s+":";
+		String nowTime = sdf.format(now.getTime());
+//		System.out.println(sdf.format(now.getTime()));
 //		System.out.println(y+"/"+mo + "/" + d + "_" +h + ":"+m+":"+s+":");
 
 
@@ -105,34 +109,74 @@ public class commonAP {
 		//				File file = new File(newFile);
 
 			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write(writeType + ":" + writing + "\r\n");
+			filewriter.write(nowTime + " " + writing + ":" + writeType  + "\r\n");
 			filewriter.close();
 		}catch(IOException e){
 			System.out.println(e);
 		}
 
-		System.out.println(writeType + ":" + writing);
+		System.out.println(nowTime + writeType + ":" + writing);
 	}
 
 	public static void writeLog(String writing,int writeType){
 
+		Calendar now = Calendar.getInstance(); //インスタンス化
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//
+//		int h = now.get(now.HOUR_OF_DAY);//時を取得
+//		int m = now.get(now.MINUTE);     //分を取得
+//		int s = now.get(now.SECOND);      //秒を取得
+//
+//		int y = now.get(Calendar.YEAR);  //年を取得
+//		int mo = now.get(Calendar.MONTH);//月を取得
+//		int d = now.get(Calendar.DATE); //現在の日を取得
+//		String nowTime = y+"/"+mo + "/" + d + "　" +h + ":"+m+":"+s+":";
+		String nowTime = sdf.format(now.getTime());
+//		System.out.println(sdf.format(now.getTime()));
+//		System.out.println(y+"/"+mo + "/" + d + "_" +h + ":"+m+":"+s+":");
+
+
+		String fileName = "sys.log";
 		switch (writeType) {
-		case logWriting.DATEDATE_LOG_FLG:
-			System.out.print(writeType);
+			case logWriting.DATEDATE_LOG_FLG:
+				fileName = "sys.log";
+				break;
+			case logWriting.STOCK_RESULT_LOG_FLG:
+				fileName = "sys.log";
+				break;
+			case logWriting.BACKTEST_LOG_FLG:
+				fileName = "sys.log";
+				break;
+			case logWriting.ANOTHER_RROR_LOG_FLG:
+				fileName = "sys.log";
+				break;
+			default:
 			break;
-		case logWriting.STOCK_RESULT_LOG_FLG:
-			System.out.print(writeType);
-			break;
-		case logWriting.BACKTEST_LOG_FLG:
-			System.out.print(writeType);
-			break;
-		case logWriting.ANOTHER_RROR_LOG_FLG:
-			System.out.print(writeType);
-			break;
-		default:
-		break;
-	}
-		System.out.print(":"+ writing);
+		}
+
+
+		String logFileFolderPath = PROPARTY.LOG_FILE_OUT;
+		File file = new File(logFileFolderPath + File.separator + fileName);
+//			File folder = new File(file_name);
+//			folder.mkdirs();
+
+		try {
+			file.createNewFile();
+		} catch (IOException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		try{
+		//				File file = new File(newFile);
+
+			FileWriter filewriter = new FileWriter(file,true);
+			filewriter.write(nowTime + " " + writing + ":" + writeType  + "");
+			filewriter.close();
+		}catch(IOException e){
+			System.out.println(e);
+		}
+
+		System.out.print(nowTime + writeType + ":" + writing);
 	}
 
 	public static double getAverageCut(List<Long> list,boolean checkJudge,int checkCountTotal,double cut,String a){
