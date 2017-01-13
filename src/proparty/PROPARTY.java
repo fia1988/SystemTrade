@@ -32,4 +32,5 @@ public class PROPARTY {
 //	DBのパス。
 	public static String DBPASS = "";
 
+
 }

@@ -373,7 +373,9 @@ public class Analysis00_Common {
 	//株：日経平均、JASDAC平均、なんちゃら400
 	//指数：自己結合；日経平均、JASDAC平均、なんちゃら400
 	public static String makekabuSQL(String code,S s){
+		
 		String cate = SQLChecker.getCate(code,s);
+		
 		String SQL = " select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'";
 
 		//株の時だけ挙動が違う
@@ -430,7 +432,7 @@ public class Analysis00_Common {
 						+	ReCord.INDEX_TBK_DD_JASDAC + "." + COLUMN.CODE + " = '" + ReCord.indexName_I306 + "' and "
 						+	ReCord.STATISTICS_NIKKE01_DD_CC + "." + COLUMN.CODE + " = '" + ReCord.TOSYO_01 + "'"
 						;
-
+				
 
 				break;
 			case ReCord.CODE_02_SATISTICS:
@@ -493,6 +495,9 @@ public class Analysis00_Common {
 
 		return SQL;
 	}
+
+
+
 
 	public static String makekabuSQL(String code,String startDay,S s){
 		String cate = SQLChecker.getCate(code,s);

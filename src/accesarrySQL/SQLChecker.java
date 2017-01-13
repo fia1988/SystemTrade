@@ -66,7 +66,7 @@ public class SQLChecker {
 					+ TBL_Name.CODELISTTBL
 					+ " where "
 					+ COLUMN.CODE + " = '"+ code + "'";
-
+		
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);

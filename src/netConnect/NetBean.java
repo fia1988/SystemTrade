@@ -17,6 +17,10 @@ import proparty.PROPARTY;
 import bean.Bean_CodeList;
 import bean.Bean_TBLRecord;
 
+import common.commonAP;
+
+import constant.logWriting;
+
 
 
 public class NetBean extends NetSuper{
@@ -40,7 +44,7 @@ public class NetBean extends NetSuper{
 	private List<String> netFile = new ArrayList<String>();
 	private List<List<String>> netFileS = new ArrayList<List <String>>();
 
-	
+
 	//リバースは何をいれても逆から入れる。
 	public void setUrlCsv(String URL,int skipLine,int intervalTime,boolean reverse){
 		netFile = new ArrayList<String>();
@@ -78,7 +82,8 @@ public class NetBean extends NetSuper{
 
 			//アクセス拒否された場合の動き
 			if(lineRecord==null){
-				System.out.println("NetBean：アクセス拒否中。150秒待ちます。");
+				commonAP.writeInLog(("NetBean：アクセス拒否中。" + PROPARTY.SLEEPTIME + "秒待ちます。") ,logWriting.DATEDATE_LOG_FLG);
+
 				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
 				try {
 					Thread.sleep(PROPARTY.SLEEPTIME);
@@ -89,7 +94,7 @@ public class NetBean extends NetSuper{
 				setUrlCsv(URL,skipLine,intervalTime);
 				return;
 			}else if(lineRecord.equals(PROPARTY.NAZO)){
-				System.out.println("NetBean：503かも。5秒待まってもう一回。");
+				commonAP.writeInLog("NetBean：503かも。" + ( PROPARTY.SLEEPTIME-145000 ) + "秒待まってもう一回。" ,logWriting.DATEDATE_LOG_FLG);
 				try {
 					Thread.sleep(PROPARTY.SLEEPTIME-145000);
 				} catch (InterruptedException e) {
@@ -114,8 +119,7 @@ public class NetBean extends NetSuper{
 			//例外処理が発生したら、表示する
 			//			System.out.println("Err =" + e);
 //			e.printStackTrace();
-
-			System.out.println("ページがないよ：" + URL);
+			commonAP.writeInLog("ページがないよ：" + URL ,logWriting.DATEDATE_LOG_FLG);
 		}finally{
 			try {
 				//				URL切断
@@ -124,7 +128,7 @@ public class NetBean extends NetSuper{
 				in.close();//InputStreamを閉じる
 				connect.disconnect();//サイトの接続を切断
 			} catch (IOException e) {
-				System.out.println("NetBean109でIOEXception");
+				commonAP.writeInLog("NetBean109でIOEXception",logWriting.DATEDATE_LOG_FLG);
 				e.printStackTrace();
 			}
 		}
@@ -259,7 +263,7 @@ public class NetBean extends NetSuper{
 				connect.disconnect();//サイトの接続を切断
 				return false;
 			}else if(lineRecord.equals(PROPARTY.NAZO)){
-				System.out.println("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。");
+				commonAP.writeInLog("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。" ,logWriting.DATEDATE_LOG_FLG);
 				try {
 					Thread.sleep(PROPARTY.INTERVALTIME);
 				} catch (InterruptedException e) {
@@ -278,7 +282,7 @@ public class NetBean extends NetSuper{
 
 
 			}else if(lineRecord.equals(PROPARTY.NAZO2)){
-				System.out.println("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。"+ lineRecord);
+				commonAP.writeInLog("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。" ,logWriting.DATEDATE_LOG_FLG);
 				try {
 					Thread.sleep(PROPARTY.INTERVALTIME);
 				} catch (InterruptedException e) {
@@ -301,16 +305,14 @@ public class NetBean extends NetSuper{
 //			System.out.println("ひょっとして・・・？");
 		}catch(IOException e1) {
 			//403エラーのときの動き
-			System.out.println("NetBean：403かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。"+ URL);
-
+			commonAP.writeInLog("NetBean：403かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。"+ URL ,logWriting.DATEDATE_LOG_FLG);
 			return setUrlCsv(URL,skipLine);
 
 		}catch(Exception e2){
 			//例外処理が発生したら、表示する
 			//			System.out.println("Err =" + e);
 			e2.printStackTrace();
-
-			System.out.println("【なぞのエラー】" + URL);
+			commonAP.writeInLog("【なぞのエラー】" + URL ,logWriting.DATEDATE_LOG_FLG);
 
 			return setUrlCsv(URL,skipLine);
 

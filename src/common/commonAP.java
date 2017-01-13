@@ -33,6 +33,32 @@ public class commonAP {
 	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
 //	static List<String[]> codeListwithiCate = new ArrayList<String>();
 
+	//終了日を入れて、count文遡った場合の開始日を取得
+	//例：2017/01/11,2→2017/01/10
+	//例：2017/01/11,1→2017/01/11
+	public static String getStartDay(String end,int count,S s){
+		String SQL = " select " + COLUMN.DAYTIME + " from " + TBL_Name.INDEX_DD
+				+" where "
+				+ COLUMN.CODE + " = 'I101'"
+				+ " and "
+				+ COLUMN.DAYTIME + " <= '" + end + "'"
+				+ " order by " + COLUMN.DAYTIME + " desc limit " + count;
+		String startDay = "";
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				startDay=s.rs.getString(COLUMN.DAYTIME);
+				
+			}
+
+		} catch (SQLException e) {
+			System.out.println("getStartDayでエラー。スタックトレース:" + SQL);
+			e.getStackTrace();
+		}
+		return startDay;
+	}
+
+
 	public static int countDay(String start,String end,S s){
 
 		String SQL = " select count(" + COLUMN.DAYTIME + ")"
@@ -84,7 +110,7 @@ public class commonAP {
 				fileName = "sys.log";
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
-				fileName = "sys.log";
+				fileName = "backtestLog.log";
 				break;
 			case logWriting.ANOTHER_RROR_LOG_FLG:
 				fileName = "sys.log";
@@ -526,10 +552,11 @@ public class commonAP {
 
 			for ( int i = 0; i < codeListwithiCate.size() ; i++){
 //				System.out.println(codeListwithiCate.get(i)[0]);
+
 				codeListwithiCate.get(i)[1]=SQLChecker.getCate(codeListwithiCate.get(i)[0], s);
 
 			}
-
+//			System.out.println("setKeepCodeList:" + codeListwithiCate.size());
 		} catch (SQLException e) {
 
 		}
