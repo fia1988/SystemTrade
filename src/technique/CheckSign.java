@@ -68,16 +68,16 @@ public class CheckSign {
 		//		nowDTOList = new ArrayList<>();
 		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 		//		paraDTO.setOnEliteFLG();
-		//		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList);
-
+		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 		////		paraDTO = new Bean_Parameta();
 		////		resultDTO = new Bean_Result();
 		////		nowDTO = new Bean_nowRecord();
 		////		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 		////		paraDTO.setOnEliteFLG();
-		////		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		//
+//		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+
+
 		//
 		//		paraDTO = new Bean_Parameta();
 		//		resultDTO = new Bean_Result();
@@ -152,7 +152,9 @@ public class CheckSign {
 				   + COLUMN.EXITMETHOD +	","
 				   + COLUMN.TYPE +			" "
 				   + " from "
-				   + TBL_Name.LASTORDER;
+				   + TBL_Name.LASTORDER
+				   + " where "
+				   + COLUMN.DAYTIME + " < '" + checkDay + "'";
 		S s = new S();
 		s.getCon();
 
@@ -224,7 +226,7 @@ public class CheckSign {
 		nowDTO = new Bean_nowRecord();
 		nowDTOList = new ArrayList<>();
 		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setOnEliteFLG();
+//		paraDTO.setOnEliteFLG();
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
 		CHECKTODAY_L(size,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,checkDay);
@@ -234,7 +236,7 @@ public class CheckSign {
 		nowDTO = new Bean_nowRecord();
 		nowDTOList = new ArrayList<>();
 		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setOnEliteFLG();
+//		paraDTO.setOnEliteFLG();
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
 		CHECKTODAY_S(size,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepCodeList,checkDay);
@@ -458,20 +460,6 @@ public class CheckSign {
 		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
 		String SQL = "";
-
-		//		//まずはラストオーダーを前日の分を削除する。
-		//		SQL = " delete from " + TBL_Name.LASTORDER
-		//			+ " where "
-		//			+ COLUMN.SIGN_FLG + " is " + signFlg
-		//			+ " and "
-		//			+ COLUMN.TYPE + " = '" + type + "'"
-		//			+ " and "
-		//			+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
-		//			+ " and "
-		//			+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
-		//			;
-		//		s.freeUpdateQuery(SQL);
-		//		System.out.println("setLastOrderTBL:" + SQL);
 
 		List<String> thisResultCodeList = new ArrayList<String>();
 

@@ -20,8 +20,8 @@ public class TimeClornigDate {
 			timer = new Timer();
 			this.MainDTO = mainDTO;
 //			timer.scheduleAtFixedRate(task,0, 1800000);
-			timer.schedule(task,0, 1800000);
-//			timer.schedule(task,0, 18);
+//			timer.schedule(task,0, 1800000);
+			timer.schedule(task,0, 18);
 //			timer.scheduleWithFixedDelay(task,0,0);
 		} catch (Exception e) {
 			e.printStackTrace();
