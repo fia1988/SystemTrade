@@ -22,7 +22,7 @@ import controller.CONTOLLBOTTON;
 public class cloringDate {
 	public String getDayDate(TAB_MainDTO mainDTO){
 //		GetCodeList a = new GetCodeList();
-		System.out.println("はじまりゅうううううううう");
+		
 		long start = System.currentTimeMillis();
 
 		//日々売買ファイルの出力先
