@@ -19,6 +19,7 @@ import botton.BackUp;
 import botton.ResetShori;
 import botton.SepaCombine;
 import botton.TimeClornigDate;
+import botton.cloringDate;
 import botton.setUp;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
@@ -45,6 +46,7 @@ public class TAB_main extends JPanel {
 	JLabel createTBLresult = new JLabel("成／否");
 	JLabel inBackupResult = new JLabel("成／否");
 	JLabel outBackupResult = new JLabel("成／否");
+	JLabel oneShotResult = new JLabel("成／否");
 	JLabel timerResult = new JLabel("ボタンを押してね");
 
 	private final Action action = new SwingAction();
@@ -299,12 +301,30 @@ public class TAB_main extends JPanel {
 		mysqlPassMask.setBounds(95, 250, 136, 25);
 		add(mysqlPassMask);
 
+		JButton btnNewButton_2 = new JButton("New button");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setAction(action_11);
+		btnNewButton_2.setBounds(821, 230, 193, 27);
+		add(btnNewButton_2);
+
+		JLabel label_5 = new JLabel("結果：");
+		label_5.setBounds(831, 270, 60, 19);
+		add(label_5);
+
+
+		oneShotResult.setBounds(885, 270, 278, 19);
+		add(oneShotResult);
+
 
 
 	}
 
 
 	TimeClornigDate TCD = null;
+	private final Action action_11 = new SwingAction_11();
 
 
 	private class SwingAction extends AbstractAction {
@@ -778,6 +798,59 @@ public class TAB_main extends JPanel {
 
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();
+		}
+	}
+	private class SwingAction_11 extends AbstractAction {
+		public SwingAction_11() {
+			putValue(NAME, "ワンショット");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			nyuryokuCheck oneShotCheck = new nyuryokuCheck();
+
+			//タイマーの状態のチェック
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+//			mainDTO.setMysqlPass(mysqlPass.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+
+
+			String checkShotResult = oneShotCheck.nyuryokuChecker(mainDTO);
+
+			switch (checkShotResult) {
+			case nyuryokuCheckResultConst.SUCCESS:
+				break;
+			case nyuryokuCheckResultConst.ON_TIMER_ERR:
+				oneShotResult.setText(checkShotResult);
+				return;
+			case nyuryokuCheckResultConst.MYSQL_ERR:
+				oneShotResult.setText(checkShotResult);
+				return;
+			case nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR:
+				oneShotResult.setText(checkShotResult);
+				return;
+			case nyuryokuCheckResultConst.NO_ENTRY_FOLDER_ERR:
+				oneShotResult.setText(checkShotResult);
+				return;
+			default:
+				oneShotResult.setText("そのほかエラー");
+				return;
+			}
+
+			cloringDate C_D = new cloringDate();
+			String mainDTO_result = C_D.getDayDate(mainDTO);
+			oneShotResult.setText(mainDTO_result);
+			//メモリの解放
+			C_D = new cloringDate();
+
+
 		}
 	}
 }

@@ -6,8 +6,12 @@ import java.util.ArrayList;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
+
+import common.commonAP;
+
 import constant.COLUMN;
 import constant.ReCord;
+import constant.logWriting;
 
 public class SEPARATE_CHECK {
 	static String codeSeparate[] = new String[4];
@@ -110,7 +114,7 @@ public class SEPARATE_CHECK {
 							+ getColumnSEPA(COLUMN.AVERAGEPRICE		,	RATE,	enXan_1) + "  "
 							+ " where "
 							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
-
+					commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 					s.freeUpdateQuery(SQL);
 
 					//2010-01-01以前、権利付最終売買日以後4営業日は取引期間後4営業日を営業停止期間としている。これのレコードを削除する。
@@ -158,7 +162,7 @@ public class SEPARATE_CHECK {
 								+ COLUMN.DAYTIME + " >= '" + dayList.get(0) + "'"
 								+ " and "
 								+ COLUMN.DAYTIME + " <= '" + dayList.get(3) + "'";
-							System.out.println(SQL);
+							commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 							s.freeUpdateQuery(SQL);
 						}
 					}
@@ -202,7 +206,7 @@ public class SEPARATE_CHECK {
 					+ COLUMN.CODE + " = '" + code + "'"
 					+ " and "
 					+ COLUMN.SEPA_FLG + " is false";
-		System.out.println(SQL);
+		commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 	}
 
