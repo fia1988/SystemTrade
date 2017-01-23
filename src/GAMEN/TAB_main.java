@@ -163,7 +163,7 @@ public class TAB_main extends JPanel {
 			}
 		});
 		btnNewButton_1.setAction(action_2);
-		btnNewButton_1.setBounds(201, 671, 119, 27);
+		btnNewButton_1.setBounds(201, 671, 119, 71);
 		add(btnNewButton_1);
 
 		JLabel label_6 = new JLabel("バックアップ");
@@ -415,6 +415,15 @@ public class TAB_main extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			TAB_PROPATY.textField.setText("aaaa");
+
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+
+			//タイマーの状態のチェック
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			if ( mainDTO.isJudgeTimer() == false){
+				return;
+			}
+
 			System.exit(0);
 		}
 	}
