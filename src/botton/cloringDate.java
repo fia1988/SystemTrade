@@ -22,9 +22,9 @@ import controller.CONTOLLBOTTON;
 public class cloringDate {
 	public String getDayDate(TAB_MainDTO mainDTO){
 //		GetCodeList a = new GetCodeList();
-		
-		long start = System.currentTimeMillis();
 
+		long start = System.currentTimeMillis();
+		long stop = System.currentTimeMillis();
 		//日々売買ファイルの出力先
 
 		String folderPath = mainDTO.getEntryFolderPath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
@@ -41,14 +41,16 @@ public class cloringDate {
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
-				commonAP.writeInLog("アップデートなし" ,logWriting.DATEDATE_LOG_FLG);
+				stop = System.currentTimeMillis();
+				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
-//				break;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
-				commonAP.writeInLog("なんかエラー1" ,logWriting.DATEDATE_LOG_FLG);
+				stop = System.currentTimeMillis();
+				commonAP.writeInLog("なんかエラー1" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_1;
 			default:
-				commonAP.writeInLog("なんかエラー2" ,logWriting.DATEDATE_LOG_FLG);
+				stop = System.currentTimeMillis();
+				commonAP.writeInLog("なんかエラー2" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_2;
 		}
 
@@ -56,7 +58,8 @@ public class cloringDate {
 
 		if ( checkTodayLog() == false ){
 			//更新日が一致しない場合は終了する。
-			commonAP.writeInLog("一部分のみが更新されている。" ,logWriting.DATEDATE_LOG_FLG);
+			stop = System.currentTimeMillis();
+			commonAP.writeInLog("一部分のみが更新されている。" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
 			return TimerShoriConst.UPDATE_BARABARA;
 		}
 
@@ -78,15 +81,16 @@ public class cloringDate {
 				break;
 			case ReturnCodeConst.SQL_ERR_1:
 				//指定したディレクトリが存在しない
-				System.out.println(folderPath+"が存在しない");
+				stop = System.currentTimeMillis();
+				commonAP.writeInLog(folderPath+"が存在しない。" + "実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 				break;
 			default:
-				System.out.println("なんかエラー");
+				commonAP.writeInLog("日々売買ファイルの出力でなんかエラー。" + "実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 				break;
 		}
 
 
-		long stop = System.currentTimeMillis();
+		stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 
 		return TimerShoriConst.SUCCESS;

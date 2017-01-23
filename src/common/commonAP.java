@@ -48,7 +48,7 @@ public class commonAP {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				startDay=s.rs.getString(COLUMN.DAYTIME);
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -104,16 +104,16 @@ public class commonAP {
 		String fileName = "sys.log";
 		switch (writeType) {
 			case logWriting.DATEDATE_LOG_FLG:
-				fileName = "sys.log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
 				break;
 			case logWriting.STOCK_RESULT_LOG_FLG:
-				fileName = "sys.log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
 				fileName = "backtestLog.log";
 				break;
 			case logWriting.ANOTHER_RROR_LOG_FLG:
-				fileName = "sys.log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
 				break;
 			default:
 			break;

@@ -110,7 +110,7 @@ public class Techinique_COMMON_METHOD {
 
 		if( size <= 0 ){return Technique98_CONST.NO_GAME;}
 		
-		int sleepTime = 5;
+		int sleepTime = 7;
 		
 		if ( sleepTime < 0 ){return Technique98_CONST.NO_GAME;}
 		
