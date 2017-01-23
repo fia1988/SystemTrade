@@ -135,13 +135,13 @@ public class commonAP {
 		//				File file = new File(newFile);
 
 			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write(nowTime + " " + writing + ":" + writeType  + "\r\n");
+			filewriter.write(nowTime + " " + writing  + "\r\n");
 			filewriter.close();
 		}catch(IOException e){
 			System.out.println(e);
 		}
 
-		System.out.println(nowTime + writeType + ":" + writing);
+		System.out.println(nowTime + ":" + writing);
 	}
 
 	public static void writeLog(String writing,int writeType){
@@ -181,13 +181,13 @@ public class commonAP {
 		//				File file = new File(newFile);
 
 			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write("：" + writing + ":" + writeType  + "");
+			filewriter.write("：" + writing );
 			filewriter.close();
 		}catch(IOException e){
 			System.out.println(e);
 		}
 
-		System.out.print(writeType + ":" + writing);
+		System.out.print( ":" + writing);
 	}
 
 	public static double getAverageCut(List<Long> list,boolean checkJudge,int checkCountTotal,double cut,String a){
