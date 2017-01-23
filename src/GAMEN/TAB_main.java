@@ -420,7 +420,7 @@ public class TAB_main extends JPanel {
 
 			//タイマーの状態のチェック
 			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			if ( mainDTO.isJudgeTimer() == false){
+			if ( mainDTO.isJudgeTimer() ){
 				return;
 			}
 

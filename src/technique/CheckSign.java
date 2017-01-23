@@ -133,7 +133,8 @@ public class CheckSign {
 
 
 
-
+		//別メソッドを動かす前にメモリ解放
+		s.closeConection();
 
 		//メモリの解放
 		STOCKList = new ArrayList<String[]>();
