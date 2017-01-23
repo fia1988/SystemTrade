@@ -37,12 +37,12 @@ public class baseFrame extends JFrame {
 
 	public void showInitPanel(){
 		getContentPane().removeAll();
-		setTitle("初期画面");
+		setTitle("FIAS_v1.1");
 
 		Edit edit = new Edit();
 		getContentPane().add(edit);
 		edit.setLayout(null);
-		setBounds(50,50,1560,960);		
+		setBounds(50,50,1560,960);
 
 		//	setContentPane(contentPane);
 

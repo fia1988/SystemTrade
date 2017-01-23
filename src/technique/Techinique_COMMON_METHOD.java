@@ -109,13 +109,13 @@ public class Techinique_COMMON_METHOD {
 //	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,int size,boolean entryCheck){
 
 		if( size <= 0 ){return Technique98_CONST.NO_GAME;}
-		
+
 		int sleepTime = 7;
-		
+
 		if ( sleepTime < 0 ){return Technique98_CONST.NO_GAME;}
-		
+		//連続稼働させないように休息する。
 		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-		
+
 		S s = new S();
 		s.getCon();
 		String startDay = commonAP.getStartDay(dayTime,size, s);
@@ -142,8 +142,8 @@ public class Techinique_COMMON_METHOD {
 						+	"and '"	+	startDay + "' <= " + headLetter + COLUMN.DAYTIME + " and "
 						+	headLetter + COLUMN.DAYTIME + " <= '" + endDay + "'"
 						+ " order by " + headLetter + COLUMN.DAYTIME +  " desc limit " + size;
-	
-	
+
+
 				break;
 			case ReCord.CODE_02_SATISTICS:
 				SQL = SQL
@@ -152,7 +152,7 @@ public class Techinique_COMMON_METHOD {
 				+ " order by " +  COLUMN.DAYTIME +  " desc limit " + size;
 				break;
 			case ReCord.CODE_03_INDEX:
-				SQL = SQL 
+				SQL = SQL
 				+	"and '"	+	startDay + "' <= " + headLetter + COLUMN.DAYTIME + " and "
 				+	headLetter + COLUMN.DAYTIME + " <= '" + endDay + "'"
 				+ " order by " +  COLUMN.DAYTIME +  " desc limit " + size;
@@ -175,14 +175,16 @@ public class Techinique_COMMON_METHOD {
 		}
 
 
-		try {	
+		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			//指定した日からサイズまでの昇順で持ってきたい
 			//例：6/1,6/2,6/3,6/4,6/5
-
+			System.out.println("実験１");
 			s.rs2.last();
 			s.rs2.next();
+			System.out.println("実験２");
 			while ( s.rs2.previous() ) {
+				System.out.println("実験ループ");
 				String nowDay = s.rs2.getString(headLetter + COLUMN.DAYTIME);
 //				System.out.println(startDay);
 //				System.out.println(endDay);
@@ -208,8 +210,8 @@ public class Techinique_COMMON_METHOD {
 					return Technique98_CONST.NO_GAME;
 				}
 			}
-			
-			
+			System.out.println("フィニッシュ");
+
 //			this_s.rs2.close();
 //			this_s.reCon();
 //			this_rs.close();

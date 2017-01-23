@@ -57,6 +57,48 @@ public class SagyoSpace {
 	}
 
 
+	public static void testCase98(){
+
+
+
+		S s = new S();
+		s.getCon();
+
+		ArrayList<String[]> STOCKList = new ArrayList<String[]>();
+		ArrayList<String[]> SATISTICSList = new ArrayList<String[]>();
+		ArrayList<String[]> INDEXList = new ArrayList<String[]>();
+		ArrayList<String[]> ETFNameList = new ArrayList<String[]>();
+
+		ArrayList<String[]> keepStockList = new ArrayList<String[]>();
+
+		String TODAY = "";
+
+		//全銘柄をリストに入れる
+		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+		STOCKList = commonAP.getCodeList();
+
+		commonAP.setCodeList(ReCord.CODE_02_SATISTICS,s);
+		SATISTICSList = commonAP.getCodeList();
+
+		commonAP.setCodeList(ReCord.CODE_03_INDEX,s);
+		INDEXList = commonAP.getCodeList();
+
+		commonAP.setCodeList(ReCord.CODE_04_ETF,s);
+		ETFNameList = commonAP.getCodeList();
+
+
+
+		//キープテーブルのリストを取得
+		commonAP.setKeepCodeList(s);
+		keepStockList = commonAP.getCodeList();
+
+		//別メソッドを動かす前にメモリ解放
+		s.closeConection();
+		TODAY = "2017-01-23";
+		System.out.println(keepStockList.size());
+		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		
+	}
 
 	public static void testCase99(){
 
@@ -160,7 +202,7 @@ public class SagyoSpace {
 //		s.closeConection();
 //		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 //		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		testCase29();
+		
 	}
 
 	public static void testCase30(){

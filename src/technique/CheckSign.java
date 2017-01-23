@@ -26,17 +26,17 @@ public class CheckSign {
 		S s = new S();
 		s.getCon();
 		String TODAY = SQLChecker.getCateToday(ReCord.CODE_01_STOCK,s);
-
+		s.closeConection();
 		//前日の注文を実行する。
 		dealLastOrder(TODAY);
 
+		s = new S();
+		s.getCon();
 		ArrayList<String[]> STOCKList = new ArrayList<String[]>();
 		ArrayList<String[]> SATISTICSList = new ArrayList<String[]>();
 		ArrayList<String[]> INDEXList = new ArrayList<String[]>();
 		ArrayList<String[]> ETFNameList = new ArrayList<String[]>();
-
 		ArrayList<String[]> keepStockList = new ArrayList<String[]>();
-
 
 
 		//全銘柄をリストに入れる
@@ -55,8 +55,6 @@ public class CheckSign {
 		//キープテーブルのリストを取得
 		commonAP.setKeepCodeList(s);
 		keepStockList = commonAP.getCodeList();
-
-
 
 		//別メソッドを動かす前にメモリ解放
 		s.closeConection();
