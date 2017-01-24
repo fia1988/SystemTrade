@@ -42,15 +42,15 @@ public class cloringDate {
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				stop = System.currentTimeMillis();
-				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
 				stop = System.currentTimeMillis();
-				commonAP.writeInLog("なんかエラー1" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("なんかエラー1" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_1;
 			default:
 				stop = System.currentTimeMillis();
-				commonAP.writeInLog("なんかエラー2" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("なんかエラー2" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_2;
 		}
 
@@ -207,6 +207,7 @@ public class cloringDate {
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
+		System.out.println(SQL);
 		s.exportFile(SQL);
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;

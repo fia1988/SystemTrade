@@ -97,7 +97,7 @@ public class SagyoSpace {
 		TODAY = "2017-01-23";
 		System.out.println(keepStockList.size());
 		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		
+
 	}
 
 	public static void testCase99(){
@@ -202,7 +202,7 @@ public class SagyoSpace {
 //		s.closeConection();
 //		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 //		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		
+
 	}
 
 	public static void testCase30(){
@@ -211,8 +211,8 @@ public class SagyoSpace {
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
-		String startDD	=	"2007-01-04";
-		String endDD		=	"2016-08-01";
+		String startDD	=	"2007-01-23";
+		String endDD		=	"2017-01-27";
 //		String startDD	=	"2007-06-30";
 //		String endDD		=	"2009-07-01";
 

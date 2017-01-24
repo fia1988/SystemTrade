@@ -179,12 +179,9 @@ public class Techinique_COMMON_METHOD {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			//指定した日からサイズまでの昇順で持ってきたい
 			//例：6/1,6/2,6/3,6/4,6/5
-			System.out.println("実験１");
 			s.rs2.last();
 			s.rs2.next();
-			System.out.println("実験２");
 			while ( s.rs2.previous() ) {
-				System.out.println("実験ループ");
 				String nowDay = s.rs2.getString(headLetter + COLUMN.DAYTIME);
 //				System.out.println(startDay);
 //				System.out.println(endDay);
@@ -210,7 +207,6 @@ public class Techinique_COMMON_METHOD {
 					return Technique98_CONST.NO_GAME;
 				}
 			}
-			System.out.println("フィニッシュ");
 
 //			this_s.rs2.close();
 //			this_s.reCon();
