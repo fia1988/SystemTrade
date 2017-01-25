@@ -207,7 +207,7 @@ public class cloringDate {
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
-		System.out.println(SQL);
+		
 		s.exportFile(SQL);
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
