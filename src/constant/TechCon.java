@@ -13,4 +13,5 @@ public class TechCon {
 	public static final String METH_MACD_M_S_OVER0 = "MACD_M_S_OVER0";
 	public static final String METH_MACD_M_L_OVER0 = "MACD_M_L_OVER0";
 
+
 }
