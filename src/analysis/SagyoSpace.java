@@ -15,6 +15,7 @@ import bean.Bean_nowRecord;
 import common.commonAP;
 
 import constant.ReCord;
+import constant.TechCon;
 
 public class SagyoSpace {
 
@@ -409,10 +410,10 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 		paraDTO.setTesuRYO(0.0);
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 		System.out.println("");
 		resultDTO.setOnResultDay();
-		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 		startDD	=	"2017-01-23";
 		paraDTO = new Bean_Parameta();
@@ -420,10 +421,12 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 		paraDTO.setTesuRYO(0.0);
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 		System.out.println("");
 		resultDTO.setOnResultDay();
-		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+//		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
 	}
