@@ -393,8 +393,8 @@ public class SagyoSpace {
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
-		String startDD	=	"2017-01-04";
-		String endDD		=	"2017-01-12";
+		String startDD	=	"2017-01-27";
+		String endDD		=	"2017-02-03";
 //		startDD	=	"2017-01-16";
 //		endDD		=	"2017-01-20";
 		String L_CLASS = "";
@@ -414,6 +414,7 @@ public class SagyoSpace {
 		resultDTO.setOnResultDay();
 		Analysis00_Common.Analysis_COMMON("technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
+		startDD	=	"2017-01-23";
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();

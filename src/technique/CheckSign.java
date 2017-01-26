@@ -128,7 +128,8 @@ public class CheckSign {
 		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 		//		paraDTO.setOnEliteFLG();
 		CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
+		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		
 
 
 		//別メソッドを動かす前にメモリ解放
