@@ -80,6 +80,45 @@ public class Bean_Result {
 	long entryTime = 0;
 	List<Long> arrayEntryTime = new ArrayList();
 
+	//勝った場合、負けた場合のエントリー回数リスト
+	ArrayList<Long> loseEntryTimeList = new ArrayList<Long>();
+	ArrayList<Long> winEntryTimeList = new ArrayList<Long>();
+
+	//勝った場合、負けた場合の保有期間リスト
+	ArrayList<Long> loseKeepTimeList = new ArrayList<Long>();
+	ArrayList<Long> winKeepTimeList = new ArrayList<Long>();
+
+	public double getWinKeepTimeAverage(){
+		double total=0.0;
+		for (int i = 0 ; i < winKeepTimeList.size() ; i++){
+			total = total + winKeepTimeList.get(i);
+		}
+		return (total/winKeepTimeList.size());
+	}
+
+	public double getLoseKeepTimeAverage(){
+		double total=0.0;
+		for (int i = 0 ; i < loseKeepTimeList.size() ; i++){
+			total = total + loseKeepTimeList.get(i);
+		}
+		return (total/loseKeepTimeList.size());
+	}
+
+	public double getWinEntryTimeAverage(){
+		double total=0.0;
+		for (int i = 0 ; i < winEntryTimeList.size() ; i++){
+			total = total + winEntryTimeList.get(i);
+		}
+		return (total/winEntryTimeList.size());
+	}
+
+	public double getLoseEntryTimeAverage(){
+		double total=0.0;
+		for (int i = 0 ; i < loseEntryTimeList.size() ; i++){
+			total = total + loseEntryTimeList.get(i);
+		}
+		return (total/loseEntryTimeList.size());
+	}
 
 	public double getEntryTimeAverage(){
 		double total=0.0;
@@ -93,12 +132,49 @@ public class Bean_Result {
 		return entryTimeList;
 	}
 
+
+	public ArrayList<Long> getLoseKeepTimeList() {
+		return loseKeepTimeList;
+	}
+
+	public void setLoseKeepTimeList(long loseKeepTimeList) {
+		this.loseKeepTimeList.add(loseKeepTimeList);
+	}
+
+	public ArrayList<Long> getWinKeepTimeList() {
+		return winKeepTimeList;
+	}
+
+	public void setWinKeepTimeList(long winKeepTimeList) {
+		this.winKeepTimeList.add(winKeepTimeList);
+	}
+
+	public ArrayList<Long> getLoseEntryTimeList() {
+		return loseEntryTimeList;
+	}
+
+	public void setLoseEntryTimeList(long loseEntryTimeList) {
+		this.loseEntryTimeList.add(loseEntryTimeList);
+	}
+
+	public ArrayList<Long> getWinEntryTimeList() {
+		return winEntryTimeList;
+	}
+
+	public void setWinEntryTimeList(Long winEntryTimeList) {
+		this.winEntryTimeList.add(winEntryTimeList);
+	}
+
 	public void setEntryTimeList(Long entryTimeList) {
 		this.entryTimeList.add(entryTimeList);
 	}
 
 	public long getEntryTime() {
 		return entryTime;
+	}
+
+	public void setEntryTime(int a) {
+		this.entryTime=a;
 	}
 
 	public void setEntryTime() {
@@ -136,9 +212,13 @@ public class Bean_Result {
 	boolean resultTotal = false;
 
 	public void resetList(){
+		loseEntryTimeList = new ArrayList<Long>();
+		winEntryTimeList = new ArrayList<Long>();
 		entryTimeList = new ArrayList<Long>();
 		entryPriceList = new ArrayList<Double>();
 		entryDayList = new ArrayList<String>();
+		loseKeepTimeList = new ArrayList<Long>();
+		winKeepTimeList = new ArrayList<Long>();
 		totalDays = 0;
 		resultPlusClass00 = 0;
 		resultPlusClass01 = 0;
@@ -270,18 +350,34 @@ public class Bean_Result {
 			//勝った場合
 			setWinCount();
 			setTOTAL_WIN();
-			setTotalWinParcent(averageParcent);
+//			setTotalWinParcent(averageParcent);
+			setTotalWinParcent(averageParcent*getEntryTime());
+			setWinEntryTimeList ( getEntryTime() );
+
+			setWinKeepTimeList( getKeepCount() );
 			result = "(勝)";
 
 		}else{
 			//負けた場合
 			setLoseCount();
 			setTOTAL_LOSE();
-			setTotalLoseParcent(averageParcent);
+//			setTotalLoseParcent(averageParcent);
+			setTotalLoseParcent(averageParcent*getEntryTime());
+			setLoseEntryTimeList ( getEntryTime() );
+			setLoseKeepTimeList( getKeepCount() );
 			result = "(負)";
 		}
 
 
+		//標準偏差を計算する。
+		setKeepDayList		( getKeepCount() );
+		setReturnList		( averageParcent*getEntryTime() );
+		setEntryTimeList	( getEntryTime() );
+
+
+//		if(getEntryTime() != 1){
+//			System.out.println(code);
+//		}
 
 		double checkClass = Math.floor(averageParcent * 100);
 		//階級を作る
@@ -398,14 +494,6 @@ public class Bean_Result {
 			break;
 		}
 
-		//標準偏差を計算する。
-		setKeepDayList		( getKeepCount() );
-		setReturnList		( averageParcent );
-		setEntryTimeList	( getEntryTime() );
-
-//		if(getEntryTime() != 1){
-//			System.out.println(code);
-//		}
 
 		if( getResultDay() ){
 //			if (averageParcent>1 || -0.4 > averageParcent){
@@ -443,6 +531,8 @@ public class Bean_Result {
 				//上下カット平均エントリー回数
 				//※上のhalfだけカットする。
 				double getCutAveEntryTimes	=	commonAP.getAverageCut(getEntryTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
+				double getCutWinAveEntryTimes	=	commonAP.getAverageCut(getWinEntryTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
+				double getCutLoseAveEntryTimes	=	commonAP.getAverageCut(getLoseEntryTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
 //				double getCutAveEntryTimes	=	commonAP.getDev(getEntryTimeList(),true,"",	half,half);
 				//上下カットリスク
 				double getCutAveRisk = commonAP.getDev(getReturnList(),		true,	half,half);
@@ -456,36 +546,79 @@ public class Bean_Result {
 				commonAP.writeInLog("トータル計：" + getTradeCount(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝％：" + getTotalWinParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() * 100 +  " %" ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("トータル平均勝％：" + getAverageWinParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("トータル平均負％：" + getAverageLoseParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE())  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("見込みリスク：" + commonAP.getDev(getReturnList(),  true)  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
+
+				commonAP.writeInLog("トータルリターン：" + ( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("一回辺りリターン：" + (( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("トータル平均勝％：" + (getTotalWinParcent()  * 100) / (getWinEntryTimeAverage()  * getTOTAL_WIN()  ) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("トータル平均負％：" + (getTotalLoseParcent() * 100) / (getLoseEntryTimeAverage() * getTOTAL_LOSE() ) +  " %",logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE())  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("見込みリスク：" + commonAP.getDev(getReturnList(),  true)  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("平均保有期間(売却できずを除く)：" + getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("平均保有勝ち期間(売却できずを除く)：" + getWinKeepTimeAverage() ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("平均保有負け期間(売却できずを除く)：" + getLoseKeepTimeAverage() ,logWriting.BACKTEST_LOG_FLG);
+
 				commonAP.writeInLog("保有期間標準偏差：" + commonAP.getDev(getKeepDayList(), true,""),logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("手数料：" + paraDTO.getTesuRYO()*100 + "%",logWriting.BACKTEST_LOG_FLG);
+
 				commonAP.writeInLog("平均エントリー回数：" + getEntryTimeAverage(),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("平均勝ちエントリー回数：" + getWinEntryTimeAverage(),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("平均負けエントリー回数：" + getLoseEntryTimeAverage(),logWriting.BACKTEST_LOG_FLG);
+
+
+
 				commonAP.writeInLog("エントリー回数標準偏差：" + commonAP.getDev(getEntryTimeList(), true,""),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("勝ちエントリー回数標準偏差：" + commonAP.getDev(getWinEntryTimeList(), true,""),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("負けエントリー回数標準偏差：" + commonAP.getDev(getLoseEntryTimeList(), true,""),logWriting.BACKTEST_LOG_FLG);
 
 
 				commonAP.writeInLog("上" + half * 100 +  "%カットトータル勝："			+	getCutWinCount		,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("下" + half * 100 +  "%カットトータル負："				+ getCutLoseCount	,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("上" + half * 100 +  "%カットトータル勝％："			+ commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("下" + half * 100 +  "%カットトータル負％："			+ commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("上" + half * 100 +  "%カットトータル平均勝％："		+ commonAP.getAverageCut(getReturnList(),true,	commonAP.AVERAGE_FLG,	half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("下" + half * 100 +  "%カットトータル平均負％："		+ commonAP.getAverageCut(getReturnList(),false,	commonAP.AVERAGE_FLG,	half) * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 
-				commonAP.writeInLog("上下0.5%カット見込みリターン："		+ getCutAveReturn * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
+				double getCutTotalWIN = commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) * 100;
+				double getCutTotalLose = commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) * 100;
+
+
+//				double getCutTotalReturn = (( ( getCutTotalLose + getCutTotalWIN ) / ( getCutWinCount + getCutLoseCount )*aveCutKeepDays ) );
+
+				commonAP.writeInLog("上" + half * 100 +  "%カットトータル勝％："			+ getCutTotalWIN +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("下" + half * 100 +  "%カットトータル負％："			+ getCutTotalLose +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下" + half * 100 +  "%カットトータルリターン："		+ (getCutTotalWIN+getCutTotalLose) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下" + half * 100 +  "一回辺りリターン%：" + (getCutTotalWIN+getCutTotalLose)/((getCutWinCount+getCutLoseCount)*getCutAveEntryTimes) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上" + half * 100 +  "%カットトータル平均勝％："		+ (getCutTotalWIN)/(getCutWinAveEntryTimes*getCutWinCount) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("下" + half * 100 +  "%カットトータル平均負％："		+ (getCutTotalLose)/(getCutLoseAveEntryTimes*getCutLoseCount) +  " %",logWriting.BACKTEST_LOG_FLG);
+
+//				commonAP.writeInLog("上下0.5%カット見込みリターン："		+ getCutAveReturn * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 //				commonAP.writeInLog("上下1%カット見込みリターン："		+ ( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) ) / ( getReturnList().size() * (paraDTO.getCutWariai()) ),logWriting.BACKTEST_LOG_FLG);
 
 
-				commonAP.writeInLog("上下1%カットリスク："				+ ( getCutAveRisk * 100 ) +  " %",logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("上下1%カットリスク："				+ ( getCutAveRisk * 100 ) +  " %",logWriting.BACKTEST_LOG_FLG);
+
+
+
+
+
+
+
+				double getCutWinAveKeepTimes	=	commonAP.getAverageCut(getWinKeepTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
+				double getCutLoseAveKeepTimes	=	commonAP.getAverageCut(getLoseKeepTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
+
 				commonAP.writeInLog("上" + half * 100 +  "%カット平均保有期間："			+ aveCutKeepDays,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上" + half * 100 +  "%カット平均勝ち平均保有期間："			+ getCutWinAveKeepTimes,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("下" + half * 100 +  "%カット平均負け平均保有期間："			+ getCutLoseAveKeepTimes,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("上下1%カット保有期間標準偏差："		+ commonAP.getDev(getKeepDayList(),		true,"",half,half),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下1%カット勝ち平均保有期間標準偏差："	+ commonAP.getDev(getWinKeepTimeList(),	true,"",half,half),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下1%カット負け平均保有期間標準偏差："	+ commonAP.getDev(getLoseKeepTimeList(),	true,"",half,half),logWriting.BACKTEST_LOG_FLG);
+
+
 
 				commonAP.writeInLog("上" + half * 100 +  "%カット平均エントリー回数："			+ getCutAveEntryTimes,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上" + half * 100 +  "%カット平均勝ちエントリー回数："			+ getCutWinAveEntryTimes,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上" + half * 100 +  "%カット平均負けエントリー回数："			+ getCutLoseAveEntryTimes,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("上下1%カットエントリー回数標準偏差："	+ commonAP.getDev(getEntryTimeList(),	true,"",half,half),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下1%カット勝ちエントリー回数標準偏差："	+ commonAP.getDev(getWinEntryTimeList(),	true,"",half,half),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下1%カット負けエントリー回数標準偏差："	+ commonAP.getDev(getLoseEntryTimeList(),	true,"",half,half),logWriting.BACKTEST_LOG_FLG);
 //				double getCutAveEntryTimes	=	commonAP.getAverageCut(getEntryTimeList(),true,	commonAP.AVERAGE_FLG,	paraDTO.getCutWariai(),"");
 
+				commonAP.writeInLog("手数料：" + paraDTO.getTesuRYO()*100 + "%",logWriting.BACKTEST_LOG_FLG);
 
 				//期間のエンドとスタートがはっきりしている場合はここ
 				if ( paraDTO.getTermFLG() ){
@@ -507,10 +640,16 @@ public class Bean_Result {
 					commonAP.writeInLog("一回辺りエントリー金額："	+	paraDTO.getEntryMoney() + " 万円"	,logWriting.BACKTEST_LOG_FLG);
 					//回転サイクル
 					double kaitenCyecle=yearDay/(aveCutKeepDays*dayRightUpTimes);
+					//トータルで稼いだお金
+					double totalGetMoney = ( ( getCutTotalWIN + getCutTotalLose ) / 100 ) * paraDTO.getEntryMoney();
+					//一年間で稼ぐお金
+					double yearEarnMoney = ((totalGetMoney*yearDay)/(paraDTO.getObTerm()));
 
 //					commonAP.writeInLog("想定金利："	+	( (100 * paraDTO.getEntryMoney() * getCutAveReturn * dayRightUpTimes * yearDay) /needMoney )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
-					commonAP.writeInLog("想定金利："	+	( (100 *  getCutAveReturn * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
-					commonAP.writeInLog("想定リスク："	+	( (100 *  getCutAveRisk * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
+//					commonAP.writeInLog("想定金利："	+	( (100 *  getCutAveReturn * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
+
+					commonAP.writeInLog("想定金利："	+	( (100) * yearEarnMoney/needMoney )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
+//					commonAP.writeInLog("想定リスク："	+	( (100 *  getCutAveRisk * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("開始時期：" + paraDTO.getObStartDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() + " 営業日",logWriting.BACKTEST_LOG_FLG);
@@ -696,6 +835,10 @@ public class Bean_Result {
 
 	public void reSetWinCount() {
 		this.winCount=0;
+	}
+
+	public void setKeepCount(int a) {
+		this.keepCount=a;
 	}
 
 	public int getKeepCount() {

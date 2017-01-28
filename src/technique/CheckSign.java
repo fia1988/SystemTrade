@@ -128,10 +128,10 @@ public class CheckSign {
 		//		nowDTOList = new ArrayList<>();
 		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 		//		paraDTO.setOnEliteFLG();
-		
+
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		
+
 
 		//別メソッドを動かす前にメモリ解放
 		s.closeConection();
@@ -281,7 +281,7 @@ public class CheckSign {
 		//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
 		//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
 		//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,ETFNameList);
-		checkdaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,keepCodeList,checkDay);
+		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,keepCodeList,checkDay);
 
 		//今日のサインをオーダーに入れる
 		makeLastOrderTBL(resultCodeList,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,type,false,checkDay);
@@ -438,10 +438,10 @@ public class CheckSign {
 
 		//今日のサインを調べる
 		ArrayList<String> resultCodeList = new ArrayList<String>();
-		checkdaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,STOCKList,checkDay);
-		checkdaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,SATISTICSList,checkDay);
-		checkdaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,INDEXList,checkDay);
-		checkdaySignControll(resultCodeList,L_packageName,L_className,L_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,ETFNameList,checkDay);
+		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,STOCKList,checkDay);
+		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,SATISTICSList,checkDay);
+		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,INDEXList,checkDay);
+		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,ETFNameList,checkDay);
 
 		//今日のサインをオーダーに入れる
 		makeLastOrderTBL(resultCodeList,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,type,true,checkDay);
@@ -892,14 +892,23 @@ public class CheckSign {
 	}
 
 
-	private static void checkdaySignControll(ArrayList<String> resultCodeList,String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList,String checkDay){
+	private static void checkdaySignControll(ArrayList<String> resultCodeList,String type,String L_packageName,String L_className,	String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList,String checkDay){
 		String check="";
 		paraDTO.setRealTimeMode(true);
+
+		String packageName = L_packageName;
+		String className = L_className;
+		String methodName = L_methodName;
+
 		if ( judge ){
 			//trueは買いフラグ
 			check = "(買)";
+
 		}else{
 			check = "(売)";
+			packageName = S_packageName;
+			className = S_className;
+			methodName = S_methodName;
 		}
 
 		if (codeList.size()==0){
@@ -920,10 +929,17 @@ public class CheckSign {
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
 
+			//true:保有期間
+			//false:エントリー回数
+			resultDTO.setKeepCount( getKeepDayEntryTimes(true , code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
+			resultDTO.setEntryTime( getKeepDayEntryTimes(false, code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
+			System.out.println(code + ":" + resultDTO.getKeepCount());
+			System.out.println(code + ":" + resultDTO.getEntryTime());
+
 			if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
 				resultCodeList.add(code);
 			};
-
+			resultDTO.resetCount();
 		}
 
 	}

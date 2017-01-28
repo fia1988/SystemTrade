@@ -35,7 +35,7 @@ public class SagyoSpace {
 		int i = 1;
 		paraDTO.setMinDeki(i);
 		resultDTO.setShoritu(0.85);
-		resultDTO.setTotalGames(25);
+		resultDTO.setTotalGames(10);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
 		//統計データを使わない場合
@@ -382,6 +382,206 @@ public class SagyoSpace {
 
 	}
 
+	public static void testCase33(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		String startDD	=	"2007-01-01";
+		String endDD		=	"2007-12-31";
+
+		
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);		
+		
+		
+		startDD	=	"2008-01-01";
+		endDD		=	"2008-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		startDD	=	"2009-01-01";
+		endDD		=	"2009-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		startDD	=	"2010-01-01";
+		endDD		=	"2010-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		
+		startDD	=	"2011-01-01";
+		endDD		=	"2011-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		startDD	=	"2012-01-01";
+		endDD		=	"2012-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		startDD	=	"2013-01-01";
+		endDD		=	"2013-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		startDD	=	"2014-01-01";
+		endDD		=	"2014-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		startDD	=	"2015-01-01";
+		endDD		=	"2015-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		startDD	=	"2016-01-01";
+		endDD		=	"2016-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		startDD	=	"2007-01-01";
+		endDD		=	"2016-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setTesuRYO(0.012);
+		paraDTO.setOnEliteFLG();
+		System.out.println("");
+		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		
+		
+	}
 
 	public static void testCase29(){
 
