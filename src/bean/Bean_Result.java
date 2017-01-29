@@ -75,6 +75,90 @@ public class Bean_Result {
 	ArrayList<Double> entryPriceList = new ArrayList<Double>();
 	ArrayList<String> entryDayList = new ArrayList<String>();
 
+	//銘柄ごとのエントリー数、保有期間、リターンの結果を格納する。
+	ArrayList<Double> returnListCode = new ArrayList<Double>();
+	ArrayList<Double> loseReturnListCode = new ArrayList<Double>();
+	ArrayList<Double> winReturnListCode = new ArrayList<Double>();
+	ArrayList<Long> entryTimeListCode = new ArrayList<Long>();
+	ArrayList<Long> loseEntryTimeListCode = new ArrayList<Long>();
+	ArrayList<Long> winEntryTimeListCode = new ArrayList<Long>();
+	ArrayList<Long> keepTimeListCode = new ArrayList<Long>();
+	ArrayList<Long> loseKeepTimeListCode = new ArrayList<Long>();
+	ArrayList<Long> winKeepTimeListCode = new ArrayList<Long>();
+
+
+
+	public ArrayList<Double> getReturnListCode() {
+		return returnListCode;
+	}
+
+	public void setReturnListCode(double returnListCode) {
+		this.returnListCode.add(returnListCode);
+	}
+
+	public ArrayList<Double> getLoseReturnListCode() {
+		return loseReturnListCode;
+	}
+
+	public void setLoseReturnListCode(double loseReturnListCode) {
+		this.loseReturnListCode.add(loseReturnListCode);
+	}
+
+	public ArrayList<Double> getWinReturnListCode() {
+		return winReturnListCode;
+	}
+
+	public void setWinReturnListCode(double winReturnListCode) {
+		this.winReturnListCode.add(winReturnListCode);
+	}
+
+	public ArrayList<Long> getEntryTimeListCode() {
+		return entryTimeListCode;
+	}
+
+	public void setEntryTimeListCode(long entryTimeListCode) {
+		this.entryTimeListCode.add(entryTimeListCode);
+	}
+
+	public ArrayList<Long> getLoseEntryTimeListCode() {
+		return loseEntryTimeListCode;
+	}
+
+	public void setLoseEntryTimeListCode(long loseEntryTimeListCode) {
+		this.loseEntryTimeListCode.add(loseEntryTimeListCode);
+	}
+
+	public ArrayList<Long> getWinEntryTimeListCode() {
+		return winEntryTimeListCode;
+	}
+
+	public void setWinEntryTimeListCode(long winEntryTimeListCode) {
+		this.winEntryTimeListCode.add(winEntryTimeListCode);
+	}
+
+	public ArrayList<Long> getKeepTimeListCode() {
+		return keepTimeListCode;
+	}
+
+	public void setKeepTimeListCode(long keepTimeListCode) {
+		this.keepTimeListCode.add(keepTimeListCode);
+	}
+
+	public ArrayList<Long> getLoseKeepTimeListCode() {
+		return loseKeepTimeListCode;
+	}
+
+	public void setLoseKeepTimeListCode(long loseKeepTimeListCode) {
+		this.loseKeepTimeListCode.add(loseKeepTimeListCode);
+	}
+
+	public ArrayList<Long> getWinKeepTimeListCode() {
+		return winKeepTimeListCode;
+	}
+
+	public void setWinKeepTimeListCode(long winKeepTimeListCode) {
+		this.winKeepTimeListCode.add(winKeepTimeListCode);
+	}
 
 	ArrayList<Long> entryTimeList = new ArrayList<Long>();
 	long entryTime = 0;
@@ -219,6 +303,9 @@ public class Bean_Result {
 		entryDayList = new ArrayList<String>();
 		loseKeepTimeList = new ArrayList<Long>();
 		winKeepTimeList = new ArrayList<Long>();
+
+		returnList = new ArrayList();
+
 		totalDays = 0;
 		resultPlusClass00 = 0;
 		resultPlusClass01 = 0;
@@ -288,8 +375,23 @@ public class Bean_Result {
 //				System.out.println("／" +  "：負【" + getLoseCount() + "】");
 			}
 		}
+
+		reSetCodeSatutus();
+	}
+
+	private void reSetCodeSatutus(){
 		reSetWinCount();
 		reSetLoseCount();
+
+		returnListCode = new ArrayList<Double>();
+		loseReturnListCode = new ArrayList<Double>();
+		winReturnListCode = new ArrayList<Double>();
+		entryTimeListCode = new ArrayList<Long>();
+		loseEntryTimeListCode = new ArrayList<Long>();
+		winEntryTimeListCode = new ArrayList<Long>();
+		keepTimeListCode = new ArrayList<Long>();
+		loseKeepTimeListCode = new ArrayList<Long>();
+		winKeepTimeListCode = new ArrayList<Long>();
 	}
 
 	//買った日と売る日が同日ではないことを確認する。
@@ -353,9 +455,13 @@ public class Bean_Result {
 //			setTotalWinParcent(averageParcent);
 			setTotalWinParcent(averageParcent*getEntryTime());
 			setWinEntryTimeList ( getEntryTime() );
-
 			setWinKeepTimeList( getKeepCount() );
-			result = "(勝)";
+
+			//コードごとの成果を入れる
+			setWinReturnListCode	( averageParcent*getEntryTime() );
+			setWinKeepTimeListCode	( getKeepCount() );
+			setWinEntryTimeListCode( getEntryTime() );
+			result = "(win)";
 
 		}else{
 			//負けた場合
@@ -365,15 +471,32 @@ public class Bean_Result {
 			setTotalLoseParcent(averageParcent*getEntryTime());
 			setLoseEntryTimeList ( getEntryTime() );
 			setLoseKeepTimeList( getKeepCount() );
-			result = "(負)";
+			//コードごとの成果を入れる
+			setLoseReturnListCode	( averageParcent*getEntryTime() );
+			setLoseKeepTimeListCode	( getKeepCount() );
+			setLoseEntryTimeListCode( getEntryTime() );
+			result = "(lose)";
 		}
 
+//		returnListCode = new ArrayList<Double>();
+//		keepTimeListCode = new ArrayList<Long>();
+//		entryTimeListCode = new ArrayList<Long>();
+//		loseKeepTimeListCode = new ArrayList<Long>();
+//		loseReturnListCode = new ArrayList<Double>();
+//		loseEntryTimeListCode = new ArrayList<Long>();
+//		winEntryTimeListCode = new ArrayList<Long>();
+//		winReturnListCode = new ArrayList<Double>();
+//		winKeepTimeListCode = new ArrayList<Long>();
 
 		//標準偏差を計算する。
 		setKeepDayList		( getKeepCount() );
 		setReturnList		( averageParcent*getEntryTime() );
 		setEntryTimeList	( getEntryTime() );
 
+		//コードごとの成果を入れる
+		setReturnListCode	( averageParcent*getEntryTime() );
+		setKeepTimeListCode	( getKeepCount() );
+		setEntryTimeListCode( getEntryTime() );
 
 //		if(getEntryTime() != 1){
 //			System.out.println(code);
@@ -497,7 +620,8 @@ public class Bean_Result {
 
 		if( getResultDay() ){
 //			if (averageParcent>1 || -0.4 > averageParcent){
-				commonAP.writeInLog(code + ":" + result + "【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【" + getKeepCount() + "】" + (exitPrice - average) + "/" + averageParcent,logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog(code + "," + result + ",【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【保有期間】," + getKeepCount() + "," + "【リターン絶対値】," + (exitPrice - average) + ",【リターン％】," + averageParcent + ",【エントリー回数】," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog(code + "," + result + "," + exitPrice + "," + getKeepCount() + ","  + averageParcent + "," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
 //			}
 
 		}
