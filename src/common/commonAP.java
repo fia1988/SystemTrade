@@ -29,6 +29,7 @@ public class commonAP {
 	public static final  int COUNT_FLG	= 3;
 
 
+
 	static String codeSingle[] = new String[2];
 	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
 //	static List<String[]> codeListwithiCate = new ArrayList<String>();
@@ -115,6 +116,9 @@ public class commonAP {
 			case logWriting.ANOTHER_RROR_LOG_FLG:
 				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
 				break;
+			case logWriting.CODE_RESULT_LOG_FLG:
+				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + ".log";
+				break;
 			default:
 			break;
 		}
@@ -161,6 +165,9 @@ public class commonAP {
 			case logWriting.ANOTHER_RROR_LOG_FLG:
 				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
 				break;
+			case logWriting.CODE_RESULT_LOG_FLG:
+				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + ".log";
+				break;
 			default:
 			break;
 		}
@@ -189,6 +196,51 @@ public class commonAP {
 
 		System.out.print( ":" + writing);
 	}
+
+
+	public static double getAverageTotalCountDouble(List<Double> list,int checkCountTotal){
+		int totalCount	=	0;
+		double sum	=	0 ;
+
+		for (double a: list){
+			totalCount++;
+			sum = sum + a;
+		}
+
+		switch(checkCountTotal){
+		case TOTAL_FLG:
+			return sum;
+		case COUNT_FLG:
+			return totalCount;
+		case AVERAGE_FLG:
+			return sum/totalCount;
+		default:
+			return 0;
+		}
+
+	}
+
+	public static double getAverageTotalCountLong(List<Long> list,int checkCountTotal){
+		int totalCount	=	0;
+		double sum	=	0 ;
+
+		for (long a: list){
+			totalCount++;
+			sum = sum + a;
+		}
+
+		switch(checkCountTotal){
+		case TOTAL_FLG:
+			return sum;
+		case COUNT_FLG:
+			return totalCount;
+		case AVERAGE_FLG:
+			return sum/totalCount;
+		default:
+			return 0;
+		}
+	}
+
 
 	public static double getAverageCut(List<Long> list,boolean checkJudge,int checkCountTotal,double cut,String a){
 		List<Long> doubleListCopy = new ArrayList<Long>();

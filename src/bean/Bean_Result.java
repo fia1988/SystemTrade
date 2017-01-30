@@ -12,9 +12,21 @@ public class Bean_Result {
 	String DAY;
 	String code;
 
+	//トータルレシオ
+	double totalRatio = 0;
+	boolean checkTotalRatio = false;
+	public double getTotalRatio() {
+		return totalRatio;
+	}
+
+	public void setTotalRatio(double totalRatio) {
+		checkTotalRatio = true;
+		this.totalRatio = totalRatio;
+	}
+
 	//勝率
 	double shoritu = 0;
-	int totalGames = 10;
+	int totalGames = 0;
 	long resultPlusClass00 = 0;
 	long resultPlusClass01 = 0;
 	long resultPlusClass02 = 0;
@@ -304,7 +316,7 @@ public class Bean_Result {
 		loseKeepTimeList = new ArrayList<Long>();
 		winKeepTimeList = new ArrayList<Long>();
 
-		returnList = new ArrayList();
+//		returnList = new ArrayList();
 
 		totalDays = 0;
 		resultPlusClass00 = 0;
@@ -351,7 +363,7 @@ public class Bean_Result {
 
 	}
 
-	public void getResultCodeResult(String resultCode){
+	public void getResultCodeResult(String resultCode,Bean_Parameta paraDTO){
 
 		if( getResultCode() ){
 
@@ -362,15 +374,60 @@ public class Bean_Result {
 
 				double totalCodeGame = (getWinCount() + getLoseCount() );
 				double shouritu = getWinCount() / totalCodeGame;
+				double totalWin = commonAP.getAverageTotalCountDouble(getWinReturnListCode(),commonAP.TOTAL_FLG) * 100;
+				double totalLose = commonAP.getAverageTotalCountDouble(getLoseReturnListCode(),commonAP.TOTAL_FLG) * 100;
+				double aveWinEntry = commonAP.getAverageTotalCountLong(getWinEntryTimeListCode(),commonAP.AVERAGE_FLG);
+				double aveLoseEntry = commonAP.getAverageTotalCountLong(getLoseEntryTimeListCode(),commonAP.AVERAGE_FLG);
+				double aveWinKeep = commonAP.getAverageTotalCountLong(getWinKeepTimeListCode(),commonAP.AVERAGE_FLG);
+				double aveLoseKeep = commonAP.getAverageTotalCountLong(getLoseKeepTimeListCode(),commonAP.AVERAGE_FLG);
 
 				//設定した勝率（shoritu）以上の場合、結果を表示する
 				if ( shouritu > shoritu){
 					if( totalCodeGame > totalGames){
-						commonAP.writeLog("・" + resultCode +  "：勝【" + getWinCount() + "】",logWriting.BACKTEST_LOG_FLG);
-						commonAP.writeInLog("／" +  "：負【" + getLoseCount() + "】",logWriting.BACKTEST_LOG_FLG);
+
+						if (checkTotalRatio){
+							double totalWARIAI = (totalWin+totalLose)/(totalWin);
+							if (totalWARIAI >= getTotalRatio()){
+								//トータル勝ち％
+								//トータル負け％
+								//勝ちエントリー平均
+								//勝ち保有期間平均
+								//勝ち最大エントリー数
+								//勝ち最大保有期間
+								//負けエントリー平均
+								//負け保有期間平均
+								//負け最大エントリー数
+								//負け最大保有期間
+								//トータル勝ち％ / トータル負け％
+
+								commonAP.writeLog("・" + resultCode +  "：勝【" + getWinCount() + "】",logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("／" +  "：負【" + getLoseCount() + "】",logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("トータル勝％：" + totalWin,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("トータル負％：" + totalLose,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("勝保有期間平均：" + aveWinKeep,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("勝エントリー平均回数：" + aveWinEntry,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("負保有期間平均：" + aveLoseKeep,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
+								commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
+								System.out.println("ここは通っている。レイシオ");
+							}
+						}else{
+							System.out.println("ここ通っている。ノーレイシオ");
+							commonAP.writeLog("・" + resultCode +  "：勝【" + getWinCount() + "】",logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("／" +  "：負【" + getLoseCount() + "】",logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("トータル勝％：" + totalWin,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("トータル負％：" + totalLose,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("勝保有期間平均：" + aveWinKeep,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("勝エントリー平均回数：" + aveWinEntry,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("負保有期間平均：" + aveLoseKeep,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
+						}
+
+
 					}
 				}
-
 //				System.out.print("・" + resultCode +  "：勝【" + getWinCount() + "】");
 //				System.out.println("／" +  "：負【" + getLoseCount() + "】");
 			}
@@ -488,13 +545,23 @@ public class Bean_Result {
 //		winReturnListCode = new ArrayList<Double>();
 //		winKeepTimeListCode = new ArrayList<Long>();
 
+		//averageParcentは投資金額に対していくら儲かったか
+		//例：一回辺り投資金額1.2万円を5回エントリー、63000円で売れば0.05
+		//averageParcentだけではエントリー回数を考慮していないからいくら儲かったかわからないため意味がない
+		//→負けまくっている銘柄に投資を繰り返している可能性がある。
+
+
+		//一回辺り投資金額と比較していくら稼げたか
+		//例：一回辺り投資金額1.2万円を5回エントリー、63000円で売れば3000/12000
+		double averageParcentEntryTime = averageParcent*getEntryTime();
+
 		//標準偏差を計算する。
 		setKeepDayList		( getKeepCount() );
-		setReturnList		( averageParcent*getEntryTime() );
+		setReturnList		( averageParcentEntryTime );
 		setEntryTimeList	( getEntryTime() );
 
 		//コードごとの成果を入れる
-		setReturnListCode	( averageParcent*getEntryTime() );
+		setReturnListCode	( averageParcentEntryTime );
 		setKeepTimeListCode	( getKeepCount() );
 		setEntryTimeListCode( getEntryTime() );
 
@@ -621,6 +688,7 @@ public class Bean_Result {
 		if( getResultDay() ){
 //			if (averageParcent>1 || -0.4 > averageParcent){
 //				commonAP.writeInLog(code + "," + result + ",【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【保有期間】," + getKeepCount() + "," + "【リターン絶対値】," + (exitPrice - average) + ",【リターン％】," + averageParcent + ",【エントリー回数】," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
+				//code,勝ち負け,儲かった金絶対値,保有期間,儲かったリターン,エントリー回数
 				commonAP.writeInLog(code + "," + result + "," + exitPrice + "," + getKeepCount() + ","  + averageParcent + "," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
 //			}
 

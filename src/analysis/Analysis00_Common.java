@@ -331,7 +331,7 @@ public class Analysis00_Common {
 
 
 				//銘柄の結果を出す
-				resultDTO.getResultCodeResult(code);
+				resultDTO.getResultCodeResult(code,paraDTO);
 
 				return Technique98_CONST.METHOD_RESULT;
 

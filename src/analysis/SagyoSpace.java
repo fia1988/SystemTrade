@@ -36,6 +36,7 @@ public class SagyoSpace {
 		paraDTO.setMinDeki(i);
 		resultDTO.setShoritu(0.85);
 		resultDTO.setTotalGames(20);
+//		resultDTO.setTotalRatio(0.75);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
 		//統計データを使わない場合
@@ -390,14 +391,7 @@ public class SagyoSpace {
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
 		String startDD	=	"2007-01-01";
-		String endDD		=	"2007-12-31";
-
-
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+		String endDD		=	"2016-12-31";
 
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
@@ -405,183 +399,25 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 		paraDTO.setTesuRYO(0.012);
 		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-
-		startDD	=	"2008-01-01";
-		endDD		=	"2008-12-31";
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
 		resultDTO.setOnResultDay();
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		resultDTO.setShoritu(0.01);
+		resultDTO.setTotalGames(1);
 		System.out.println("");
 		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
 
-		startDD	=	"2009-01-01";
-		endDD		=	"2009-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 		paraDTO.setTesuRYO(0.012);
 		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2010-01-01";
-		endDD		=	"2010-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-
-		startDD	=	"2011-01-01";
-		endDD		=	"2011-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2012-01-01";
-		endDD		=	"2012-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2013-01-01";
-		endDD		=	"2013-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2014-01-01";
-		endDD		=	"2014-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2015-01-01";
-		endDD		=	"2015-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2016-01-01";
-		endDD		=	"2016-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		startDD	=	"2007-01-01";
-		endDD		=	"2016-12-31";
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON( TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
+		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
+		resultDTO.setOnResultTotal();
+		resultDTO.setShoritu(0.01);
+		resultDTO.setTotalGames(1);
 		System.out.println("");
 		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
 
@@ -600,7 +436,7 @@ public class SagyoSpace {
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
 		String startDD	=	"2017-01-27";
-		String endDD		=	"2017-02-03";
+		String endDD		=	"2017-01-30";
 //		startDD	=	"2017-01-16";
 //		endDD		=	"2017-01-20";
 		String L_CLASS = "";
@@ -1003,6 +839,9 @@ public class SagyoSpace {
 					paraDTO.setTesuRYO(0.022);
 					//					paraDTO.setMaxEntryTimes(15);
 					//					paraDTO.setMaxKeepDays(15);
+					resultDTO.setShoritu(0.85);
+					resultDTO.setTotalGames(20);
+					resultDTO.setTotalRatio(0.70);
 
 					if (!(L_METHOD.equals(methodList_S.get(c)[1]))){
 						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);

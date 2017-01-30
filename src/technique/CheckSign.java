@@ -755,7 +755,56 @@ public class CheckSign {
 
 	//true:保有期間
 	//false:エントリー回数
-	private static int getKeepDayEntryTimes(boolean check,
+	public static String getKeepDay(
+			String code,
+			String type,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName){
+		String SQL = "";
+		S s = new S();
+		s.getCon();
+		String resultStr = "0";
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
+
+		//true:保有期間
+		//false:エントリー回数
+		String column = COLUMN.ENTRYDAY;
+
+		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
+				+ " where "
+				+ COLUMN.CODE + " = '" + code + "'"
+				+ " and "
+				+ COLUMN.TYPE + " = '" + type + "'"
+				+ " and "
+				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ " and "
+				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				System.out.println(SQL);
+				try {
+					s.rs2 = s.sqlGetter().executeQuery(SQL);
+					//				if(s.rs2.next()){
+					//
+					//				};
+					while(s.rs2.next()){
+						//					String codeStatus[] = new String[6];
+						resultStr = s.rs2.getString(	column	);
+					};
+				} catch (SQLException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+
+				s.closeConection();
+				return resultStr;
+	}
+
+	public static int getEntryTimes(
 			String code,
 			String type,
 			String L_packageName,
@@ -773,11 +822,7 @@ public class CheckSign {
 
 		//true:保有期間
 		//false:エントリー回数
-		String column = COLUMN.ENTRYDAY;
-
-		if ( check = false ) {
-			column = COLUMN.ENTRYTIMES;
-		}
+		String column = COLUMN.ENTRYTIMES;
 
 		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
 				+ " where "
@@ -788,7 +833,7 @@ public class CheckSign {
 				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
 				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
-
+				System.out.println(SQL);
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
 					//				if(s.rs2.next()){
@@ -928,11 +973,16 @@ public class CheckSign {
 			String code = codeList.get(i)[0];
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
-
+			String startDay = getKeepDay(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName);
+			String endDay = day;
+			S s = new S();
+			s.getCon();
+			int keepCount = commonAP.countDay(startDay,endDay, s);
+			s.closeConection();
 			//true:保有期間
 			//false:エントリー回数
-			resultDTO.setKeepCount( getKeepDayEntryTimes(true , code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
-			resultDTO.setEntryTime( getKeepDayEntryTimes(false, code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
+			resultDTO.setKeepCount( keepCount );
+			resultDTO.setEntryTime( getEntryTimes(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
 			System.out.println(code + ":" + resultDTO.getKeepCount());
 			System.out.println(code + ":" + resultDTO.getEntryTime());
 
