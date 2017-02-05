@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import proparty.PROPARTY;
 import proparty.S;
 import technique.CheckSign;
 import technique.Technique98_CONST;
@@ -68,9 +67,7 @@ public class SagyoSpace {
 
 		String startDD	=	"2016-10-03";
 		String endDD		=	"2016-12-30";
-		PROPARTY.DBUSER="root";
-		PROPARTY.DBPASS="8Jecikj";
-		PROPARTY.LOG_FILE_OUT="C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.log";
+
 
 
 //		paraDTO = new Bean_Parameta();
@@ -84,6 +81,9 @@ public class SagyoSpace {
 //		Analysis00_Common.Analysis_COMMON("technique","Techinique00_TEST","MACD_M_L_OVER0","technique","Techinique00_TEST","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
+
+		startDD	=	"2007-10-03";
+		endDD		=	"2007-12-30";
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
@@ -92,15 +92,32 @@ public class SagyoSpace {
 		resultDTO.setTotalGames(0);
 		paraDTO.setTesuRYO(0.0);
 		paraDTO.setOnEliteFLG();
-		resultDTO.setOnResultDay();
+		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
 		System.out.println("");
 //		resultDTO.setTotalRatio(0.75);
 //		paraDTO.setCheckRenzokuSign(false);
 //		paraDTO.setMaxKeepDays(3);
-//		paraDTO.setMaxEntryTimes(1);
+		paraDTO.setMaxEntryTimes(1);
 		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		resultDTO.setShoritu(0.00);
+		resultDTO.setTotalGames(0);
+		paraDTO.setTesuRYO(0.0);
+		paraDTO.setOnEliteFLG();
+		resultDTO.setOffResultDay();
+		resultDTO.setOffResultCode();
+		System.out.println("");
+//		resultDTO.setTotalRatio(0.75);
+		paraDTO.setCheckRenzokuSign(false);
+//		paraDTO.setMaxKeepDays(3);
+//		paraDTO.setMaxEntryTimes(1);
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
 		paraDTO = new Bean_Parameta();
@@ -111,9 +128,7 @@ public class SagyoSpace {
 
 	public static void testCase98(){
 
-		PROPARTY.DBUSER="root";
-		PROPARTY.DBPASS="8Jecikj";
-		PROPARTY.LOG_FILE_OUT="C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.log";
+
 		List<String> dayList = new ArrayList<String>();
 		dayList.add("2016-10-03");
 		dayList.add("2016-10-04");
