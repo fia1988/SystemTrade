@@ -276,7 +276,7 @@ public class Bean_Result {
 	public void setEntryTime() {
 		this.entryTime++;
 	}
-	
+
 	public void setEntryTimeMinus() {
 		this.entryTime--;
 	}
@@ -474,7 +474,7 @@ public class Bean_Result {
 				if ( entryPriceList.size() > 0 ){
 					entryPriceList.remove(entryPriceList.size() - 1);
 				}
-				
+
 				if (entryDayList.size() > 0 ){
 					entryDayList.remove(entryDayList.size() - 1);
 				}
@@ -506,6 +506,12 @@ public class Bean_Result {
 		if ( checkSameDay() == false ){
 			return;
 		};
+
+		//checkSameDayの結果exitDayがnullの場合は終了する。
+		if (exitDay==null){
+			return;
+		}
+
 
 		double average = getEntryAveragePrice();
 		//averageParcentは*100していない

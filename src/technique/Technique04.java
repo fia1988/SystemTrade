@@ -785,10 +785,10 @@ public class Technique04 {
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
 
-		if (resultDTO.getKeepCount() >= 3){
-			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-			return Technique98_CONST.TRADE_FLG;
-		}
+//		if (resultDTO.getKeepCount() >= 5){
+//			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+//			return Technique98_CONST.TRADE_FLG;
+//		}
 
 		if ( nowDTO.getNowMIDDLE_MACD_01() < 0 ){return Technique98_CONST.NO_GAME;}
 		if ( nowDTO.getNowMIDDLE_MACD_SIGNAL_01() < 0 ){return Technique98_CONST.NO_GAME;}
