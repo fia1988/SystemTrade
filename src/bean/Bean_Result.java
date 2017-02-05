@@ -276,6 +276,10 @@ public class Bean_Result {
 	public void setEntryTime() {
 		this.entryTime++;
 	}
+	
+	public void setEntryTimeMinus() {
+		this.entryTime--;
+	}
 
 	public void reSetEntryTime() {
 		this.entryTime=0;
@@ -380,14 +384,20 @@ public class Bean_Result {
 				double aveLoseEntry = commonAP.getAverageTotalCountLong(getLoseEntryTimeListCode(),commonAP.AVERAGE_FLG);
 				double aveWinKeep = commonAP.getAverageTotalCountLong(getWinKeepTimeListCode(),commonAP.AVERAGE_FLG);
 				double aveLoseKeep = commonAP.getAverageTotalCountLong(getLoseKeepTimeListCode(),commonAP.AVERAGE_FLG);
+				double totalWARIAI = 0;
+				try {
+					totalWARIAI = (totalWin+totalLose)/(totalWin);
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("なんかあった");
+				}
 
 				//設定した勝率（shoritu）以上の場合、結果を表示する
 				if ( shouritu > shoritu){
 					if( totalCodeGame > totalGames){
-
 						if (checkTotalRatio){
-							double totalWARIAI = (totalWin+totalLose)/(totalWin);
-							if (totalWARIAI >= getTotalRatio()){
+
+							if (totalWARIAI > getTotalRatio()){
 								//トータル勝ち％
 								//トータル負け％
 								//勝ちエントリー平均
@@ -422,6 +432,7 @@ public class Bean_Result {
 							commonAP.writeInLog("勝エントリー平均回数：" + aveWinEntry,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("負保有期間平均：" + aveLoseKeep,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
 						}
 
@@ -463,7 +474,7 @@ public class Bean_Result {
 				if ( entryPriceList.size() > 0 ){
 					entryPriceList.remove(entryPriceList.size() - 1);
 				}
-
+				
 				if (entryDayList.size() > 0 ){
 					entryDayList.remove(entryDayList.size() - 1);
 				}
@@ -472,6 +483,7 @@ public class Bean_Result {
 					reSetKeepCount();
 					return false;
 				}
+				setEntryTimeMinus();
 			}
 		} catch (NullPointerException e) {
 //			System.out.println("exitDay:" + exitDay);
@@ -687,9 +699,9 @@ public class Bean_Result {
 
 		if( getResultDay() ){
 //			if (averageParcent>1 || -0.4 > averageParcent){
-//				commonAP.writeInLog(code + "," + result + ",【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【保有期間】," + getKeepCount() + "," + "【リターン絶対値】," + (exitPrice - average) + ",【リターン％】," + averageParcent + ",【エントリー回数】," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog(code + "," + result + ",【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【保有期間】," + getKeepCount() + "," + "【リターン絶対値】," + (exitPrice - average) + ",【リターン％】," + averageParcent + ",【エントリー回数】," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
 				//code,勝ち負け,儲かった金絶対値,保有期間,儲かったリターン,エントリー回数
-				commonAP.writeInLog(code + "," + result + "," + exitPrice + "," + getKeepCount() + ","  + averageParcent + "," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog(code + "," + result + "," + exitPrice + "," + getKeepCount() + ","  + averageParcent + "," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
 //			}
 
 		}
@@ -740,9 +752,10 @@ public class Bean_Result {
 				commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() * 100 +  " %" ,logWriting.BACKTEST_LOG_FLG);
 
 				commonAP.writeInLog("トータルリターン：" + ( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("リターンレイシオ：" + ( (getTotalWinParcent() + getTotalLoseParcent()) / ( ( getTotalWinParcent() ) ) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("一回辺りリターン：" + (( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("トータル平均勝％：" + (getTotalWinParcent()  * 100) / (getWinEntryTimeAverage()  * getTOTAL_WIN()  ) +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("トータル平均負％：" + (getTotalLoseParcent() * 100) / (getLoseEntryTimeAverage() * getTOTAL_LOSE() ) +  " %",logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("トータル平均勝％：" + (getTotalWinParcent()  * 100) / (getWinEntryTimeAverage()  * getTOTAL_WIN()  ) +  " %",logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("トータル平均負％：" + (getTotalLoseParcent() * 100) / (getLoseEntryTimeAverage() * getTOTAL_LOSE() ) +  " %",logWriting.BACKTEST_LOG_FLG);
 //				commonAP.writeInLog("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE())  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 //				commonAP.writeInLog("見込みリスク：" + commonAP.getDev(getReturnList(),  true)  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("平均保有期間(売却できずを除く)：" + getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);

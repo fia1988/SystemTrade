@@ -266,6 +266,8 @@ public class Analysis00_Common {
 							//今何日保有しているかをnowDTOにいれる。
 							nowDTO.setKeepDay(resultDTO.getKeepCount());
 
+//							boolean checkSameDay = false;
+							
 							//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
 							if (paraDTO.getCheckRenzokuSign()){
 								switch( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTOList,i,resultDTO,true) ){
@@ -274,6 +276,7 @@ public class Analysis00_Common {
 										resultDTO.setEntryDay(nowDTOList.get(i).getKessaiDay());
 										resultDTO.setEntryPrice(nowDTOList.get(i).getKessaiKingaku());
 										resultDTO.setEntryTime();
+//										checkSameDay = true;
 										//取引の発生した回数
 //										resultDTO.setTradeCount();
 										break;
@@ -284,7 +287,11 @@ public class Analysis00_Common {
 									//売りメソッドがどこにもない場合
 								}
 							}
-
+							
+							//売りと買いが同じ日に出ているかをチェックする。同じ日に出ていたらエントリータイムを一つ減らす。
+//							if (checkSameDay==true){
+//								resultDTO.setEntryTimeMinus();
+//							}
 
 							switch( Analysis00_Common.Analysis_intMethod(S_packageName,S_className,S_methodName,paraDTO,nowDTOList,i,resultDTO,false) ){
 
@@ -294,6 +301,9 @@ public class Analysis00_Common {
 									resultDTO.setExitDay(nowDTOList.get(i).getKessaiDay());
 									resultDTO.setExitPrice(nowDTOList.get(i).getKessaiKingaku());
 
+									
+									
+									
 									//ループが終わった証を立てる
 									loopCheck=true;
 									//その日の結論を出す。
@@ -313,6 +323,10 @@ public class Analysis00_Common {
 									return Technique98_CONST.NO_METHOD;
 							}
 
+//							if (checkSameDay==true){
+//								resultDTO.setEntryTime();
+//							}
+							
 							//次の日に
 							i++;
 						}

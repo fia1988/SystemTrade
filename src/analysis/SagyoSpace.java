@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import proparty.PROPARTY;
 import proparty.S;
 import technique.CheckSign;
 import technique.Technique98_CONST;
@@ -59,47 +60,169 @@ public class SagyoSpace {
 	}
 
 
+
+	public static void testCase97(){
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		String startDD	=	"2016-10-03";
+		String endDD		=	"2016-10-20";
+		PROPARTY.DBUSER="root";
+		PROPARTY.DBPASS="8Jecikj";
+		PROPARTY.LOG_FILE_OUT="C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.log";
+
+
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		resultDTO.setShoritu(0.05);
+//		resultDTO.setTotalGames(1);
+//		paraDTO.setTesuRYO(0.0);
+//		System.out.println("");
+//		Analysis00_Common.Analysis_COMMON("technique","Techinique00_TEST","MACD_M_L_OVER0","technique","Techinique00_TEST","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		resultDTO.setShoritu(0.00);
+		resultDTO.setTotalGames(0);
+		paraDTO.setTesuRYO(0.0);
+		paraDTO.setOnEliteFLG();
+		resultDTO.setOnResultDay();
+		resultDTO.setOffResultCode();
+		System.out.println("");
+//		resultDTO.setTotalRatio(0.75);
+//		paraDTO.setCheckRenzokuSign(false);
+//		paraDTO.setMaxKeepDays(3);
+//		paraDTO.setMaxEntryTimes(1);
+		Analysis00_Common.Analysis_COMMON("technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+
+	}
+
 	public static void testCase98(){
 
+		PROPARTY.DBUSER="root";
+		PROPARTY.DBPASS="8Jecikj";
+		PROPARTY.LOG_FILE_OUT="C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.log";
+		List<String> dayList = new ArrayList<String>();
+		dayList.add("2016-10-03");
+		dayList.add("2016-10-04");
+		dayList.add("2016-10-05");
+		dayList.add("2016-10-06");
+		dayList.add("2016-10-07");
+		dayList.add("2016-10-11");
+		dayList.add("2016-10-12");
+		dayList.add("2016-10-13");
+		dayList.add("2016-10-14");
+		dayList.add("2016-10-17");
+		dayList.add("2016-10-18");
+		dayList.add("2016-10-19");
+		dayList.add("2016-10-20");
+//		dayList.add("2016-10-21");
+//		dayList.add("2016-10-24");
+//		dayList.add("2016-10-25");
+//		dayList.add("2016-10-26");
+//		dayList.add("2016-10-27");
+//		dayList.add("2016-10-28");
+//		dayList.add("2016-10-31");
+//		dayList.add("2016-11-01");
+//		dayList.add("2016-11-02");
+//		dayList.add("2016-11-04");
+//		dayList.add("2016-11-07");
+//		dayList.add("2016-11-08");
+//		dayList.add("2016-11-09");
+//		dayList.add("2016-11-10");
+//		dayList.add("2016-11-11");
+//		dayList.add("2016-11-14");
+//		dayList.add("2016-11-15");
+//		dayList.add("2016-11-16");
+//		dayList.add("2016-11-17");
+//		dayList.add("2016-11-18");
+//		dayList.add("2016-11-21");
+//		dayList.add("2016-11-22");
+//		dayList.add("2016-11-24");
+//		dayList.add("2016-11-25");
+//		dayList.add("2016-11-28");
+//		dayList.add("2016-11-29");
+//		dayList.add("2016-11-30");
+//		dayList.add("2016-12-01");
+//		dayList.add("2016-12-02");
+//		dayList.add("2016-12-05");
+//		dayList.add("2016-12-06");
+//		dayList.add("2016-12-07");
+//		dayList.add("2016-12-08");
+//		dayList.add("2016-12-09");
+//		dayList.add("2016-12-12");
+//		dayList.add("2016-12-13");
+//		dayList.add("2016-12-14");
+//		dayList.add("2016-12-15");
+//		dayList.add("2016-12-16");
+//		dayList.add("2016-12-19");
+//		dayList.add("2016-12-20");
+//		dayList.add("2016-12-21");
+//		dayList.add("2016-12-22");
+//		dayList.add("2016-12-26");
+//		dayList.add("2016-12-27");
+//		dayList.add("2016-12-28");
+//		dayList.add("2016-12-29");
+//		dayList.add("2016-12-30");
 
+		for (String TODAY:dayList){
 
-		S s = new S();
-		s.getCon();
+			CheckSign.dealLastOrder(TODAY);
+			System.out.println(TODAY);
+			S s = new S();
+			s.getCon();
 
-		ArrayList<String[]> STOCKList = new ArrayList<String[]>();
-		ArrayList<String[]> SATISTICSList = new ArrayList<String[]>();
-		ArrayList<String[]> INDEXList = new ArrayList<String[]>();
-		ArrayList<String[]> ETFNameList = new ArrayList<String[]>();
+			ArrayList<String[]> STOCKList = new ArrayList<String[]>();
+			ArrayList<String[]> SATISTICSList = new ArrayList<String[]>();
+			ArrayList<String[]> INDEXList = new ArrayList<String[]>();
+			ArrayList<String[]> ETFNameList = new ArrayList<String[]>();
 
-		ArrayList<String[]> keepStockList = new ArrayList<String[]>();
+			ArrayList<String[]> keepStockList = new ArrayList<String[]>();
+			//全銘柄をリストに入れる
+			commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+			STOCKList = commonAP.getCodeList();
 
-		String TODAY = "";
+			commonAP.setCodeList(ReCord.CODE_02_SATISTICS,s);
+			SATISTICSList = commonAP.getCodeList();
 
-		//全銘柄をリストに入れる
-		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
-		STOCKList = commonAP.getCodeList();
+			commonAP.setCodeList(ReCord.CODE_03_INDEX,s);
+			INDEXList = commonAP.getCodeList();
 
-		commonAP.setCodeList(ReCord.CODE_02_SATISTICS,s);
-		SATISTICSList = commonAP.getCodeList();
+			commonAP.setCodeList(ReCord.CODE_04_ETF,s);
+			ETFNameList = commonAP.getCodeList();
 
-		commonAP.setCodeList(ReCord.CODE_03_INDEX,s);
-		INDEXList = commonAP.getCodeList();
+			//キープテーブルのリストを取得
+			commonAP.setKeepCodeList(s);
+			keepStockList = commonAP.getCodeList();
 
-		commonAP.setCodeList(ReCord.CODE_04_ETF,s);
-		ETFNameList = commonAP.getCodeList();
+			//別メソッドを動かす前にメモリ解放
+			s.closeConection();
 
+//			CheckSign.CHECKTODAY(1,"DD","technique","Techinique00_TEST","MACD_M_L_OVER0","technique","Techinique00_TEST","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//			int sleepTime = 7;
+//			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
+			STOCKList = new ArrayList<String[]>();
+			SATISTICSList = new ArrayList<String[]>();
+			INDEXList = new ArrayList<String[]>();
+			ETFNameList = new ArrayList<String[]>();
+			keepStockList = new ArrayList<String[]>();
+		}
 
-		//キープテーブルのリストを取得
-		commonAP.setKeepCodeList(s);
-		keepStockList = commonAP.getCodeList();
-
-		//別メソッドを動かす前にメモリ解放
-		s.closeConection();
-		TODAY = "2017-01-23";
-		System.out.println(keepStockList.size());
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
+		testCase97();
 	}
 
 	public static void testCase99(){

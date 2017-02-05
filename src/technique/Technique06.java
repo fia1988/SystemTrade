@@ -21,7 +21,7 @@ public class Technique06 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		if ( paraDTO.getEliteFLG(judge) ){
 			switch(paraDTO.getSMETHOD()){
 
@@ -101,7 +101,7 @@ public class Technique06 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		if ( paraDTO.getEliteFLG(judge) ){
 			switch(paraDTO.getSMETHOD()){
 
@@ -175,7 +175,7 @@ public class Technique06 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		//買いの時だけエリート処理
 		if ( paraDTO.getEliteFLG(judge) ){
 			switch(paraDTO.getSMETHOD()){
@@ -377,7 +377,11 @@ public class Technique06 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
+//		if (resultDTO.getEntryTime() >= 3){
+//			return Technique98_CONST.NO_GAME;
+//		}
+
 		if ( paraDTO.getEliteFLG(judge) ){
 			switch(paraDTO.getSMETHOD()){
 
@@ -887,7 +891,7 @@ public class Technique06 {
 		}else{
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
-		
+
 		if (nowDTO.getNowSHORTIDO_01() < nowDTO.getNowCLOSE_01() ){
 			//			nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
 			//			nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowCLOSE_01() );

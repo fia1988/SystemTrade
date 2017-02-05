@@ -576,6 +576,10 @@ public class COLUMN {
 	public static String RESULTRETURN								= "resultReturn";
 	public static String RESULTRETURN_KATA		 					= RESULTRETURN + " double ";
 
+	//トータルリターン
+	public static String TOTAL_RETURN								= "totalReturn";
+	public static String TOTAL_RETURN_KATA							= TOTAL_RETURN + " double ";
+
 	//保有期間
 	public static String KEEPTIME = "keepTime";
 	public static String KEEPTIME_KATA = KEEPTIME + " smallint unsigned   ";

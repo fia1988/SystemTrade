@@ -118,7 +118,8 @@ public class createTBL {
 				+ COLUMN.EXITPRICE_KATA									 + " , " //
 				+ COLUMN.TYPE_KATA									 	 + " , " //
 				+ COLUMN.ENTRYTIMES_KATA								 + " , " //
-				+ COLUMN.RESULTRETURN_KATA									 + " , " //
+				+ COLUMN.RESULTRETURN_KATA								 + " , " //
+				+ COLUMN.TOTAL_RETURN_KATA								 + " , " //
 				+ COLUMN.KEEPTIME_KATA									 + " , " //
 				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
 				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //

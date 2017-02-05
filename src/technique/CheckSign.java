@@ -368,6 +368,7 @@ public class CheckSign {
 								+ COLUMN.TYPE									 	 + " , " //
 								+ COLUMN.ENTRYTIMES								 + " , " //
 								+ COLUMN.RESULTRETURN									 + " , " //
+								+ COLUMN.TOTAL_RETURN									 + " , " //
 								+ COLUMN.KEEPTIME									 + " , " //
 								+ COLUMN.ENTRYMETHOD								 + " , " //
 								+ COLUMN.EXITMETHOD								 + "   " //
@@ -380,6 +381,7 @@ public class CheckSign {
 								+ "'" + type			+ "'"	 + ","
 								+ entryTime							 + ","
 								+ RETURN							 + ","
+								+ (RETURN*entryTime)					 + ","
 								+ keepTime							 + ","
 								+ "'" + Lmethod			+ "'"	 + ","
 								+ "'" + Smethod			+ "'"	 + " "
@@ -753,6 +755,56 @@ public class CheckSign {
 	}
 
 
+
+	//true:保有期間
+	//false:エントリー回数
+	public static String getKeepDay(
+			String code,
+			String type,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName,S s){
+		String SQL = "";
+
+		String resultStr = "0";
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
+
+		//true:保有期間
+		//false:エントリー回数
+		String column = COLUMN.ENTRYDAY;
+
+		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
+				+ " where "
+				+ COLUMN.CODE + " = '" + code + "'"
+				+ " and "
+				+ COLUMN.TYPE + " = '" + type + "'"
+				+ " and "
+				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ " and "
+				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+//				System.out.println(SQL);
+				try {
+					s.rs2 = s.sqlGetter().executeQuery(SQL);
+					//				if(s.rs2.next()){
+					//
+					//				};
+					while(s.rs2.next()){
+						//					String codeStatus[] = new String[6];
+						resultStr = s.rs2.getString(	column	);
+					};
+				} catch (SQLException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+
+				return resultStr;
+	}
+
 	//true:保有期間
 	//false:エントリー回数
 	public static String getKeepDay(
@@ -784,7 +836,7 @@ public class CheckSign {
 				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
 				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
-				System.out.println(SQL);
+//				System.out.println(SQL);
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
 					//				if(s.rs2.next()){
@@ -833,7 +885,7 @@ public class CheckSign {
 				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
 				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
-				System.out.println(SQL);
+//				System.out.println(SQL);
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
 					//				if(s.rs2.next()){
@@ -973,18 +1025,48 @@ public class CheckSign {
 			String code = codeList.get(i)[0];
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
-			String startDay = getKeepDay(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName);
-			String endDay = day;
-			S s = new S();
-			s.getCon();
-			int keepCount = commonAP.countDay(startDay,endDay, s);
-			s.closeConection();
-			//true:保有期間
-			//false:エントリー回数
-			resultDTO.setKeepCount( keepCount );
-			resultDTO.setEntryTime( getEntryTimes(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
-			System.out.println(code + ":" + resultDTO.getKeepCount());
-			System.out.println(code + ":" + resultDTO.getEntryTime());
+
+
+
+			//買うときにはエントリー回数を参照するので買う時だけ見る
+			//売うときにはキープデイズを参照するので売る時だけ見る
+			if ( judge ){
+				//trueは買いフラグ
+				resultDTO.setEntryTime( getEntryTimes(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
+			}else{
+				S s = new S();
+				s.getCon();
+
+				String startDay = getKeepDay(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,s);
+				String endDay = day;
+				int keepCount=0;
+
+				if(startDay.equals(endDay)){
+					keepCount = 1;
+				}else{
+					keepCount = commonAP.countDay(startDay,endDay, s) ;
+				}
+				s.closeConection();
+				//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
+				int sleepTime = 7;
+				try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+				
+				resultDTO.setKeepCount( keepCount );
+				System.out.println(code);
+				System.out.println("start:"+startDay);
+				System.out.println("end  :"+endDay);
+				System.out.println("count:"+keepCount);
+			}
+
+
+
+
+
+
+
+
+//			System.out.println(code + ":" + resultDTO.getKeepCount());
+//			System.out.println(code + ":" + resultDTO.getEntryTime());
 
 			if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
 				resultCodeList.add(code);

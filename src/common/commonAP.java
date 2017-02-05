@@ -60,7 +60,12 @@ public class commonAP {
 	}
 
 
+	//startが0の場合、1を返す。
 	public static int countDay(String start,String end,S s){
+
+		if (start.equals("0")){
+			return 0;
+		}
 
 		String SQL = " select count(" + COLUMN.DAYTIME + ")"
 					+" from " + TBL_Name.INDEX_DD
@@ -139,7 +144,7 @@ public class commonAP {
 		//				File file = new File(newFile);
 
 			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write(nowTime + " " + writing  + "\r\n");
+			filewriter.write(nowTime + "," + writing  + "\r\n");
 			filewriter.close();
 		}catch(IOException e){
 			System.out.println(e);

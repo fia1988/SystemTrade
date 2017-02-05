@@ -116,7 +116,6 @@ public class Technique00_Common {
 
 			//エントリータイムが多すぎるとノーゲーム
 			if (resultDTO.getEntryTime() >= paraDTO.getMaxEntryTimes()){
-//			if (resultDTO.getEntryTime() >= 12){
 				return Technique98_CONST.NO_GAME;
 			}
 		}
