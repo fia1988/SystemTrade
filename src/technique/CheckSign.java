@@ -1050,12 +1050,9 @@ public class CheckSign {
 				//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
 				int sleepTime = 7;
 				try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-				
+
 				resultDTO.setKeepCount( keepCount );
-				System.out.println(code);
-				System.out.println("start:"+startDay);
-				System.out.println("end  :"+endDay);
-				System.out.println("count:"+keepCount);
+
 			}
 
 

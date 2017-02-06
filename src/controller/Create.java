@@ -4,6 +4,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import sql.createDB;
 import sql.createTBL;
+import constant.CATE_FLG;
 
 public class Create {
 	String SQL;
@@ -37,7 +38,7 @@ public class Create {
 
 		for (int i = 0;i<TBL_Name.getCodeList_HauhunReplace().size();i++){
 			//DBをつくるので-を―に変換
-			a.dayTable_Stock((TBL_Name.getCodeList_HauhunReplace().get(i)).replace("-", "―"),s);
+			a.dayTable_Stock((TBL_Name.getCodeList_HauhunReplace().get(i)).replace("-",CATE_FLG.replaceLetter),s);
 		}
 
 		s.closeConection();

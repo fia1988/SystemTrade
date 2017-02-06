@@ -105,24 +105,24 @@ public class commonAP {
 		String nowTime = sdf.format(now.getTime());
 //		System.out.println(sdf.format(now.getTime()));
 //		System.out.println(y+"/"+mo + "/" + d + "_" +h + ":"+m+":"+s+":");
+		
 
-
-		String fileName = "sys.log";
+		String fileName = "sys" + logWriting.logKakutyousi;
 		switch (writeType) {
 			case logWriting.DATEDATE_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			case logWriting.STOCK_RESULT_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
-				fileName = "backtestLog.log";
+				fileName = "backtestLog" + logWriting.logKakutyousi;
 				break;
 			case logWriting.ANOTHER_RROR_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			case logWriting.CODE_RESULT_LOG_FLG:
-				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + ".log";
+				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			default:
 			break;
@@ -156,22 +156,22 @@ public class commonAP {
 	public static void writeLog(String writing,int writeType){
 
 
-		String fileName = "sys.log";
+		String fileName = "sys" + logWriting.logKakutyousi;
 		switch (writeType) {
 			case logWriting.DATEDATE_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			case logWriting.STOCK_RESULT_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
-				fileName = "backtestLog.log";
+				fileName = "backtestLog" + logWriting.logKakutyousi;
 				break;
 			case logWriting.ANOTHER_RROR_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + ".log";
+				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			case logWriting.CODE_RESULT_LOG_FLG:
-				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + ".log";
+				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + logWriting.logKakutyousi;
 				break;
 			default:
 			break;

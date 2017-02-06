@@ -10,7 +10,7 @@ public class AccesarryParameta {
 	public static int HEKATUSHORT = 9;
 	public static int HEKATUMIDDLE = 13;
 	public static int HEKATULONG = 26;
-
+	
 	//MACDシグナル
 	public static int MACD_SIGNAL = 9;
 

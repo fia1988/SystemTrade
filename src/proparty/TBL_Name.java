@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.CATE_FLG;
+
 public class TBL_Name {
 
 	final public static String KABU_DB = "kabudata";
@@ -142,7 +144,7 @@ public class TBL_Name {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				codeList_HaihunReplace.add(s.rs.getString("code").replace("―", "-"));
+				codeList_HaihunReplace.add(s.rs.getString("code").replace(CATE_FLG.replaceLetter, "-"));
 				}
 
 		} catch (SQLException e) {
@@ -170,7 +172,7 @@ public class TBL_Name {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				statisticalList_HaihunReplace.add(s.rs.getString("code").replace("―", "-"));
+				statisticalList_HaihunReplace.add(s.rs.getString("code").replace(CATE_FLG.replaceLetter, "-"));
 				}
 
 		} catch (SQLException e) {
@@ -194,7 +196,7 @@ public class TBL_Name {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				indexList_HaihunReplace.add(s.rs.getString("code").replace("―", "-"));
+				indexList_HaihunReplace.add(s.rs.getString("code").replace(CATE_FLG.replaceLetter, "-"));
 				}
 
 		} catch (SQLException e) {
@@ -217,7 +219,7 @@ public class TBL_Name {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				futureList_HaihunReplace.add(s.rs.getString("code").replace("―", "-"));
+				futureList_HaihunReplace.add(s.rs.getString("code").replace(CATE_FLG.replaceLetter, "-"));
 				}
 
 		} catch (SQLException e) {
@@ -241,7 +243,7 @@ public class TBL_Name {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				currency_HaihunReplace.add(s.rs.getString("code").replace("―", "-"));
+				currency_HaihunReplace.add(s.rs.getString("code").replace(CATE_FLG.replaceLetter, "-"));
 				}
 
 		} catch (SQLException e) {

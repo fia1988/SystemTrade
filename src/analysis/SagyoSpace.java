@@ -83,7 +83,7 @@ public class SagyoSpace {
 
 
 		startDD	=	"2007-10-03";
-		endDD		=	"2007-12-30";
+		endDD		=	"2016-12-30";
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
@@ -977,9 +977,10 @@ public class SagyoSpace {
 					paraDTO.setTesuRYO(0.022);
 					//					paraDTO.setMaxEntryTimes(15);
 					//					paraDTO.setMaxKeepDays(15);
+					resultDTO.setOnResultCode();
 					resultDTO.setShoritu(0.85);
 					resultDTO.setTotalGames(20);
-					resultDTO.setTotalRatio(0.70);
+					resultDTO.setTotalRatio(0.65);
 
 					if (!(L_METHOD.equals(methodList_S.get(c)[1]))){
 						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);

@@ -10,4 +10,6 @@ public class logWriting {
 	public static final int CODE_RESULT_LOG_FLG			= 5;
 //	public static final int STOCK_RESULT_LOG_FLG_L		= 5;
 //	public static final int STOCK_RESULT_LOG_FLG_S		= 6;
+	
+	public static final String logKakutyousi = ".csv";
 }

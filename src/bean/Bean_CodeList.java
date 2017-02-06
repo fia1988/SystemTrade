@@ -1,5 +1,7 @@
 package bean;
 
+import constant.CATE_FLG;
+
 public class Bean_CodeList {
 	private String code = null;
 	private String codeName = null;//銘柄名
@@ -146,7 +148,7 @@ public class Bean_CodeList {
 	//この中に指標とかの場合、値に合わせてsetCodeする。
 	public void setCodeName(String codeName) {
 
-		this.codeName = codeName.replaceAll("-","―").replace(" ", "").replace("・", "_").replace("(", "_").replace(")", "_").replace("（", "_").replace("）", "_");
+		this.codeName = codeName.replaceAll("-",CATE_FLG.replaceLetter).replace(" ", "").replace("・", "_").replace("(", "_").replace(")", "_").replace("（", "_").replace("）", "_");
 	}
 
 	public String getCode() {
@@ -154,7 +156,7 @@ public class Bean_CodeList {
 	}
 	public void setCode(String code) {
 //		this.code = code.replaceAll("-T","").replaceAll("-t","").replaceAll("-","―");
-		this.code = code.replaceAll("-","―");
+		this.code = code.replaceAll("-",CATE_FLG.replaceLetter);
 	}
 	public String getMarket() {
 		return market;

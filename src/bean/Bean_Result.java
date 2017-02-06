@@ -756,13 +756,13 @@ public class Bean_Result {
 				commonAP.writeInLog("トータル計：" + getTradeCount(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝％：" + getTotalWinParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() * 100 +  " %" ,logWriting.BACKTEST_LOG_FLG);
-
-				commonAP.writeInLog("トータルリターン：" + ( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("リターンレイシオ：" + ( (getTotalWinParcent() + getTotalLoseParcent()) / ( ( getTotalWinParcent() ) ) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				double totalReturn = getTotalWinParcent() + getTotalLoseParcent();
+				commonAP.writeInLog("トータルリターン：" + ( ( totalReturn ) * 100 ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("リターンレイシオ：" + ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("一回辺りリターン：" + (( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
-//				commonAP.writeInLog("トータル平均勝％：" + (getTotalWinParcent()  * 100) / (getWinEntryTimeAverage()  * getTOTAL_WIN()  ) +  " %",logWriting.BACKTEST_LOG_FLG);
-//				commonAP.writeInLog("トータル平均負％：" + (getTotalLoseParcent() * 100) / (getLoseEntryTimeAverage() * getTOTAL_LOSE() ) +  " %",logWriting.BACKTEST_LOG_FLG);
-//				commonAP.writeInLog("見込みリターン：" + ( getTotalWinParcent() + getTotalLoseParcent() ) / ( getTOTAL_WIN() + getTOTAL_LOSE())  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("トータル平均勝％：" + (getTotalWinParcent()  * 100) / ( getTOTAL_WIN()  ) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("トータル平均負％：" + (getTotalLoseParcent() * 100) / ( getTOTAL_LOSE() ) +  " %",logWriting.BACKTEST_LOG_FLG);
+//				commonAP.writeInLog("見込みリターン：" + ( totalReturn ) / ( getTOTAL_WIN() + getTOTAL_LOSE())  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 //				commonAP.writeInLog("見込みリスク：" + commonAP.getDev(getReturnList(),  true)  * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("平均保有期間(売却できずを除く)：" + getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("平均保有勝ち期間(売却できずを除く)：" + getWinKeepTimeAverage() ,logWriting.BACKTEST_LOG_FLG);
@@ -789,13 +789,13 @@ public class Bean_Result {
 
 
 //				double getCutTotalReturn = (( ( getCutTotalLose + getCutTotalWIN ) / ( getCutWinCount + getCutLoseCount )*aveCutKeepDays ) );
-
+				double getCutTotalReturn = getCutTotalLose + getCutTotalWIN;
 				commonAP.writeInLog("上" + half * 100 +  "%カットトータル勝％："			+ getCutTotalWIN +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("下" + half * 100 +  "%カットトータル負％："			+ getCutTotalLose +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("上下" + half * 100 +  "%カットトータルリターン："		+ (getCutTotalWIN+getCutTotalLose) +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("上下" + half * 100 +  "一回辺りリターン%：" + (getCutTotalWIN+getCutTotalLose)/((getCutWinCount+getCutLoseCount)*getCutAveEntryTimes) +  " %" ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("上" + half * 100 +  "%カットトータル平均勝％："		+ (getCutTotalWIN)/(getCutWinAveEntryTimes*getCutWinCount) +  " %",logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("下" + half * 100 +  "%カットトータル平均負％："		+ (getCutTotalLose)/(getCutLoseAveEntryTimes*getCutLoseCount) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下" + half * 100 +  "%カットトータルリターン："		+ (getCutTotalReturn) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上下" + half * 100 +  "一回辺りリターン%：" + (getCutTotalReturn)/((getCutWinCount+getCutLoseCount)) +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("上" + half * 100 +  "%カットトータル平均勝％："		+ (getCutTotalWIN*100)/(getCutWinCount) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("下" + half * 100 +  "%カットトータル平均負％："		+ (getCutTotalLose*100)/(getCutLoseCount) +  " %",logWriting.BACKTEST_LOG_FLG);
 
 //				commonAP.writeInLog("上下0.5%カット見込みリターン："		+ getCutAveReturn * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 //				commonAP.writeInLog("上下1%カット見込みリターン："		+ ( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) ) / ( getReturnList().size() * (paraDTO.getCutWariai()) ),logWriting.BACKTEST_LOG_FLG);
