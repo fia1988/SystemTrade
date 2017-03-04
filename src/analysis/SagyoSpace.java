@@ -58,7 +58,136 @@ public class SagyoSpace {
 
 	}
 
+	public static void testCase96(){
+		//連続取引するエリートの全メソッドの一覧を作る
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
+		String startDD	=	"2007-01-03";
+		String endDD		=	"2016-12-31";
+
+
+		paraDTO = new Bean_Parameta();
+		resultDTO = new Bean_Result();
+		nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO);
+		paraDTO.setEtfFLG(false);
+		paraDTO.setCheckRenzokuSign(true);
+		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultDay();
+		resultDTO.setShoritu(0.85);
+		resultDTO.setTotalGames(20);
+		paraDTO.setMaxEntryTimes(18);
+//		paraDTO.setMaxKeepDays(31);
+//		resultDTO.setTotalRatio(0.65);
+		String tec = "technique";
+		Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(18);
+////		paraDTO.setMaxKeepDays(21);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(18);
+////		paraDTO.setMaxKeepDays(17);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(15);
+////		paraDTO.setMaxKeepDays(19);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(15);
+////		paraDTO.setMaxKeepDays(22);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(9);
+////		paraDTO.setMaxKeepDays(16);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(15);
+////		paraDTO.setMaxKeepDays(32);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO);
+//		paraDTO.setEtfFLG(false);
+//		paraDTO.setCheckRenzokuSign(true);
+//		paraDTO.setTesuRYO(0.022);
+//		resultDTO.setOnResultCode();
+//		resultDTO.setShoritu(0.85);
+//		resultDTO.setTotalGames(20);
+//		paraDTO.setMaxEntryTimes(12);
+////		paraDTO.setMaxKeepDays(19);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+	}
 
 	public static void testCase97(){
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -813,6 +942,23 @@ public class SagyoSpace {
 		methodName[1] = "MACD_IDOHEIKIN_L";
 		methodList_L.add(methodName.clone());
 
+		methodName[0] = "Technique08";
+		methodName[1] = "MACD_OR_IDOHEIKIN_S";
+		methodList_L.add(methodName.clone());
+
+
+		methodName[0] = "Technique08";
+		methodName[1] = "MACD_0_OR_IDOHEIKIN_S";
+		methodList_L.add(methodName.clone());
+
+
+		methodName[0] = "Technique04";
+		methodName[1] = "MACD_M_S_OVER0";
+		methodList_L.add(methodName.clone());
+
+		methodName[0] = "Technique04";
+		methodName[1] = "MACD_M_S";
+		methodList_L.add(methodName.clone());
 
 		methodName[0] = "Technique06";
 		methodName[1] = "IDO_HEKIN_1_L";
@@ -857,6 +1003,25 @@ public class SagyoSpace {
 
 		List<String[]> methodList_S = new ArrayList<String[]>();
 		String methodNameS[] = new String[2];
+		methodNameS[0] = "Technique04";
+		methodNameS[1] = "MACD_M_L_OVER0";
+		methodList_S.add(methodNameS.clone());
+
+
+		methodNameS[0] = "Technique06";
+		methodNameS[1] = "idoHeikinTest_L";
+		methodList_S.add(methodNameS.clone());
+
+
+		methodNameS[0] = "Technique04";
+		methodNameS[1] = "MACD_M_L";
+		methodList_S.add(methodNameS.clone());
+
+
+		methodNameS[0] = "Technique08";
+		methodNameS[1] = "MACD_IDOHEIKIN_L";
+		methodList_S.add(methodNameS.clone());
+
 		methodNameS[0] = "Technique08";
 		methodNameS[1] = "MACD_OR_IDOHEIKIN_S";
 		methodList_S.add(methodNameS.clone());
@@ -867,30 +1032,13 @@ public class SagyoSpace {
 		methodList_S.add(methodNameS.clone());
 
 
-		methodNameS[0] = "Technique06";
-		methodNameS[1] = "idoHeikinTest_S";
-		methodList_S.add(methodNameS.clone());
-
-
 		methodNameS[0] = "Technique04";
 		methodNameS[1] = "MACD_M_S_OVER0";
 		methodList_S.add(methodNameS.clone());
 
-
-//		methodNameS[0] = "Technique04";
-//		methodNameS[1] = "MACD_M_S_14";
-//		methodList_S.add(methodNameS.clone());
-
-
 		methodNameS[0] = "Technique04";
 		methodNameS[1] = "MACD_M_S";
 		methodList_S.add(methodNameS.clone());
-
-
-		methodNameS[0] = "Technique08";
-		methodNameS[1] = "MACD_IDOHEIKIN_S";
-		methodList_S.add(methodNameS.clone());
-
 
 		methodNameS[0] = "Technique06";
 		methodNameS[1] = "IDO_HEKIN_1_L";
@@ -972,7 +1120,7 @@ public class SagyoSpace {
 					nowDTO = new Bean_nowRecord();
 					shokisettei(paraDTO, nowDTO, resultDTO);
 					paraDTO.setEtfFLG(false);
-//					paraDTO.setCheckRenzokuSign(false);
+					paraDTO.setCheckRenzokuSign(false);
 //					resultDTO.setTotalGames(20);
 					paraDTO.setTesuRYO(0.022);
 					//					paraDTO.setMaxEntryTimes(15);
@@ -980,7 +1128,7 @@ public class SagyoSpace {
 					resultDTO.setOnResultCode();
 					resultDTO.setShoritu(0.85);
 					resultDTO.setTotalGames(20);
-					resultDTO.setTotalRatio(0.65);
+//					resultDTO.setTotalRatio(0.65);
 
 					if (!(L_METHOD.equals(methodList_S.get(c)[1]))){
 						Analysis00_Common.Analysis_COMMON("technique",L_CLASS,L_METHOD,"technique",methodList_S.get(c)[0],methodList_S.get(c)[1],paraDTO,nowDTO,resultDTO,startDD,endDD);

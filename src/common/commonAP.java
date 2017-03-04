@@ -105,52 +105,11 @@ public class commonAP {
 		String nowTime = sdf.format(now.getTime());
 //		System.out.println(sdf.format(now.getTime()));
 //		System.out.println(y+"/"+mo + "/" + d + "_" +h + ":"+m+":"+s+":");
-		
-
-		String fileName = "sys" + logWriting.logKakutyousi;
-		switch (writeType) {
-			case logWriting.DATEDATE_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
-				break;
-			case logWriting.STOCK_RESULT_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
-				break;
-			case logWriting.BACKTEST_LOG_FLG:
-				fileName = "backtestLog" + logWriting.logKakutyousi;
-				break;
-			case logWriting.ANOTHER_RROR_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
-				break;
-			case logWriting.CODE_RESULT_LOG_FLG:
-				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + logWriting.logKakutyousi;
-				break;
-			default:
-			break;
-		}
 
 
-		String logFileFolderPath = PROPARTY.LOG_FILE_OUT;
-		File file = new File(logFileFolderPath + File.separator + fileName);
-//			File folder = new File(file_name);
-//			folder.mkdirs();
+		writeLog(nowTime + "," + writing,writeType);
+		writeLog("\r\n",writeType);
 
-		try {
-			file.createNewFile();
-		} catch (IOException e1) {
-			// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-		}
-		try{
-		//				File file = new File(newFile);
-
-			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write(nowTime + "," + writing  + "\r\n");
-			filewriter.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
-
-		System.out.println(nowTime + ":" + writing);
 	}
 
 	public static void writeLog(String writing,int writeType){
@@ -193,13 +152,13 @@ public class commonAP {
 		//				File file = new File(newFile);
 
 			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write("：" + writing );
+			filewriter.write(writing );
 			filewriter.close();
 		}catch(IOException e){
 			System.out.println(e);
 		}
 
-		System.out.print( ":" + writing);
+		System.out.print(writing);
 	}
 
 

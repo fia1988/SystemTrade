@@ -11,6 +11,7 @@ import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.Net_Adress;
 import proparty.S;
+import accesarrySQL.SEPARATE_CHECK;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
 
@@ -535,6 +536,10 @@ public class CONTOLLBOTTON {
 				i_d.InsertDD_STOCK_ETF(B_B.getList_CSVtoDTO_STOCK_ETF(),MAXDAY, s);
 				check = 0;
 
+
+				//分割チェック。
+				SEPARATE_CHECK.checkSEPARATE_controll(s);
+
 				//一回でも通ればtrueにする。
 				noSetUrlCsv = true;
 			}else{
@@ -545,9 +550,9 @@ public class CONTOLLBOTTON {
 				}
 			}
 
-
 			calendar.add(Calendar.DAY_OF_MONTH, +1);
 			MAXDAY = sdf1.format(calendar.getTime());
+
 		}
 
 		if (noSetUrlCsv == false){

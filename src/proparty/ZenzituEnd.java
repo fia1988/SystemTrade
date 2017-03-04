@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import accesarrySQL.SQLChecker;
 import constant.COLUMN;
-import constant.ReCord;
 
 public class ZenzituEnd {
 
@@ -13,9 +12,9 @@ public class ZenzituEnd {
 		String SQL;
 
 		String column = COLUMN.CLOSE;
-		if (cate.equals(ReCord.CODE_01_STOCK)){
-			column = COLUMN.BEFORE_CLOSE;
-		}
+//		if (cate.equals(ReCord.CODE_01_STOCK)){
+//			column = COLUMN.BEFORE_CLOSE;
+//		}
 
 		SQL = "select "
 			+ column

@@ -8,7 +8,6 @@ import proparty.controllDay;
 import technique.CheckSign;
 import GamenDTO.TAB_MainDTO;
 import accesarrySQL.OneRecord_Update;
-import accesarrySQL.SEPARATE_CHECK;
 
 import common.commonAP;
 
@@ -64,7 +63,7 @@ public class cloringDate {
 		}
 
 		//分割チェック。sはこの中で独自に作る。
-		SEPARATE_CHECK.checkSEPARATE_controll();
+//		SEPARATE_CHECK.checkSEPARATE_controll();
 
 
 		//今日のサインの点灯をチェックする。
@@ -207,7 +206,7 @@ public class cloringDate {
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
-		
+
 		s.exportFile(SQL);
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;

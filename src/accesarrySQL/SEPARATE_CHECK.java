@@ -18,11 +18,11 @@ public class SEPARATE_CHECK {
 	static ArrayList<String[]> codeSeparateList = new ArrayList<String[]>();
 
 
-	public static void checkSEPARATE_controll(){
+	public static void checkSEPARATE_controll(S s){
 
 
-		S s = new S();
-		s.getCon();
+//		S s = new S();
+//		s.getCon();
 
 
 
@@ -191,7 +191,7 @@ public class SEPARATE_CHECK {
 		}
 
 
-		s.closeConection();
+//		s.closeConection();
 
 
 	}
