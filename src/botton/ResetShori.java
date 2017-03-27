@@ -80,10 +80,10 @@ public class ResetShori {
 //
 //		SQL = "delete from " + TBL_Name.SEPARATE_DD;
 //		s.freeUpdateQuery(SQL);
-		
-		
-		
-		
+
+
+
+
 //		//分割情報のみをリセット
 //		SQL = " update " + TBL_Name.STOCK_DD	+ " set "
 //						 + COLUMN.OPEN			+ " = " + COLUMN.BEFORE_OPEN	+ " , "
@@ -141,6 +141,9 @@ public class ResetShori {
 		s.freeUpdateQuery(SQL);
 
 		SQL = "delete from " + TBL_Name.RESULTHISTROYTBL;
+		s.freeUpdateQuery(SQL);
+
+		SQL = "delete from " + TBL_Name.INTERVAL_TIME_TBL;
 		s.freeUpdateQuery(SQL);
 
 		s.closeConection();

@@ -37,7 +37,7 @@ public class Create {
 		TBL_Name.setCodeList_HauhunReplace(s);
 
 		for (int i = 0;i<TBL_Name.getCodeList_HauhunReplace().size();i++){
-			//DBをつくるので-を―に変換
+			//DBをつくるので-を_に変換
 			a.dayTable_Stock((TBL_Name.getCodeList_HauhunReplace().get(i)).replace("-",CATE_FLG.replaceLetter),s);
 		}
 

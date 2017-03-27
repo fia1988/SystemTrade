@@ -59,7 +59,7 @@ public class ConAccessary {
 			if( checkCount%400 == 0){
 				checkCount=0;
 				s.resetConnection();
-				commonAP.writeLog(code + ":" + dayTime + ",",logWriting.DATEDATE_LOG_FLG);
+//				commonAP.writeLog(code + ":" + dayTime + ",",logWriting.DATEDATE_LOG_FLG);
 //				System.out.print(code + ":" + dayTime + ":");
 			}
 

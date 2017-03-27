@@ -155,7 +155,6 @@ public class Bean_CodeList {
 		return code;
 	}
 	public void setCode(String code) {
-//		this.code = code.replaceAll("-T","").replaceAll("-t","").replaceAll("-","―");
 		this.code = code.replaceAll("-",CATE_FLG.replaceLetter);
 	}
 	public String getMarket() {

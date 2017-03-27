@@ -220,7 +220,7 @@ public class TAB_test extends JPanel {
 //			Bean_Result resultDTO = new Bean_Result();
 //			Bean_nowRecord nowDTO = new Bean_nowRecord();
 //			paraDTO.setIntCount01(2);
-//			nowDTO.setCode("1301―T");
+//			nowDTO.setCode("1301_T");
 //			nowDTO.setCateflg("1");
 //			nowDTO.setNowDay_01("2008-05-05");
 //			Technique02.checkMotiKabu_L(paraDTO, nowDTO, resultDTO);
@@ -402,7 +402,7 @@ public class TAB_test extends JPanel {
 //			//ETF・・・4
 //			//先物・・・5
 //			//通貨・・・6
-//			DT.setCodeDTO_DD("1301―T","2007-01-01","2007-01-09", s);
+//			DT.setCodeDTO_DD("1301_T","2007-01-01","2007-01-09", s);
 //
 //
 //			for(int i =0;i<DT.getCodeDTO_DD().size();i++){

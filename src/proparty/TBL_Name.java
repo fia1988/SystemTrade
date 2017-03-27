@@ -10,7 +10,7 @@ import constant.CATE_FLG;
 public class TBL_Name {
 
 	final public static String KABU_DB = "kabudata";
-	
+
 	final public static String TAIL_MONTH      = "_MM";
 	final public static String TAIL_WEEK       = "_WW";
 	final public static String TAIL_DAY        = "_DD";
@@ -21,6 +21,9 @@ public class TBL_Name {
 
 	final public static String CODELISTTBL     = "00_codeListTBL";
 
+	final public static String INTERVAL_TIME_TBL	= "92_intervalTimeTBL";
+	final public static String ELETE_LIST_TEST_TBL	= "93_eleteListTestTBL";
+	final public static String ELETE_LIST_TBL		= "94_eleteListTBL";
 	final public static String LASTORDER     = "95_lastOrderTBL";
 	final public static String KEEPLISTTBL     = "96_keepListTBL";
 	final public static String RESULTHISTROYTBL     = "97_resultHistryTBL";
@@ -133,7 +136,7 @@ public class TBL_Name {
 		return codeNewList;
 	}
 
-//テーブルの名前のうち"-"を"―"に置換して取得
+//テーブルの名前のうち"-"を"_"に置換して取得
 	public static void setCodeList_HauhunReplace(S s){
 
 		SQL = "select code from " + CODELISTTBL + " where etf_flg = true or company_flg = true";

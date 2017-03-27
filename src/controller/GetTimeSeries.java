@@ -68,12 +68,12 @@ public class GetTimeSeries {
 //
 //			md.setMAX_DD_HAIHUN(TBL_Name.getCodeList_HauhunReplace().get(i),s);
 //			DTO_B_T_List = new ArrayList<Bean_TBLRecord>();
-//			//-を―に置き換えて挿入している。
+//			//-を_に置き換えて挿入している。
 //			NB.setCodeDD( DTO_B_T_List ,
 //					TBL_Name.getCodeList_HauhunReplace().get(i),md.getMAX_DD_HAIHUN());
-//			//-を―に置き換えて挿入している。
+//			//-を_に置き換えて挿入している。
 //			IS.c_InsertStock_DD(NB.getCodeDD(),
-//					(TBL_Name.getCodeList_HauhunReplace().get(i)).replace("-","―"),s);
+//					(TBL_Name.getCodeList_HauhunReplace().get(i)).replace("-","_"),s);
 //		}
 //		s.closeConection();
 //

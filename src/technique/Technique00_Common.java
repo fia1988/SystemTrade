@@ -86,6 +86,20 @@ public class Technique00_Common {
 		//買いメソッドの場合の処理
 		if ( judge==false ) {return Technique98_CONST.NO_GAME;	}
 
+
+		//インターバルタイムかどうかをチェックする
+		if ( paraDTO.getRealTimeMode()==false ){
+			if (resultDTO.isNowInterValFLG()==true){
+				//今のインターバルタイムが設定したマックスよりも大きければ買う
+				if( resultDTO.getNowInterValTime() < resultDTO.getMaxInterValTime()){
+					resultDTO.setNowInterValTime();
+					return Technique98_CONST.NO_GAME;
+				}else{
+					resultDTO.setNowInterValFLG(false);
+				}
+			}
+		}
+
 		//日経が急落してたり今の銘柄が急落してたら買いフラグをたてないようにする。
 		//NOGAMEで返す
 
@@ -135,15 +149,63 @@ public class Technique00_Common {
 		}
 
 
-		return Technique98_CONST.TRADE_FLG;
+
+		//損切的なのを計算
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+		if ( Double.isNaN(resultDTO.getNowAveragePrice(paraDTO, nowDTO)) || resultDTO.getNowAveragePrice(paraDTO, nowDTO) == 0 ) {
+			// 0とかNaNのときはここ＝まだ初購入の時はここ
+		}else{
+			//初購入ではないときはここ
+//			System.out.println(nowDTO.getCode_01() + ":" + resultDTO.getEntryTime() + ":" + resultDTO.getNowAveragePrice(paraDTO, nowDTO));
 
 
+
+//			if ( paraDTO.getRealTimeMode() ){
+//				//本番
+//				nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+//			}else{
+//				//バックテスト
+//				nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+//			}
+			//これ以上買わないサイン
+//			resultDTO.getEntryTime();
 //			return Technique98_CONST.NO_GAME;
-//			return Technique98_CONST.TRADE_FLG;
+
+			//今日の終値
+			double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+			//昨日までの平均取得価格
+			double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+
+
+			double wari = 0.05;
+			double nowAvePriceH = nowAvePrice * ( 1 + wari);
+			double nowAvePriceL = nowAvePrice * ( 1 - wari);
+
+
+//			if ( nowAvePriceL <= nowPrice && nowPrice <= nowAvePriceH ){
+
+			//paraDTO.getEntryMoney();の単位は万円
+			double resultReturn = ( (nowAvePrice - nowPrice ) / nowPrice ) * resultDTO.getEntryTime();
+
+			//マイナスが著しければ止める
+			//-1.0 = -100%
+			double minusMIN = -2.0;
+			if (resultReturn <= minusMIN){
+				return Technique98_CONST.NO_GAME;
+			}
 
 
 
+//			if (nowAvePriceL > nowPrice){
+//				return Technique98_CONST.TRADE_FLG;
+//			}else{
+//				return Technique98_CONST.NO_GAME;
+//			}
 
+		}
+
+
+		return Technique98_CONST.TRADE_FLG;
 
 	}
 
@@ -192,6 +254,15 @@ public class Technique00_Common {
 			}
 		}
 
+		//損切のインターバルが必要かどうかのチェック
+		//インターバルタイムかどうかをチェックする。
+		//損切した場合、インターバルフラグをtrue
+		if ( paraDTO.getRealTimeMode()==false ){
+			
+//			resultDTO.setNowInterValFLG(true);
+//			return Technique98_CONST.TRADE_FLG;
+			
+		}
 
 
 //		if (checkPlunge_STOCK_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){

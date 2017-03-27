@@ -151,11 +151,7 @@ public class Bean_Bean {
 				B_C.setCatelfg(ReCord.CODE_01_STOCK);
 			}
 
-			//9468―Oで末尾２文字が"―T"出ない場合のみ、ADDする。
-			//-Tなら―は存在しないようになっている。
-//			if(B_C.getCode().lastIndexOf("―") + 2 != B_C.getCode().length() ){
-//				B_Cs.add(B_C);
-//			}
+
 			B_Cs.add(B_C);
 
 		}

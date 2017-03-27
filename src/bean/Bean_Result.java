@@ -12,6 +12,46 @@ public class Bean_Result {
 	String DAY;
 	String code;
 
+	String realStartDay = "0";
+
+	int maxInterValTime=0;
+	int nowInterValTime=0;
+	boolean nowInterValFLG=false;
+
+
+
+	public boolean isNowInterValFLG() {
+		return nowInterValFLG;
+	}
+
+	public void setNowInterValFLG(boolean nowInterValFLG) {
+		this.nowInterValFLG = nowInterValFLG;
+	}
+
+	public int getNowInterValTime() {
+		return nowInterValTime;
+	}
+
+	public void setNowInterValTime() {
+		this.nowInterValTime++;
+	}
+
+	public int getMaxInterValTime() {
+		return maxInterValTime;
+	}
+
+	public void setMaxInterValTime(int maxInterValTime) {
+		this.maxInterValTime = maxInterValTime;
+	}
+
+	public String getRealStartDay() {
+		return realStartDay;
+	}
+
+	public void setRealStartDay(String realStartDay) {
+		this.realStartDay = realStartDay;
+	}
+
 	//トータルレシオ
 	double totalRatio = 0;
 	boolean checkTotalRatio = false;
@@ -286,6 +326,10 @@ public class Bean_Result {
 
 	}
 
+	public void reSetRealAverage(){
+		this.realAveregePrice = 0;
+	}
+
 	double totalWinParcent;
 	double averageWinParcent;
 	double totalLoseParcent;
@@ -418,7 +462,7 @@ public class Bean_Result {
 								commonAP.writeInLog("勝エントリー平均回数：" + aveWinEntry,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("負保有期間平均：" + aveLoseKeep,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
-								commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
+								commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
 								commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 								System.out.println("ここは通っている。レイシオ");
 							}
@@ -434,7 +478,7 @@ public class Bean_Result {
 							commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 							//時刻,メソッド名,code
-							commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
+							commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
 						}
 
 
@@ -447,11 +491,19 @@ public class Bean_Result {
 
 		reSetCodeSatutus();
 	}
+	
+
+	public void resetInterval(){
+		maxInterValTime=0;
+		nowInterValTime=0;
+		nowInterValFLG=false;
+	}
 
 	private void reSetCodeSatutus(){
 		reSetWinCount();
 		reSetLoseCount();
-
+		resetInterval();
+		
 		returnListCode = new ArrayList<Double>();
 		loseReturnListCode = new ArrayList<Double>();
 		winReturnListCode = new ArrayList<Double>();
@@ -726,6 +778,8 @@ public class Bean_Result {
 	public void resetCount(){
 		reSetKeepCount();
 		reSetEntryTime();
+		reSetRealAverage();
+		realStartDay = "0";
 	}
 
 	public void getResultTotalResult(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO){
@@ -993,6 +1047,31 @@ public class Bean_Result {
 			total = total + entryPriceList.get(i);
 		}
 		return (total/entryPriceList.size());
+	}
+
+	double realAveregePrice;
+	public void setRealAveragePrice(double price){
+		this.realAveregePrice = price;
+	}
+
+	public double getRealAveragePrice(){
+		return realAveregePrice;
+	}
+
+	//一応nowDTOも入れているが必要なさそう
+	public double getNowAveragePrice(Bean_Parameta paraDTO,Bean_nowRecord nowDTO){
+
+		double nowAvePrice;
+
+		if ( paraDTO.getRealTimeMode() ){
+			//本番
+			nowAvePrice = getRealAveragePrice();
+		}else{
+			//バックテスト
+			nowAvePrice = getEntryAveragePrice();
+
+		}
+		return nowAvePrice;
 	}
 
 	public void setEntryPrice(double entryPrice) {

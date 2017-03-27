@@ -19,7 +19,7 @@ public class CATE_FLG {
 	public static String SAKIMONO_FLG	= "5";
 	public static String CURRENCY_FLG	= "6";
 
-	public final static String replaceLetter = "―";
+	public final static String replaceLetter = "_";
 
 	public void testsub(Bean_CodeList B){
 		B.setOpen("100");

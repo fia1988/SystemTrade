@@ -127,11 +127,26 @@ public class Analysis00_Common {
 
 
 		//全銘柄をリストに入れる
-		commonAP.setCodeList(paraDTO.getCheckCate(),s);
+		
 
+		
+		ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
+		
+		
+		if ( paraDTO.getEliteFLG(true) ){
+			//エリートフラグオン
+			commonAP.setCodeList(L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,"DD",false,s);
+//				commonAP.setCodeList(paraDTO.getCheckCate(),s);
+		}else{
+			//エリートフラグオフ
+			commonAP.setCodeList(paraDTO.getCheckCate(),s);
+		}
+
+		codeListwithiCate = commonAP.getCodeList();
+		
 		//全銘柄でループする
-		for (int i=0;i<commonAP.getCodeList().size();i++){
-			String code = commonAP.getCodeList().get(i)[0];
+		for (int i=0;i<codeListwithiCate.size();i++){
+			String code = codeListwithiCate.get(i)[0];
 
 			String SQL = makekabuSQL(code,startDay,endDay,s);
 			Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, SQL, s);

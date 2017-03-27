@@ -29,9 +29,62 @@ public class createTBL {
 
 		createKeepListTable(s);
 		createResulthistory(s);
-
+		createEleteTBL(s);
 
 		return createLastOrderTable(s);
+	}
+
+	private void createIntervalTime(S s){
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+
+
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.NOW_INTERVAL_KATA								 + " , " //
+				+ COLUMN.MAX_INTERVAL_KATA								 + " , " //
+				+ "primary key ("
+				+ COLUMN.CODE + " , " + COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
+
+		SQL = create + TBL_Name.INTERVAL_TIME_TBL + colum;
+
+		int intResult = s.freeUpdateQuery(SQL);
+
+	}
+
+	private void createEleteTBL(S s){
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+
+
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ "primary key ("
+				+ COLUMN.CODE + " , " + COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
+
+		SQL = create + TBL_Name.ELETE_LIST_TBL + colum;
+
+		int intResult = s.freeUpdateQuery(SQL);
+
+		SQL = create + TBL_Name.ELETE_LIST_TEST_TBL + colum;
+
+		intResult = s.freeUpdateQuery(SQL);
 	}
 
 	private String createLastOrderTable(S s){

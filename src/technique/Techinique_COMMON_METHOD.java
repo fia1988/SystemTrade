@@ -59,7 +59,7 @@ public class Techinique_COMMON_METHOD {
 //					break;
 //			}
 
-			// select *  from 01_STOCK_DD where dayTime <= '2016-06-06' and code='9994―T' order by daytime desc limit 1
+			// select *  from 01_STOCK_DD where dayTime <= '2016-06-06' and code='9994_T' order by daytime desc limit 1
 //			System.out.println(SQL);
 
 			this_s.rs2 = this_s.sqlGetter().executeQuery(SQL);
@@ -103,7 +103,7 @@ public class Techinique_COMMON_METHOD {
 
 	//コード名、日付、メソッドを入れると実行する。今日の日付のメソッドを確認する。
 	//パッケージ名とDTOとコードとtrue,falseをいれる
-	//例）Techinique_COMMON_METHOD.codeMethodMove("technique","Technique04","MACD_L",paraDTO,nowDTOList,8,resultDTO,"9994―T","2016-06-06",5,true);
+	//例）Techinique_COMMON_METHOD.codeMethodMove("technique","Technique04","MACD_L",paraDTO,nowDTOList,8,resultDTO,"9994_T","2016-06-06",5,true);
 	//nowDTOadressの値はなんでもよい
 	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,String dayTime,int size,boolean entryCheck){
 //	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,int size,boolean entryCheck){

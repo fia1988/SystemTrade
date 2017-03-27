@@ -41,16 +41,18 @@ public class CheckSign {
 
 
 		//全銘柄をリストに入れる
-		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+
+//		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+		commonAP.setCodeList("DD",ReCord.CODE_01_STOCK,true,s);
 		STOCKList = commonAP.getCodeList();
 
-		commonAP.setCodeList(ReCord.CODE_02_SATISTICS,s);
+		commonAP.setCodeList("DD",ReCord.CODE_02_SATISTICS,true,s);
 		SATISTICSList = commonAP.getCodeList();
 
-		commonAP.setCodeList(ReCord.CODE_03_INDEX,s);
+		commonAP.setCodeList("DD",ReCord.CODE_03_INDEX,true,s);
 		INDEXList = commonAP.getCodeList();
 
-		commonAP.setCodeList(ReCord.CODE_04_ETF,s);
+		commonAP.setCodeList("DD",ReCord.CODE_04_ETF,true,s);
 		ETFNameList = commonAP.getCodeList();
 
 		//キープテーブルのリストを取得
@@ -856,6 +858,47 @@ public class CheckSign {
 				return resultStr;
 	}
 
+	public static void setEntryTimesEntryDayAveragePrice(String code,
+			String type,
+			String L_packageName,
+			String L_className,
+			String L_methodName,
+			String S_packageName,
+			String S_className,
+			String S_methodName,
+			Bean_Result resultDTO,
+			S s){
+
+		String SQL = "";
+		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
+		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
+
+		String column = COLUMN.ENTRYTIMES + "," + COLUMN.ENTRYDAY + "," + COLUMN.AVERAGEPRICE;
+
+		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
+				+ " where "
+				+ COLUMN.CODE + " = '" + code + "'"
+				+ " and "
+				+ COLUMN.TYPE + " = '" + type + "'"
+				+ " and "
+				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ " and "
+				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+
+		try {
+			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			while(s.rs2.next()){
+
+				resultDTO.setEntryTime(s.rs2.getInt(COLUMN.ENTRYTIMES));
+//				resultDTO.setKeepCount(s.rs2.getString(COLUMN.ENTRYDAY));
+				resultDTO.setRealStartDay(s.rs2.getString(COLUMN.ENTRYDAY));
+				resultDTO.setRealAveragePrice(s.rs2.getDouble(COLUMN.AVERAGEPRICE));
+			};
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static int getEntryTimes(
 			String code,
 			String type,
@@ -864,10 +907,11 @@ public class CheckSign {
 			String L_methodName,
 			String S_packageName,
 			String S_className,
-			String S_methodName){
+			String S_methodName
+			,S s){
 		String SQL = "";
-		S s = new S();
-		s.getCon();
+//		S s = new S();
+//		s.getCon();
 		int resultInt = 0;
 		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
@@ -901,7 +945,7 @@ public class CheckSign {
 				}
 
 
-				s.closeConection();
+//				s.closeConection();
 				return resultInt;
 	}
 
@@ -990,7 +1034,6 @@ public class CheckSign {
 
 
 	private static void checkdaySignControll(ArrayList<String> resultCodeList,String type,String L_packageName,String L_className,	String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,ArrayList<String[]> codeList,String checkDay){
-		String check="";
 		paraDTO.setRealTimeMode(true);
 
 		String packageName = L_packageName;
@@ -999,10 +1042,7 @@ public class CheckSign {
 
 		if ( judge ){
 			//trueは買いフラグ
-			check = "(買)";
-
 		}else{
-			check = "(売)";
 			packageName = S_packageName;
 			className = S_className;
 			methodName = S_methodName;
@@ -1012,67 +1052,96 @@ public class CheckSign {
 			return;
 		}
 
+
+		String LMETHOD = (L_packageName + "." + L_className + "." + L_methodName);
+		String SMETHOD = (S_packageName + "." + S_className + "." + S_methodName);
 //		S s = new S();
 //		s.getCon();
 		//01_stock_dd a
 		//00_codelisttbl b
 		//02_statistics_dd c
 		String cate = codeList.get(0)[1];
-		String day = checkDay;
+
 
 		//全銘柄でループする
 		for (int i=0;i< codeList.size();i++){
 			String code = codeList.get(i)[0];
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
-
-
-
-			//買うときにはエントリー回数を参照するので買う時だけ見る
-			//売うときにはキープデイズを参照するので売る時だけ見る
 			if ( judge ){
 				//trueは買いフラグ
-				resultDTO.setEntryTime( getEntryTimes(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName) );
-			}else{
-				S s = new S();
-				s.getCon();
-
-				String startDay = getKeepDay(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,s);
-				String endDay = day;
-				int keepCount=0;
-
-				if(startDay.equals(endDay)){
-					keepCount = 1;
-				}else{
-					keepCount = commonAP.countDay(startDay,endDay, s) ;
+				if(LMETHOD.equals(codeList.get(i)[2]) && SMETHOD.equals(codeList.get(i)[3])){
+					checkdaySignControll_sub(code,cate,resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,checkDay);
 				}
-				s.closeConection();
-				//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
-				int sleepTime = 7;
-				try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-
-				resultDTO.setKeepCount( keepCount );
-
+			}else{
+				checkdaySignControll_sub(code,cate,resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,checkDay);
 			}
-
-
-
-
-
-
-
-
-//			System.out.println(code + ":" + resultDTO.getKeepCount());
-//			System.out.println(code + ":" + resultDTO.getEntryTime());
-
-			if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
-				resultCodeList.add(code);
-			};
-			resultDTO.resetCount();
 		}
 
 	}
 
+	private static void checkdaySignControll_sub(String code,String cate,ArrayList<String> resultCodeList,String type,String L_packageName,String L_className,	String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,String checkDay){
+		String day = checkDay;
+
+		String packageName = L_packageName;
+		String className = L_className;
+		String methodName = L_methodName;
+
+		if ( judge ){
+			//trueは買いフラグ
+
+		}else{
+
+			packageName = S_packageName;
+			className = S_className;
+			methodName = S_methodName;
+		}
+
+		S s = new S();
+		s.getCon();
+
+		//以下を設定する
+		//resultDTO.setEntryTime
+		//resultDTO.setRealStartDay
+		//resultDTO.setRealAveragePrice
+		setEntryTimesEntryDayAveragePrice(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, resultDTO, s);
+
+
+		//買うときにはエントリー回数を参照するので買う時だけ見る
+		//売うときにはキープデイズを参照するので売る時だけ見る
+		if ( judge ){
+			//trueは買いフラグ
+//			resultDTO.setEntryTime( getEntryTimes(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,s) );
+		}else{
+
+//			String startDay = getKeepDay(code, type, L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName,s);
+			String startDay = resultDTO.getRealStartDay();
+			String endDay = day;
+			int keepCount=0;
+
+			if(startDay.equals(endDay)){
+				keepCount = 1;
+			}else{
+				keepCount = commonAP.countDay(startDay,endDay, s) ;
+			}
+
+			resultDTO.setKeepCount( keepCount );
+
+		}
+
+		s.closeConection();
+		//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
+		int sleepTime = 7;
+		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+
+//		System.out.println(code + ":" + resultDTO.getKeepCount());
+//		System.out.println(code + ":" + resultDTO.getEntryTime());
+
+		if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
+			resultCodeList.add(code);
+		};
+		resultDTO.resetCount();
+	}
 
 
 }

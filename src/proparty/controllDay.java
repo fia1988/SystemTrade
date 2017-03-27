@@ -148,7 +148,7 @@ public class controllDay {
 	//YYYY-MM-DDでとってくる
 	public static String getMAX_DD_STOCK_ETF(S s){
 
-		//-を―に変える。DBには―で入っている
+		//-を_に変える。DBには_で入っている
 
 //		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
 		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_STOCK_ETF + "'";
@@ -178,7 +178,7 @@ public class controllDay {
 
 	public static String getMAX_DD_STATISTICS(S s){
 
-		//-を―に変える。DBには―で入っている
+		//-を_に変える。DBには_で入っている
 		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_STATISTICS + "'";
 		s.setPstmt(SQL);
 
@@ -206,7 +206,7 @@ public class controllDay {
 
 	public static String getMAX_DD_INDEX(S s){
 
-		//-を―に変える。DBには―で入っている
+		//-を_に変える。DBには_で入っている
 		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_INDEX + "'";
 		s.setPstmt(SQL);
 

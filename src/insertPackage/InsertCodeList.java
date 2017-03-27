@@ -28,8 +28,8 @@ public class InsertCodeList extends InsertSuper  {
 //		for (int i = 0;i<Num;i++){
 //
 //			try {
-//				System.out.println(B_C_List.get(i).getCode().replaceAll("-","―"));
-//				s.getPstmt().setString( i*6+  1, (B_C_List.get(i).getCode()).replaceAll("-","―")    );
+//				System.out.println(B_C_List.get(i).getCode().replaceAll("-","_"));
+//				s.getPstmt().setString( i*6+  1, (B_C_List.get(i).getCode()).replaceAll("-","_")    );
 //				s.getPstmt().setString( i*6+  2,  B_C_List.get(i).getCodeName()                      );
 //				s.getPstmt().setString( i*6+  3,  B_C_List.get(i).getMarket()                        );
 //				s.getPstmt().setString( i*6+  4,  B_C_List.get(i).getCategory()                      );
@@ -69,7 +69,7 @@ public class InsertCodeList extends InsertSuper  {
 		s.setPstmt(SQL);
 
 				try {
-//					s.getPstmt().setString(  1, (B_C.getCode()).replaceAll("-","―")   );
+//					s.getPstmt().setString(  1, (B_C.getCode()).replaceAll("-","_")   );
 //					s.getPstmt().setString(  2,  B_C.getCodeName()                     );
 //					s.getPstmt().setString(  3,  B_C.getMarket()                       );
 //					s.getPstmt().setString(  4,  B_C.getCategory()                     );

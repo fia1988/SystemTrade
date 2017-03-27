@@ -170,7 +170,7 @@ public class NetBean extends NetSuper{
 
 			//アクセス拒否された場合の動き
 			if(lineRecord==null){
-				System.out.println("NetBean：アクセス拒否中。150秒待ちます。");
+				System.out.println("NetBean：アクセス拒否中。"+PROPARTY.SLEEPTIME+"ﾐﾘ秒待ちます。");
 				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
 				try {
 					Thread.sleep(PROPARTY.SLEEPTIME);
@@ -181,7 +181,7 @@ public class NetBean extends NetSuper{
 				setUrlCsv(URL,skipLine,intervalTime);
 				return;
 			}else if(lineRecord.equals(PROPARTY.NAZO)){
-				System.out.println("NetBean：503かも。5秒待まってもう一回。");
+				System.out.println("NetBean：503かも。"+(PROPARTY.SLEEPTIME-145000)+"ﾐﾘ秒待まってもう一回。");
 				try {
 					Thread.sleep(PROPARTY.SLEEPTIME-145000);
 				} catch (InterruptedException e) {

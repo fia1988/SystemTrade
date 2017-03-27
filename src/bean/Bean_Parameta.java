@@ -111,6 +111,10 @@ public class Bean_Parameta {
 		this.eliteFLG = true;
 	}
 
+	public void setOffEliteFLG() {
+		this.eliteFLG = false;
+	}
+
 	public boolean isStockFLG() {
 		return stockFLG;
 	}

@@ -5,6 +5,13 @@ public class COLUMN {
 	//count(*)
 	public static String COUNT											= "count(*)";
 
+	//今のインターバルタイム
+	public static String NOW_INTERVAL									= "now_interval";
+	public static String NOW_INTERVAL_KATA								= NOW_INTERVAL + "  smallint  unsigned ";
+	//インターバルタイムの最大値
+	public static String MAX_INTERVAL									= "MAX_interval";
+	public static String MAX_INTERVAL_KATA								= MAX_INTERVAL + "  smallint  unsigned  ";
+
 	//コードリストテーブルの列名
 	//証券コード
 	public static String CODE											= "code";

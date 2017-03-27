@@ -118,19 +118,22 @@ public class commonAP {
 		String fileName = "sys" + logWriting.logKakutyousi;
 		switch (writeType) {
 			case logWriting.DATEDATE_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
+				fileName = "sys_" + writeType + logWriting.logKakutyousi;
 				break;
 			case logWriting.STOCK_RESULT_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
+				fileName = "sys_" + writeType + logWriting.logKakutyousi;
 				break;
 			case logWriting.BACKTEST_LOG_FLG:
 				fileName = "backtestLog" + logWriting.logKakutyousi;
 				break;
 			case logWriting.ANOTHER_RROR_LOG_FLG:
-				fileName = "sys_" + logWriting.DATEDATE_LOG_FLG + logWriting.logKakutyousi;
+				fileName = "sys_" + writeType + logWriting.logKakutyousi;
 				break;
 			case logWriting.CODE_RESULT_LOG_FLG:
-				fileName = "CODE_" + logWriting.CODE_RESULT_LOG_FLG + logWriting.logKakutyousi;
+				fileName = "CODE_" + writeType + logWriting.logKakutyousi;
+				break;
+			case logWriting.CODE_RESULT_LIST_LOG_FLG:
+				fileName = "samaryResult_" + writeType + logWriting.logKakutyousi;
 				break;
 			default:
 			break;
@@ -578,6 +581,83 @@ public class commonAP {
 		}
 
 	}
+
+	//true:本番
+	//false:test
+	public static void setCodeList(String type,String cate,boolean judge,S s){
+		codeListwithiCate = new ArrayList<String[]>();
+//		codeSingle=null;
+
+		String SQL;
+		String TBL;
+		if (judge){
+			TBL = TBL_Name.ELETE_LIST_TBL;
+		}else{
+			TBL = TBL_Name.ELETE_LIST_TEST_TBL;
+		}
+
+		SQL = " select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
+
+
+		SQL = " select * from " +  TBL +" AAA "
+				+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
+				+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+				+ " where "
+				+ "BBB." + COLUMN.CATE_FLG	+ " = '" + cate + "'"	 + " and " //
+				+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  " ;
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				codeSingle = new String[4];
+				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
+				codeSingle[1]=cate;
+				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
+				codeSingle[3]=s.rs.getString("AAA." + COLUMN.EXITMETHOD);
+				codeListwithiCate.add(codeSingle);
+			}
+
+		} catch (SQLException e) {
+
+		}
+	}
+
+	//true:本番
+	//false:test
+	public static void setCodeList(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type,boolean judge,S s){
+		String LMETHOD = (L_packageName + "." + L_className + "." + L_methodName);
+		String SMETHOD = (S_packageName + "." + S_className + "." + S_methodName);
+
+		String TBL;
+		if (judge){
+			TBL = TBL_Name.ELETE_LIST_TBL;
+		}else{
+			TBL = TBL_Name.ELETE_LIST_TEST_TBL;
+		}
+
+		String SQL;
+		SQL = " select * from " +  TBL +" AAA "
+				+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
+				+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+				+ " where "
+				+ "AAA." + COLUMN.ENTRYMETHOD	+ " = '" + LMETHOD + "'"	 + " and " //
+				+ "AAA." + COLUMN.EXITMETHOD	+ " = '" + SMETHOD + "'"	 + " and  " //
+				+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  " ;
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				codeSingle = new String[2];
+				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
+				codeSingle[1]=s.rs.getString("BBB." + COLUMN.CATE_FLG);
+				codeListwithiCate.add(codeSingle);
+			}
+
+		} catch (SQLException e) {
+
+		}
+	}
+
 
 	public static void setCodeList(String cate, S s){
 //		codeList = new ArrayList<String>();
