@@ -22,13 +22,34 @@ public class Bean_Parameta {
 	private String LMETHOD = "";
 	private String SMETHOD = "";
 
+	private String termType = "DD";
+
+
+
+	public String getTermType() {
+		return termType;
+	}
+
+	public void setTermType(String termType) {
+		this.termType = termType;
+	}
+
+
 
 
 	private int maxEntryTimes = 2000;
 	private int maxKeepDays = 2000;
+	private double maxLoss = 2000;
 
 
 
+	public double getMaxLoss() {
+		return maxLoss;
+	}
+
+	public void setMaxLoss(double maxLoss) {
+		this.maxLoss = maxLoss;
+	}
 
 	public int getMaxEntryTimes() {
 		return maxEntryTimes;

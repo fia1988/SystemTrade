@@ -88,6 +88,7 @@ public class Technique00_Common {
 
 
 		//インターバルタイムかどうかをチェックする
+		//なお、リアルタイムモードのときはそもそもインターバルテーブルのレコードで制御するため記述しない
 		if ( paraDTO.getRealTimeMode()==false ){
 			if (resultDTO.isNowInterValFLG()==true){
 				//今のインターバルタイムが設定したマックスよりも大きければ買う
@@ -95,13 +96,27 @@ public class Technique00_Common {
 					resultDTO.setNowInterValTime();
 					return Technique98_CONST.NO_GAME;
 				}else{
+					resultDTO.reSetNowInterValTime();
 					resultDTO.setNowInterValFLG(false);
 				}
 			}
 		}
 
-		//日経が急落してたり今の銘柄が急落してたら買いフラグをたてないようにする。
-		//NOGAMEで返す
+		//今日の終値
+		double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+		//昨日までの平均取得価格
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+
+		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
+		nowResult = nowResult * resultDTO.getEntryTime();
+		double lossLine = -1 * paraDTO.getMaxLoss();
+
+		if (nowResult <= lossLine ){
+			return Technique98_CONST.NO_GAME;
+		}
+
+//			return Technique98_CONST.TRADE_FLG;
 
 
 //		//RUMフラグがtrueだったら一定確率でノーゲームを返す。
@@ -138,20 +153,21 @@ public class Technique00_Common {
 
 
 		//取引量の少ない銘柄は計算しない
-		if (nowDTOList.get(nowDTOadress).getNowDEKI_01() < paraDTO.getMinDeki()	){
+		if (nowDTOList.get(nowDTOadress).getNowMIDDLEIDO_DEKI_01() < paraDTO.getMinDeki()	){
 
 			//株かどうかを確認する。INDEXの場合、出来高がないからスルー
 			if(nowDTOList.get(nowDTOadress).getCateflg_01().equals(ReCord.CODE_03_INDEX)){
-				return Technique98_CONST.TRADE_FLG;
+
+			}else{
+				return Technique98_CONST.NO_GAME;
 			}
 			//				System.out.println(nowDTOList.get(nowDTOadress).getNowDEKI_01());
-			return Technique98_CONST.NO_GAME;
+
 		}
 
 
 
 		//損切的なのを計算
-		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 		if ( Double.isNaN(resultDTO.getNowAveragePrice(paraDTO, nowDTO)) || resultDTO.getNowAveragePrice(paraDTO, nowDTO) == 0 ) {
 			// 0とかNaNのときはここ＝まだ初購入の時はここ
 		}else{
@@ -171,10 +187,7 @@ public class Technique00_Common {
 //			resultDTO.getEntryTime();
 //			return Technique98_CONST.NO_GAME;
 
-			//今日の終値
-			double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
-			//昨日までの平均取得価格
-			double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+
 
 
 			double wari = 0.05;
@@ -189,14 +202,16 @@ public class Technique00_Common {
 
 			//マイナスが著しければ止める
 			//-1.0 = -100%
-			double minusMIN = -2.0;
-			if (resultReturn <= minusMIN){
-				return Technique98_CONST.NO_GAME;
-			}
+			double minusMIN = -3.0;
+			double plusMIN = 1.0;
+//			if (resultReturn <= minusMIN){
+//			if (resultReturn >= plusMIN){
+//				return Technique98_CONST.NO_GAME;
+//			}
 
 
-
-//			if (nowAvePriceL > nowPrice){
+//
+//			if (nowAvePriceL < nowPrice){
 //				return Technique98_CONST.TRADE_FLG;
 //			}else{
 //				return Technique98_CONST.NO_GAME;
@@ -219,13 +234,13 @@ public class Technique00_Common {
 
 
 
-		if (checkKeepDay_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			return Technique98_CONST.TRADE_FLG;
-		}
-
-		if (checkPrice_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-			return Technique98_CONST.TRADE_FLG;
-		}
+//		if (checkKeepDay_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
+//			return setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+//		}
+//
+//		if (checkPrice_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
+//			return setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+//		}
 
 
 
@@ -257,12 +272,40 @@ public class Technique00_Common {
 		//損切のインターバルが必要かどうかのチェック
 		//インターバルタイムかどうかをチェックする。
 		//損切した場合、インターバルフラグをtrue
-		if ( paraDTO.getRealTimeMode()==false ){
-			
-//			resultDTO.setNowInterValFLG(true);
-//			return Technique98_CONST.TRADE_FLG;
-			
+
+		//今日の終値
+		double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+		//昨日までの平均取得価格
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+
+		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
+		nowResult = nowResult * resultDTO.getEntryTime();
+		double lossLine = -1 * paraDTO.getMaxLoss();
+		if (nowResult <= lossLine ){
+			resultDTO.setNowInterValFLG(true);
+			System.out.println(nowDTO.getCode_01());
+			System.out.println(nowAvePrice);
+			System.out.println(nowPrice);
+			System.out.println(resultDTO.getEntryTime());
+
+			if (nowResult <= lossLine * 1.5){
+				return Technique98_CONST.NO_GAME;
+			}
+
+			return setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
+
+
+
+//			return Technique98_CONST.TRADE_FLG;
+		if ( paraDTO.getRealTimeMode() ){
+//			System.out.println(nowDTO.getCode_01());
+//			System.out.println(nowAvePrice);
+//			System.out.println(nowPrice);
+//			System.out.println(resultDTO.getEntryTime());
+		}
+
 
 
 //		if (checkPlunge_STOCK_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
@@ -371,7 +414,6 @@ public class Technique00_Common {
 
 
 		if ( resultDTO.getKeepCount() >= paraDTO.getCheckKeepDay() ){
-			setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 			return Technique98_CONST.TRADE_FLG;
 		}
 

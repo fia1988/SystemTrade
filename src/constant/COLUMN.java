@@ -5,12 +5,24 @@ public class COLUMN {
 	//count(*)
 	public static String COUNT											= "count(*)";
 
+
+	//エリートテーブルで設定する最大保有期間、エントリー回数、インターバルタイム、損切ライン
+	public static String MAX_ENTRY_TIME									= "MAX_ENTRY_TIME";
+	public static String MAX_ENTRY_TIME_KATA								= MAX_ENTRY_TIME + "  smallint  unsigned ";
+	public static String MAX_KEEP_TIME									= "MAX_KEEP_TIME";
+	public static String MAX_KEEP_TIME_KATA								= MAX_KEEP_TIME + "  smallint  unsigned ";
+	//ただし1.0＝-100％
+	public static String MAX_LOSS										= "MAX_LOSS";
+	public static String MAX_LOSS_KATA								= MAX_LOSS + "  double   unsigned ";
+
+
 	//今のインターバルタイム
 	public static String NOW_INTERVAL									= "now_interval";
 	public static String NOW_INTERVAL_KATA								= NOW_INTERVAL + "  smallint  unsigned ";
 	//インターバルタイムの最大値
 	public static String MAX_INTERVAL									= "MAX_interval";
 	public static String MAX_INTERVAL_KATA								= MAX_INTERVAL + "  smallint  unsigned  ";
+
 
 	//コードリストテーブルの列名
 	//証券コード

@@ -97,19 +97,14 @@ public class Technique08 {
 
 
 
-
-		paraDTO.setOffEliteFLG();
 		if ( Technique04.MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 
 			if ( Technique06.idoHeikinTest_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
-				paraDTO.setOnEliteFLG();
 				return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 
 			}
 
 		};
-
-		paraDTO.setOnEliteFLG();
 		return Technique98_CONST.NO_GAME;
 	}
 

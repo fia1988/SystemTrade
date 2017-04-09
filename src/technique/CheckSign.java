@@ -56,7 +56,7 @@ public class CheckSign {
 		ETFNameList = commonAP.getCodeList();
 
 		//キープテーブルのリストを取得
-		commonAP.setKeepCodeList(s);
+		commonAP.setKeepCodeList("DD",s);
 		keepStockList = commonAP.getCodeList();
 
 		//別メソッドを動かす前にメモリ解放
@@ -1071,13 +1071,26 @@ public class CheckSign {
 			if ( judge ){
 				//trueは買いフラグ
 				if(LMETHOD.equals(codeList.get(i)[2]) && SMETHOD.equals(codeList.get(i)[3])){
+					setParameta(paraDTO,resultDTO,codeList.get(i));
 					checkdaySignControll_sub(code,cate,resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,checkDay);
 				}
 			}else{
+				setParameta(paraDTO,resultDTO,codeList.get(i));
+//				paraDTO.setMaxEntryTimes	(	Integer.parseInt(codeList.get(i)[4])	);
+//				paraDTO.setMaxKeepDays		(	Integer.parseInt(codeList.get(i)[5])	);
+//				resultDTO.setMaxInterValTime(	Integer.parseInt(codeList.get(i)[6])	);
+//				paraDTO.setMaxLoss			(	Double.parseDouble(codeList.get(i)[7])	);
 				checkdaySignControll_sub(code,cate,resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,checkDay);
 			}
 		}
 
+	}
+
+	private static void setParameta(Bean_Parameta paraDTO,Bean_Result resultDTO,String[] codeList){
+		paraDTO.setMaxEntryTimes	(	Integer.parseInt(codeList[4])	);
+		paraDTO.setMaxKeepDays		(	Integer.parseInt(codeList[5])	);
+		resultDTO.setMaxInterValTime(	Integer.parseInt(codeList[6])	);
+		paraDTO.setMaxLoss			(	Double.parseDouble(codeList[7])	);
 	}
 
 	private static void checkdaySignControll_sub(String code,String cate,ArrayList<String> resultCodeList,String type,String L_packageName,String L_className,	String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,String checkDay){
@@ -1086,6 +1099,10 @@ public class CheckSign {
 		String packageName = L_packageName;
 		String className = L_className;
 		String methodName = L_methodName;
+
+		String LMETHOD = L_packageName + "." + L_className + "." + L_methodName;
+		String SMETHOD = S_packageName + "." + S_className + "." + S_methodName;
+
 
 		if ( judge ){
 			//trueは買いフラグ
@@ -1139,9 +1156,72 @@ public class CheckSign {
 
 		if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
 			resultCodeList.add(code);
+
+			//売りフラグの時、インターバルタイムがtrueかどうかをチェックする
+			if ( judge==false ){
+				if ( resultDTO.isNowInterValFLG() ){
+
+					//次の処理のためにfalseにする。
+					s = new S();
+					s.getCon();
+					setIntervalTBL(LMETHOD,SMETHOD,type,code,resultDTO.getMaxInterValTime(),s);
+					resultDTO.setNowInterValFLG(false);
+					//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
+					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+					s.closeConection();
+				}
+			};
 		};
 		resultDTO.resetCount();
 	}
 
+	private static void setIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
+		String SQL ="insert into " + TBL_Name.KEEPLISTTBL
+				+ " ( "
+				+ COLUMN.ENTRYMETHOD								 + " , " //
+				+ COLUMN.EXITMETHOD								 	 + " ,  " //
+				+ COLUMN.TYPE									 	 + " , " //
+				+ COLUMN.CODE										 + " , " //
+				+ COLUMN.NOW_INTERVAL								 + " , " //
+				+ COLUMN.MAX_INTERVAL								 + "   " //
+				+ " ) value ( "
+				+ "'" + Lmethod + "'"	 + ","
+				+ "'" + Smethod + "'"	 + ","
+				+ "'" + type    + "'"	 + ","
+				+ "'" + code    + "'"	 + ","
+				+ "1"					 + ","
+				+ maxInterval			 + " "
+				+ ")";
+		s.freeUpdateQuery(SQL);
+	}
 
+	private static void deleteIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
+		String SQL;
+		//		SQL = "delete from " + TBL_Name.INTERVAL_TIME_TBL;
+//		s.freeUpdateQuery(SQL);
+
+//		+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+//		+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+//		+ COLUMN.TYPE_KATA									 	 + " , " //
+//		+ COLUMN.CODE_KATA										 + " , " //
+//		+ COLUMN.NOW_INTERVAL_KATA								 + " , " //
+//		+ COLUMN.MAX_INTERVAL_KATA								 + " , " //
+	}
+
+	private static void increMentIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
+		String SQL;
+		String TBL = TBL_Name.INTERVAL_TIME_TBL;
+//		SQL = " update "
+//				+ TBL
+//				+ " set "
+//				+ updateColomn + " = " + num
+//				+ " where "
+//				+ COLUMN.DAYTIME
+//				+ " = '" + dayTime + "'"
+//				+ " and "
+//				+ COLUMN.CODE
+//				+ " ='" + code + "'";
+
+//		s.sqlGetter().executeUpdate(SQL);
+	}
 }

@@ -32,6 +32,10 @@ public class Bean_Result {
 		return nowInterValTime;
 	}
 
+	public void reSetNowInterValTime(){
+		this.nowInterValTime = 0;
+	}
+
 	public void setNowInterValTime() {
 		this.nowInterValTime++;
 	}
@@ -426,10 +430,15 @@ public class Bean_Result {
 				double totalLose = commonAP.getAverageTotalCountDouble(getLoseReturnListCode(),commonAP.TOTAL_FLG) * 100;
 				double aveWinEntry = commonAP.getAverageTotalCountLong(getWinEntryTimeListCode(),commonAP.AVERAGE_FLG);
 				double aveLoseEntry = commonAP.getAverageTotalCountLong(getLoseEntryTimeListCode(),commonAP.AVERAGE_FLG);
+				String winList		= commonAP.getStringList(getWinEntryTimeListCode()	, true);
+				String loseList		= commonAP.getStringList(getLoseEntryTimeListCode()	, true);
 				double aveWinKeep = commonAP.getAverageTotalCountLong(getWinKeepTimeListCode(),commonAP.AVERAGE_FLG);
 				double aveLoseKeep = commonAP.getAverageTotalCountLong(getLoseKeepTimeListCode(),commonAP.AVERAGE_FLG);
 				double totalWARIAI = 0;
 				try {
+					if(totalWin==0){
+						totalWin = 0.01;
+					}
 					totalWARIAI = (totalWin+totalLose)/(totalWin);
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -439,6 +448,8 @@ public class Bean_Result {
 				//設定した勝率（shoritu）以上の場合、結果を表示する
 				if ( shouritu > shoritu){
 					if( totalCodeGame > totalGames){
+						String elete = paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + paraDTO.getTermType() + "," + resultCode + "," + paraDTO.getMaxEntryTimes() + "," + paraDTO.getMaxKeepDays() + "," + getMaxInterValTime() + "," + paraDTO.getMaxLoss() + "\r\n";
+
 						if (checkTotalRatio){
 
 							if (totalWARIAI > getTotalRatio()){
@@ -462,7 +473,9 @@ public class Bean_Result {
 								commonAP.writeInLog("勝エントリー平均回数：" + aveWinEntry,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("負保有期間平均：" + aveLoseKeep,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
-								commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
+								commonAP.writeInLog("勝エントリー回数一覧：" + "・" + resultCode +"," + winList,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("負エントリー回数一覧：" + "・" + resultCode +"," + loseList,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeLog( elete ,logWriting.CODE_RESULT_LOG_FLG);
 								commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 								System.out.println("ここは通っている。レイシオ");
 							}
@@ -476,9 +489,11 @@ public class Bean_Result {
 							commonAP.writeInLog("勝エントリー平均回数：" + aveWinEntry,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("負保有期間平均：" + aveLoseKeep,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("勝エントリー回数一覧：" + "・" + resultCode +"," + winList,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("負エントリー回数一覧：" + "・" + resultCode +"," + loseList,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 							//時刻,メソッド名,code
-							commonAP.writeInLog(paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + resultCode,logWriting.CODE_RESULT_LOG_FLG);
+							commonAP.writeLog( elete ,logWriting.CODE_RESULT_LOG_FLG);
 						}
 
 
@@ -489,9 +504,9 @@ public class Bean_Result {
 			}
 		}
 
-		reSetCodeSatutus();
+		reSetCodeSatutus(paraDTO);
 	}
-	
+
 
 	public void resetInterval(){
 		maxInterValTime=0;
@@ -499,11 +514,20 @@ public class Bean_Result {
 		nowInterValFLG=false;
 	}
 
-	private void reSetCodeSatutus(){
+	private void reSetCodeSatutus(Bean_Parameta paraDTO){
 		reSetWinCount();
 		reSetLoseCount();
 		resetInterval();
-		
+
+		if ( paraDTO.getEliteFLG(true) ){
+			//エリートフラグがonのとき、セットする。paraとかをリセットする
+//			resultDTO.setEntryDay(entryDay);E
+			paraDTO.setMaxEntryTimes	(	2000	);
+			paraDTO.setMaxKeepDays		(	2000	);
+			paraDTO.setMaxLoss			(	2000	);
+			setMaxInterValTime			(	0		);
+		}
+
 		returnListCode = new ArrayList<Double>();
 		loseReturnListCode = new ArrayList<Double>();
 		winReturnListCode = new ArrayList<Double>();
@@ -760,9 +784,9 @@ public class Bean_Result {
 //			if (averageParcent>1 || -0.4 > averageParcent){
 //				commonAP.writeInLog(code + "," + result + ",【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【保有期間】," + getKeepCount() + "," + "【リターン絶対値】," + (exitPrice - average) + ",【リターン％】," + averageParcent + ",【エントリー回数】," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
 				//code,勝ち負け,儲かった金絶対値,保有期間,儲かったリターン,エントリー回数,購入日,購入価格
-			//日時,code,勝ち負け,平均取得価格,売値,手数料,儲かったリターン,保有期間,エントリー回数,購入日,購入価格
+			//日時,code,勝ち負け,平均取得価格,売値,手数料,儲かったリターン,儲かったリターンとエントリー回数結果,保有期間,エントリー回数,購入日,購入価格
 
-				commonAP.writeInLog(code + "," + result + ","  + average + "," + exitPrice + "," + paraDTO.getTesuRYO() + ","  + averageParcent + "," + getKeepCount() + "," + getEntryTime() + "," + getEntryList(),logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeLog(code + "," + result + ","  + average + "," + exitPrice + "," + paraDTO.getTesuRYO() + ","  + averageParcent + "," + (averageParcent*getEntryTime()) + "," + getKeepCount() + "," + getEntryTime() + "," + getEntryList() + "\r\n",logWriting.BACKTEST_LOG_FLG);
 //			}
 
 		}

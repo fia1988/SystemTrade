@@ -30,7 +30,7 @@ public class createTBL {
 		createKeepListTable(s);
 		createResulthistory(s);
 		createEleteTBL(s);
-
+		createIntervalTime(s);
 		return createLastOrderTable(s);
 	}
 
@@ -75,6 +75,10 @@ public class createTBL {
 				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
 				+ COLUMN.TYPE_KATA									 	 + " , " //
 				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.MAX_ENTRY_TIME_KATA							 + " , " //
+				+ COLUMN.MAX_KEEP_TIME_KATA								 + " , " //
+				+ COLUMN.MAX_INTERVAL_KATA									 + " , " //
+				+ COLUMN.MAX_LOSS_KATA								+ " , " //
 				+ "primary key ("
 				+ COLUMN.CODE + " , " + COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
 

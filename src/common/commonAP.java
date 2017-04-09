@@ -187,6 +187,33 @@ public class commonAP {
 
 	}
 
+	public static String getStringList(ArrayList<Long> resultList,boolean judge){
+		String resultLetter = "";
+
+		List<Long> doubleListCopy = new ArrayList<Long>();
+		doubleListCopy = resultList;
+
+		Collections.sort(doubleListCopy);
+		Collections.reverse(doubleListCopy);
+		if(judge){
+			//勝ちリスト
+
+		}else{
+
+			//負けリスト
+			//昇順でソートしたものを逆順にする
+//			Collections.sort(doubleListCopy);
+//	        
+		}
+
+
+	    for (Long a:doubleListCopy){
+	        resultLetter = resultLetter + a + ",";
+	    }
+
+		return resultLetter;
+	}
+
 	public static double getAverageTotalCountLong(List<Long> list,int checkCountTotal){
 		int totalCount	=	0;
 		double sum	=	0 ;
@@ -553,19 +580,32 @@ public class commonAP {
 
 	}
 
-	public static void setKeepCodeList(S s){
+	public static void setKeepCodeList(String type,S s){
 		codeListwithiCate = new ArrayList<String[]>();
 		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.KEEPLISTTBL;
+		String TBL = TBL_Name.ELETE_LIST_TBL;
 
+		SQL = " select * from " +  TBL +" AAA "
+				+ " left outer join " + TBL_Name.KEEPLISTTBL + " BBB "
+				+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+				+ " where "
+				+ "BBB." + COLUMN.TYPE			+ " = '" + type + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				codeSingle = new String[2];
-				String code = s.rs.getString(COLUMN.CODE);
+				String code = s.rs.getString("BBB." + COLUMN.CODE);
 //				String cate = SQLChecker.getCate(code, s);
+				//setCodeList（本番）に合わせる
 				codeSingle[0]=code;
 //				codeSingle[1]=cate;
+				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
+				codeSingle[3]=s.rs.getString("AAA." + COLUMN.EXITMETHOD);
+				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
+				codeSingle[5]=s.rs.getString("AAA." + COLUMN.MAX_KEEP_TIME);
+				codeSingle[6]=s.rs.getString("AAA." + COLUMN.MAX_INTERVAL);
+				codeSingle[7]=s.rs.getString("AAA." + COLUMN.MAX_LOSS);
 				codeListwithiCate.add(codeSingle);
 			}
 
@@ -609,11 +649,16 @@ public class commonAP {
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
-				codeSingle = new String[4];
+				//keepCodeListと揃える
+				codeSingle = new String[7];
 				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
 				codeSingle[1]=cate;
 				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
 				codeSingle[3]=s.rs.getString("AAA." + COLUMN.EXITMETHOD);
+				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
+				codeSingle[5]=s.rs.getString("AAA." + COLUMN.MAX_KEEP_TIME);
+				codeSingle[6]=s.rs.getString("AAA." + COLUMN.MAX_INTERVAL);
+				codeSingle[7]=s.rs.getString("AAA." + COLUMN.MAX_LOSS);
 				codeListwithiCate.add(codeSingle);
 			}
 
@@ -627,7 +672,7 @@ public class commonAP {
 	public static void setCodeList(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,String type,boolean judge,S s){
 		String LMETHOD = (L_packageName + "." + L_className + "." + L_methodName);
 		String SMETHOD = (S_packageName + "." + S_className + "." + S_methodName);
-
+		codeListwithiCate = new ArrayList<String[]>();
 		String TBL;
 		if (judge){
 			TBL = TBL_Name.ELETE_LIST_TBL;
@@ -647,9 +692,13 @@ public class commonAP {
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
-				codeSingle = new String[2];
+				codeSingle = new String[6];
 				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
 				codeSingle[1]=s.rs.getString("BBB." + COLUMN.CATE_FLG);
+				codeSingle[2]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
+				codeSingle[3]=s.rs.getString("AAA." + COLUMN.MAX_KEEP_TIME);
+				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_INTERVAL);
+				codeSingle[5]=s.rs.getString("AAA." + COLUMN.MAX_LOSS);
 				codeListwithiCate.add(codeSingle);
 			}
 

@@ -127,12 +127,12 @@ public class Analysis00_Common {
 
 
 		//全銘柄をリストに入れる
-		
 
-		
+
+
 		ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
-		
-		
+
+
 		if ( paraDTO.getEliteFLG(true) ){
 			//エリートフラグオン
 			commonAP.setCodeList(L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,"DD",false,s);
@@ -143,11 +143,19 @@ public class Analysis00_Common {
 		}
 
 		codeListwithiCate = commonAP.getCodeList();
-		
+
 		//全銘柄でループする
 		for (int i=0;i<codeListwithiCate.size();i++){
 			String code = codeListwithiCate.get(i)[0];
 
+			if ( paraDTO.getEliteFLG(true) ){
+				//エリートフラグがonのとき、セットする。paraとかを
+//				resultDTO.setEntryDay(entryDay);E
+				paraDTO.setMaxEntryTimes	(	Integer.parseInt(codeListwithiCate.get(i)[2])	);
+				paraDTO.setMaxKeepDays		(	Integer.parseInt(codeListwithiCate.get(i)[3])	);
+				resultDTO.setMaxInterValTime(	Integer.parseInt(codeListwithiCate.get(i)[4])	);
+				paraDTO.setMaxLoss			(	Double.parseDouble(codeListwithiCate.get(i)[5])	);
+			}
 			String SQL = makekabuSQL(code,startDay,endDay,s);
 			Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, SQL, s);
 
@@ -282,7 +290,7 @@ public class Analysis00_Common {
 							nowDTO.setKeepDay(resultDTO.getKeepCount());
 
 //							boolean checkSameDay = false;
-							
+
 							//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
 							if (paraDTO.getCheckRenzokuSign()){
 								switch( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTOList,i,resultDTO,true) ){
@@ -302,7 +310,7 @@ public class Analysis00_Common {
 									//売りメソッドがどこにもない場合
 								}
 							}
-							
+
 							//売りと買いが同じ日に出ているかをチェックする。同じ日に出ていたらエントリータイムを一つ減らす。
 //							if (checkSameDay==true){
 //								resultDTO.setEntryTimeMinus();
@@ -316,9 +324,9 @@ public class Analysis00_Common {
 									resultDTO.setExitDay(nowDTOList.get(i).getKessaiDay());
 									resultDTO.setExitPrice(nowDTOList.get(i).getKessaiKingaku());
 
-									
-									
-									
+
+
+
 									//ループが終わった証を立てる
 									loopCheck=true;
 									//その日の結論を出す。
@@ -341,7 +349,7 @@ public class Analysis00_Common {
 //							if (checkSameDay==true){
 //								resultDTO.setEntryTime();
 //							}
-							
+
 							//次の日に
 							i++;
 						}
@@ -402,9 +410,9 @@ public class Analysis00_Common {
 	//株：日経平均、JASDAC平均、なんちゃら400
 	//指数：自己結合；日経平均、JASDAC平均、なんちゃら400
 	public static String makekabuSQL(String code,S s){
-		
+
 		String cate = SQLChecker.getCate(code,s);
-		
+
 		String SQL = " select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'";
 
 		//株の時だけ挙動が違う
@@ -461,7 +469,7 @@ public class Analysis00_Common {
 						+	ReCord.INDEX_TBK_DD_JASDAC + "." + COLUMN.CODE + " = '" + ReCord.indexName_I306 + "' and "
 						+	ReCord.STATISTICS_NIKKE01_DD_CC + "." + COLUMN.CODE + " = '" + ReCord.TOSYO_01 + "'"
 						;
-				
+
 
 				break;
 			case ReCord.CODE_02_SATISTICS:
