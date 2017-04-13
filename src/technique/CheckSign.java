@@ -63,76 +63,14 @@ public class CheckSign {
 		s.closeConection();
 
 
-		//		paraDTO = new Bean_Parameta();
-		//		resultDTO = new Bean_Result();
-		//		nowDTO = new Bean_nowRecord();
-		//		nowDTOList = new ArrayList<>();
-		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		//		paraDTO.setOnEliteFLG();
-//		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-		////		paraDTO = new Bean_Parameta();
-		////		resultDTO = new Bean_Result();
-		////		nowDTO = new Bean_nowRecord();
-		////		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		////		paraDTO.setOnEliteFLG();
-//		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique08","MACD_IDOHEIKIN_S",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-
-		//
-		//		paraDTO = new Bean_Parameta();
-		//		resultDTO = new Bean_Result();
-		//		nowDTO = new Bean_nowRecord();
-		//		nowDTOList = new ArrayList<>();
-		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		//		paraDTO.setOnEliteFLG();
-		//		CHECKTODAY(1,"DD","technique","Technique06","idoHeikinTest_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		//
-		//
-		//		paraDTO = new Bean_Parameta();
-		//		resultDTO = new Bean_Result();
-		//		nowDTO = new Bean_nowRecord();
-		//		nowDTOList = new ArrayList<>();
-		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		//		paraDTO.setOnEliteFLG();
-		//		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L","technique","Technique04","MACD_M_S_OVER0",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		//
-		//
-		//		paraDTO = new Bean_Parameta();
-		//		resultDTO = new Bean_Result();
-		//		nowDTO = new Bean_nowRecord();
-		//		nowDTOList = new ArrayList<>();
-		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		//		paraDTO.setOnEliteFLG();
-		//		CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L","technique","Technique08","MACD_IDOHEIKIN_S",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		//
-		//
-		////		paraDTO = new Bean_Parameta();
-		////		resultDTO = new Bean_Result();
-		////		nowDTO = new Bean_nowRecord();
-		////		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		////		paraDTO.setOnEliteFLG();
-		////		CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_1_S","technique","Technique04","MACD_M_S_OVER0",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-		//
-		//
-		//		paraDTO = new Bean_Parameta();
-		//		resultDTO = new Bean_Result();
-		//		nowDTO = new Bean_nowRecord();
-		//		nowDTOList = new ArrayList<>();
-		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		//		paraDTO.setOnEliteFLG();
-		//		CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_1_S","technique","Technique06","IDO_HEKIN_2_L",paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList);
-
-
-		//		paraDTO = new Bean_Parameta();
-		//		resultDTO = new Bean_Result();
-		//		nowDTO = new Bean_nowRecord();
-		//		nowDTOList = new ArrayList<>();
-		//		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
-		//		paraDTO.setOnEliteFLG();
-
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L,			TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 
 		//別メソッドを動かす前にメモリ解放
@@ -1068,6 +1006,10 @@ public class CheckSign {
 			String code = codeList.get(i)[0];
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
+			System.out.println("");
+			System.out.println(code);
+			System.out.println(LMETHOD);
+			System.out.println(SMETHOD);
 			if ( judge ){
 				//trueは買いフラグ
 				if(LMETHOD.equals(codeList.get(i)[2]) && SMETHOD.equals(codeList.get(i)[3])){
@@ -1091,6 +1033,13 @@ public class CheckSign {
 		paraDTO.setMaxKeepDays		(	Integer.parseInt(codeList[5])	);
 		resultDTO.setMaxInterValTime(	Integer.parseInt(codeList[6])	);
 		paraDTO.setMaxLoss			(	Double.parseDouble(codeList[7])	);
+
+		System.out.println();
+		System.out.println(paraDTO.getMaxEntryTimes());
+		System.out.println(paraDTO.getMaxKeepDays());
+		System.out.println(resultDTO.getMaxInterValTime());
+		System.out.println(paraDTO.getMaxLoss());
+
 	}
 
 	private static void checkdaySignControll_sub(String code,String cate,ArrayList<String> resultCodeList,String type,String L_packageName,String L_className,	String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,int size,boolean judge,String checkDay){

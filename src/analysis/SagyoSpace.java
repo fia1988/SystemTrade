@@ -29,8 +29,8 @@ public class SagyoSpace {
 		//結論の出力方法
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
-//		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
+		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
@@ -66,8 +66,9 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2016-12-31";
-//		startDD	=	"2017-01-01";
-//		endDD		=	"2017-04-07";
+
+		startDD	=	"2016-10-01";
+		endDD		=	"2016-12-31";
 
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
@@ -75,16 +76,12 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
-//		resultDTO.setOffResultCode();
-//		resultDTO.setOffResultDay();
-//		paraDTO.setMaxEntryTimes(35);
-//		paraDTO.setMaxKeepDays(31);
-//		resultDTO.setTotalRatio(0.65);
+		
+
 		String tec = "technique";
-//		paraDTO.setMaxLoss(3);
-//		resultDTO.setMaxInterValTime(	30	);
-//		resultDTO.setOnResultDay();
+////		paraDTO.setMaxLoss(3);
+////		resultDTO.setMaxInterValTime(	30	);
+////		resultDTO.setOnResultDay();
 		Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
@@ -94,7 +91,7 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(32);
 //		paraDTO.setMaxKeepDays(21);
@@ -107,7 +104,7 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(35);
 //		paraDTO.setMaxKeepDays(17);
@@ -120,7 +117,7 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(19);
@@ -133,7 +130,7 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(28);
 //		paraDTO.setMaxKeepDays(22);
@@ -145,7 +142,7 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(28);
 //		paraDTO.setMaxKeepDays(16);
@@ -157,7 +154,7 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(33);
 //		paraDTO.setMaxKeepDays(32);
@@ -169,53 +166,53 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
 		paraDTO.setCheckRenzokuSign(true);
-		paraDTO.setTesuRYO(0.022);
+		
 		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(20);
 //		paraDTO.setMaxKeepDays(19);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
-
-		List<String[]> methodList_L = new ArrayList<String[]>();
-		String methodName[] = new String[2];
-		methodName[0] = "Technique11";
-		methodName[1] = "DEKI_1_L";
-		methodList_L.add(methodName.clone());
-
-		List<String[]> methodList_S = new ArrayList<String[]>();
-		String methodNameS[] = new String[2];
-		methodNameS[0] = "Technique11";
-
-		methodNameS[1] = "DEKI_1_L";
-		methodList_S.add(methodNameS.clone());
-
-
-
-		for (int b = 0 ;b < methodList_L.size() ; b++){
-			String L_CLASS = methodList_L.get(b)[0];
-			String L_METHOD = methodList_L.get(b)[1];
-			for (int c = 0 ;c < methodList_S.size() ; c++){
-				String S_CLASS = methodList_L.get(c)[0];
-				String S_METHOD = methodList_L.get(c)[1];
-				System.out.println("");
-
-				paraDTO = new Bean_Parameta();
-				resultDTO = new Bean_Result();
-				nowDTO = new Bean_nowRecord();
-				shokisettei(paraDTO, nowDTO, resultDTO);
-				paraDTO.setEtfFLG(false);
-				paraDTO.setCheckRenzokuSign(true);
-				paraDTO.setTesuRYO(0.022);
-				//					paraDTO.setMaxEntryTimes(15);
-				//					paraDTO.setMaxKeepDays(15);
-				resultDTO.setOnResultCode();
-				resultDTO.setShoritu(0.85);
-				resultDTO.setTotalGames(20);
-//				resultDTO.setTotalRatio(0.65);
-				if (!(L_METHOD.equals(S_METHOD))){
-					Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
-				}
-			}
-		}
+//
+//		List<String[]> methodList_L = new ArrayList<String[]>();
+//		String methodName[] = new String[2];
+//		methodName[0] = "Technique11";
+//		methodName[1] = "DEKI_1_L";
+//		methodList_L.add(methodName.clone());
+//
+//		List<String[]> methodList_S = new ArrayList<String[]>();
+//		String methodNameS[] = new String[2];
+//		methodNameS[0] = "Technique11";
+//
+//		methodNameS[1] = "DEKI_1_L";
+//		methodList_S.add(methodNameS.clone());
+//
+//
+//
+//		for (int b = 0 ;b < methodList_L.size() ; b++){
+//			String L_CLASS = methodList_L.get(b)[0];
+//			String L_METHOD = methodList_L.get(b)[1];
+//			for (int c = 0 ;c < methodList_S.size() ; c++){
+//				String S_CLASS = methodList_L.get(c)[0];
+//				String S_METHOD = methodList_L.get(c)[1];
+//				System.out.println("");
+//
+//				paraDTO = new Bean_Parameta();
+//				resultDTO = new Bean_Result();
+//				nowDTO = new Bean_nowRecord();
+//				shokisettei(paraDTO, nowDTO, resultDTO);
+//				paraDTO.setEtfFLG(false);
+//				paraDTO.setCheckRenzokuSign(true);
+//				paraDTO.setTesuRYO(0.022);
+//				//					paraDTO.setMaxEntryTimes(15);
+//				//					paraDTO.setMaxKeepDays(15);
+//				resultDTO.setOnResultCode();
+//				resultDTO.setShoritu(0.85);
+//				resultDTO.setTotalGames(20);
+////				resultDTO.setTotalRatio(0.65);
+//				if (!(L_METHOD.equals(S_METHOD))){
+//					Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
+//				}
+//			}
+//		}
 
 
 
@@ -353,6 +350,8 @@ public class SagyoSpace {
 		dayList.add("2016-12-29");
 		dayList.add("2016-12-30");
 
+		
+		
 		for (String TODAY:dayList){
 
 			CheckSign.dealLastOrder(TODAY);
@@ -367,16 +366,16 @@ public class SagyoSpace {
 
 			ArrayList<String[]> keepStockList = new ArrayList<String[]>();
 			//全銘柄をリストに入れる
-			commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+			commonAP.setCodeList("DD",ReCord.CODE_01_STOCK,true,s);
 			STOCKList = commonAP.getCodeList();
 
-			commonAP.setCodeList(ReCord.CODE_02_SATISTICS,s);
+			commonAP.setCodeList("DD",ReCord.CODE_02_SATISTICS,true,s);
 			SATISTICSList = commonAP.getCodeList();
 
-			commonAP.setCodeList(ReCord.CODE_03_INDEX,s);
+			commonAP.setCodeList("DD",ReCord.CODE_03_INDEX,true,s);
 			INDEXList = commonAP.getCodeList();
 
-			commonAP.setCodeList(ReCord.CODE_04_ETF,s);
+			commonAP.setCodeList("DD",ReCord.CODE_04_ETF,true,s);
 			ETFNameList = commonAP.getCodeList();
 
 			//キープテーブルのリストを取得
@@ -385,11 +384,14 @@ public class SagyoSpace {
 
 			//別メソッドを動かす前にメモリ解放
 			s.closeConection();
+			
 
 //			CheckSign.CHECKTODAY(1,"DD","technique","Techinique00_TEST","MACD_M_L_OVER0","technique","Techinique00_TEST","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//			int sleepTime = 7;
-//			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-			CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			int sleepTime = 7000;
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 			STOCKList = new ArrayList<String[]>();
 			SATISTICSList = new ArrayList<String[]>();
@@ -398,7 +400,7 @@ public class SagyoSpace {
 			keepStockList = new ArrayList<String[]>();
 		}
 
-		testCase97();
+//		testCase97();
 	}
 
 	public static void testCase99(){
