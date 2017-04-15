@@ -784,7 +784,7 @@ public class Bean_Result {
 //			if (averageParcent>1 || -0.4 > averageParcent){
 //				commonAP.writeInLog(code + "," + result + ",【entry】" + getEntryList() + "【exit】" + exitDay + "/" + exitPrice + "【保有期間】," + getKeepCount() + "," + "【リターン絶対値】," + (exitPrice - average) + ",【リターン％】," + averageParcent + ",【エントリー回数】," + getEntryTime(),logWriting.BACKTEST_LOG_FLG);
 				//code,勝ち負け,儲かった金絶対値,保有期間,儲かったリターン,エントリー回数,購入日,購入価格
-			//日時,code,勝ち負け,平均取得価格,売値,手数料,儲かったリターン,儲かったリターンとエントリー回数結果,保有期間,エントリー回数,購入日,購入価格
+			//code,勝ち負け,平均取得価格,売値,手数料,儲かったリターン,儲かったリターンとエントリー回数結果,保有期間,エントリー回数,購入日,購入価格
 
 				commonAP.writeLog(code + "," + result + ","  + average + "," + exitPrice + "," + paraDTO.getTesuRYO() + ","  + averageParcent + "," + (averageParcent*getEntryTime()) + "," + getKeepCount() + "," + getEntryTime() + "," + getEntryList() + "\r\n",logWriting.BACKTEST_LOG_FLG);
 //			}

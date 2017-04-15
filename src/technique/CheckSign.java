@@ -930,7 +930,7 @@ public class CheckSign {
 						+ " as sub "
 						+ " ) ";
 
-//				System.out.println(SQL);
+				System.out.println(SQL);
 				s.freeUpdateQuery(SQL);
 //				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.DATEDATE_LOG_FLG);
 			};
@@ -1006,10 +1006,7 @@ public class CheckSign {
 			String code = codeList.get(i)[0];
 			boolean checkMotiResult = false;
 			cate = codeList.get(i)[1];
-			System.out.println("");
-			System.out.println(code);
-			System.out.println(LMETHOD);
-			System.out.println(SMETHOD);
+
 			if ( judge ){
 				//trueは買いフラグ
 				if(LMETHOD.equals(codeList.get(i)[2]) && SMETHOD.equals(codeList.get(i)[3])){
@@ -1034,11 +1031,6 @@ public class CheckSign {
 		resultDTO.setMaxInterValTime(	Integer.parseInt(codeList[6])	);
 		paraDTO.setMaxLoss			(	Double.parseDouble(codeList[7])	);
 
-		System.out.println();
-		System.out.println(paraDTO.getMaxEntryTimes());
-		System.out.println(paraDTO.getMaxKeepDays());
-		System.out.println(resultDTO.getMaxInterValTime());
-		System.out.println(paraDTO.getMaxLoss());
 
 	}
 
@@ -1051,7 +1043,16 @@ public class CheckSign {
 
 		String LMETHOD = L_packageName + "." + L_className + "." + L_methodName;
 		String SMETHOD = S_packageName + "." + S_className + "." + S_methodName;
-
+		
+//		System.out.println("");
+//		System.out.println("checkdaySignControll_sub");
+//		System.out.println(code);
+//		System.out.println(LMETHOD);
+//		System.out.println(SMETHOD);
+//		System.out.println(paraDTO.getMaxEntryTimes());
+//		System.out.println(paraDTO.getMaxKeepDays());
+//		System.out.println(resultDTO.getMaxInterValTime());
+//		System.out.println(paraDTO.getMaxLoss());
 
 		if ( judge ){
 			//trueは買いフラグ

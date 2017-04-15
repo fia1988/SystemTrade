@@ -39,6 +39,7 @@ public class SagyoSpace {
 		resultDTO.setTotalRatio(0.65);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
+		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
@@ -70,6 +71,9 @@ public class SagyoSpace {
 		startDD	=	"2016-10-01";
 		endDD		=	"2016-12-31";
 
+
+		
+		
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
@@ -350,8 +354,8 @@ public class SagyoSpace {
 		dayList.add("2016-12-29");
 		dayList.add("2016-12-30");
 
-		
-		
+
+
 		for (String TODAY:dayList){
 
 			CheckSign.dealLastOrder(TODAY);
@@ -366,9 +370,10 @@ public class SagyoSpace {
 
 			ArrayList<String[]> keepStockList = new ArrayList<String[]>();
 			//全銘柄をリストに入れる
+
 			commonAP.setCodeList("DD",ReCord.CODE_01_STOCK,true,s);
 			STOCKList = commonAP.getCodeList();
-
+			
 			commonAP.setCodeList("DD",ReCord.CODE_02_SATISTICS,true,s);
 			SATISTICSList = commonAP.getCodeList();
 
@@ -388,11 +393,13 @@ public class SagyoSpace {
 
 //			CheckSign.CHECKTODAY(1,"DD","technique","Techinique00_TEST","MACD_M_L_OVER0","technique","Techinique00_TEST","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 			int sleepTime = 7000;
-			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+
 			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			
 			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			
 			STOCKList = new ArrayList<String[]>();
 			SATISTICSList = new ArrayList<String[]>();
 			INDEXList = new ArrayList<String[]>();

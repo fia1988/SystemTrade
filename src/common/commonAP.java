@@ -594,12 +594,13 @@ public class commonAP {
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
-				codeSingle = new String[2];
+				codeSingle = new String[8];
 				String code = s.rs.getString("BBB." + COLUMN.CODE);
 //				String cate = SQLChecker.getCate(code, s);
 				//setCodeList（本番）に合わせる
 				codeSingle[0]=code;
 //				codeSingle[1]=cate;
+
 				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
 				codeSingle[3]=s.rs.getString("AAA." + COLUMN.EXITMETHOD);
 				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
@@ -650,7 +651,7 @@ public class commonAP {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				//keepCodeListと揃える
-				codeSingle = new String[7];
+				codeSingle = new String[8];
 				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
 				codeSingle[1]=cate;
 				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
