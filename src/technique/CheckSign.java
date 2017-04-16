@@ -73,6 +73,11 @@ public class CheckSign {
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 
+		s.resetConnection();
+
+		afterCheck(s);
+		
+		
 		//別メソッドを動かす前にメモリ解放
 		s.closeConection();
 
@@ -1043,7 +1048,7 @@ public class CheckSign {
 
 		String LMETHOD = L_packageName + "." + L_className + "." + L_methodName;
 		String SMETHOD = S_packageName + "." + S_className + "." + S_methodName;
-		
+
 //		System.out.println("");
 //		System.out.println("checkdaySignControll_sub");
 //		System.out.println(code);
@@ -1126,7 +1131,7 @@ public class CheckSign {
 	}
 
 	private static void setIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
-		String SQL ="insert into " + TBL_Name.KEEPLISTTBL
+		String SQL ="insert into " + TBL_Name.INTERVAL_TIME_TBL
 				+ " ( "
 				+ COLUMN.ENTRYMETHOD								 + " , " //
 				+ COLUMN.EXITMETHOD								 	 + " ,  " //
@@ -1145,10 +1150,17 @@ public class CheckSign {
 		s.freeUpdateQuery(SQL);
 	}
 
-	private static void deleteIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
+	public static void afterCheck(S s){
+		deleteIntervalTBL(s);
+		increMentIntervalTBL(s);
+	}
+	
+	private static void deleteIntervalTBL(S s){
 		String SQL;
-		//		SQL = "delete from " + TBL_Name.INTERVAL_TIME_TBL;
-//		s.freeUpdateQuery(SQL);
+		SQL = "delete from " + TBL_Name.INTERVAL_TIME_TBL
+			+ " where "
+			+ COLUMN.NOW_INTERVAL + " > " + COLUMN.MAX_INTERVAL	;
+		s.freeUpdateQuery(SQL);
 
 //		+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
 //		+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
@@ -1158,20 +1170,18 @@ public class CheckSign {
 //		+ COLUMN.MAX_INTERVAL_KATA								 + " , " //
 	}
 
-	private static void increMentIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
+	private static void increMentIntervalTBL(S s){
 		String SQL;
 		String TBL = TBL_Name.INTERVAL_TIME_TBL;
-//		SQL = " update "
-//				+ TBL
-//				+ " set "
-//				+ updateColomn + " = " + num
-//				+ " where "
-//				+ COLUMN.DAYTIME
-//				+ " = '" + dayTime + "'"
-//				+ " and "
-//				+ COLUMN.CODE
-//				+ " ='" + code + "'";
-
-//		s.sqlGetter().executeUpdate(SQL);
+		SQL = " update "
+				+ TBL
+				+ " set "
+				+ COLUMN.NOW_INTERVAL + " = " + COLUMN.NOW_INTERVAL + " + 1";
+		try {
+			s.sqlGetter().executeUpdate(SQL);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 	}
 }

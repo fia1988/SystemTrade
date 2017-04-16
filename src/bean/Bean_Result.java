@@ -18,7 +18,17 @@ public class Bean_Result {
 	int nowInterValTime=0;
 	boolean nowInterValFLG=false;
 
+	boolean maxLossFLG = false;
 
+
+
+	public boolean isMaxLossFLG() {
+		return maxLossFLG;
+	}
+
+	public void setMaxLossFLG(boolean maxLossFLG) {
+		this.maxLossFLG = maxLossFLG;
+	}
 
 	public boolean isNowInterValFLG() {
 		return nowInterValFLG;
@@ -518,6 +528,7 @@ public class Bean_Result {
 		reSetWinCount();
 		reSetLoseCount();
 		resetInterval();
+		setMaxLossFLG(false);
 
 		if ( paraDTO.getEliteFLG(true) ){
 			//エリートフラグがonのとき、セットする。paraとかをリセットする

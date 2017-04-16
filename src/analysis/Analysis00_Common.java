@@ -332,7 +332,12 @@ public class Analysis00_Common {
 									//その日の結論を出す。
 									resultDTO.getResultDayResult(code,paraDTO);
 									//下で一日増やすので減らしておく
-									i--;
+									if ( resultDTO.isMaxLossFLG() == false){
+										i--;	
+									}else{
+										resultDTO.setMaxLossFLG(false);
+									}
+									
 
 									//売買フラグチェックを外す。
 									paraDTO.setCheckFLG(false);
@@ -345,10 +350,6 @@ public class Analysis00_Common {
 								case Technique98_CONST.NO_METHOD:
 									return Technique98_CONST.NO_METHOD;
 							}
-
-//							if (checkSameDay==true){
-//								resultDTO.setEntryTime();
-//							}
 
 							//次の日に
 							i++;

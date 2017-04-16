@@ -16,6 +16,8 @@ public class ReturnCodeConst {
 	final public static int SQL_ERR_1045 = 1045;
 	//テーブル重複
 	final public static int SQL_ERR_1050 = 1050;
+	//列がない
+	final public static int SQL_ERR_1054 = 1054;
 	//レコード重複
 	final public static int SQL_ERR_1062 = 1062;
 	//ファイルが既に存在する

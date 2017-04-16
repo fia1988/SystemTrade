@@ -203,7 +203,7 @@ public class commonAP {
 			//負けリスト
 			//昇順でソートしたものを逆順にする
 //			Collections.sort(doubleListCopy);
-//	        
+//
 		}
 
 
@@ -632,20 +632,40 @@ public class commonAP {
 		String SQL;
 		String TBL;
 		if (judge){
+			//本番
 			TBL = TBL_Name.ELETE_LIST_TBL;
+			SQL = " select * from " +  TBL +" AAA "
+					+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
+					+ " on "
+					+ "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+					+ " left outer join " + TBL_Name.INTERVAL_TIME_TBL + " CCC "
+					+ " on "
+					+ "AAA." + COLUMN.CODE + " = " + "CCC." + COLUMN.CODE
+					+ " and "
+					+ "AAA." + COLUMN.ENTRYMETHOD + " = " + "CCC." + COLUMN.ENTRYMETHOD
+					+ " and "
+					+ "AAA." + COLUMN.EXITMETHOD + " = " + "CCC." + COLUMN.EXITMETHOD
+					+ " and "
+					+ "AAA." + COLUMN.CODE + " = " + "CCC." + COLUMN.CODE
+					+ " where "
+					+ "BBB." + COLUMN.CATE_FLG	+ " = '" + cate + "'"
+					+ " and "
+					+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  "
+					+ " and "
+					+ "CCC." + COLUMN.MAX_INTERVAL + " is null";
 		}else{
+			//試験環境
 			TBL = TBL_Name.ELETE_LIST_TEST_TBL;
+			SQL = " select * from " +  TBL +" AAA "
+					+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
+					+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+					+ " where "
+					+ "BBB." + COLUMN.CATE_FLG	+ " = '" + cate + "'"	 + " and " //
+					+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  " ;
+
 		}
 
-		SQL = " select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
 
-
-		SQL = " select * from " +  TBL +" AAA "
-				+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
-				+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
-				+ " where "
-				+ "BBB." + COLUMN.CATE_FLG	+ " = '" + cate + "'"	 + " and " //
-				+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  " ;
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);

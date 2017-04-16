@@ -155,6 +155,7 @@ public class Technique00_Common {
 			}
 		}
 
+
 		//今日の終値
 		double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
 		//昨日までの平均取得価格
@@ -169,7 +170,6 @@ public class Technique00_Common {
 			return Technique98_CONST.NO_GAME;
 		}
 
-//			return Technique98_CONST.TRADE_FLG;
 
 
 //		//RUMフラグがtrueだったら一定確率でノーゲームを返す。
@@ -300,28 +300,10 @@ public class Technique00_Common {
 
 
 
-
-
-
-		if ( paraDTO.getRealTimeMode() ){
-			//本番
-
-//			Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
-//			int keepTime = getKeepDayEntryTimes(true,nowDTO.getCode_01(),"DD",paraDTO.getLMETHOD(),paraDTO.getSMETHOD());
-//			//保有期間が長くなると売る
-//			if (keepTime >= paraDTO.getMaxKeepDays()){
-//				Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
-//				return Technique98_CONST.TRADE_FLG;
-//			}
-
-		}else{
-			//バックテスト
-
-		}
-
 		//保有期間が長くなると売る
 		if (resultDTO.getKeepCount() >= paraDTO.getMaxKeepDays()){
 			Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+			resultDTO.setNowInterValFLG(true);
 			return Technique98_CONST.TRADE_FLG;
 		}
 		//損切のインターバルが必要かどうかのチェック
@@ -329,9 +311,21 @@ public class Technique00_Common {
 		//損切した場合、インターバルフラグをtrue
 
 		//今日の終値
-		double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
-		//昨日までの平均取得価格
+		double nowPrice= 0 ;
+		if ( paraDTO.getRealTimeMode() ){
+			//本番
+			nowPrice = nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+		}else{
+			//バックテスト
 
+			try{
+				nowPrice = nowDTOList.get(nowDTOadress + 1).getNowCLOSE_01() ;
+//			}catch(ArrayIndexOutOfBoundsException e){
+			}catch(Exception e){
+				return Technique98_CONST.NO_GAME;
+			}
+		}
+		//昨日までの平均取得価格
 		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
 
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
@@ -339,32 +333,21 @@ public class Technique00_Common {
 		double lossLine = -1 * paraDTO.getMaxLoss();
 
 		if (nowResult <= lossLine ){
-			resultDTO.setNowInterValFLG(true);
-
-
 			if (nowResult <= lossLine * 1.5){
 				return Technique98_CONST.NO_GAME;
 			}
+
+			resultDTO.setNowInterValFLG(true);
 
 			if ( paraDTO.getRealTimeMode() ){
 				//本番
 				return setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 			}else{
 				//バックテスト
-//				System.out.println("----------");
-//				System.out.println(nowDTO.getNowDay_01());
-//				System.out.println(nowDTO.getCode_01());
-//				System.out.println(nowAvePrice);
-//				System.out.println(nowPrice);
-//				System.out.println(resultDTO.getEntryTime());
-//				System.out.println(nowResult);
-//				System.out.println(lossLine);
-//				System.out.println("----------");
-//				System.out.println(nowDTO.getCode_01());
-//				System.out.println(nowAvePrice);
-//				System.out.println(nowPrice);
-//				System.out.println(resultDTO.getEntryTime());
+
+				resultDTO.setMaxLossFLG(true);
 				return setKessaiClose(paraDTO,nowDTO, nowDTOList, nowDTOadress + 1 , resultDTO, judge);
+
 			}
 
 		}
