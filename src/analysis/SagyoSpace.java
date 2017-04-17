@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proparty.S;
+import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
@@ -14,6 +15,7 @@ import bean.Bean_nowRecord;
 
 import common.commonAP;
 
+import constant.COLUMN;
 import constant.ReCord;
 import constant.TechCon;
 
@@ -30,21 +32,22 @@ public class SagyoSpace {
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
 		resultDTO.setOnResultDay();
-//		resultDTO.setOnResultCode();
+		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
 		resultDTO.setShoritu(0.75);
 		resultDTO.setTotalGames(20);
-		resultDTO.setTotalRatio(0.65);
+//		resultDTO.setTotalRatio(0.65);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
-		paraDTO.setTesuRYO(0);
+//		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
 //		paraDTO.setEntryMoney(0.83);
-		paraDTO.setOnEliteFLG();
+		//エリートフラグ
+//		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		System.out.println("【出来高"+ i + "】");
 	}
@@ -59,6 +62,48 @@ public class SagyoSpace {
 
 	}
 
+	public static void testCase999(){
+
+			String column = COLUMN.CODE			 	+ " , " //
+							+ COLUMN.DAYTIME		+ " , " //
+							+ COLUMN.TYPE			+ " , " //
+							+ COLUMN.ENTRYMETHOD	+ " , " //
+							+ COLUMN.EXITMETHOD		+ " , "
+							+ COLUMN.ENTRYTIMES		+ "  ";
+
+			String heddaColumn = "'" +  COLUMN.CODE		 	+ "' , " //
+					   + "'" +  COLUMN.DAYTIME		+ "' , " //
+					   + "'" +  COLUMN.TYPE			+ "' , " //
+					   + "'" +  COLUMN.ENTRYMETHOD	+ "' , " //
+					   + "'" +  COLUMN.EXITMETHOD	+ "' , "
+					   + "'" +  COLUMN.ENTRYTIMES	+ "'  ";
+
+
+
+
+			String SQL;
+
+			SQL =	" SELECT "
+					+ heddaColumn
+					+ " union "
+					+ " SELECT "
+					+ column
+					+ " FROM " + TBL_Name.LASTORDER + " AAA "
+					+	" left outer join " + TBL_Name.KEEPLISTTBL + " BBB "
+					+	" on AAA." + COLUMN.CODE  + "= " + "BBB." +  COLUMN.CODE
+					+	" and "
+					+	" AAA." + COLUMN.TYPE  + "= " + "BBB." +  COLUMN.TYPE
+					+	" and "
+					+	" AAA." + COLUMN.ENTRYMETHOD  + "= " + "BBB." +  COLUMN.ENTRYMETHOD
+					+	" and "
+					+	" AAA." + COLUMN.EXITMETHOD  + "= " + "BBB." +  COLUMN.EXITMETHOD
+					+	" where "
+					+	"AAA." + COLUMN.SIGN_FLG  + " is  true ";
+			System.out.println(SQL);
+
+	}
+
+
 	public static void testCase96(){
 		//連続取引するエリートの全メソッドの一覧を作る
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -68,8 +113,8 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2016-12-31";
 
-		startDD	=	"2016-10-01";
-		endDD		=	"2016-12-31";
+//		startDD	=	"2016-10-01";
+//		endDD		=	"2016-12-31";
 
 
 
@@ -78,8 +123,6 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
-
 
 		String tec = "technique";
 ////		paraDTO.setMaxLoss(3);
@@ -93,9 +136,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(32);
 //		paraDTO.setMaxKeepDays(21);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
@@ -106,9 +147,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(35);
 //		paraDTO.setMaxKeepDays(17);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
@@ -119,9 +158,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(19);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
@@ -132,9 +169,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(28);
 //		paraDTO.setMaxKeepDays(22);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
@@ -144,9 +179,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(28);
 //		paraDTO.setMaxKeepDays(16);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
@@ -156,9 +189,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(33);
 //		paraDTO.setMaxKeepDays(32);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
@@ -168,9 +199,7 @@ public class SagyoSpace {
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO);
 //		paraDTO.setOnEliteFLG();
-		paraDTO.setCheckRenzokuSign(true);
 
-		resultDTO.setOnResultCode();
 //		paraDTO.setMaxEntryTimes(20);
 //		paraDTO.setMaxKeepDays(19);
 		Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);

@@ -186,17 +186,20 @@ public class cloringDate {
 		String fileNameL;
 		String fileNameS;
 		String filePath;
-		String column = COLUMN.CODE			 	+ " , " //
-						+ COLUMN.DAYTIME		+ " , " //
-						+ COLUMN.TYPE			+ " , " //
-						+ COLUMN.ENTRYMETHOD	+ " , " //
-						+ COLUMN.EXITMETHOD		+ " " ;
+		String column 	= "AAA." + COLUMN.CODE			 	+ " , " //
+						+ "AAA." + COLUMN.DAYTIME		+ " , " //
+						+ "AAA." + COLUMN.TYPE			+ " , " //
+						+ "AAA." + COLUMN.ENTRYMETHOD	+ " , " //
+						+ "AAA." + COLUMN.EXITMETHOD		+ " , "
+						+ "BBB." + COLUMN.ENTRYTIMES		+ "  ";
 
 		String heddaColumn = "'" +  COLUMN.CODE		 	+ "' , " //
 						   + "'" +  COLUMN.DAYTIME		+ "' , " //
 						   + "'" +  COLUMN.TYPE			+ "' , " //
 						   + "'" +  COLUMN.ENTRYMETHOD	+ "' , " //
-						   + "'" +  COLUMN.EXITMETHOD	+ "' " ;;
+						   + "'" +  COLUMN.EXITMETHOD	+ "' , "
+						   + "'" +  COLUMN.ENTRYTIMES	+ "'  ";
+
 
 
 		String today = controllDay.getMAX_DD_INDEX(s);
@@ -226,12 +229,26 @@ public class cloringDate {
 				+ " union "
 				+ " SELECT "
 				+ column
-				+ " FROM " + TBL_Name.LASTORDER
+				+ " FROM " + TBL_Name.LASTORDER + " AAA "
+				+	" left outer join " + TBL_Name.KEEPLISTTBL + " BBB "
+				+	" on "
+				+	" AAA." + COLUMN.CODE  + "= " + "BBB." +  COLUMN.CODE
+				+	" and "
+				+	" AAA." + COLUMN.TYPE  + "= " + "BBB." +  COLUMN.TYPE
+				+	" and "
+				+	" AAA." + COLUMN.ENTRYMETHOD  + "= " + "BBB." +  COLUMN.ENTRYMETHOD
+				+	" and "
+				+	" AAA." + COLUMN.EXITMETHOD  + "= " + "BBB." +  COLUMN.EXITMETHOD
 				+	" where "
-				+	COLUMN.SIGN_FLG  + " is  " + judge + " "
+				+	" AAA." + COLUMN.SIGN_FLG  + " is  " + judge + " "
 				+	" INTO OUTFILE '" + filePath +  "'"
 				+	" FIELDS TERMINATED BY ','"
 				+	" OPTIONALLY ENCLOSED BY '\"'";
+		System.out.println(SQL);
+//		String column = COLUMN.CODE			 	+ " , " //
+//				+ COLUMN.TYPE			+ " , " //
+//				+ COLUMN.ENTRYMETHOD	+ " , " //
+//				+ COLUMN.EXITMETHOD		+ " , "
 
 		return SQL;
 	}
