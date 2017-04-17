@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proparty.S;
-import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
@@ -15,7 +14,6 @@ import bean.Bean_nowRecord;
 
 import common.commonAP;
 
-import constant.COLUMN;
 import constant.ReCord;
 import constant.TechCon;
 
@@ -31,7 +29,7 @@ public class SagyoSpace {
 		//結論の出力方法
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
-		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultDay();
 		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
@@ -62,46 +60,6 @@ public class SagyoSpace {
 
 	}
 
-	public static void testCase999(){
-
-			String column = COLUMN.CODE			 	+ " , " //
-							+ COLUMN.DAYTIME		+ " , " //
-							+ COLUMN.TYPE			+ " , " //
-							+ COLUMN.ENTRYMETHOD	+ " , " //
-							+ COLUMN.EXITMETHOD		+ " , "
-							+ COLUMN.ENTRYTIMES		+ "  ";
-
-			String heddaColumn = "'" +  COLUMN.CODE		 	+ "' , " //
-					   + "'" +  COLUMN.DAYTIME		+ "' , " //
-					   + "'" +  COLUMN.TYPE			+ "' , " //
-					   + "'" +  COLUMN.ENTRYMETHOD	+ "' , " //
-					   + "'" +  COLUMN.EXITMETHOD	+ "' , "
-					   + "'" +  COLUMN.ENTRYTIMES	+ "'  ";
-
-
-
-
-			String SQL;
-
-			SQL =	" SELECT "
-					+ heddaColumn
-					+ " union "
-					+ " SELECT "
-					+ column
-					+ " FROM " + TBL_Name.LASTORDER + " AAA "
-					+	" left outer join " + TBL_Name.KEEPLISTTBL + " BBB "
-					+	" on AAA." + COLUMN.CODE  + "= " + "BBB." +  COLUMN.CODE
-					+	" and "
-					+	" AAA." + COLUMN.TYPE  + "= " + "BBB." +  COLUMN.TYPE
-					+	" and "
-					+	" AAA." + COLUMN.ENTRYMETHOD  + "= " + "BBB." +  COLUMN.ENTRYMETHOD
-					+	" and "
-					+	" AAA." + COLUMN.EXITMETHOD  + "= " + "BBB." +  COLUMN.EXITMETHOD
-					+	" where "
-					+	"AAA." + COLUMN.SIGN_FLG  + " is  true ";
-			System.out.println(SQL);
-
-	}
 
 
 	public static void testCase96(){
