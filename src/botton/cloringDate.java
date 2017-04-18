@@ -244,7 +244,7 @@ public class cloringDate {
 				+	" INTO OUTFILE '" + filePath +  "'"
 				+	" FIELDS TERMINATED BY ','"
 				+	" OPTIONALLY ENCLOSED BY '\"'";
-		System.out.println(SQL);
+//		System.out.println(SQL);
 //		String column = COLUMN.CODE			 	+ " , " //
 //				+ COLUMN.TYPE			+ " , " //
 //				+ COLUMN.ENTRYMETHOD	+ " , " //

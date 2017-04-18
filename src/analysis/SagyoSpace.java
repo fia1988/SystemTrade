@@ -36,7 +36,7 @@ public class SagyoSpace {
 		paraDTO.setMinDeki(i);
 		resultDTO.setShoritu(0.75);
 		resultDTO.setTotalGames(20);
-//		resultDTO.setTotalRatio(0.65);
+		resultDTO.setTotalRatio(0.65);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
 //		paraDTO.setTesuRYO(0);
@@ -45,7 +45,7 @@ public class SagyoSpace {
 		//一回当たりエントリー金額（単位：万円）
 //		paraDTO.setEntryMoney(0.83);
 		//エリートフラグ
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		System.out.println("【出来高"+ i + "】");
 	}
@@ -71,8 +71,8 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2016-12-31";
 
-//		startDD	=	"2016-10-01";
-//		endDD		=	"2016-12-31";
+		startDD	=	"2017-04-18";
+		endDD		=	"2017-05-31";
 
 
 
