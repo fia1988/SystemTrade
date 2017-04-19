@@ -1002,6 +1002,9 @@ public class Bean_Result {
 				commonAP.writeInLog("	-17%以下 ："	+	resultMinusClassOver,logWriting.BACKTEST_LOG_FLG);
 			} catch (Exception e) {
 				commonAP.writeInLog("	ここでエラー発生。次の処理へゆきます。",logWriting.BACKTEST_LOG_FLG);
+				String errLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + "0" + "," + "0" + ",0,0,0,0,0,0,0,0,0,0,0,0%,0,0 万円,0%";
+				//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,一回辺りリターン,保有期間,勝ち保有期間,負け保有期間,平均E数,勝ちE数,負けE数,手数料,必要資金,一日辺りサイン点灯数,金利
+				commonAP.writeInLog(errLetter,logWriting.CODE_RESULT_LIST_LOG_FLG);
 			}
 
 
