@@ -74,7 +74,26 @@ public class SagyoSpace {
 		startDD	=	"2017-04-18";
 		endDD		=	"2017-05-31";
 
-
+//		startDD		=	"2007-01-01";
+//		endDD		=	"2007-12-31";
+//		startDD		=	"2008-01-01";
+//		endDD		=	"2008-12-31";
+//		startDD		=	"2009-01-01";
+//		endDD		=	"2009-12-31";
+//		startDD		=	"2010-01-01";
+//		endDD		=	"2010-12-31";
+//		startDD		=	"2011-01-01";
+//		endDD		=	"2011-12-31";
+//		startDD		=	"2012-01-01";
+//		endDD		=	"2012-12-31";
+//		startDD		=	"2013-01-01";
+//		endDD		=	"2013-12-31";
+//		startDD		=	"2014-01-01";
+//		endDD		=	"2014-12-31";
+//		startDD		=	"2015-01-01";
+//		endDD		=	"2015-12-31";
+//		startDD		=	"2016-01-01";
+//		endDD		=	"2016-12-31";
 
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();

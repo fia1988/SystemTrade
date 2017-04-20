@@ -148,14 +148,14 @@ public class Bean_CodeList {
 	//この中に指標とかの場合、値に合わせてsetCodeする。
 	public void setCodeName(String codeName) {
 
-		this.codeName = codeName.replaceAll("-",CATE_FLG.replaceLetter).replace(" ", "").replace("・", "_").replace("(", "_").replace(")", "_").replace("（", "_").replace("）", "_");
+		this.codeName = codeName.replaceAll(CONST_BEAN.CODE_HAIHUN,CATE_FLG.replaceLetter).replace(" ", "").replace("・", "_").replace("(", "_").replace(")", "_").replace("（", "_").replace("）", "_");
 	}
 
 	public String getCode() {
 		return code;
 	}
 	public void setCode(String code) {
-		this.code = code.replaceAll("-",CATE_FLG.replaceLetter);
+		this.code = code.replaceAll(CONST_BEAN.CODE_HAIHUN,CATE_FLG.replaceLetter);
 	}
 	public String getMarket() {
 		return market;
@@ -176,9 +176,9 @@ public class Bean_CodeList {
 
 
 
-//	YYYY年MM月DD日はYYYYMMDDに変換されて保持される。
+//	YYYY年MM月DD日はYYYY-MM-DDに変換されて保持される。
 	public void setDay(String x){
-		x = ( ( x.replaceFirst("年", "-") ).replaceFirst("月", "-") ).replaceFirst("日", "");
+		x = ( ( x.replaceFirst(CONST_BEAN.YEAR, CONST_BEAN.YEAR_SEPA) ).replaceFirst(CONST_BEAN.MONTH, CONST_BEAN.MONTH_SEPA) ).replaceFirst(CONST_BEAN.DAY, CONST_BEAN.DAY_SEPA);
 		day = x;
 	}
 
@@ -214,7 +214,7 @@ public class Bean_CodeList {
 	}
 
 	public void setOpen(String x){
-		x = (x.equals("")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.ZERO_BLANK)) ? CONST_BEAN.ZERO_PRICE : x;
 		open = x;
 	}
 
@@ -223,7 +223,7 @@ public class Bean_CodeList {
 	}
 
 	public void setMax(String x){
-		x = (x.equals("")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.ZERO_BLANK)) ? CONST_BEAN.ZERO_PRICE : x;
 		max = x;
 	}
 
@@ -232,7 +232,7 @@ public class Bean_CodeList {
 	}
 
 	public void setMin(String x){
-		x = (x.equals("")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.ZERO_BLANK)) ? CONST_BEAN.ZERO_PRICE : x;
 		min = x;
 	}
 
@@ -241,7 +241,7 @@ public class Bean_CodeList {
 	}
 
 	public void setClose(String x){
-		x = (x.equals("")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.ZERO_BLANK)) ? CONST_BEAN.ZERO_PRICE : x;
 		close = x;
 	}
 
@@ -250,7 +250,7 @@ public class Bean_CodeList {
 	}
 
 	public void setDeki(String x){
-		x = (x.equals("")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.ZERO_BLANK)) ? CONST_BEAN.ZERO_PRICE : x;
 		deki = x;
 	}
 
@@ -259,7 +259,7 @@ public class Bean_CodeList {
 	}
 
 	public void setBaybay(String x){
-		x = (x.equals("")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.ZERO_BLANK)) ? CONST_BEAN.ZERO_PRICE : x;
 		baybay = x;
 	}
 
@@ -268,7 +268,7 @@ public class Bean_CodeList {
 	}
 
 	public void setStockCount(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.IMITATION_ZERO)) ? CONST_BEAN.ZERO_PRICE : x;
 		stockCount = x;
 	}
 
@@ -277,7 +277,7 @@ public class Bean_CodeList {
 	}
 
 	public void setTakePrice(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.IMITATION_ZERO)) ? CONST_BEAN.ZERO_PRICE : x;
 		takePrice = x;
 	}
 
@@ -287,7 +287,7 @@ public class Bean_CodeList {
 
 
 	public void setUpPrice(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.IMITATION_ZERO)) ? CONST_BEAN.ZERO_PRICE : x;
 		upPrice = x;
 	}
 
@@ -296,7 +296,7 @@ public class Bean_CodeList {
 	}
 
 	public void setDownPrice(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.IMITATION_ZERO)) ? CONST_BEAN.ZERO_PRICE : x;
 		downPrice = x;
 	}
 
@@ -305,7 +305,7 @@ public class Bean_CodeList {
 	}
 
 	public void setNoChange(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.IMITATION_ZERO)) ? CONST_BEAN.ZERO_PRICE : x;
 		noChange = x;
 	}
 
@@ -314,7 +314,7 @@ public class Bean_CodeList {
 	}
 
 	public void setNoCompare(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals(CONST_BEAN.IMITATION_ZERO)) ? CONST_BEAN.ZERO_PRICE : x;
 		noCompare = x;
 	}
 
