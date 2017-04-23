@@ -35,7 +35,7 @@ public class SagyoSpace {
 		int i = 1000;
 		paraDTO.setMinDeki(i);
 		resultDTO.setShoritu(0.75);
-		resultDTO.setTotalGames(20);
+		resultDTO.setTotalGames(10);
 		resultDTO.setTotalRatio(0.65);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
@@ -47,6 +47,7 @@ public class SagyoSpace {
 		//エリートフラグ
 		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
+//		paraDTO.setMaxEntryTimes(30);
 		System.out.println("【出来高"+ i + "】");
 	}
 
@@ -68,7 +69,7 @@ public class SagyoSpace {
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
-		String startDD	=	"2007-01-03";
+		String startDD	=	"2012-01-03";
 		String endDD		=	"2016-12-31";
 
 		startDD	=	"2017-04-18";

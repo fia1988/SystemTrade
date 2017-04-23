@@ -756,6 +756,15 @@ public class createTBL {
 				+ ") values ('" + ReCord.KOSHINBI_CURRENCY + "' , '"+ ReCord.CURRENCY_KOSHINBI_SHOKI + "' )  " ;
 
 		s.freeUpdateQuery(SQL);
+		
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_SEPA_COMBINE_CHECK + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.freeUpdateQuery(SQL);
 
 	}
 

@@ -6,6 +6,7 @@ public class ReCord {
 	public static String KOSHINBI_INDEX									= "指数更新日";
 	public static String KOSHINBI_STATISTICS							= "統計更新日";
 	public static String KOSHINBI_CURRENCY								= "通貨更新日";
+	public static String KOSHINBI_SEPA_COMBINE_CHECK					= "分割併合確認日";
 
 	//個別銘柄・・・1
 	//統計・・・2
@@ -39,7 +40,7 @@ public class ReCord {
 	public static final String INDEX_TBK_DD_TOPIX_SMALL		= "iiiiii";
 	public static final String INDEX_TBK_DD_ASIA			= "iiiiiii";
 	public static final String INDEX_TBK_DD_JASDAC			= "iiiiiiii";
-	
+
 	//銘柄名など
 //	I101 日経平均
 	public static final String indexName_I101 = "I101";
@@ -60,7 +61,7 @@ public class ReCord {
 
 	//東証一部
 	public static final String TOSYO_01 = "東証1部";
-	
+
 	//初期値
 	public static String KOSHINBI_SHOKI									= "2007-01-03";
 	//通貨初期値

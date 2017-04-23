@@ -106,6 +106,18 @@ public class controllDay {
 
 	}
 
+	
+	
+	public static void update_KOSHINBI_SEPA_COMBINE_CHECK(String updateDay,S s){
+		SQL = "update " + TBL_Name.UPDATE_MANAGE
+				+ " set "
+				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
+				+ " where "
+				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_SEPA_COMBINE_CHECK + "'";
+		s.freeUpdateQuery(SQL);
+	}
+
+
 	public static void update_STOCK_ETF(String updateDay,S s){
 		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
