@@ -888,6 +888,7 @@ public class Bean_Result {
 				commonAP.writeInLog("上下" + half * 100 +  "一回辺りリターン%：" + (getCutTotalReturn)/((getCutWinCount+getCutLoseCount)) +  " %" ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("上" + half * 100 +  "%カットトータル平均勝％："		+ (getCutTotalWIN*100)/(getCutWinCount) +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("下" + half * 100 +  "%カットトータル平均負％："		+ (getCutTotalLose*100)/(getCutLoseCount) +  " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("出来高中期移動平均線：" + paraDTO.getMinDeki(),logWriting.BACKTEST_LOG_FLG);
 
 //				commonAP.writeInLog("上下0.5%カット見込みリターン："		+ getCutAveReturn * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 //				commonAP.writeInLog("上下1%カット見込みリターン："		+ ( commonAP.getAverageCut(getReturnList(),true,	commonAP.TOTAL_FLG,	half) + commonAP.getAverageCut(getReturnList(),false,	commonAP.TOTAL_FLG,	half) ) / ( getReturnList().size() * (paraDTO.getCutWariai()) ),logWriting.BACKTEST_LOG_FLG);
@@ -957,8 +958,8 @@ public class Bean_Result {
 					commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() + " 営業日",logWriting.BACKTEST_LOG_FLG);
 
-					String resultLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getTOTAL_WIN() + "," + getTOTAL_LOSE() + "," + ( getTotalWinParcent() * 100 ) + "," +  ( getTotalLoseParcent() * 100 ) + "," + (totalReturn*100) + "," + ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + "," + ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + "," + (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + "," + ( getWinKeepTimeAverage() ) + "," + getLoseKeepTimeAverage() + "," + getEntryTimeAverage() + "," + getWinEntryTimeAverage() + "," + getLoseEntryTimeAverage() + "," +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + needMoney + " 万円" + "," + ( (100) * yearEarnMoney/needMoney ) + "%";
-					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,一回辺りリターン,保有期間,勝ち保有期間,負け保有期間,平均E数,勝ちE数,負けE数,手数料,必要資金,一日辺りサイン点灯数,金利
+					String resultLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getTOTAL_WIN() + "," + getTOTAL_LOSE() + "," + ( getTotalWinParcent() * 100 ) + "," +  ( getTotalLoseParcent() * 100 ) + "," + (totalReturn*100) + "," + ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + "," + ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + "," + (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + "," + ( getWinKeepTimeAverage() ) + "," + getLoseKeepTimeAverage() + "," + getEntryTimeAverage() + "," + getWinEntryTimeAverage() + "," + getLoseEntryTimeAverage() + "," +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + ( (100) * yearEarnMoney/needMoney ) + "%";
+					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,一回辺りリターン,保有期間,勝ち保有期間,負け保有期間,平均E数,勝ちE数,負けE数,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利
 					commonAP.writeInLog(resultLetter,logWriting.CODE_RESULT_LIST_LOG_FLG);
 
 				}

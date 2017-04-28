@@ -292,9 +292,15 @@ public class commonAP {
 		//昇順に並び替え
 		Collections.sort(doubleListCopy);
 
+		int cutsize = (int)Math.round(cut * doubleListCopy.size());
+		if ( cutsize == 0){
+			if ( doubleListCopy.size() > 2){
+				cutsize = 1;
+			}
+		}
 
 		if (checkJudge){
-			for (int i = 0  ; i < doubleListCopy.size() - (int)Math.round(cut * doubleListCopy.size()) ; i++) {
+			for (int i = 0  ; i < doubleListCopy.size() - cutsize ; i++) {
 				if(doubleListCopy.get(i) >= 0){
 					totalCount++;
 					sum = sum + doubleListCopy.get(i);
@@ -302,7 +308,7 @@ public class commonAP {
 				}
 	        }
 		}else{
-			for (int i = 0 + (int)Math.round(cut * doubleListCopy.size() )   ; i < doubleListCopy.size() ; i++) {
+			for (int i = 0 + cutsize   ; i < doubleListCopy.size() ; i++) {
 				if(doubleListCopy.get(i) < 0){
 					totalCount++;
 					sum = sum + doubleListCopy.get(i);
