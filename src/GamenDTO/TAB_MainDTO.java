@@ -21,12 +21,19 @@ public class TAB_MainDTO {
 	private String outBackUpFilePath;
 	//バックアップ入力ファイルパス
 	private String inBackUpFilePath;
+	//分割フォルダ出力先ファイルパス
+	private String sepaFolderPath;
 
 
 
 
 
-
+	public String getSepaFolderPath() {
+		return sepaFolderPath;
+	}
+	public void setSepaFolderPath(String sepaFolderPath) {
+		this.sepaFolderPath = sepaFolderPath;
+	}
 	public String getOutBackUpFilePath() {
 		return outBackUpFilePath;
 	}

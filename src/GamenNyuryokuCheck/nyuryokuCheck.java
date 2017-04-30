@@ -39,6 +39,11 @@ public class nyuryokuCheck {
 		    return nyuryokuCheckResultConst.NO_ENTRY_FOLDER_ERR;
 		}
 
+		file =  new File(mainDTO.getSepaFolderPath());
+		if (file.isDirectory()==false){
+		    return nyuryokuCheckResultConst.NO_SEPA_FOLDER_ERR;
+		}
+
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 }

@@ -73,7 +73,7 @@ public class TAB_main extends JPanel {
 		logFolderPath.setColumns(10);
 
 		JTextPane textPane = new JTextPane();
-		textPane.setBounds(42, 528, 183, 110);
+		textPane.setBounds(477, 658, 183, 110);
 		add(textPane);
 
 		JButton btnNewButton = new JButton("timerOn");
@@ -318,6 +318,15 @@ public class TAB_main extends JPanel {
 		oneShotResult.setBounds(885, 270, 278, 19);
 		add(oneShotResult);
 
+		sepaFolderPath = new JTextField();
+		sepaFolderPath.setColumns(10);
+		sepaFolderPath.setBounds(42, 504, 330, 25);
+		add(sepaFolderPath);
+
+		JLabel label_9 = new JLabel("分割併合ファイル出力先");
+		label_9.setBounds(42, 474, 330, 19);
+		add(label_9);
+
 
 
 	}
@@ -325,6 +334,7 @@ public class TAB_main extends JPanel {
 
 	TimeClornigDate TCD = null;
 	private final Action action_11 = new SwingAction_11();
+	private JTextField sepaFolderPath;
 
 
 	private class SwingAction extends AbstractAction {
@@ -348,7 +358,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-
+			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
+			
 
 			String checkResult = check.nyuryokuChecker(mainDTO);
 
@@ -368,6 +379,9 @@ public class TAB_main extends JPanel {
 			case nyuryokuCheckResultConst.NO_ENTRY_FOLDER_ERR:
 				timerResult.setText(checkResult);
 				return;
+			case nyuryokuCheckResultConst.NO_SEPA_FOLDER_ERR:
+			timerResult.setText(checkResult);
+			return;
 			default:
 				timerResult.setText("そのほかエラー");
 				return;
