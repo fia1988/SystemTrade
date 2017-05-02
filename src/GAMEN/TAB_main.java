@@ -16,6 +16,7 @@ import proparty.TBL_Name;
 import GamenDTO.TAB_MainDTO;
 import GamenNyuryokuCheck.nyuryokuCheck;
 import botton.BackUp;
+import botton.CreateSepaComFile;
 import botton.ResetShori;
 import botton.SepaCombine;
 import botton.TimeClornigDate;
@@ -48,6 +49,7 @@ public class TAB_main extends JPanel {
 	JLabel outBackupResult = new JLabel("成／否");
 	JLabel oneShotResult = new JLabel("成／否");
 	JLabel timerResult = new JLabel("ボタンを押してね");
+	JLabel oneShotSepaComResult = new JLabel("成／否");
 
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
@@ -222,21 +224,21 @@ public class TAB_main extends JPanel {
 		add(button_4);
 
 		JLabel label_12 = new JLabel("結果：");
-		label_12.setBounds(831, 402, 60, 19);
+		label_12.setBounds(832, 505, 60, 19);
 		add(label_12);
 
 		JLabel label_13 = new JLabel("結果：");
 		label_13.setBounds(831, 196, 60, 19);
 		add(label_13);
 
-		deleteDBresult.setBounds(885, 402, 278, 19);
+		deleteDBresult.setBounds(886, 505, 278, 19);
 		add(deleteDBresult);
 
 		createTBLresult.setBounds(885, 197, 278, 19);
 		add(createTBLresult);
 
 		JLabel label_16 = new JLabel("リセット処理 ※操作注意");
-		label_16.setBounds(811, 306, 165, 19);
+		label_16.setBounds(812, 409, 165, 19);
 		add(label_16);
 
 		JButton btnsql = new JButton("下のSQLを手打ちしてね");
@@ -245,34 +247,34 @@ public class TAB_main extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnsql.setBounds(831, 361, 193, 27);
+		btnsql.setBounds(832, 464, 193, 27);
 		add(btnsql);
 
 		JButton button_6 = new JButton("test");
 		button_6.setAction(action_5);
-		button_6.setBounds(831, 434, 193, 27);
+		button_6.setBounds(832, 537, 193, 27);
 		add(button_6);
 
 		JButton button_7 = new JButton("test");
 		button_7.setAction(action_6);
-		button_7.setBounds(831, 503, 193, 27);
+		button_7.setBounds(832, 606, 193, 27);
 		add(button_7);
 
 		JButton button_8 = new JButton("test");
 		button_8.setAction(action_7);
-		button_8.setBounds(831, 570, 193, 27);
+		button_8.setBounds(832, 673, 193, 27);
 		add(button_8);
 
 		JLabel label_18 = new JLabel("結果：");
-		label_18.setBounds(831, 469, 60, 19);
+		label_18.setBounds(832, 572, 60, 19);
 		add(label_18);
 
 		JLabel label_19 = new JLabel("結果：");
-		label_19.setBounds(831, 536, 60, 19);
+		label_19.setBounds(832, 639, 60, 19);
 		add(label_19);
 
 		JLabel label_20 = new JLabel("結果：");
-		label_20.setBounds(831, 607, 60, 19);
+		label_20.setBounds(832, 710, 60, 19);
 		add(label_20);
 
 		JLabel lblCreateDatabaseKabudata = new JLabel("CREATE DATABASE " + TBL_Name.KABU_DB );
@@ -280,13 +282,13 @@ public class TAB_main extends JPanel {
 		add(lblCreateDatabaseKabudata);
 
 
-		deleteRecordResult.setBounds(885, 469, 278, 19);
+		deleteRecordResult.setBounds(886, 572, 278, 19);
 		add(deleteRecordResult);
 
-		deleteS_Cresult.setBounds(885, 536, 278, 19);
+		deleteS_Cresult.setBounds(886, 639, 278, 19);
 		add(deleteS_Cresult);
 
-		deleteKeepResult.setBounds(885, 607, 278, 19);
+		deleteKeepResult.setBounds(886, 710, 278, 19);
 		add(deleteKeepResult);
 
 		JLabel label_17 = new JLabel("バックアップ出力先フォルダパス");
@@ -327,6 +329,23 @@ public class TAB_main extends JPanel {
 		label_9.setBounds(42, 474, 330, 19);
 		add(label_9);
 
+		JLabel label_10 = new JLabel("結果：");
+		label_10.setBounds(832, 346, 60, 19);
+		add(label_10);
+
+
+		oneShotSepaComResult.setBounds(885, 346, 278, 19);
+		add(oneShotSepaComResult);
+
+		JButton button_3 = new JButton("分割併合ファイル取込");
+		button_3.setAction(action_12);
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_3.setBounds(821, 302, 193, 27);
+		add(button_3);
+
 
 
 	}
@@ -335,6 +354,7 @@ public class TAB_main extends JPanel {
 	TimeClornigDate TCD = null;
 	private final Action action_11 = new SwingAction_11();
 	private JTextField sepaFolderPath;
+	private final Action action_12 = new SwingAction_12();
 
 
 	private class SwingAction extends AbstractAction {
@@ -359,7 +379,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
-			
+
 
 			String checkResult = check.nyuryokuChecker(mainDTO);
 
@@ -843,7 +863,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-
+			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
 
 			String checkShotResult = oneShotCheck.nyuryokuChecker(mainDTO);
 
@@ -862,6 +882,9 @@ public class TAB_main extends JPanel {
 			case nyuryokuCheckResultConst.NO_ENTRY_FOLDER_ERR:
 				oneShotResult.setText(checkShotResult);
 				return;
+			case nyuryokuCheckResultConst.NO_SEPA_FOLDER_ERR:
+				oneShotResult.setText(checkShotResult);
+				return;
 			default:
 				oneShotResult.setText("そのほかエラー");
 				return;
@@ -874,6 +897,66 @@ public class TAB_main extends JPanel {
 			C_D = new cloringDate();
 
 
+		}
+	}
+	private class SwingAction_12 extends AbstractAction {
+		public SwingAction_12() {
+			putValue(NAME, "分割併合ファイル取込");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+
+			//タイマーの状態のチェック
+			mainDTO.setJudgeTimer((  timerCheck.getText() ));
+			mainDTO.setMysqlID(mysqlID.getText());
+			mainDTO.setMysqlPass(mysqlPassMask.getText());
+			mainDTO.setLogFilePath(logFolderPath.getText());
+			mainDTO.setEntryFolderPath(entryFolderPath.getText());
+			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
+
+			String checkShotResult = sepaComCheck.nyuryokuChecker(mainDTO);
+
+			//-3
+			System.out.println("2016-02-15".compareTo("2016-02-18"));
+			//-2
+			System.out.println("2016-02-15".compareTo("2016-02-17"));
+			System.out.println("2016-02-15".compareTo("2016-02-16"));
+			System.out.println("2016-02-15".compareTo("2016-02-15"));
+			System.out.println("2016-02-15".compareTo("2016-02-14"));
+			System.out.println("2016-02-15".compareTo("2016-02-12"));
+
+			switch (checkShotResult) {
+			case nyuryokuCheckResultConst.SUCCESS:
+				oneShotSepaComResult.setText(checkShotResult);
+				break;
+			case nyuryokuCheckResultConst.ON_TIMER_ERR:
+				oneShotSepaComResult.setText(checkShotResult);
+				return;
+			case nyuryokuCheckResultConst.MYSQL_ERR:
+				oneShotSepaComResult.setText(checkShotResult);
+				return;
+			case nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR:
+				oneShotSepaComResult.setText(checkShotResult);
+				return;
+			case nyuryokuCheckResultConst.NO_SEPA_FOLDER_ERR:
+				oneShotSepaComResult.setText(checkShotResult);
+				return;
+			default:
+				oneShotSepaComResult.setText("そのほかエラー");
+				return;
+			}
+
+
+			checkShotResult = sepaComCheck.checkSepaComFile(mainDTO);
+			oneShotSepaComResult.setText(checkShotResult);
+
+			//メモリの解放
+			sepaComCheck = new CreateSepaComFile();
 		}
 	}
 }

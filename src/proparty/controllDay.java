@@ -106,14 +106,14 @@ public class controllDay {
 
 	}
 
-	
-	
-	public static void update_KOSHINBI_SEPA_COMBINE_CHECK(String updateDay,S s){
+
+
+	public static void update_KOSHINBI(String updateDay,String UpdateCulumn,S s){
 		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
 				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_SEPA_COMBINE_CHECK + "'";
+				+ COLUMN.KOSIN + " = '" + UpdateCulumn + "'";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -156,6 +156,37 @@ public class controllDay {
 		return sdf1.format(calendar.getTime());
 
 	}
+
+	//UPDATEMANAGEテーブルから引数で指定した値の日付を取得する。
+	public static String getDAY_DD_FROM_UPDATE_MAMAGE(String updateColumn,S s){
+
+
+//		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
+		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + updateColumn + "'";
+
+		s.setPstmt(SQL);
+		System.out.println(SQL);
+		try {
+
+			s.p_rs = s.getPstmt().executeQuery(SQL);
+
+			while (s.p_rs.next()) {
+
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
+
+			}
+//			System.out.println(TBLName + "のMAX(setMAX_DD_HAIHUN)：" + MAX_HAIHUN);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// TODO 自動生成された catch ブロック
+		} catch(NullPointerException e1){
+
+
+		}
+
+		return MAXDAY;
+	}
+
 
 	//YYYY-MM-DDでとってくる
 	public static String getMAX_DD_STOCK_ETF(S s){
