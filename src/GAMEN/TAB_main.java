@@ -890,6 +890,20 @@ public class TAB_main extends JPanel {
 				return;
 			}
 
+
+			//一回分のセパ取込
+			CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+			checkShotResult = sepaComCheck.checkSepaComFile(mainDTO);
+			oneShotResult.setText(checkShotResult);
+
+			//メモリの解放
+			sepaComCheck = new CreateSepaComFile();
+
+			//成功以外は中止
+			if (!checkShotResult.equals(nyuryokuCheckResultConst.SUCCESS)){	return;	}
+
+
+			//ワンショット分の日々ファイルの取込
 			cloringDate C_D = new cloringDate();
 			String mainDTO_result = C_D.getDayDate(mainDTO);
 			oneShotResult.setText(mainDTO_result);

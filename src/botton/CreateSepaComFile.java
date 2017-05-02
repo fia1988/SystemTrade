@@ -54,11 +54,22 @@ public class CreateSepaComFile {
 		s.getCon();
 		String lastSepaDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_SEPA_CHECK, s);
 		String lastComDay =  controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_COMBINE_CHECK, s);
+
+
+//		//-3
+//		System.out.println("2016-02-15".compareTo("2016-02-18"));
+//		//-2
+//		System.out.println("2016-02-15".compareTo("2016-02-17"));
+//		System.out.println("2016-02-15".compareTo("2016-02-16"));
+//		System.out.println("2016-02-15".compareTo("2016-02-15"));
+//		System.out.println("2016-02-15".compareTo("2016-02-14"));
+//		System.out.println("2016-02-15".compareTo("2016-02-12"));
+
 //		controllDay.update_KOSHINBI(updateDay, ReCord.KOSHINBI_COMBINE_CHECK, s);
 //		controllDay.update_KOSHINBI(updateDay, ReCord.KOSHINBI_SEPA_CHECK, s);
 		System.out.println(lastSepaDay);
 		System.out.println(lastComDay);
-
+//		commonAP.writeInLog("日々売買ファイルの出力でなんかエラー。",logWriting.DATEDATE_LOG_FLG);
 		s.closeConection();
 
 

@@ -88,6 +88,10 @@ public class cloringDate {
 				break;
 		}
 
+		//分割ファイルの作成/取込を行う。
+		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+		sepaComCheck.checkSepaComFile(mainDTO);
+
 
 		stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
