@@ -73,6 +73,27 @@ public class CreateSepaComFile {
 		s.closeConection();
 
 
+
+//		String filePath = mainDTO.getSepaFolderPath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
+//
+//		String SQL = "LOAD DATA INFILE \"" + filePath + "\" ignore INTO TABLE " + TBL_Name.SEPARATE_DD + " FIELDS TERMINATED BY ','";
+//
+//		S s = new S();
+//		s.getCon();
+//
+//		try {
+//			s.sqlGetter().executeUpdate(SQL);
+//		} catch (SQLException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//			s.closeConection();
+//			return e.getErrorCode();
+//		}
+//
+//
+//		s.closeConection();
+//		return ReturnCodeConst.SQL_ERR_0;
+
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 
