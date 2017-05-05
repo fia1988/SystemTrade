@@ -79,7 +79,7 @@ public class BackUp {
 	public String backUpOut(TAB_MainDTO mainDTO){
 
 
-		String executeCmd = "mysqldump -u " + mainDTO.getMysqlID() + " -p" + mainDTO.getMysqlPass() + " " + TBL_Name.KABU_DB + "  >  " + mainDTO.getOutBackUpFilePath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
+		String executeCmd = "mysqldump --single-transaction -u " + mainDTO.getMysqlID() + " -p " + mainDTO.getMysqlPass() + " " + TBL_Name.KABU_DB + "  >  " + mainDTO.getOutBackUpFilePath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
 //		executeCmd = executeCmd.replace(File.separator,ReturnCodeConst.SQL_SEPA);
 //		mysqldump --single-transaction -u root -p kabudata > D:/orderList/a.dump
 //
@@ -87,7 +87,9 @@ public class BackUp {
 		try {
 			System.out.println("out:" + executeCmd);
 		    runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+		    System.out.println("aaa");
 		    int processComplete = runtimeProcess.waitFor();
+		    System.out.println("bbbbbbb");
 		    if (processComplete == 0) {
 		    	return nyuryokuCheckResultConst.SUCCESS;
 		    } else {
