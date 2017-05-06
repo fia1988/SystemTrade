@@ -4,6 +4,7 @@ import java.io.File;
 
 import proparty.S;
 import proparty.controllDay;
+import sepacomfilecreate.ParseHtmlStockSplit;
 import GamenDTO.TAB_MainDTO;
 import constant.ReCord;
 import constant.ReturnCodeConst;
@@ -69,6 +70,12 @@ public class CreateSepaComFile {
 //		controllDay.update_KOSHINBI(updateDay, ReCord.KOSHINBI_SEPA_CHECK, s);
 		System.out.println(lastSepaDay);
 		System.out.println(lastComDay);
+		
+		ParseHtmlStockSplit phs = new ParseHtmlStockSplit();
+		
+		System.out.println("分割：" + phs.makeSplitCsv(mainDTO.getSepaFolderPath(), lastSepaDay	));
+		System.out.println("併合：" + phs.makeMergeCsv(mainDTO.getSepaFolderPath(), lastComDay	));
+		
 //		commonAP.writeInLog("日々売買ファイルの出力でなんかエラー。",logWriting.DATEDATE_LOG_FLG);
 		s.closeConection();
 

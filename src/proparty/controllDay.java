@@ -165,7 +165,7 @@ public class controllDay {
 		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + updateColumn + "'";
 
 		s.setPstmt(SQL);
-		System.out.println(SQL);
+
 		try {
 
 			s.p_rs = s.getPstmt().executeQuery(SQL);

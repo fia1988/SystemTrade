@@ -524,7 +524,7 @@ public class Technique04 {
 		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
 
 
-		
+
 
 //// TODO ＜MACDの買いシグナル＞
 //		MACDがプラスマイナス０を下から上にぬく（順張り）

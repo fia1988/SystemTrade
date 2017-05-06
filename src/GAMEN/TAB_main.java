@@ -935,14 +935,7 @@ public class TAB_main extends JPanel {
 
 			String checkShotResult = sepaComCheck.nyuryokuChecker(mainDTO);
 
-			//-3
-			System.out.println("2016-02-15".compareTo("2016-02-18"));
-			//-2
-			System.out.println("2016-02-15".compareTo("2016-02-17"));
-			System.out.println("2016-02-15".compareTo("2016-02-16"));
-			System.out.println("2016-02-15".compareTo("2016-02-15"));
-			System.out.println("2016-02-15".compareTo("2016-02-14"));
-			System.out.println("2016-02-15".compareTo("2016-02-12"));
+
 
 			switch (checkShotResult) {
 			case nyuryokuCheckResultConst.SUCCESS:
