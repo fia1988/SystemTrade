@@ -29,13 +29,15 @@ import au.com.bytecode.opencsv.CSVWriter;
  */
 public class ParseHtmlStockSplit {
 
-	final int NORMAL_END = 0;
-	final int ERROR_SAMEFILENAME = 1;
-	final int ERROR_NOFOLDEREXIST = 2;
-	final int ERROR_IOERROR = 3;
-	final int ERROR_WEBCONNECT = 4;
-	final int ERROR_OTHER = 5;
-	final int ERROR_DATAINCOLLECT = 6;
+	public final static int NO_UPDATE = 7;
+	public final static int NORMAL_END = 0;
+	public final static int ERROR_SAMEFILENAME = 1;
+	public final static int ERROR_NOFOLDEREXIST = 2;
+	public final static int ERROR_IOERROR = 3;
+	public final static int ERROR_WEBCONNECT = 4;
+	public final static int ERROR_OTHER = 5;
+	public final static int ERROR_DATAINCOLLECT = 6;
+	public final static int ERROR_SQL = 8;
 
 	/**
 	 *
@@ -43,15 +45,15 @@ public class ParseHtmlStockSplit {
 	public ParseHtmlStockSplit() {
 	}
 
-	public int makeSplitCsv(String strFolder, String strDate) {
+	public int makeSplitCsv(String strFolder, String fileName) {
 		String url = "http://kabu.com/process/bunkatu.js";
 
 		File folder = new File(strFolder);
 		if (!folder.exists()) return ERROR_NOFOLDEREXIST;
 
 		String outputFilePath = strFolder;
-		if (!strFolder.endsWith("\\")) outputFilePath += "\\";
-		outputFilePath += "sepa_" + strDate + ".csv";
+		if (!strFolder.endsWith(File.separator)) outputFilePath += File.separator;
+		outputFilePath += fileName;
 
 		File file = new File(outputFilePath);
 		if (file.exists()) return ERROR_SAMEFILENAME;
@@ -77,15 +79,15 @@ public class ParseHtmlStockSplit {
 
 	}
 
-	public int makeMergeCsv(String strFolder, String strDate) {
+	public int makeMergeCsv(String strFolder, String fileName) {
 		String url = "http://kabu.com/process/gensi.js";
 
 		File folder = new File(strFolder);
 		if (!folder.exists()) return ERROR_NOFOLDEREXIST;
 
 		String outputFilePath = strFolder;
-		if (!strFolder.endsWith("\\")) outputFilePath += "\\";
-		outputFilePath += "com_" + strDate + ".csv";
+		if (!strFolder.endsWith(File.separator)) outputFilePath += File.separator;
+		outputFilePath += fileName;
 
 		File file = new File(outputFilePath);
 		if (file.exists()) return ERROR_SAMEFILENAME;

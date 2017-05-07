@@ -135,6 +135,9 @@ public class commonAP {
 			case logWriting.CODE_RESULT_LIST_LOG_FLG:
 				fileName = "samaryResult_" + writeType + logWriting.logKakutyousi;
 				break;
+			case logWriting.CODE_SEPACON_ERR_LOG_FLG:
+				fileName = "sepaComERR_" + writeType + logWriting.logKakutyousi;
+				break;
 			default:
 			break;
 		}

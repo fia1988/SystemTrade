@@ -9,6 +9,8 @@ public class logWriting {
 	public static final int BACKTEST_LOG_FLG			= 4;
 	public static final int CODE_RESULT_LOG_FLG			= 5;
 	public static final int CODE_RESULT_LIST_LOG_FLG	= 6;
+	//分割併合ファイルのエラーログ
+	public static final int CODE_SEPACON_ERR_LOG_FLG	= 7;
 //	public static final int STOCK_RESULT_LOG_FLG_L		= 5;
 //	public static final int STOCK_RESULT_LOG_FLG_S		= 6;
 
