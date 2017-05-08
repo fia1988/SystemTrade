@@ -1,6 +1,7 @@
 package botton;
 
 import java.io.File;
+import java.sql.SQLException;
 
 import proparty.S;
 import proparty.TBL_Name;
@@ -202,16 +203,16 @@ public class CreateSepaComFile {
 					+ " and "
 					+ COLUMN.EFFECT_STARTDAY + " < '2007-01-01'";
 
-		System.out.println(SQL1);
-//		try {
-//			s.sqlGetter().executeUpdate(SQL1);
-//			s.freeUpdateQuery(SQL2);
-//		} catch (SQLException e) {
-//			// TODO 自動生成された catch ブロック
-//			e.printStackTrace();
-//			s.closeConection();
-//			return e.getErrorCode();
-//		}
+		System.out.println("createSepaComFileAndLoad:"+SQL1);
+		try {
+			s.sqlGetter().executeUpdate(SQL1);
+			s.freeUpdateQuery(SQL2);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			s.closeConection();
+			return e.getErrorCode();
+		}
 
 		phs = new ParseHtmlStockSplit();
 		s.closeConection();
