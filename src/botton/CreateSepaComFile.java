@@ -160,6 +160,7 @@ public class CreateSepaComFile {
 //		//-2
 //		System.out.println("2016-02-15".compareTo("2016-02-17"));
 		//直近一週間で更新がない場合は処理終わり
+
 		if ( (toDay.compareTo(checkDay)) < 7 ){
 			s.closeConection();
 			return ParseHtmlStockSplit.NO_UPDATE;
