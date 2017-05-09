@@ -2,6 +2,8 @@ package botton;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import proparty.S;
 import proparty.TBL_Name;
@@ -140,6 +142,35 @@ public class CreateSepaComFile {
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 
+	private boolean checkSabunDay(String TODAY,String lastUpdateDay,int checkSabun){
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    Date dateTODAY = null;
+	    Date dateCheckDay = null;
+
+	    try {
+	        dateTODAY = sdf.parse(TODAY);
+	        dateCheckDay = sdf.parse(lastUpdateDay);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    // 日付をlong値に変換します。
+	    long dateTimeTODAY = dateTODAY.getTime();
+	    long dateTimeCheckDay = dateCheckDay.getTime();
+
+	    // 差分の日数を算出します。
+	    long dayDiff = ( dateTimeTODAY - dateTimeCheckDay  ) / (1000 * 60 * 60 * 24 );
+
+	    
+
+	    if(checkSabun <= dayDiff){
+	    	return false;
+	    }else{
+	    	return true;
+	    }
+
+
+	}
 
 	//true:分割
 	//false:併合
@@ -162,10 +193,15 @@ public class CreateSepaComFile {
 //		System.out.println("2016-02-15".compareTo("2016-02-17"));
 		//直近一週間で更新がない場合は処理終わり
 
-		if ( (toDay.compareTo(checkDay)) < 7 ){
+		if (checkSabunDay(toDay,checkDay,7)){
 			s.closeConection();
 			return ParseHtmlStockSplit.NO_UPDATE;
 		}
+
+//		if ( (toDay.compareTo(checkDay)) < 7 ){
+//			s.closeConection();
+//			return ParseHtmlStockSplit.NO_UPDATE;
+//		}
 
 		String fileName;
 		int checkResult;
@@ -203,16 +239,23 @@ public class CreateSepaComFile {
 					+ " and "
 					+ COLUMN.EFFECT_STARTDAY + " < '2007-01-01'";
 
-		System.out.println("createSepaComFileAndLoad:"+SQL1);
-		try {
-			s.sqlGetter().executeUpdate(SQL1);
-			s.freeUpdateQuery(SQL2);
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			s.closeConection();
-			return e.getErrorCode();
+
+		commonAP.writeInLog("createSepaComFileAndLoad:"+SQL1,logWriting.DATEDATE_LOG_FLG);
+
+		//自動取込がONの場合、取り込みを行う。
+		if(mainDTO.isSepaComFileAutoCaptureFLG()){
+			commonAP.writeInLog("取込開始",logWriting.DATEDATE_LOG_FLG);
+			try {
+				s.sqlGetter().executeUpdate(SQL1);
+				s.freeUpdateQuery(SQL2);
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+				s.closeConection();
+				return e.getErrorCode();
+			}
 		}
+
 
 		phs = new ParseHtmlStockSplit();
 		s.closeConection();

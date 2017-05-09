@@ -24,10 +24,16 @@ public class TAB_MainDTO {
 	//分割フォルダ出力先ファイルパス
 	private String sepaFolderPath;
 
+	private boolean sepaComFileAutoCaptureFLG = false;
 
 
 
-
+	public boolean isSepaComFileAutoCaptureFLG() {
+		return sepaComFileAutoCaptureFLG;
+	}
+	public void setSepaComFileAutoCaptureFLG(boolean sepaComFileAutoCaptureFLG) {
+		this.sepaComFileAutoCaptureFLG = sepaComFileAutoCaptureFLG;
+	}
 	public String getSepaFolderPath() {
 		return sepaFolderPath;
 	}
