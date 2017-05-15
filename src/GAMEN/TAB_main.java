@@ -796,15 +796,15 @@ public class TAB_main extends JPanel {
 			}
 
 
-//			String resultBackUpOut = BU.backUpOut(mainDTO);
-//			switch (resultBackUpOut) {
-//				case nyuryokuCheckResultConst.SUCCESS:
-//					outBackupResult.setText(resultBackUpOut);
-//					return;
-//				default:
-//					outBackupResult.setText(resultBackUpOut);
-//				break;
-//			}
+			String resultBackUpOut = BU.backUpOut(mainDTO);
+			switch (resultBackUpOut) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					outBackupResult.setText(resultBackUpOut);
+					return;
+				default:
+					outBackupResult.setText(resultBackUpOut);
+				break;
+			}
 
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();
@@ -850,16 +850,16 @@ public class TAB_main extends JPanel {
 			}
 
 
-//			String resultBackUpIn = BU.backUpIn(mainDTO);
-//
-//			switch (resultBackUpIn) {
-//				case nyuryokuCheckResultConst.SUCCESS:
-//					inBackupResult.setText(resultBackUpIn);
-//					return;
-//				default:
-//					inBackupResult.setText(resultBackUpIn);
-//				break;
-//			}
+			String resultBackUpIn = BU.backUpIn(mainDTO);
+
+			switch (resultBackUpIn) {
+				case nyuryokuCheckResultConst.SUCCESS:
+					inBackupResult.setText(resultBackUpIn);
+					return;
+				default:
+					inBackupResult.setText(resultBackUpIn);
+				break;
+			}
 
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();
