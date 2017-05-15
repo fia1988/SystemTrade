@@ -59,6 +59,10 @@ public class CreateSepaComFile {
 
 	public String checkSepaComFile(TAB_MainDTO mainDTO){
 
+		commonAP.writeInLog("分割チェック開始",logWriting.DATEDATE_LOG_FLG);
+		//分割ファイルを取り込む前に今現在、falseのものを消す！
+		deleteOldFalse();
+
 
 		String letterSepaCOM = "分割";
 		switch (createSepaComFileAndLoad(mainDTO,true)) {
@@ -142,6 +146,33 @@ public class CreateSepaComFile {
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 
+	private int deleteOldFalse(){
+
+		S s = new S();
+		s.getCon();
+
+		String SQL = "delete from " + TBL_Name.SEPARATE_DD
+					+ " where "
+					+ COLUMN.SEPA_FLG + " is false ";
+
+		int deleteRecord = 0;
+		try {
+			commonAP.writeInLog("sepa_flg is falseを削除します。",logWriting.DATEDATE_LOG_FLG);
+			deleteRecord = s.sqlGetter().executeUpdate(SQL);
+			commonAP.writeInLog(deleteRecord + "件削除しました。",logWriting.DATEDATE_LOG_FLG);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			//エラー
+			return 0;
+		}finally{
+			s.closeConection();
+		}
+
+		return deleteRecord;
+//		return 0;
+	}
+
 	private boolean checkSabunDay(String TODAY,String lastUpdateDay,int checkSabun){
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    Date dateTODAY = null;
@@ -161,7 +192,7 @@ public class CreateSepaComFile {
 	    // 差分の日数を算出します。
 	    long dayDiff = ( dateTimeTODAY - dateTimeCheckDay  ) / (1000 * 60 * 60 * 24 );
 
-	    
+
 
 	    if(checkSabun <= dayDiff){
 	    	return false;
@@ -177,14 +208,17 @@ public class CreateSepaComFile {
 	private int createSepaComFileAndLoad(TAB_MainDTO mainDTO,boolean checkFLG){
 		String checkDay;
 		String toDay = controllDay.getTODAY();
+		String letter = "";
 
 		S s = new S();
 		s.getCon();
 
 		if ( checkFLG ){
 			checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_SEPA_CHECK, s);
+			letter = "分割";
 		}else{
 			checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_COMBINE_CHECK, s);
+			letter = "併合";
 		}
 
 //		//-3
@@ -193,15 +227,10 @@ public class CreateSepaComFile {
 //		System.out.println("2016-02-15".compareTo("2016-02-17"));
 		//直近一週間で更新がない場合は処理終わり
 
-		if (checkSabunDay(toDay,checkDay,7)){
+		if (checkSabunDay(toDay,checkDay,3)){
 			s.closeConection();
 			return ParseHtmlStockSplit.NO_UPDATE;
 		}
-
-//		if ( (toDay.compareTo(checkDay)) < 7 ){
-//			s.closeConection();
-//			return ParseHtmlStockSplit.NO_UPDATE;
-//		}
 
 		String fileName;
 		int checkResult;
@@ -244,9 +273,10 @@ public class CreateSepaComFile {
 
 		//自動取込がONの場合、取り込みを行う。
 		if(mainDTO.isSepaComFileAutoCaptureFLG()){
-			commonAP.writeInLog("取込開始",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog(letter + "取込開始",logWriting.DATEDATE_LOG_FLG);
 			try {
-				s.sqlGetter().executeUpdate(SQL1);
+				int addRecord = s.sqlGetter().executeUpdate(SQL1);
+				commonAP.writeInLog(letter+"を"+addRecord + "件追加しました。",logWriting.DATEDATE_LOG_FLG);
 				s.freeUpdateQuery(SQL2);
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック

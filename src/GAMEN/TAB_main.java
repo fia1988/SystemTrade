@@ -353,6 +353,10 @@ public class TAB_main extends JPanel {
 		checkBox.setBounds(39, 582, 333, 29);
 		add(checkBox);
 
+		JLabel label_14 = new JLabel("sepaComKakodataは後に取り込むこと。");
+		label_14.setBounds(831, 368, 278, 19);
+		add(label_14);
+
 
 
 	}
@@ -548,7 +552,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			
+
 			ResetShori RS = new ResetShori();
 			deleteDBresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
@@ -595,7 +599,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			
+
 			ResetShori RS = new ResetShori();
 			deleteRecordResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
@@ -883,7 +887,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			
+
 			String checkShotResult = oneShotCheck.nyuryokuChecker(mainDTO);
 
 			switch (checkShotResult) {
@@ -952,7 +956,7 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			
+
 			String checkShotResult = sepaComCheck.nyuryokuChecker(mainDTO);
 
 

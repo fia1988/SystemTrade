@@ -39,7 +39,7 @@ public class SagyoSpace {
 		resultDTO.setTotalRatio(0.65);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
-//		paraDTO.setTesuRYO(0);
+		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
@@ -77,49 +77,52 @@ public class SagyoSpace {
 
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
-		dayList[0] = "2007-01-01";
-		dayList[1] = "2007-12-31";
+		dayList[0] =	"2017-04-25";
+		dayList[1] =	"2017-05-31";
 		dayLists.add(dayList.clone());
-
-		dayList[0] = "2008-01-01";
-		dayList[1] = "2008-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2009-01-01";
-		dayList[1] = "2009-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2010-01-01";
-		dayList[1] = "2010-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2011-01-01";
-		dayList[1] = "2011-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2012-01-01";
-		dayList[1] = "2012-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2013-01-01";
-		dayList[1] = "2013-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2014-01-01";
-		dayList[1] = "2014-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2015-01-01";
-		dayList[1] = "2015-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2016-01-01";
-		dayList[1] = "2016-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2017-01-01";
-		dayList[1] = "2017-03-31";
-		dayLists.add(dayList.clone());
+//		dayList[0] = "2007-01-01";
+//		dayList[1] = "2007-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2008-01-01";
+//		dayList[1] = "2008-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2009-01-01";
+//		dayList[1] = "2009-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2010-01-01";
+//		dayList[1] = "2010-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2011-01-01";
+//		dayList[1] = "2011-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2012-01-01";
+//		dayList[1] = "2012-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2013-01-01";
+//		dayList[1] = "2013-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2014-01-01";
+//		dayList[1] = "2014-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2015-01-01";
+//		dayList[1] = "2015-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2016-01-01";
+//		dayList[1] = "2016-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2017-01-01";
+//		dayList[1] = "2017-03-31";
+//		dayLists.add(dayList.clone());
 
 		String tec = "technique";
 
