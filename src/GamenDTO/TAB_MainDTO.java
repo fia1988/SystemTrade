@@ -23,11 +23,29 @@ public class TAB_MainDTO {
 	private String inBackUpFilePath;
 	//分割フォルダ出力先ファイルパス
 	private String sepaFolderPath;
-
+	//分割を自動で取り込むか判断するフラグ
 	private boolean sepaComFileAutoCaptureFLG = false;
+	//最適化処理フラグ
+	private boolean optimazeFLG = false;
+	//自動バックアップファイル作成を判断するフラグ
+	private boolean autoBackUp = false;
 
 
 
+
+
+	public boolean isAutoBackUp() {
+		return autoBackUp;
+	}
+	public void setAutoBackUp(boolean autoBackUp) {
+		this.autoBackUp = autoBackUp;
+	}
+	public boolean isOptimazeFLG() {
+		return optimazeFLG;
+	}
+	public void setOptimazeFLG(boolean optimazeFLG) {
+		this.optimazeFLG = optimazeFLG;
+	}
 	public boolean isSepaComFileAutoCaptureFLG() {
 		return sepaComFileAutoCaptureFLG;
 	}

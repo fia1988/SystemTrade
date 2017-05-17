@@ -64,10 +64,12 @@ public class ParseHtmlStockSplit {
 		} catch (UnknownHostException e) {
 			return ERROR_WEBCONNECT;
 		} catch (IOException e) {
+			e.printStackTrace();
 			return ERROR_OTHER;
 		} catch (NoDataException e) {
 			return ERROR_DATAINCOLLECT;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ERROR_OTHER;
 		}
 

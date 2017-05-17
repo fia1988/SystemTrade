@@ -2,6 +2,7 @@ package botton;
 
 import java.io.File;
 
+import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
@@ -92,6 +93,40 @@ public class cloringDate {
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
 		sepaComCheck.checkSepaComFile(mainDTO);
 
+		//backUp開始
+		if (mainDTO.isAutoBackUp()){
+			BackUp BU = new BackUp();
+
+			//最適化フラグがtrueの場合最適化もやる
+			if (mainDTO.isOptimazeFLG()){
+				BU.optimizeDB(mainDTO);
+			}
+
+			String toDay = commonAP.getTODAY();
+			S s = new S();
+			s.getCon();
+			String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
+			s.closeConection();
+
+			if (commonAP.checkSabunDay(toDay,checkDay,PROPARTY.BACK_UP_KANkAKU)==false){
+				//同名ファイルのチェック
+				//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
+				mainDTO.setOutBackUpFilePath(mainDTO.getOutBackUpFolderPath() + File.separator + toDay + ".dump");
+				File file =  new File(mainDTO.getOutBackUpFilePath());
+				if (file.isFile()==true){
+					BU = new BackUp();
+					commonAP.writeInLog(mainDTO.getOutBackUpFilePath(),logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("↑同名ファイルが存在するため、バックアップは行いません。",logWriting.DATEDATE_LOG_FLG);
+				}else{
+					BU.backUpOut(mainDTO);
+					BU.checkDumpFileNumbers(mainDTO);
+				}
+
+			}
+
+
+			BU = new BackUp();
+		}
 
 		stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);

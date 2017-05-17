@@ -15,6 +15,8 @@ public class nyuryokuCheckResultConst {
 	final public static String NO_FILE_ERR = "ファイルが存在しません";
 	//フォルダが存在しない
 	final public static String NO_FOLDER_ERR = "フォルダが存在しません";
+	//バックアップフォルダが存在しない
+	final public static String NO_BACKUP_FOLDER_ERR = "バックアップフォルダが存在しません";
 	//ファイルが既に存在する
 	final public static String EXACT_BACK_UP_FILE_ERR = "バックアップファイルが既に存在します";
 	//ログフォルダが存在しない。

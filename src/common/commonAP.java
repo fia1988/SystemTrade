@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import proparty.PROPARTY;
@@ -773,5 +774,33 @@ public class commonAP {
 		return codeListwithiCate;
 	}
 
+	//after - before > checksabunのときtrue
+	public static boolean checkSabunDay(String TODAY,String lastUpdateDay,int checkSabun){
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    Date dateTODAY = null;
+	    Date dateCheckDay = null;
+
+	    try {
+	        dateTODAY = sdf.parse(TODAY);
+	        dateCheckDay = sdf.parse(lastUpdateDay);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    // 日付をlong値に変換します。
+	    long dateTimeTODAY = dateTODAY.getTime();
+	    long dateTimeCheckDay = dateCheckDay.getTime();
+
+	    // 差分の日数を算出します。
+	    long dayDiff = ( dateTimeTODAY - dateTimeCheckDay  ) / (1000 * 60 * 60 * 24 );
+
+
+
+	    if(checkSabun < dayDiff){
+	    	return false;
+	    }else{
+	    	return true;
+	    }
+	}
 
 }

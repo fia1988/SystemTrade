@@ -2,9 +2,8 @@ package botton;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
@@ -59,7 +58,7 @@ public class CreateSepaComFile {
 
 	public String checkSepaComFile(TAB_MainDTO mainDTO){
 
-		commonAP.writeInLog("分割チェック開始",logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog("分割併合チェック開始",logWriting.DATEDATE_LOG_FLG);
 		//分割ファイルを取り込む前に今現在、falseのものを消す！
 		deleteOldFalse();
 
@@ -70,7 +69,7 @@ public class CreateSepaComFile {
 				commonAP.writeInLog(letterSepaCOM + "ファイル更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ParseHtmlStockSplit.NORMAL_END:
-				commonAP.writeInLog(letterSepaCOM + "ファイル更新取込成功",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog(letterSepaCOM + "ファイル更新処理成功",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ParseHtmlStockSplit.ERROR_DATAINCOLLECT:
 				commonAP.writeInLog(letterSepaCOM + "ファイルのレイアウトがおかしい",logWriting.DATEDATE_LOG_FLG);
@@ -109,7 +108,7 @@ public class CreateSepaComFile {
 				commonAP.writeInLog(letterSepaCOM + "ファイル更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ParseHtmlStockSplit.NORMAL_END:
-				commonAP.writeInLog(letterSepaCOM + "ファイル更新取込成功",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog(letterSepaCOM + "ファイル更新処理成功",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ParseHtmlStockSplit.ERROR_DATAINCOLLECT:
 				commonAP.writeInLog(letterSepaCOM + "ファイルのレイアウトがおかしい",logWriting.DATEDATE_LOG_FLG);
@@ -173,35 +172,7 @@ public class CreateSepaComFile {
 //		return 0;
 	}
 
-	private boolean checkSabunDay(String TODAY,String lastUpdateDay,int checkSabun){
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	    Date dateTODAY = null;
-	    Date dateCheckDay = null;
 
-	    try {
-	        dateTODAY = sdf.parse(TODAY);
-	        dateCheckDay = sdf.parse(lastUpdateDay);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-
-	    // 日付をlong値に変換します。
-	    long dateTimeTODAY = dateTODAY.getTime();
-	    long dateTimeCheckDay = dateCheckDay.getTime();
-
-	    // 差分の日数を算出します。
-	    long dayDiff = ( dateTimeTODAY - dateTimeCheckDay  ) / (1000 * 60 * 60 * 24 );
-
-
-
-	    if(checkSabun <= dayDiff){
-	    	return false;
-	    }else{
-	    	return true;
-	    }
-
-
-	}
 
 	//true:分割
 	//false:併合
@@ -227,7 +198,8 @@ public class CreateSepaComFile {
 //		System.out.println("2016-02-15".compareTo("2016-02-17"));
 		//直近一週間で更新がない場合は処理終わり
 
-		if (checkSabunDay(toDay,checkDay,3)){
+		//trueのときは処理終了
+		if (commonAP.checkSabunDay(toDay,checkDay,PROPARTY.SEPA_COM_KANKAKU)){
 			s.closeConection();
 			return ParseHtmlStockSplit.NO_UPDATE;
 		}
@@ -277,6 +249,7 @@ public class CreateSepaComFile {
 			try {
 				int addRecord = s.sqlGetter().executeUpdate(SQL1);
 				commonAP.writeInLog(letter+"を"+addRecord + "件追加しました。",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog(letter + "ファイル取込成功",logWriting.DATEDATE_LOG_FLG);
 				s.freeUpdateQuery(SQL2);
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック

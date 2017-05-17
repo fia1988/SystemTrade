@@ -40,6 +40,8 @@ public class TAB_main extends JPanel {
 	private JTextField inBackUplogFilePath;
 
 	JCheckBox checkBox = new JCheckBox("分割併合ファイル自動取込チェック");
+	JCheckBox checkBox_1 = new JCheckBox("最適化チェックフラグ");
+	JCheckBox checkBox_2 = new JCheckBox("自動バックアップ制御");
 
 	JLabel timerCheck = new JLabel("false");
 	JLabel sepaComResult = new JLabel("成／否");
@@ -182,7 +184,7 @@ public class TAB_main extends JPanel {
 
 		inBackUplogFilePath = new JTextField();
 		inBackUplogFilePath.setColumns(10);
-		inBackUplogFilePath.setBounds(434, 381, 330, 25);
+		inBackUplogFilePath.setBounds(434, 421, 330, 25);
 		add(inBackUplogFilePath);
 
 		JButton button_1 = new JButton("test");
@@ -192,21 +194,21 @@ public class TAB_main extends JPanel {
 
 		JButton button_2 = new JButton("test");
 		button_2.setAction(action_10);
-		button_2.setBounds(434, 415, 165, 27);
+		button_2.setBounds(434, 455, 165, 27);
 		add(button_2);
 
 		JLabel label_7 = new JLabel("結果：");
-		label_7.setBounds(434, 312, 60, 19);
+		label_7.setBounds(434, 333, 60, 19);
 		add(label_7);
 
 		JLabel label_8 = new JLabel("結果：");
-		label_8.setBounds(434, 457, 60, 19);
+		label_8.setBounds(434, 497, 60, 19);
 		add(label_8);
 
-		outBackupResult.setBounds(488, 312, 307, 19);
+		outBackupResult.setBounds(488, 333, 307, 19);
 		add(outBackupResult);
 
-		inBackupResult.setBounds(488, 457, 307, 19);
+		inBackupResult.setBounds(488, 497, 307, 19);
 		add(inBackupResult);
 
 		JLabel label_11 = new JLabel("初期設定");
@@ -299,7 +301,7 @@ public class TAB_main extends JPanel {
 		add(label_17);
 
 		JLabel label_21 = new JLabel("バックアップ入力ファイルパス");
-		label_21.setBounds(434, 346, 239, 19);
+		label_21.setBounds(434, 386, 239, 19);
 		add(label_21);
 
 		mysqlPassMask = new JPasswordField();
@@ -358,6 +360,14 @@ public class TAB_main extends JPanel {
 		add(label_14);
 
 
+		checkBox_1.setBounds(434, 301, 212, 29);
+		add(checkBox_1);
+
+
+		checkBox_2.setBounds(42, 281, 239, 29);
+		add(checkBox_2);
+
+
 
 	}
 
@@ -391,12 +401,15 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 
 			String checkResult = check.nyuryokuChecker(mainDTO);
 
 			switch (checkResult) {
 			case nyuryokuCheckResultConst.SUCCESS:
 				timerCheck.setText("true") ;
+				timerResult.setText("ツール実行中。。。");
 				break;
 			case nyuryokuCheckResultConst.ON_TIMER_ERR:
 				timerResult.setText(checkResult);
@@ -411,7 +424,10 @@ public class TAB_main extends JPanel {
 				timerResult.setText(checkResult);
 				return;
 			case nyuryokuCheckResultConst.NO_SEPA_FOLDER_ERR:
-			timerResult.setText(checkResult);
+				timerResult.setText(checkResult);
+			return;
+			case nyuryokuCheckResultConst.NO_BACKUP_FOLDER_ERR:
+				timerResult.setText(checkResult);
 			return;
 			default:
 				timerResult.setText("そのほかエラー");
@@ -452,6 +468,7 @@ public class TAB_main extends JPanel {
 
 
 			timerCheck.setText("false") ;
+			timerResult.setText("ツール停止。。。");
 			TCD.cancelEveryDay();
 
 //			a = new TimeClornigDate();
@@ -494,6 +511,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			SepaCombine SC = new SepaCombine();
 			sepaComResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = SC.nyuryokuChecker(mainDTO);
@@ -552,7 +571,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			ResetShori RS = new ResetShori();
 			deleteDBresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
@@ -599,6 +619,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 
 			ResetShori RS = new ResetShori();
 			deleteRecordResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
@@ -642,6 +664,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			deleteS_Cresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			ResetShori RS = new ResetShori();
@@ -683,7 +707,9 @@ public class TAB_main extends JPanel {
 			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			deleteKeepResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			ResetShori RS = new ResetShori();
@@ -726,6 +752,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			createTBLresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 
@@ -773,6 +801,9 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
 			outBackupResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
 
 			String checkNyuryoku = BU.nyuryokuCheckerOut(mainDTO);
 
@@ -795,6 +826,16 @@ public class TAB_main extends JPanel {
 					return;
 			}
 
+
+			if (mainDTO.isOptimazeFLG()){
+				String opResult = BU.optimizeDB(mainDTO);
+				if (!opResult.equals(nyuryokuCheckResultConst.SUCCESS)){
+					outBackupResult.setText(opResult + ":最適化失敗");
+					BU = new BackUp();
+					mainDTO = new TAB_MainDTO();
+					return;
+				}
+			}
 
 			String resultBackUpOut = BU.backUpOut(mainDTO);
 			switch (resultBackUpOut) {
@@ -829,6 +870,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			String checkNyuryoku = BU.nyuryokuCheckerIn(mainDTO);
 
 			inBackupResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
@@ -848,6 +891,8 @@ public class TAB_main extends JPanel {
 				default:
 					return;
 			}
+
+
 
 
 			String resultBackUpIn = BU.backUpIn(mainDTO);
@@ -887,7 +932,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			String checkShotResult = oneShotCheck.nyuryokuChecker(mainDTO);
 
 			switch (checkShotResult) {
@@ -956,7 +1002,8 @@ public class TAB_main extends JPanel {
 			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
 			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
 			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-
+			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+			mainDTO.setAutoBackUp(checkBox_2.isSelected());
 			String checkShotResult = sepaComCheck.nyuryokuChecker(mainDTO);
 
 

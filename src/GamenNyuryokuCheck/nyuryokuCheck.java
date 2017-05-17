@@ -45,6 +45,15 @@ public class nyuryokuCheck {
 		    return nyuryokuCheckResultConst.NO_SEPA_FOLDER_ERR;
 		}
 
+		//自動バックアップを取る場合はバックアップフォルダのフォルダパスをチェックする
+		if (mainDTO.isAutoBackUp()){
+			//バックアップファイルの出力先有無チェック
+			file =  new File(mainDTO.getOutBackUpFolderPath());
+			if (file.isDirectory()==false){
+			    return nyuryokuCheckResultConst.NO_BACKUP_FOLDER_ERR;
+			}
+		}
+
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 }

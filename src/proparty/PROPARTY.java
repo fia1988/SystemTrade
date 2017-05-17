@@ -21,6 +21,20 @@ public class PROPARTY {
 	public static int HISABISADAY_INDEX			=	5210;
 
 
+	//0:毎日
+	//1:月水金
+	//2:月木、火金
+	//3:月金
+	//4:週一回
+	//7:月、翌週火、翌週水・・・
+	//8:月、翌週水、翌週金
+	//バックアップを何日間隔でやるか
+	public static int BACK_UP_KANkAKU			=	0;
+	//分割併合ファイルを何日間隔でとるか
+	public static int SEPA_COM_KANKAKU			=	1;
+	//バックアップファイルの世代、いくつdumpファイルを作るか
+	public static int MAX_DUMP_FILES			=	4;
+
 	//503エラー？たまに出るへんなやつ
 	public static String NAZO = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">";
 	public static String NAZO2 = "<HTML><HEAD><TITLE>Service Unavailable</TITLE>";

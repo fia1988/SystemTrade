@@ -2,6 +2,7 @@ package botton;
 
 import java.io.File;
 
+import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
@@ -79,17 +80,14 @@ public class BackUp {
 
 
 
-	private String optimizeDB(TAB_MainDTO mainDTO){
+	public String optimizeDB(TAB_MainDTO mainDTO){
 
 		String executeCmd = "cmd /c mysqlcheck -o -u " + mainDTO.getMysqlID() + " -p" + mainDTO.getMysqlPass() + " " + TBL_Name.KABU_DB ;
 		commonAP.writeInLog("最適化開始",logWriting.DATEDATE_LOG_FLG);
 		Process runtimeProcess;
 		try {
-			System.out.println("out:" + executeCmd);
 		    runtimeProcess = Runtime.getRuntime().exec(executeCmd);
-		    System.out.println("aaa");
 		    int processComplete = runtimeProcess.waitFor();
-		    System.out.println("bbbbbbb");
 		    if (processComplete == 0) {
 		    	commonAP.writeInLog("最適化成功",logWriting.DATEDATE_LOG_FLG);
 		    	return nyuryokuCheckResultConst.SUCCESS;
@@ -109,6 +107,7 @@ public class BackUp {
 	public String backUpOut(TAB_MainDTO mainDTO){
 
 
+
 		String executeCmd = "cmd /c mysqldump --single-transaction -u " + mainDTO.getMysqlID() + " -p" + mainDTO.getMysqlPass() + " " + TBL_Name.KABU_DB + "  >  " + mainDTO.getOutBackUpFilePath().replace(File.separator,ReturnCodeConst.SQL_SEPA);
 //		executeCmd = executeCmd.replace(File.separator,ReturnCodeConst.SQL_SEPA);
 //		mysqldump --single-transaction -u root -p kabudata > D:/orderList/a.dump
@@ -118,11 +117,8 @@ public class BackUp {
 		commonAP.writeInLog("バックアップ開始：" + mainDTO.getOutBackUpFilePath().replace(File.separator,ReturnCodeConst.SQL_SEPA),logWriting.DATEDATE_LOG_FLG);
 
 		try {
-			System.out.println("out:" + executeCmd);
 		    runtimeProcess = Runtime.getRuntime().exec(executeCmd);
-		    System.out.println("aaa");
 		    int processComplete = runtimeProcess.waitFor();
-		    System.out.println("bbbbbbb");
 		    if (processComplete == 0) {
 		    	commonAP.writeInLog("バックアップ成功",logWriting.DATEDATE_LOG_FLG);
 		    	updateBackUpDay();
@@ -162,8 +158,6 @@ public class BackUp {
 		commonAP.writeInLog("リストア開始:" + mainDTO.getInBackUpFilePath().replace(File.separator,ReturnCodeConst.SQL_SEPA),logWriting.DATEDATE_LOG_FLG);
 		Process runtimeProcess;
 		try {
-			System.out.println("in:" + executeCmd);
-
 		    runtimeProcess = Runtime.getRuntime().exec(executeCmd);
 		    int processComplete = runtimeProcess.waitFor();
 		    if (processComplete == 0) {
@@ -179,5 +173,51 @@ public class BackUp {
 		    return nyuryokuCheckResultConst.FAILED + ":" + "原因不明のエラー";
 		}
 
+	}
+
+
+	public String checkDumpFileNumbers(TAB_MainDTO mainDTO){
+		if(checkAllFileNumbers(mainDTO)==false){
+			if ( deleteMostOldDumpFile(mainDTO)==false ) {
+				return nyuryokuCheckResultConst.FAILED;
+			};
+		}
+
+		return nyuryokuCheckResultConst.SUCCESS;
+	}
+
+	//フォルダ内のファイルの数を数える。
+	//指定の数より多い場合はfalseを返す。
+	//falseの場合、一番古いファイルを削除する。
+	private boolean checkAllFileNumbers(TAB_MainDTO mainDTO){
+
+        File file = new File(mainDTO.getOutBackUpFilePath());
+        File files[] = file.listFiles();
+
+        if (files.length > PROPARTY.MAX_DUMP_FILES){
+        	commonAP.writeInLog( (files.length + 1) + "以上のファイルが存在するため最も古いdumpを削除します。",logWriting.DATEDATE_LOG_FLG);
+        	return false;
+        }
+		return true;
+	}
+
+	private boolean deleteMostOldDumpFile(TAB_MainDTO mainDTO){
+        File file = new File(mainDTO.getOutBackUpFilePath());
+        File files[] = file.listFiles();
+
+        //以下のような順でならんでいるので一番新しい古いファイルを消す
+        //[0]:2017-01-01
+        //[1]:2017-01-02
+        //[2]:2017-01-03
+
+        if(files[0].delete()){
+        	//成功
+        	commonAP.writeInLog(files[0] + "の削除に成功しました。",logWriting.DATEDATE_LOG_FLG);
+        }else{
+        	//失敗
+        	commonAP.writeInLog(files[0] + "の削除に失敗しました。",logWriting.DATEDATE_LOG_FLG);
+        }
+
+		return true;
 	}
 }
