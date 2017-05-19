@@ -17,6 +17,7 @@ import constant.ReCord;
 import constant.ReturnCodeConst;
 import constant.TimerShoriConst;
 import constant.logWriting;
+import constant.nyuryokuCheckResultConst;
 import controller.CONTOLLBOTTON;
 
 public class cloringDate {
@@ -113,15 +114,19 @@ public class cloringDate {
 				//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
 				mainDTO.setOutBackUpFilePath(mainDTO.getOutBackUpFolderPath() + File.separator + toDay + ".dump");
 				File file =  new File(mainDTO.getOutBackUpFilePath());
+				System.out.println("if (file.isFile()==true){:"+file);
 				if (file.isFile()==true){
 					BU = new BackUp();
 					commonAP.writeInLog(mainDTO.getOutBackUpFilePath(),logWriting.DATEDATE_LOG_FLG);
 					commonAP.writeInLog("↑同名ファイルが存在するため、バックアップは行いません。",logWriting.DATEDATE_LOG_FLG);
 				}else{
-					BU.backUpOut(mainDTO);
-					BU.checkDumpFileNumbers(mainDTO);
+					//バックアップ成功時の処理
+					System.out.println("aaa");
+					if (BU.backUpOut(mainDTO).equals(nyuryokuCheckResultConst.SUCCESS)){
+						System.out.println("nnnnn");
+						BU.checkDumpFileNumbers(mainDTO);
+					}
 				}
-
 			}
 
 

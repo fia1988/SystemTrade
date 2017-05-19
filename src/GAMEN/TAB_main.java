@@ -841,11 +841,12 @@ public class TAB_main extends JPanel {
 			switch (resultBackUpOut) {
 				case nyuryokuCheckResultConst.SUCCESS:
 					outBackupResult.setText(resultBackUpOut);
-					return;
+					break;
 				default:
 					outBackupResult.setText(resultBackUpOut);
 				break;
 			}
+
 
 			BU = new BackUp();
 			mainDTO = new TAB_MainDTO();

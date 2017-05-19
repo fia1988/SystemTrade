@@ -190,7 +190,7 @@ public class BackUp {
 	//指定の数より多い場合はfalseを返す。
 	//falseの場合、一番古いファイルを削除する。
 	private boolean checkAllFileNumbers(TAB_MainDTO mainDTO){
-
+		System.out.println("checkAllFileNumbers:");
         File file = new File(mainDTO.getOutBackUpFilePath());
         File files[] = file.listFiles();
 
@@ -209,7 +209,7 @@ public class BackUp {
         //[0]:2017-01-01
         //[1]:2017-01-02
         //[2]:2017-01-03
-
+        System.out.println("deleteMostOldDumpFile:"+files[0]);
         if(files[0].delete()){
         	//成功
         	commonAP.writeInLog(files[0] + "の削除に成功しました。",logWriting.DATEDATE_LOG_FLG);

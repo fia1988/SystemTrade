@@ -3,11 +3,16 @@
  */
 package sepacomfilecreate;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +34,6 @@ import au.com.bytecode.opencsv.CSVWriter;
  */
 public class ParseHtmlStockSplit {
 
-	public final static int NO_UPDATE = 7;
 	public final static int NORMAL_END = 0;
 	public final static int ERROR_SAMEFILENAME = 1;
 	public final static int ERROR_NOFOLDEREXIST = 2;
@@ -37,7 +41,9 @@ public class ParseHtmlStockSplit {
 	public final static int ERROR_WEBCONNECT = 4;
 	public final static int ERROR_OTHER = 5;
 	public final static int ERROR_DATAINCOLLECT = 6;
+	public final static int NO_UPDATE = 7;
 	public final static int ERROR_SQL = 8;
+
 
 	/**
 	 *
@@ -45,7 +51,7 @@ public class ParseHtmlStockSplit {
 	public ParseHtmlStockSplit() {
 	}
 
-	public int makeSplitCsv(String strFolder, String fileName) {
+	public int makeSplitCsv(String strFolder, String strDate) {
 		String url = "http://kabu.com/process/bunkatu.js";
 
 		File folder = new File(strFolder);
@@ -53,7 +59,7 @@ public class ParseHtmlStockSplit {
 
 		String outputFilePath = strFolder;
 		if (!strFolder.endsWith(File.separator)) outputFilePath += File.separator;
-		outputFilePath += fileName;
+		outputFilePath += strDate;
 
 		File file = new File(outputFilePath);
 		if (file.exists()) return ERROR_SAMEFILENAME;
@@ -64,12 +70,10 @@ public class ParseHtmlStockSplit {
 		} catch (UnknownHostException e) {
 			return ERROR_WEBCONNECT;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return ERROR_OTHER;
 		} catch (NoDataException e) {
 			return ERROR_DATAINCOLLECT;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return ERROR_OTHER;
 		}
 
@@ -81,7 +85,7 @@ public class ParseHtmlStockSplit {
 
 	}
 
-	public int makeMergeCsv(String strFolder, String fileName) {
+	public int makeMergeCsv(String strFolder, String strDate) {
 		String url = "http://kabu.com/process/gensi.js";
 
 		File folder = new File(strFolder);
@@ -89,7 +93,7 @@ public class ParseHtmlStockSplit {
 
 		String outputFilePath = strFolder;
 		if (!strFolder.endsWith(File.separator)) outputFilePath += File.separator;
-		outputFilePath += fileName;
+		outputFilePath += strDate;
 
 		File file = new File(outputFilePath);
 		if (file.exists()) return ERROR_SAMEFILENAME;
@@ -178,11 +182,12 @@ public class ParseHtmlStockSplit {
 		SplitMergeInfo info = new SplitMergeInfo();
 		//boolean halfFlag = true;
 
-		document = Jsoup.connect(url).get();
+//		document = Jsoup.connect(url).get();
 
 		//System.out.println(document.html());
 
-		String strSite = document.html().replace("\n", "");
+		String strSite = getPageText(url);
+		//document.html().replace("\n", "");
 
 		String regex = "document.write\\(\\'\\s*<tr>\\s*\\\\\\s*<td>(.*?)</td>\\\\\\s*<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\<td>'\\);";
 
@@ -217,18 +222,7 @@ public class ParseHtmlStockSplit {
 			count += 1;
 		}
 
-		regex = "BRatioW\\s=\\s&quot;(.*?)&quot;;";
-		p = Pattern.compile(regex);
-
-		count = 0;
-
-		m = p.matcher(strSite);
-		while (m.find()){
-			groupList.get(count).setIntWariateRate2(m.group(1));
-			count += 1;
-		}
-
-		regex = "ARatioW\\s=\\s&quot;(.*?)&quot;;";
+		regex = "ARatioW\\s=\\s\"(.*?)\";";
 		p = Pattern.compile(regex);
 
 		count = 0;
@@ -239,6 +233,20 @@ public class ParseHtmlStockSplit {
 			count += 1;
 		}
 
+		regex = "BRatioW\\s=\\s\"(.*?)\";";
+		p = Pattern.compile(regex);
+
+		count = 0;
+
+		m = p.matcher(strSite);
+		while (m.find()){
+			groupList.get(count).setIntWariateRate2(m.group(1));
+			count += 1;
+		}
+		//
+		//		for (SplitMergeInfo group : groupList) {
+		//			System.out.println(group.toString());
+		//		}
 
 		return groupList;
 	}
@@ -249,48 +257,60 @@ public class ParseHtmlStockSplit {
 		//String url = "http://kabu.com/process/bunkatu.js";
 		List<SplitMergeInfo> groupList = new ArrayList<>();
 		SplitMergeInfo info = new SplitMergeInfo();
-		boolean halfFlag = true;
+//
+//		document = Jsoup.connect(url).get();
+//
+//		System.out.println(document.html());
 
-		document = Jsoup.connect(url).get();
+		String strSite = getPageText(url);
+		//document.html().replace("\n", "");
 
-		//System.out.println(document.html());
-
-		String strSite = document.html().replace("\n", "");
-
-		String regex = "document.write\\(\\'.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
+		String regex = "document.write\\(\\'\\s*<tr>\\s*\\\\\\s*<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
+		//String regex = "document.write\\(\\'.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
 
 		//System.out.println(strSite);
 		Pattern p = Pattern.compile(regex);
 
 		Matcher m = p.matcher(strSite);
 		while (m.find()){
-			//System.out.println("groupcount:" + m.groupCount());
+			//System.out.println("groupcount:" + m.group());
 			//System.out.println("group1:" + m.group(1) + m.group(2) + m.group(3));
-			if (halfFlag) {
-				info = new SplitMergeInfo();
-				info.setStrWariateDate(m.group(1));
-				info.setStrStockCode(m.group(2));
-				info.setStrStockName(m.group(3));
-				halfFlag = !halfFlag;
-			} else {
-				info.setStrLastDate(m.group(1));
-				info.setStrStartDate(m.group(2));
-				info.setStrSalableDate(m.group(3));
-				info.setIsSplit(1);
-				//test
-				groupList.add(info);
-				halfFlag = !halfFlag;
+			info = new SplitMergeInfo();
+			info.setStrWariateDate(m.group(1));
+			info.setStrStockCode(m.group(2));
+			info.setStrStockName(m.group(3));
 
-			}
+			groupList.add(info);
 		}
 
 		if (groupList.size()==0) throw new NoDataException();
 
-		regex = "BRatioW\\s=\\s&quot;(.*?)&quot;;";
+		regex = "document.write\\(\\'</td>\\\\\\s*<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
+
+		//System.out.println(strSite);
+		p = Pattern.compile(regex);
+
+		int count = 0;
+
+		m = p.matcher(strSite);
+		while (m.find()){
+			//System.out.println("groupcount:" + m.group());
+			//System.out.println("group1:" + m.group(1) + m.group(2) + m.group(3));
+
+			groupList.get(count).setStrLastDate(m.group(1));
+			groupList.get(count).setStrStartDate(m.group(2));
+			groupList.get(count).setStrSalableDate(m.group(3));
+			groupList.get(count).setIsSplit(1);
+
+			count += 1;
+		}
+
+
+		regex = "BRatioW\\s*=\\s*\"(.*?)\";";
 		p = Pattern.compile(regex);
 
 		//System.out.println(regex);
-		int count = 0;
+		count = 0;
 
 		m = p.matcher(strSite);
 		while (m.find()){
@@ -299,7 +319,7 @@ public class ParseHtmlStockSplit {
 		}
 
 
-		regex = "ARatioW\\s=\\s&quot;(.*?)&quot;;";
+		regex = "ARatioW\\s*=\\s*\"(.*?)\";";
 		p = Pattern.compile(regex);
 
 		//System.out.println(regex);
@@ -311,9 +331,9 @@ public class ParseHtmlStockSplit {
 			count += 1;
 		}
 
-		//		for (SplitMergeInfo group : groupList) {
-		//			System.out.println(group.toString());
-		//		}
+//		for (SplitMergeInfo group : groupList) {
+//			System.out.println(group.toString());
+//		}
 
 		return groupList;
 	}
@@ -361,8 +381,6 @@ public class ParseHtmlStockSplit {
 			return false;
 		}
 
-
-
 		//銘柄名
 		if (info.strStockName.length()==0) return false;
 
@@ -389,6 +407,37 @@ public class ParseHtmlStockSplit {
 		dateUpdate = sdf.parse(strUpdate);
 
 		return strUpdate;
+	}
+
+	private String getPageText(String strUrl) throws IOException {
+		URL url = new URL(strUrl); // ダウンロードする URL
+		URLConnection conn = url.openConnection();
+		InputStream in = conn.getInputStream();
+
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(in));
+
+		StringBuilder sb = new StringBuilder();
+
+		String line;
+
+		while ((line = br.readLine()) != null) {
+			sb.append(line);
+		}
+
+		//System.out.println(sb.toString());
+
+		br.close();
+
+		//		File file = new File("c:\\download\\file.zip"); // 保存先
+		//		FileOutputStream out = new FileOutputStream(file, false);
+		//		int b;
+		//		while((b = in.read()) != -1){
+		//		    out.write(b);
+		//		}
+
+		in.close();
+		return sb.toString();
 	}
 }
 
