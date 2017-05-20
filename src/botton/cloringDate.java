@@ -121,6 +121,7 @@ public class cloringDate {
 					commonAP.writeInLog("↑同名ファイルが存在するため、バックアップは行いません。",logWriting.DATEDATE_LOG_FLG);
 				}else{
 					//バックアップ成功時の処理
+					BU.checkDumpFileNumbers(mainDTO);
 					System.out.println("aaa");
 					if (BU.backUpOut(mainDTO).equals(nyuryokuCheckResultConst.SUCCESS)){
 						System.out.println("nnnnn");

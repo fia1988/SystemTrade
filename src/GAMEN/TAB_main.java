@@ -822,6 +822,9 @@ public class TAB_main extends JPanel {
 				case nyuryokuCheckResultConst.EXACT_BACK_UP_FILE_ERR:
 					outBackupResult.setText(checkNyuryoku);
 					return;
+				case nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR:
+					outBackupResult.setText(checkNyuryoku);
+					return;
 				default:
 					return;
 			}
@@ -887,6 +890,9 @@ public class TAB_main extends JPanel {
 					inBackupResult.setText(checkNyuryoku);
 					return;
 				case nyuryokuCheckResultConst.NO_FILE_ERR:
+					inBackupResult.setText(checkNyuryoku);
+					return;
+				case nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR:
 					inBackupResult.setText(checkNyuryoku);
 					return;
 				default:

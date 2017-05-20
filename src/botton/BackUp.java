@@ -38,6 +38,12 @@ public class BackUp {
 		    return nyuryokuCheckResultConst.NO_FILE_ERR;
 		}
 
+		//ログファイルの出力先有無チェック
+		file =  new File(mainDTO.getLogFilePath());
+		if (file.isDirectory()==false){
+		    return nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR;
+		}
+
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 
@@ -62,6 +68,12 @@ public class BackUp {
 		File file =  new File(mainDTO.getOutBackUpFolderPath());
 		if (file.isDirectory()==false){
 		    return nyuryokuCheckResultConst.NO_FOLDER_ERR;
+		}
+
+		//ログファイルの出力先有無チェック
+		file =  new File(mainDTO.getLogFilePath());
+		if (file.isDirectory()==false){
+			return nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR;
 		}
 
 		s = new S();
