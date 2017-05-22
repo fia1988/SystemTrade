@@ -44,7 +44,8 @@ public class TimeClornigDate {
 			try {
 				C_D.getDayDate(MainDTO);
 			} catch (Exception e) {
-
+				System.out.println("aaaaaaaaaaaaaa");
+				e.printStackTrace();
 			}
 
 			//メモリの解放

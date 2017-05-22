@@ -202,7 +202,7 @@ public class BackUp {
 	//指定の数より多い場合はfalseを返す。
 	//falseの場合、一番古いファイルを削除する。
 	private boolean checkAllFileNumbers(TAB_MainDTO mainDTO){
-		System.out.println("checkAllFileNumbers:");
+		
         File file = new File(mainDTO.getOutBackUpFilePath());
         File files[] = file.listFiles();
 
