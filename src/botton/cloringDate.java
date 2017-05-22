@@ -112,21 +112,18 @@ public class cloringDate {
 			if (commonAP.checkSabunDay(toDay,checkDay,PROPARTY.BACK_UP_KANkAKU)==false){
 				//同名ファイルのチェック
 				//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
-//				
+//
 				String todayDump = mainDTO.getOutBackUpFolderPath() + File.separator + toDay + ".dump";
 				File file =  new File(todayDump);
 				if (file.isFile()==true){
 					BU = new BackUp();
-					commonAP.writeInLog(mainDTO.getOutBackUpFilePath(),logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog(todayDump,logWriting.DATEDATE_LOG_FLG);
 					commonAP.writeInLog("↑同名ファイルが存在するため、バックアップは行いません。",logWriting.DATEDATE_LOG_FLG);
 				}else{
 					//バックアップ成功時の処理
-					
-					mainDTO.setOutBackUpFilePath(mainDTO.getOutBackUpFolderPath() + File.separator + toDay + ".dump");
+					mainDTO.setOutBackUpFilePath(todayDump);
 					String resultBackOut = BU.backUpOut(mainDTO);
-					System.out.println(resultBackOut);
 					if (resultBackOut.equals(nyuryokuCheckResultConst.SUCCESS)){
-						System.out.println("nnnnn");
 						BU.checkDumpFileNumbers(mainDTO);
 					}
 				}

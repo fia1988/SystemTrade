@@ -37,7 +37,7 @@ public class baseFrame extends JFrame {
 
 	public void showInitPanel(){
 		getContentPane().removeAll();
-		setTitle("FIAS_v1.1");
+		setTitle("FIAS_v2.0");
 
 		Edit edit = new Edit();
 		getContentPane().add(edit);
