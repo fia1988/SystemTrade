@@ -30,7 +30,9 @@ public class TAB_MainDTO {
 	//自動バックアップファイル作成を判断するフラグ
 	private boolean autoBackUp = false;
 
-
+	//日々データ作成時に利用するバックアップフォルダ名
+	
+	//日々データ作成時に利用するバックアップファイル名
 
 
 

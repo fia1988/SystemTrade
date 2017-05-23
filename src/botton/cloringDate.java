@@ -114,6 +114,7 @@ public class cloringDate {
 				//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
 //
 				String todayDump = mainDTO.getOutBackUpFolderPath() + File.separator + toDay + ".dump";
+				String todayFolder = mainDTO.getOutBackUpFolderPath();
 				File file =  new File(todayDump);
 				if (file.isFile()==true){
 					BU = new BackUp();
@@ -123,6 +124,8 @@ public class cloringDate {
 					//バックアップ成功時の処理
 					mainDTO.setOutBackUpFilePath(todayDump);
 					String resultBackOut = BU.backUpOut(mainDTO);
+					//画面の入力値とDTOの値を一致させる。
+					mainDTO.setOutBackUpFilePath(todayFolder);
 					if (resultBackOut.equals(nyuryokuCheckResultConst.SUCCESS)){
 						BU.checkDumpFileNumbers(mainDTO);
 					}
