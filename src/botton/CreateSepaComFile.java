@@ -60,7 +60,6 @@ public class CreateSepaComFile {
 
 		commonAP.writeInLog("分割併合チェック開始",logWriting.DATEDATE_LOG_FLG);
 		//分割ファイルを取り込む前に今現在、falseのものを消す！
-		deleteOldFalse();
 
 
 		String letterSepaCOM = "分割";
@@ -145,27 +144,40 @@ public class CreateSepaComFile {
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 
-	private int deleteOldFalse(){
+	//true:分割
+	//false:併合
+	private int deleteOldFalse(boolean judge , S s ){
 
-		S s = new S();
-		s.getCon();
+		String letter;
+		String judgeStr;
+		if (judge){
+			letter = "分割";
+			judgeStr = "true";
+		}else{
+			letter = "併合";
+			judgeStr = "false";
+		}
+
+
 
 		String SQL = "delete from " + TBL_Name.SEPARATE_DD
 					+ " where "
-					+ COLUMN.SEPA_FLG + " is false ";
+					+ COLUMN.SEPA_FLG + " is false "
+					+ " and "
+					+ COLUMN.CHECKSEPA_COMBINE + " is " + judgeStr;
 
 		int deleteRecord = 0;
 		try {
 			commonAP.writeInLog("sepa_flg is falseを削除します。",logWriting.DATEDATE_LOG_FLG);
 			deleteRecord = s.sqlGetter().executeUpdate(SQL);
-			commonAP.writeInLog(deleteRecord + "件削除しました。",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog(letter + "を" + deleteRecord + "件削除しました。",logWriting.DATEDATE_LOG_FLG);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 			//エラー
 			return 0;
 		}finally{
-			s.closeConection();
+
 		}
 
 		return deleteRecord;
@@ -240,6 +252,8 @@ public class CreateSepaComFile {
 					+ " and "
 					+ COLUMN.EFFECT_STARTDAY + " < '2007-01-01'";
 
+		//取り込む前に削除する
+		deleteOldFalse(checkFLG,s);
 
 		commonAP.writeInLog("createSepaComFileAndLoad:"+SQL1,logWriting.DATEDATE_LOG_FLG);
 
