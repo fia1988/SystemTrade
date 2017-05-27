@@ -207,7 +207,7 @@ public class BackUp {
         File files[] = file.listFiles();
 
         if (files.length > PROPARTY.MAX_DUMP_FILES){
-        	commonAP.writeInLog( (files.length + 1) + "以上のファイルが存在するため最も古いdumpを削除します。",logWriting.DATEDATE_LOG_FLG);
+        	commonAP.writeInLog( PROPARTY.MAX_DUMP_FILES + "ファイルよりも多くファイルが存在するため最も古いdumpを削除します。",logWriting.DATEDATE_LOG_FLG);
         	return false;
         }
 		return true;
