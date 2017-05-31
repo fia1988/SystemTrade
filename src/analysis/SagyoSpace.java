@@ -77,8 +77,11 @@ public class SagyoSpace {
 
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
-		dayList[0] =	"2017-04-25";
-		dayList[1] =	"2017-05-31";
+//		dayList[0] =	"2017-04-25";
+//		dayList[1] =	"2017-05-31";
+//		dayLists.add(dayList.clone());
+		dayList[0] =	"2017-05-29";
+		dayList[1] =	"2017-06-30";
 		dayLists.add(dayList.clone());
 //		dayList[0] = "2007-01-01";
 //		dayList[1] = "2007-12-31";

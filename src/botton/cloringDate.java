@@ -38,7 +38,7 @@ public class cloringDate {
 //		}
 
 		//時系列データの更新
-		switch (zikeiretuDataUpdate()){
+		switch (zikeiretuDataUpdate(mainDTO)){
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
@@ -64,10 +64,10 @@ public class cloringDate {
 			return TimerShoriConst.UPDATE_BARABARA;
 		}
 
-		//分割チェック。sはこの中で独自に作る。
-//		SEPARATE_CHECK.checkSEPARATE_controll();
 
-
+		
+		
+		
 		//今日のサインの点灯をチェックする。
 		CheckSign.checkTodaySign();
 
@@ -145,7 +145,7 @@ public class cloringDate {
 
 
 	//時系列データの更新
-	private int zikeiretuDataUpdate(){
+	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
 		CONTOLLBOTTON CB = new CONTOLLBOTTON();
 		S s = new S();
 		s.getCon();
@@ -165,15 +165,12 @@ public class cloringDate {
 		CB = new CONTOLLBOTTON();
 		s.resetConnection();
 
-
 		stockResult = CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STOCK_ETF(s) 			,
 														controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
 														ReCord.CODE_01_STOCK						,
 														s											);
 
 		s.resetConnection();
-
-
 		//CBのなかを破棄する。メモリ解放
 		CB = new CONTOLLBOTTON();
 		indexResult = CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,

@@ -31,8 +31,8 @@ public class PROPARTY {
 	//バックアップを何日間隔でやるか
 	public static int BACK_UP_KANkAKU			=	4;
 	//分割併合ファイルを何日間隔でとるか
-	public static int SEPA_COM_KANKAKU			=	1;
-	//バックアップファイルの世代、いくつdumpファイルを作るか
+	public static int SEPA_COM_KANKAKU			=	0;
+	//バックアップファイルの世代、いくつdumpファイルを残すか
 	public static int MAX_DUMP_FILES			=	5;
 
 	//503エラー？たまに出るへんなやつ
