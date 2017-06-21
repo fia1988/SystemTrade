@@ -571,6 +571,22 @@ public class COLUMN {
 	public static String AVERAGEPRICE = "averagePrice";
 	public static String AVERAGEPRICE_KATA = AVERAGEPRICE + " double unsigned  ";
 
+	//現実的平均取得価格
+	public static String REAL_AVERAGEPRICE = "REALaveragePrice";
+	public static String REAL_AVERAGEPRICE_KATA = REAL_AVERAGEPRICE + " double unsigned  ";
+
+	//理想的平均取得価格
+	public static String IDEA_AVERAGEPRICE = "IDEAaveragePrice";
+	public static String IDEA_AVERAGEPRICE_KATA = IDEA_AVERAGEPRICE + " double unsigned  ";
+
+	//現実的合計投資金額
+	public static String REAL_TOTAL_ENTRY_MONEY = "REAL_TOTAL_ENTRY_MONEY";
+	public static String REAL_TOTAL_ENTRY_MONEY_KATA = REAL_TOTAL_ENTRY_MONEY + " int unsigned  ";
+
+	//理想的合計投資金額
+	public static String IDEA_TOTAL_ENTRY_MONEY = "IDEA_TOTAL_ENTRY_MONEY";
+	public static String IDEA_TOTAL_ENTRY_MONEY_KATA = IDEA_TOTAL_ENTRY_MONEY + " double unsigned  ";
+
 	//タイプ。分足とか日足とかを区別
 	public static String TYPE = "type";
 	public static String TYPE_KATA = TYPE + " varchar(2)" ;
@@ -599,6 +615,14 @@ public class COLUMN {
 	public static String TOTAL_RETURN								= "totalReturn";
 	public static String TOTAL_RETURN_KATA							= TOTAL_RETURN + " double ";
 
+	//現実的リターン
+	public static String REAL_RETURN								= "RealReturn";
+	public static String REAL_RETURN_KATA							= REAL_RETURN + " double ";
+
+	//理想的リターン
+	public static String IDEA_RETURN								= "IDEAReturn";
+	public static String IDEA_RETURN_KATA							= IDEA_RETURN + " double ";
+
 	//保有期間
 	public static String KEEPTIME = "keepTime";
 	public static String KEEPTIME_KATA = KEEPTIME + " smallint unsigned   ";
@@ -606,6 +630,26 @@ public class COLUMN {
 	//売買サインフラグ。true買い、false売り
 	public static String SIGN_FLG											= "sign_flg";
 	public static String SIGN_FLG_KATA 									= SIGN_FLG + " tinyint(1) ";
+
+	//売買単位
+	public static String VOLUME_UNIT = "volumeUnit";
+	public static String VOLUME_UNIT_KATA = VOLUME_UNIT + " int unsigned  ";
+
+	//ミニ株本株チェック trueミニ株、false普通株
+	public static String MINI_CHECK_FLG											= "MINI_CHECK_flg";
+	public static String MINI_CHECK_FLG_KATA 									= MINI_CHECK_FLG + " tinyint(1) ";
+
+	//理想的購入枚数
+	public static String IDEA_VOLUME = "ideallyVolume";
+	public static String IDEA_VOLUME_KATA = IDEA_VOLUME + " double unsigned  ";
+
+	//現実的購入枚数
+	public static String REAL_ENTRY_VOLUME = "realEntryVolume";
+	public static String REAL_ENTRY_VOLUME_KATA = REAL_ENTRY_VOLUME + " int unsigned  ";
+
+	//エントリー金額
+	public static String ENTRY_MONEY = "entry_money";
+	public static String ENTRY_MONEY_KATA = ENTRY_MONEY + " int unsigned  ";
 
 	//更新内容
 	public static String KOSIN													= "KOSIN";

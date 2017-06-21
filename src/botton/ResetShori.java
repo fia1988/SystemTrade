@@ -145,6 +145,16 @@ public class ResetShori {
 
 		SQL = "delete from " + TBL_Name.INTERVAL_TIME_TBL;
 		s.freeUpdateQuery(SQL);
+//
+//		SQL = "drop table " + TBL_Name.LASTORDER;
+//		s.freeUpdateQuery(SQL);
+//
+//		SQL = "drop table " + TBL_Name.KEEPLISTTBL;
+//		s.freeUpdateQuery(SQL);
+//
+//		SQL = "drop table " + TBL_Name.RESULTHISTROYTBL;
+//		s.freeUpdateQuery(SQL);
+
 
 		s.closeConection();
 	}

@@ -275,8 +275,23 @@ public class Analysis00_Common {
 
 						//取引の発生した回数
 						resultDTO.setTradeCount();
-
 						resultDTO.setEntryTime();
+
+						//ドルコスト平均法でも買う
+						if (paraDTO.isDollCostFLG()){
+							//取得株数。注文するときは今日の終値をもとに数を計算する。ただしこれは理論値
+							double getStockVolume = ( paraDTO.getEntryMoney() * 10000 ) / nowDTOList.get(i).getNowCLOSE_01();
+							if ( paraDTO.isRealEntryVolumeFLG() ){
+								//購入数現実的。切り上げ
+								getStockVolume = Math.ceil(getStockVolume);
+							}
+							String nowDay = nowDTOList.get(i + 1).getNowDay_01();
+							nowDay = nowDay.replaceAll("-", "");
+							double douNowDay = Double.parseDouble(nowDay);
+							//購買金額。明日の始値で買うのだ
+							resultDTO.setDollerStockVolume(getStockVolume, nowDTOList.get(i + 1).getNowOpen_01(),douNowDay);
+
+						}
 
 						//次の日に
 						i++;
@@ -299,6 +314,22 @@ public class Analysis00_Common {
 										resultDTO.setEntryDay(nowDTOList.get(i).getKessaiDay());
 										resultDTO.setEntryPrice(nowDTOList.get(i).getKessaiKingaku());
 										resultDTO.setEntryTime();
+
+										//ドルコスト平均法でも買う
+										if (paraDTO.isDollCostFLG()){
+											//取得株数。注文するときは今日の終値をもとに数を計算する。ただしこれは理論値
+											double getStockVolume = ( paraDTO.getEntryMoney() * 10000 ) / nowDTOList.get(i).getNowCLOSE_01();
+											if ( paraDTO.isRealEntryVolumeFLG() ){
+												//購入数現実的。切り上げ
+												getStockVolume = Math.ceil(getStockVolume);
+											}
+											String nowDay = nowDTOList.get(i + 1).getNowDay_01();
+											nowDay = nowDay.replaceAll("-", "");
+											double douNowDay = Double.parseDouble(nowDay);
+											//購買金額。明日の始値で買うのだ
+											resultDTO.setDollerStockVolume(getStockVolume, nowDTOList.get(i + 1).getNowOpen_01(),douNowDay);
+										}
+
 //										checkSameDay = true;
 										//取引の発生した回数
 //										resultDTO.setTradeCount();
@@ -324,7 +355,16 @@ public class Analysis00_Common {
 									resultDTO.setExitDay(nowDTOList.get(i).getKessaiDay());
 									resultDTO.setExitPrice(nowDTOList.get(i).getKessaiKingaku());
 
+									//ドルコスト平均法での売り
+									if (paraDTO.isDollCostFLG()){
+										String nowDay = nowDTOList.get(i).getNowDay_01();
+										nowDay = nowDay.replaceAll("-", "");
+										double douNowDay = Double.parseDouble(nowDay);
 
+										//売った日を保有します。
+										resultDTO.setDoubleDaytime(douNowDay);
+
+									}
 
 
 									//ループが終わった証を立てる
@@ -333,11 +373,11 @@ public class Analysis00_Common {
 									resultDTO.getResultDayResult(code,paraDTO);
 									//下で一日増やすので減らしておく
 									if ( resultDTO.isMaxLossFLG() == false){
-										i--;	
+										i--;
 									}else{
 										resultDTO.setMaxLossFLG(false);
 									}
-									
+
 
 									//売買フラグチェックを外す。
 									paraDTO.setCheckFLG(false);
@@ -388,7 +428,7 @@ public class Analysis00_Common {
 			try {
 				s.rs2.close();
 				s.reCon();
-				System.out.println("こことおった");
+				System.out.println("Analysis_COMMON_main:こことおった");
 				//					System.out.println("トータル勝：" + TOTAL_WIN);
 				//					System.out.println("トータル負：" + TOTAL_LOSE);
 			} catch (SQLException e) {

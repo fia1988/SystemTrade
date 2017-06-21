@@ -378,6 +378,24 @@ public class TAB_main extends JPanel {
 	private final Action action_12 = new SwingAction_12();
 
 
+	private void gamenNyuryoku(TAB_MainDTO mainDTO){
+		//タイマーの状態のチェック
+		mainDTO.setJudgeTimer((  timerCheck.getText() ));
+		mainDTO.setMysqlID(mysqlID.getText());
+//		mainDTO.setMysqlPass(mysqlPass.getText());
+		mainDTO.setMysqlPass(mysqlPassMask.getText());
+		mainDTO.setLogFilePath(logFolderPath.getText());
+		mainDTO.setEntryFolderPath(entryFolderPath.getText());
+		mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
+		mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
+		mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
+		mainDTO.setSepaFolderPath(sepaFolderPath.getText());
+		mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+		mainDTO.setOptimazeFLG(checkBox_1.isSelected());
+		mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+	}
+
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "タイマーオン");
@@ -389,20 +407,7 @@ public class TAB_main extends JPanel {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
 			nyuryokuCheck check = new nyuryokuCheck();
 
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+			gamenNyuryoku(mainDTO);
 
 			String checkResult = check.nyuryokuChecker(mainDTO);
 
@@ -500,19 +505,10 @@ public class TAB_main extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
 			SepaCombine SC = new SepaCombine();
 			sepaComResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = SC.nyuryokuChecker(mainDTO);
@@ -560,19 +556,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
+
 			ResetShori RS = new ResetShori();
 			deleteDBresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 			String checkNyuryoku = RS.nyuryokuChecker(mainDTO);
@@ -608,19 +596,10 @@ public class TAB_main extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
 
 			ResetShori RS = new ResetShori();
 			deleteRecordResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
@@ -653,19 +632,12 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
+
+
 			deleteS_Cresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			ResetShori RS = new ResetShori();
@@ -697,19 +669,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
+
 			deleteKeepResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 			ResetShori RS = new ResetShori();
@@ -741,19 +705,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
+
 			createTBLresult.setText(nyuryokuCheckResultConst.NOW_SHORI);
 
 
@@ -789,20 +745,13 @@ public class TAB_main extends JPanel {
 			BackUp BU = new BackUp();
 
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
+
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
 			outBackupResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
 
 
 			String checkNyuryoku = BU.nyuryokuCheckerOut(mainDTO);
@@ -863,19 +812,11 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			BackUp BU = new BackUp();
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
+
 			String checkNyuryoku = BU.nyuryokuCheckerIn(mainDTO);
 
 			inBackupResult.setText(nyuryokuCheckResultConst.NOW_SHORI);
@@ -927,20 +868,9 @@ public class TAB_main extends JPanel {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
 			nyuryokuCheck oneShotCheck = new nyuryokuCheck();
 
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-//			mainDTO.setMysqlPass(mysqlPass.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
 			String checkShotResult = oneShotCheck.nyuryokuChecker(mainDTO);
 
 			switch (checkShotResult) {
@@ -998,19 +928,9 @@ public class TAB_main extends JPanel {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
 			CreateSepaComFile sepaComCheck = new CreateSepaComFile();
 
-			//タイマーの状態のチェック
-			mainDTO.setJudgeTimer((  timerCheck.getText() ));
-			mainDTO.setMysqlID(mysqlID.getText());
-			mainDTO.setMysqlPass(mysqlPassMask.getText());
-			mainDTO.setLogFilePath(logFolderPath.getText());
-			mainDTO.setEntryFolderPath(entryFolderPath.getText());
-			mainDTO.setSepaCombineFilePath(sepaComFolderPath.getText());
-			mainDTO.setOutBackUpFolderPath(outBackUplogFolderPath.getText());
-			mainDTO.setInBackUpFilePath(inBackUplogFilePath.getText());
-			mainDTO.setSepaFolderPath(sepaFolderPath.getText());
-			mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
-			mainDTO.setOptimazeFLG(checkBox_1.isSelected());
-			mainDTO.setAutoBackUp(checkBox_2.isSelected());
+			//入力チェック
+			gamenNyuryoku(mainDTO);
+
 			String checkShotResult = sepaComCheck.nyuryokuChecker(mainDTO);
 
 

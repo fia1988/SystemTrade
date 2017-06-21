@@ -31,6 +31,7 @@ public class createTBL {
 		createResulthistory(s);
 		createEleteTBL(s);
 		createIntervalTime(s);
+		createOutPutTable(s);
 		return createLastOrderTable(s);
 	}
 
@@ -91,6 +92,37 @@ public class createTBL {
 		intResult = s.freeUpdateQuery(SQL);
 	}
 
+	private void createOutPutTable(S s){
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.DAYTIME_KATA									 + " , " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.CATE_FLG_KATA									 + " , " //
+				+ COLUMN.SIGN_FLG_KATA								 	 + " , " //売買サインフラグ。true買い、false売り
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.CLOSE_KATA										 + " , " //今日の終値
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.VOLUME_UNIT_KATA								 + " ,  " //売買単位
+				+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+				+ COLUMN.REAL_ENTRY_VOLUME_KATA							 + " ,  " //現実的購入枚数
+				+ COLUMN.ENTRY_MONEY_KATA								 + " ,  " //一回辺り投資金額
+				+ "primary key ("
+				+ COLUMN.CODE + " , "+ COLUMN.CATE_FLG + " , "+  COLUMN.DAYTIME + " , "+ COLUMN.SIGN_FLG + " , "+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + "," + COLUMN.MINI_CHECK_FLG +  ")) ";
+
+		SQL = create + TBL_Name.OUT_PUT_LASTORDER + colum;
+
+		s.freeUpdateQuery(SQL);
+	}
+
 	private String createLastOrderTable(S s){
 		//SQL全文
 		String SQL;
@@ -104,12 +136,17 @@ public class createTBL {
 				+ COLUMN.CODE_KATA										 + " , " //
 				+ COLUMN.DAYTIME_KATA									 + " , " //
 				+ COLUMN.TYPE_KATA									 	 + " , " //
-				+ COLUMN.CATE_FLG_KATA									 	 + " , " //
+				+ COLUMN.CATE_FLG_KATA									 + " , " //
 				+ COLUMN.SIGN_FLG_KATA								 	 + " , " //売買サインフラグ。true買い、false売り
 				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
 				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.CLOSE_KATA										 + " ,  " //今日の終値
+				+ COLUMN.VOLUME_UNIT_KATA								 + " ,  " //売買単位
+				+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+				+ COLUMN.IDEA_VOLUME_KATA								 + " ,  " //理想的購入枚数
+				+ COLUMN.REAL_ENTRY_VOLUME_KATA								 + " ,  " //現実的購入枚数
 				+ "primary key ("
-				+ COLUMN.CODE + " , "+ COLUMN.CATE_FLG + " , "+  COLUMN.DAYTIME + " , "+ COLUMN.SIGN_FLG + " , "+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
+				+ COLUMN.CODE + " , "+ COLUMN.CATE_FLG + " , "+  COLUMN.DAYTIME + " , "+ COLUMN.SIGN_FLG + " , "+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + "," + COLUMN.MINI_CHECK_FLG +  ")) ";
 
 		SQL = create + TBL_Name.LASTORDER + colum;
 
@@ -147,8 +184,15 @@ public class createTBL {
 				+ COLUMN.TYPE_KATA									 	 + " , " //
 				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
 				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+				+ COLUMN.IDEA_VOLUME_KATA								 + " ,  "  //理想的保持数
+				+ COLUMN.IDEA_AVERAGEPRICE_KATA							 + " ,  "  //理想的平均取得価格
+				+ COLUMN.IDEA_TOTAL_ENTRY_MONEY_KATA					 + " ,  "  //理想的合計投資金額
+				+ COLUMN.REAL_ENTRY_VOLUME_KATA							 + " ,  "  //現実保有数
+				+ COLUMN.REAL_AVERAGEPRICE_KATA							 + " ,  "  //現実平均取得価格
+				+ COLUMN.REAL_TOTAL_ENTRY_MONEY_KATA					 + " ,  " 	//現実的合計投資金額
 				+ "primary key ("
-				+ COLUMN.CODE + " , " +  COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + ")) ";
+				+ COLUMN.CODE + " , " +  COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "," + COLUMN.TYPE + "," + COLUMN.MINI_CHECK_FLG + ")) ";
 
 		SQL = create + TBL_Name.KEEPLISTTBL + colum;
 
@@ -180,8 +224,18 @@ public class createTBL {
 				+ COLUMN.KEEPTIME_KATA									 + " , " //
 				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
 				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+				+ COLUMN.IDEA_VOLUME_KATA								 + " ,  "  //理想的保持数
+				+ COLUMN.IDEA_AVERAGEPRICE_KATA							 + " ,  "  //理想的平均取得価格
+				+ COLUMN.IDEA_RETURN_KATA								 + " ,  " //理想的トータルリターン
+				+ COLUMN.REAL_ENTRY_VOLUME_KATA							 + " ,  "  //現実保有数
+				+ COLUMN.REAL_AVERAGEPRICE_KATA							 + " ,  "  //現実平均取得価格
+				+ COLUMN.REAL_RETURN_KATA								 + " ,  "//現実的的トータルリターン
+
+
+
 				+ "primary key ("
-				+ COLUMN.CODE + " , " +  COLUMN.ENTRYDAY + " , " + COLUMN.ENTRYMETHOD + " , " + COLUMN.EXITMETHOD +  ")) ";
+				+ COLUMN.CODE + " , " +  COLUMN.ENTRYDAY + " , " + COLUMN.ENTRYMETHOD + " , " + COLUMN.EXITMETHOD + "," + COLUMN.MINI_CHECK_FLG +  ")) ";
 
 		SQL = create + TBL_Name.RESULTHISTROYTBL + colum;
 

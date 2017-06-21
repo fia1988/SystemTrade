@@ -84,6 +84,7 @@ public class Technique00_Common {
 			try{
 				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress + 1).getNowDay_01());
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
+
 				return Technique98_CONST.TRADE_FLG;
 			}catch(ArrayIndexOutOfBoundsException e){
 				if ( paraDTO.getRealTimeMode() ){
@@ -103,6 +104,8 @@ public class Technique00_Common {
 			try{
 				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress + 1).getNowDay_01());
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
+
+
 				return Technique98_CONST.TRADE_FLG;
 			}catch(ArrayIndexOutOfBoundsException e){
 				if ( paraDTO.getRealTimeMode() ){

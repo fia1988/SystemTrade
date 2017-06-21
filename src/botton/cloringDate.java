@@ -65,9 +65,9 @@ public class cloringDate {
 		}
 
 
-		
-		
-		
+
+
+
 		//今日のサインの点灯をチェックする。
 		CheckSign.checkTodaySign();
 
@@ -224,27 +224,37 @@ public class cloringDate {
 		String SQL = "";
 		S s = new S();
 		s.getCon();
+		copyOutPutTBL(s);
 		int resultInt = 0;
 
 
 		String fileNameL;
 		String fileNameS;
 		String filePath;
-		String column 	= "AAA." + COLUMN.CODE			 	+ " , " //
-						+ "AAA." + COLUMN.DAYTIME		+ " , " //
-						+ "AAA." + COLUMN.TYPE			+ " , " //
-						+ "AAA." + COLUMN.ENTRYMETHOD	+ " , " //
-						+ "AAA." + COLUMN.EXITMETHOD		+ " , "
-						+ "BBB." + COLUMN.ENTRYTIMES		+ "  ";
+		String column 	= COLUMN.CODE			 	+ " , " //
+						+ COLUMN.DAYTIME			+ " , " //
+						+ COLUMN.TYPE				+ " , " //
+						+ COLUMN.ENTRYMETHOD		+ " , " //
+						+ COLUMN.EXITMETHOD			+ " , "
+						+ COLUMN.MINI_CHECK_FLG		+ " , "
+						+ COLUMN.REAL_ENTRY_VOLUME	+ "  ";
+//						+ COLUMN.ENTRY_MONEY;
 
-		String heddaColumn = "'" +  COLUMN.CODE		 	+ "' , " //
-						   + "'" +  COLUMN.DAYTIME		+ "' , " //
-						   + "'" +  COLUMN.TYPE			+ "' , " //
-						   + "'" +  COLUMN.ENTRYMETHOD	+ "' , " //
-						   + "'" +  COLUMN.EXITMETHOD	+ "' , "
-						   + "'" +  COLUMN.ENTRYTIMES	+ "'  ";
+		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
+						   + "'" +  COLUMN.DAYTIME				+ "' , " //
+						   + "'" +  COLUMN.TYPE					+ "' , " //
+						   + "'" +  COLUMN.ENTRYMETHOD			+ "' , " //
+						   + "'" +  COLUMN.EXITMETHOD			+ "' , "
+						   + "'" +  COLUMN.MINI_CHECK_FLG		+ "' , "
+						   + "'" +  COLUMN.REAL_ENTRY_VOLUME	+ "' , "
+						   + "'" +  COLUMN.ENTRY_MONEY			+ "'" ;
 
 
+//		+ COLUMN.VOLUME_UNIT_KATA								 + " ,  " //売買単位
+//		+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+//		+ COLUMN.REAL_ENTRY_VOLUME_KATA								 + " ,  " //現実的購入枚数
+
+//		COLUMN.MINI_CHECK_FLG;
 
 		String today = controllDay.getMAX_DD_INDEX(s);
 		fileNameL = today + "_" + "L.csv";
@@ -265,6 +275,34 @@ public class cloringDate {
 		return resultInt;
 	}
 
+	private void copyOutPutTBL(S s){
+
+
+
+		String SQL = "delete from " + TBL_Name.OUT_PUT_LASTORDER;
+		s.freeUpdateQuery(SQL);
+
+		SQL = " insert into " + TBL_Name.OUT_PUT_LASTORDER
+					+ " select "
+					+ COLUMN.CODE										 + " , " //
+					+ COLUMN.DAYTIME									 + " , " //
+					+ COLUMN.TYPE									 	 + " , " //
+					+ COLUMN.CATE_FLG									 + " , " //
+					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
+					+ COLUMN.ENTRYMETHOD								 + " , " //
+					+ COLUMN.EXITMETHOD									 + " ,  " //
+					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
+					+ COLUMN.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+					+ COLUMN.CLOSE										 + " ,  "//今日の終値
+					+ COLUMN.REAL_ENTRY_VOLUME							 + "   " //現実的購入枚数
+					+ " from "
+					+ TBL_Name.LASTORDER;
+
+		s.freeUpdateQuery(SQL);
+
+
+	}
+
 	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge){
 		String SQL;
 
@@ -273,18 +311,9 @@ public class cloringDate {
 				+ " union "
 				+ " SELECT "
 				+ column
-				+ " FROM " + TBL_Name.LASTORDER + " AAA "
-				+	" left outer join " + TBL_Name.KEEPLISTTBL + " BBB "
-				+	" on "
-				+	" AAA." + COLUMN.CODE  + "= " + "BBB." +  COLUMN.CODE
-				+	" and "
-				+	" AAA." + COLUMN.TYPE  + "= " + "BBB." +  COLUMN.TYPE
-				+	" and "
-				+	" AAA." + COLUMN.ENTRYMETHOD  + "= " + "BBB." +  COLUMN.ENTRYMETHOD
-				+	" and "
-				+	" AAA." + COLUMN.EXITMETHOD  + "= " + "BBB." +  COLUMN.EXITMETHOD
+				+ " FROM " + TBL_Name.OUT_PUT_LASTORDER
 				+	" where "
-				+	" AAA." + COLUMN.SIGN_FLG  + " is  " + judge + " "
+				+	COLUMN.SIGN_FLG  + " is  " + judge + " "
 				+	" INTO OUTFILE '" + filePath +  "'"
 				+	" FIELDS TERMINATED BY ','"
 				+	" OPTIONALLY ENCLOSED BY '\"'";

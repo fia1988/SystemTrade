@@ -29,26 +29,32 @@ public class SagyoSpace {
 		//結論の出力方法
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
-//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultDay();
 		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
-		resultDTO.setShoritu(0.75);
-		resultDTO.setTotalGames(10);
-		resultDTO.setTotalRatio(0.65);
+//		resultDTO.setShoritu(0.75);
+		resultDTO.setShoritu(0.05);
+//		resultDTO.setTotalGames(10);
+		resultDTO.setTotalGames(1);
+//		resultDTO.setTotalRatio(0.65);
+		resultDTO.setTotalRatio(0.05);
 		//手数料
-		paraDTO.setTesuRYO(0.022);
+//		paraDTO.setTesuRYO(0.022);
 //		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
 //		paraDTO.setEntryMoney(0.83);
 		//エリートフラグ
+		paraDTO.setOffEliteFLG();
 		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 //		paraDTO.setMaxEntryTimes(30);
 //		System.out.println("【出来高"+ i + "】");
+		//ドルコスト法
+		paraDTO.setDollCostFLG(true);
 	}
 
 	public static void shokisettei_false(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
@@ -61,6 +67,126 @@ public class SagyoSpace {
 
 	}
 
+	public static void testCase95(){
+		//連続取引するエリートの全メソッドの一覧を作る
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		String startDD	=	"2007-01-03";
+		String endDD		=	"2016-12-31";
+		startDD	=	"2016-10-03";
+		endDD		=	"2016-10-31";
+		List<String[]> dayLists = new ArrayList<String[]>();
+		String dayList[] = new String[2];
+//		dayList[0] =	"2017-04-25";
+//		dayList[1] =	"2017-05-31";
+//		dayLists.add(dayList.clone());
+		dayList[0] =	startDD;
+		dayList[1] =	endDD;
+		dayLists.add(dayList.clone());
+
+
+
+
+
+		String tec = "technique";
+
+
+		for (String[] a: dayLists){
+			startDD		=	a[0];
+			endDD		=	a[1];
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+
+////			paraDTO.setMaxLoss(3);
+////			resultDTO.setMaxInterValTime(	30	);
+////			resultDTO.setOnResultDay();
+			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(32);
+//			paraDTO.setMaxKeepDays(21);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(35);
+//			paraDTO.setMaxKeepDays(17);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(30);
+//			paraDTO.setMaxKeepDays(19);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(28);
+//			paraDTO.setMaxKeepDays(22);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(28);
+//			paraDTO.setMaxKeepDays(16);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(33);
+//			paraDTO.setMaxKeepDays(32);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(20);
+//			paraDTO.setMaxKeepDays(19);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+		}
+
+	}
 
 
 	public static void testCase96(){
@@ -276,7 +402,7 @@ public class SagyoSpace {
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
 		String startDD	=	"2016-10-03";
-		String endDD		=	"2016-12-30";
+		String endDD		=	"2016-10-30";
 
 
 
@@ -362,54 +488,57 @@ public class SagyoSpace {
 		dayList.add("2016-10-27");
 		dayList.add("2016-10-28");
 		dayList.add("2016-10-31");
-		dayList.add("2016-11-01");
-		dayList.add("2016-11-02");
-		dayList.add("2016-11-04");
-		dayList.add("2016-11-07");
-		dayList.add("2016-11-08");
-		dayList.add("2016-11-09");
-		dayList.add("2016-11-10");
-		dayList.add("2016-11-11");
-		dayList.add("2016-11-14");
-		dayList.add("2016-11-15");
-		dayList.add("2016-11-16");
-		dayList.add("2016-11-17");
-		dayList.add("2016-11-18");
-		dayList.add("2016-11-21");
-		dayList.add("2016-11-22");
-		dayList.add("2016-11-24");
-		dayList.add("2016-11-25");
-		dayList.add("2016-11-28");
-		dayList.add("2016-11-29");
-		dayList.add("2016-11-30");
-		dayList.add("2016-12-01");
-		dayList.add("2016-12-02");
-		dayList.add("2016-12-05");
-		dayList.add("2016-12-06");
-		dayList.add("2016-12-07");
-		dayList.add("2016-12-08");
-		dayList.add("2016-12-09");
-		dayList.add("2016-12-12");
-		dayList.add("2016-12-13");
-		dayList.add("2016-12-14");
-		dayList.add("2016-12-15");
-		dayList.add("2016-12-16");
-		dayList.add("2016-12-19");
-		dayList.add("2016-12-20");
-		dayList.add("2016-12-21");
-		dayList.add("2016-12-22");
-		dayList.add("2016-12-26");
-		dayList.add("2016-12-27");
-		dayList.add("2016-12-28");
-		dayList.add("2016-12-29");
-		dayList.add("2016-12-30");
+//		dayList.add("2016-11-01");
+//		dayList.add("2016-11-02");
+//		dayList.add("2016-11-04");
+//		dayList.add("2016-11-07");
+//		dayList.add("2016-11-08");
+//		dayList.add("2016-11-09");
+//		dayList.add("2016-11-10");
+//		dayList.add("2016-11-11");
+//		dayList.add("2016-11-14");
+//		dayList.add("2016-11-15");
+//		dayList.add("2016-11-16");
+//		dayList.add("2016-11-17");
+//		dayList.add("2016-11-18");
+//		dayList.add("2016-11-21");
+//		dayList.add("2016-11-22");
+//		dayList.add("2016-11-24");
+//		dayList.add("2016-11-25");
+//		dayList.add("2016-11-28");
+//		dayList.add("2016-11-29");
+//		dayList.add("2016-11-30");
+//		dayList.add("2016-12-01");
+//		dayList.add("2016-12-02");
+//		dayList.add("2016-12-05");
+//		dayList.add("2016-12-06");
+//		dayList.add("2016-12-07");
+//		dayList.add("2016-12-08");
+//		dayList.add("2016-12-09");
+//		dayList.add("2016-12-12");
+//		dayList.add("2016-12-13");
+//		dayList.add("2016-12-14");
+//		dayList.add("2016-12-15");
+//		dayList.add("2016-12-16");
+//		dayList.add("2016-12-19");
+//		dayList.add("2016-12-20");
+//		dayList.add("2016-12-21");
+//		dayList.add("2016-12-22");
+//		dayList.add("2016-12-26");
+//		dayList.add("2016-12-27");
+//		dayList.add("2016-12-28");
+//		dayList.add("2016-12-29");
+//		dayList.add("2016-12-30");
 
 
 
 
 		for (String TODAY:dayList){
-
-			CheckSign.dealLastOrder(TODAY);
+			Bean_Parameta paraDTO = new Bean_Parameta();
+			Bean_Result resultDTO = new Bean_Result();
+			Bean_nowRecord nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+			CheckSign.dealLastOrder(TODAY,paraDTO);
 			System.out.println(TODAY);
 			S s = new S();
 			s.getCon();
@@ -452,7 +581,7 @@ public class SagyoSpace {
 			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 
 			s.resetConnection();
-			CheckSign.afterCheck(s);
+			CheckSign.afterCheck(TODAY,s);
 			STOCKList = new ArrayList<String[]>();
 			SATISTICSList = new ArrayList<String[]>();
 			INDEXList = new ArrayList<String[]>();
@@ -463,110 +592,7 @@ public class SagyoSpace {
 //		testCase97();
 	}
 
-	public static void testCase99(){
 
-
-
-		S s = new S();
-		s.getCon();
-
-		ArrayList<String[]> STOCKList = new ArrayList<String[]>();
-		ArrayList<String[]> SATISTICSList = new ArrayList<String[]>();
-		ArrayList<String[]> INDEXList = new ArrayList<String[]>();
-		ArrayList<String[]> ETFNameList = new ArrayList<String[]>();
-
-		ArrayList<String[]> keepStockList = new ArrayList<String[]>();
-
-		String TODAY = "";
-
-		//全銘柄をリストに入れる
-		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
-		STOCKList = commonAP.getCodeList();
-
-		commonAP.setCodeList(ReCord.CODE_02_SATISTICS,s);
-		SATISTICSList = commonAP.getCodeList();
-
-		commonAP.setCodeList(ReCord.CODE_03_INDEX,s);
-		INDEXList = commonAP.getCodeList();
-
-		commonAP.setCodeList(ReCord.CODE_04_ETF,s);
-		ETFNameList = commonAP.getCodeList();
-
-
-
-		//キープテーブルのリストを取得
-		commonAP.setKeepCodeList("DD",s);
-		keepStockList = commonAP.getCodeList();
-
-		//別メソッドを動かす前にメモリ解放
-		s.closeConection();
-		TODAY = "2017-01-04";
-		System.out.println(keepStockList.size());
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-
-		TODAY = "2017-01-05";
-		CheckSign.dealLastOrder(TODAY);
-		s.getCon();
-		commonAP.setKeepCodeList("DD",s);
-		keepStockList = commonAP.getCodeList();
-		s.closeConection();
-		System.out.println(keepStockList.size());
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-		TODAY = "2017-01-06";
-		CheckSign.dealLastOrder(TODAY);
-		s.getCon();
-		commonAP.setKeepCodeList("DD",s);
-		keepStockList = commonAP.getCodeList();
-		s.closeConection();
-		System.out.println(keepStockList.size());
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-		TODAY = "2017-01-10";
-		CheckSign.dealLastOrder(TODAY);
-		s.getCon();
-		commonAP.setKeepCodeList("DD",s);
-		keepStockList = commonAP.getCodeList();
-		s.closeConection();
-		System.out.println(keepStockList.size());
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-
-		TODAY = "2017-01-11";
-		CheckSign.dealLastOrder(TODAY);
-		s.getCon();
-		commonAP.setKeepCodeList("DD",s);
-		keepStockList = commonAP.getCodeList();
-		s.closeConection();
-		System.out.println(keepStockList.size());
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-
-		TODAY = "2017-01-12";
-		CheckSign.dealLastOrder(TODAY);
-		s.getCon();
-		commonAP.setKeepCodeList("DD",s);
-		keepStockList = commonAP.getCodeList();
-		s.closeConection();
-		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-//		TODAY = "2017-01-13";
-//		CheckSign.dealLastOrder(TODAY);
-//		s.getCon();
-//		commonAP.setKeepCodeList(s);
-//		keepStockList = commonAP.getCodeList();
-//		s.closeConection();
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique06","IDO_HEKIN_3_S","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CheckSign.CHECKTODAY(1,"DD","technique","Technique04","MACD_M_L_OVER0","technique","Technique04","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-	}
 
 	public static void testCase30(){
 

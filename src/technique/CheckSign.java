@@ -6,6 +6,7 @@ import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
+import proparty.controllDay;
 import accesarrySQL.SQLChecker;
 import analysis.SagyoSpace;
 import bean.Bean_Parameta;
@@ -29,7 +30,11 @@ public class CheckSign {
 		String TODAY = SQLChecker.getCateToday(ReCord.CODE_01_STOCK,s);
 		s.closeConection();
 		//前日の注文を実行する。
-		dealLastOrder(TODAY);
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		dealLastOrder(TODAY,paraDTO);
 
 		s = new S();
 		s.getCon();
@@ -78,8 +83,9 @@ public class CheckSign {
 
 
 		s.resetConnection();
+		TODAY = controllDay.getMAX_DD_STOCK_ETF(s);
+		afterCheck(TODAY,s);
 
-		afterCheck(s);
 
 
 		//別メソッドを動かす前にメモリ解放
@@ -94,12 +100,63 @@ public class CheckSign {
 
 	}
 
-	public static void dealLastOrder(String checkDay){
+	public static void checkVolume(double entryMoney,String TODAY,S s){
+
+		//まずはクローズを一致させる
+		String SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.STOCK_DD
+					+ " set "
+					+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBL_Name.STOCK_DD + "." + COLUMN.CLOSE
+					+ " where "
+					+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.STOCK_DD + "." + COLUMN.CODE
+					+ " and "
+					+ TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+		s.freeUpdateQuery(SQL);
+
+		//以下true:買い
+		//理想的株数を計算する
+		SQL  = " update "+ TBL_Name.LASTORDER
+				+ " set "
+				+ COLUMN.IDEA_VOLUME + " = " + "( " + (entryMoney*10000) + " / " + COLUMN.CLOSE + " ) "
+				+ " where "
+				+ COLUMN.SIGN_FLG + " is true";
+		s.freeUpdateQuery(SQL);
+
+		//現実的株数を計算する
+		SQL  = " update "+ TBL_Name.LASTORDER
+				+ " set "
+				+ COLUMN.REAL_ENTRY_VOLUME + " = " + COLUMN.IDEA_VOLUME
+				+ " where "
+				+ COLUMN.SIGN_FLG + " is true";
+		s.freeUpdateQuery(SQL);
+
+		//切り上げ処理
+		SQL  = " update "+ TBL_Name.LASTORDER
+				+ " set "
+				+ COLUMN.REAL_ENTRY_VOLUME + " = " + COLUMN.REAL_ENTRY_VOLUME + " + 1 "
+				+ " where "
+				+ COLUMN.REAL_ENTRY_VOLUME + " < " + COLUMN.IDEA_VOLUME
+				+ " and "
+				+ COLUMN.SIGN_FLG + " is true";
+		s.freeUpdateQuery(SQL);
+
+		//以下false売り
+		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.KEEPLISTTBL
+				+ " set "
+				+ TBL_Name.LASTORDER + "." + COLUMN.REAL_ENTRY_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.REAL_ENTRY_VOLUME
+				+ " where "
+				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false ";
+		s.freeUpdateQuery(SQL);
+
+	}
+
+
+	public static void dealLastOrder(String checkDay,Bean_Parameta paraDTO){
 
 		List<String[]> methodList = new ArrayList<String[]>();
 		String SQL = " SELECT DISTINCT "
 				   + COLUMN.ENTRYMETHOD +	","
 				   + COLUMN.EXITMETHOD +	","
+//				   + COLUMN.MINI_CHECK_FLG +	","
 				   + COLUMN.TYPE +			" "
 				   + " from "
 				   + TBL_Name.LASTORDER
@@ -127,13 +184,13 @@ public class CheckSign {
 			//前日の分を買う。
 			List<String[]> lastOrderCodeList_L = new ArrayList<String[]>();
 			getLastOrderCodeList(lastOrderCodeList_L,a[0],a[1],a[2],true,checkDay);
-			setEntryTBL_L(lastOrderCodeList_L, a[0],a[1],a[2],checkDay);
+			setEntryTBL_L(lastOrderCodeList_L, a[0],a[1],a[2],checkDay,paraDTO);
 			lastOrderCodeList_L = new ArrayList<String[]>();
 
 			//前日の分を売る
 			List<String[]> lastOrderCodeList_S = new ArrayList<String[]>();
 			getLastOrderCodeList(lastOrderCodeList_S,a[0],a[1],a[2],false,checkDay);
-			setResultTBL_S(lastOrderCodeList_S,a[0],a[1],a[2],checkDay);
+			setResultTBL_S(lastOrderCodeList_S,a[0],a[1],a[2],checkDay,paraDTO);
 			lastOrderCodeList_S = new ArrayList<String[]>();
 
 		}
@@ -226,6 +283,7 @@ public class CheckSign {
 
 		//今日のサインを調べる
 		ArrayList<String> resultCodeList = new ArrayList<String>();
+//		ArrayList<String[]> resultCodeList = new ArrayList<String[]>();
 		//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,STOCKList);
 		//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,SATISTICSList);
 		//		checkTodaySignControll(resultCodeList,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,false,INDEXList);
@@ -244,11 +302,14 @@ public class CheckSign {
 
 
 
-	private static void setResultTBL_S(List<String[]> codeList,String Lmethod,String Smethod,String type,String checkDay){
+	private static void setResultTBL_S(List<String[]> codeList,String Lmethod,String Smethod,String type,String checkDay,Bean_Parameta paraDTO){
 		S s = new S();
 		s.getCon();
 //		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 //		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
+
+		//単位万円→円
+		double oneTimeEntryMoney = paraDTO.getEntryMoney()*10000;
 
 		String TODAY = checkDay;
 		for (int i = 0; i < codeList.size();i++){
@@ -256,6 +317,7 @@ public class CheckSign {
 			String cate = codeList.get(i)[2];
 			String code = codeList.get(i)[0];
 			String TBL = SQLChecker.getTBL(cate);
+			String checkMINI = codeList.get(i)[6];
 
 			boolean exitCheck = false;
 
@@ -292,7 +354,9 @@ public class CheckSign {
 							+ " and "
 							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 							+ " and "
-							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+							+ " and "
+							+ COLUMN.MINI_CHECK_FLG + " is "	+ checkMINI;
 
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
 
@@ -302,8 +366,19 @@ public class CheckSign {
 
 						String entryDay = s.rs2.getString(COLUMN.ENTRYDAY);
 						int entryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
+						double realVolume = s.rs2.getDouble(COLUMN.REAL_ENTRY_VOLUME);;
+						double ideaVolume = s.rs2.getDouble(COLUMN.IDEA_VOLUME);;
+
 						double averagePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
+						double realAveragePrice = s.rs2.getDouble(COLUMN.REAL_AVERAGEPRICE);
+						double ideaAveragePrice = s.rs2.getDouble(COLUMN.IDEA_AVERAGEPRICE);
+
 						double RETURN = ( nowOpen - averagePrice ) / averagePrice;
+//						double realRETURN = realVolume * ( ( nowOpen - realAveragePrice ) / realAveragePrice );
+						double realRETURN = ( realVolume * ( ( nowOpen - realAveragePrice ) ) ) / oneTimeEntryMoney;
+//						double ideaRETURN = ideaVolume * ( ( nowOpen - ideaAveragePrice ) / ideaAveragePrice );
+						double ideaRETURN = ( ideaVolume * ( ( nowOpen - ideaAveragePrice ) ) ) / oneTimeEntryMoney;
+
 //						int keepTime = commonAP.countDay(entryDay,signDay, s) ;
 						int keepTime = commonAP.countDay(entryDay,TODAY, s) -1;
 
@@ -314,6 +389,13 @@ public class CheckSign {
 								+ COLUMN.EXITDAY									 + " , " //
 								+ COLUMN.AVERAGEPRICE								 + " , " //
 								+ COLUMN.EXITPRICE									 + " , " //
+								+ COLUMN.IDEA_AVERAGEPRICE 						 	 + " , " //理想的平均取得価格
+								+ COLUMN.IDEA_VOLUME 						  		 + " , " //理想的保有株数
+								+ COLUMN.IDEA_RETURN								 + " ,  " //理想的トータルリターン
+								+ COLUMN.REAL_AVERAGEPRICE 						 	 + " , " //現実的平均取得価格
+								+ COLUMN.REAL_ENTRY_VOLUME 						 	 + " , " //現実的保有株数
+								+ COLUMN.REAL_RETURN								 + " ,  " //現実的トータルリターン
+								+ COLUMN.MINI_CHECK_FLG									 	 + " , " //
 								+ COLUMN.TYPE									 	 + " , " //
 								+ COLUMN.ENTRYTIMES								 + " , " //
 								+ COLUMN.RESULTRETURN									 + " , " //
@@ -327,6 +409,13 @@ public class CheckSign {
 								+ "'" + TODAY			+ "'"	 + ","
 								+ averagePrice						 + ","
 								+ nowOpen							 + ","
+								+ ideaAveragePrice							 + ","//理想的平均取得価格
+								+ ideaVolume							 + ","//理想的保有株数
+								+ ideaRETURN							 + ","//理想的トータルリターン
+								+ realAveragePrice							 + ","//現実的平均取得価格
+								+ realVolume							 + ","//現実的保有株数
+								+ realRETURN							 + ","//現実的トータルリターン
+								+ checkMINI + ","
 								+ "'" + type			+ "'"	 + ","
 								+ entryTime							 + ","
 								+ RETURN							 + ","
@@ -335,6 +424,13 @@ public class CheckSign {
 								+ "'" + Lmethod			+ "'"	 + ","
 								+ "'" + Smethod			+ "'"	 + " "
 								+ ")";
+//						+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+//						+ COLUMN.IDEA_VOLUME_KATA								 + " ,  "  //理想的保持数
+//						+ COLUMN.IDEA_AVERAGEPRICE_KATA							 + " ,  "  //理想的平均取得価格
+//						+ COLUMN.IDEA_RETURN_KATA								 + " ,  " //理想的トータルリターン
+//						+ COLUMN.REAL_ENTRY_VOLUME_KATA							 + " ,  "  //現実保有数
+//						+ COLUMN.REAL_AVERAGEPRICE_KATA							 + " ,  "  //現実平均取得価格
+//						+ COLUMN.REAL_RETURN_KATA								 + " ,  "//現実的的トータルリターン
 
 						s.freeUpdateQuery(SQL);
 
@@ -389,6 +485,7 @@ public class CheckSign {
 
 		//今日のサインを調べる
 		ArrayList<String> resultCodeList = new ArrayList<String>();
+//		ArrayList<String[]> resultCodeList = new ArrayList<String[]>();
 		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,STOCKList,checkDay);
 		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,SATISTICSList,checkDay);
 		checkdaySignControll(resultCodeList,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO,nowDTOList,0,resultDTO,size,true,INDEXList,checkDay);
@@ -467,6 +564,7 @@ public class CheckSign {
 					+ COLUMN.TYPE									 	 + " , " //
 					+ COLUMN.CATE_FLG									 + " , " //
 					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
+					+ COLUMN.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
 					+ COLUMN.ENTRYMETHOD								 + " , " //
 					+ COLUMN.EXITMETHOD								 + "  " //
 					+ " ) value ( "
@@ -475,6 +573,7 @@ public class CheckSign {
 					+ "'" + type			+ "'"	 + ","
 					+ cate							 + ","
 					+ signFlg						 + ","
+					+ " true "						 + ","
 					+ "'" + Lmethod			+ "'"	 + ","
 					+ "'" + Smethod			+ "'"	 + " "
 					+ ")";
@@ -499,7 +598,7 @@ public class CheckSign {
 
 
 
-	private static void setEntryTBL_L(List<String[]> codeList,String Lmethod,String Smethod,String type,String checkDay){
+	private static void setEntryTBL_L(List<String[]> codeList,String Lmethod,String Smethod,String type,String checkDay,Bean_Parameta paraDTO){
 
 
 		S s = new S();
@@ -522,6 +621,15 @@ public class CheckSign {
 			String code = codeList.get(i)[0];
 			String TBL = SQLChecker.getTBL(cate);
 
+			//ミニ株チェック true：ミニ、false：普通株
+			String checkMINI = codeList.get(i)[6];
+			double ideaVolume = Double.valueOf(codeList.get(i)[7]);
+			double realVolume = Double.valueOf(codeList.get(i)[8]);
+
+//			codeStatus[6] = s.rs2.getString(	COLUMN.MINI_CHECK_FLG	);
+//			codeStatus[7] = s.rs2.getString(	COLUMN.IDEA_VOLUME		);
+//			codeStatus[8] = s.rs2.getString(	COLUMN.REAL_ENTRY_VOLUME);
+
 			//最新日が買いサイン実行日
 //			String SQL = " select "
 //					+ COLUMN.DAYTIME + "," + COLUMN.OPEN
@@ -534,7 +642,7 @@ public class CheckSign {
 //					+ " order by " + COLUMN.DAYTIME + " desc";
 
 
-		String	SQL = " select "
+			String	SQL = " select "
 					+ COLUMN.DAYTIME + "," + COLUMN.OPEN
 					+ " from "
 					+ TBL
@@ -563,7 +671,9 @@ public class CheckSign {
 						+ " and "
 						+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 						+ " and "
-						+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+						+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+						+ " and "
+						+ COLUMN.MINI_CHECK_FLG + " is "	+ checkMINI;
 
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 
@@ -575,8 +685,21 @@ public class CheckSign {
 						//一緒じゃない場合だけ動く
 
 						int beforeEntryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
+						double beforeRealVolume = s.rs2.getDouble(COLUMN.REAL_ENTRY_VOLUME);;
+						double beforeIdeaVolume = s.rs2.getDouble(COLUMN.IDEA_VOLUME);;
+						int beforeRealTotalEntryMoney =s.rs2.getInt(COLUMN.REAL_TOTAL_ENTRY_MONEY);
+						double beforeIdeaTotalEntryMoney =s.rs2.getDouble(COLUMN.IDEA_TOTAL_ENTRY_MONEY);
 						double beforeAveragePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
 						double nowAveragePrice = ( ( beforeAveragePrice * beforeEntryTime ) + nowOpen ) / ( beforeEntryTime + 1);
+						int intRealVolume = (int)realVolume;
+						int intNowOpen = (int)nowOpen;
+						int nowRealTotalEntryMoney = beforeRealTotalEntryMoney + (intRealVolume * intNowOpen);
+						double nowIdeaTotalMoney = beforeIdeaTotalEntryMoney + (ideaVolume * intNowOpen);
+						double nowRealVolume = beforeRealVolume + realVolume;
+						double nowIdeaVolume = beforeIdeaVolume + ideaVolume;
+						double realNowAveragePrice = ( ( nowRealTotalEntryMoney ) / ( nowRealVolume ));;
+						double ideaNowAveragePrice = ( nowIdeaTotalMoney ) / ( nowIdeaVolume );;
+
 
 						//						s.rs2.updateDouble(COLUMN.AVERAGEPRICE,nowAveragePrice);
 						//						s.rs2.updateInt(COLUMN.ENTRYTIMES,beforeEntryTime + 1);
@@ -587,9 +710,15 @@ public class CheckSign {
 							//
 							SQL = " update "+ TBL_Name.KEEPLISTTBL + " "
 									+ " set "
-									+ COLUMN.ENTRYTIMES + 	   " = " + ( beforeEntryTime + 1 ) + " , "
-									+ COLUMN.AVERAGEPRICE + 	   " = " + nowAveragePrice + " , "
-									+ COLUMN.LASTENTRYDAY + " = '" + TODAY + "' "
+									+ COLUMN.ENTRYTIMES + 			" = " + ( beforeEntryTime + 1 ) + " , "
+									+ COLUMN.AVERAGEPRICE + 		" = " + nowAveragePrice + " , "
+									+ COLUMN.LASTENTRYDAY +			" = '" + TODAY + "' , "
+									+ COLUMN.IDEA_TOTAL_ENTRY_MONEY +	" = " + nowIdeaTotalMoney + " , "
+									+ COLUMN.REAL_TOTAL_ENTRY_MONEY +	" = " + nowRealTotalEntryMoney + " , "
+									+ COLUMN.IDEA_AVERAGEPRICE + 	" = " + ( ideaNowAveragePrice ) + " , "//理想的平均取得価格
+									+ COLUMN.IDEA_VOLUME + 			" = " + ( nowIdeaVolume ) + " , "//理想的保有株数
+									+ COLUMN.REAL_AVERAGEPRICE + 	" = " + ( realNowAveragePrice ) + " , "//現実的平均取得価格
+									+ COLUMN.REAL_ENTRY_VOLUME + 	" = " + ( nowRealVolume ) + "  "//現実的保有株数
 									+ " where "
 									+ COLUMN.CODE + " = '" + code + "'"
 									+ " and "
@@ -597,7 +726,9 @@ public class CheckSign {
 									+ " and "
 									+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
 									+ " and "
-									+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+									+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+									+ " and "
+									+ COLUMN.MINI_CHECK_FLG + " is "	+ checkMINI;;
 									s.freeUpdateQuery(SQL);
 
 						}
@@ -607,23 +738,42 @@ public class CheckSign {
 				}else{
 					//falseのとき存在しない
 					if(existCheck){
+
+						double totalRealEntryMoney = (realVolume * nowOpen);
+						double totalIdeaEntryMoney = (ideaVolume * nowOpen);
+
+
 						SQL ="insert into " + TBL_Name.KEEPLISTTBL
 								+ " ( "
 								+ COLUMN.CODE										 + " , " //
 								+ COLUMN.ENTRYDAY									 + " , " //
 								+ COLUMN.LASTENTRYDAY								 + " , " //
-								+ COLUMN.ENTRYTIMES									 + " , " //
 								+ COLUMN.AVERAGEPRICE								 + " , " //
+								+ COLUMN.ENTRYTIMES									 + " , " //
+								+ COLUMN.IDEA_AVERAGEPRICE 						 	 + " , " //理想的平均取得価格
+								+ COLUMN.IDEA_VOLUME 						  		 + " , " //理想的保有株数
+								+ COLUMN.REAL_AVERAGEPRICE 						 	 + " , " //現実的平均取得価格
+								+ COLUMN.REAL_ENTRY_VOLUME 						 	 + " , " //現実的保有株数
 								+ COLUMN.TYPE									 	 + " , " //
+								+ COLUMN.MINI_CHECK_FLG							 	 + " , " //
+								+ COLUMN.IDEA_TOTAL_ENTRY_MONEY						 	 + " , " //
+								+ COLUMN.REAL_TOTAL_ENTRY_MONEY						 	 + " , " //
 								+ COLUMN.ENTRYMETHOD								 + " , " //
 								+ COLUMN.EXITMETHOD									 + "   " //
 								+ " ) value ( "
 								+ "'" + code + "'"	 + ","
 								+ "'" + TODAY+ "'"	 + ","
 								+ "'" + TODAY+ "'"	 + ","
+								+ nowOpen			 + ","
 								+ "1"				 + ","
 								+ nowOpen			 + ","
+								+ ideaVolume		 + ","
+								+ nowOpen			 + ","
+								+ realVolume		 + ","
 								+ "'" + type	+ "'"+ ","
+								+ checkMINI			 + ","
+								+ totalIdeaEntryMoney	 + ","
+								+ totalRealEntryMoney	 + ","
 								+ "'" + Lmethod	+ "'"+ ","
 								+ "'" + Smethod	+ "'"+ " "
 								+ ")";
@@ -675,13 +825,24 @@ public class CheckSign {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 
 			while(s.rs2.next()){
-				String codeStatus[] = new String[6];
-				codeStatus[0] = s.rs2.getString(	COLUMN.CODE	);
-				codeStatus[1] = s.rs2.getString(	COLUMN.DAYTIME	);
-				codeStatus[2] = s.rs2.getString(	COLUMN.CATE_FLG	);
-				codeStatus[3] = s.rs2.getString(	COLUMN.ENTRYMETHOD	);
-				codeStatus[4] = s.rs2.getString(	COLUMN.EXITMETHOD	);
-				codeStatus[5] = s.rs2.getString(	COLUMN.DAYTIME	);
+				String codeStatus[] = new String[9];
+				codeStatus[0] = s.rs2.getString(	COLUMN.CODE				);
+				codeStatus[1] = s.rs2.getString(	COLUMN.DAYTIME			);
+				codeStatus[2] = s.rs2.getString(	COLUMN.CATE_FLG			);
+				codeStatus[3] = s.rs2.getString(	COLUMN.ENTRYMETHOD		);
+				codeStatus[4] = s.rs2.getString(	COLUMN.EXITMETHOD		);
+				codeStatus[5] = s.rs2.getString(	COLUMN.DAYTIME			);
+
+				if ( s.rs2.getString(	COLUMN.MINI_CHECK_FLG	).equals("1") ){
+					codeStatus[6] = "true";
+				}else{
+					codeStatus[6] = "false";
+				}
+
+
+				codeStatus[7] = s.rs2.getString(	COLUMN.IDEA_VOLUME		);
+				codeStatus[8] = s.rs2.getString(	COLUMN.REAL_ENTRY_VOLUME);
+
 				lastOrderCodeList.add(codeStatus.clone());
 
 			};
@@ -1115,7 +1276,6 @@ public class CheckSign {
 
 		if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
 			resultCodeList.add(code);
-
 			//売りフラグの時、インターバルタイムがtrueかどうかをチェックする
 			if ( judge==false ){
 				if ( resultDTO.isNowInterValFLG() ){
@@ -1154,9 +1314,20 @@ public class CheckSign {
 		s.freeUpdateQuery(SQL);
 	}
 
-	public static void afterCheck(S s){
+	public static void afterCheck(String TODAY,S s){
 		deleteIntervalTBL(s);
 		increMentIntervalTBL(s);
+
+
+		//今日の購入株数を計算する
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		//一回当たりエントリー金額（単位：万円）
+//		paraDTO.setEntryMoney(0.83);
+		checkVolume(paraDTO.getEntryMoney(),TODAY,s);
+
 	}
 
 	private static void deleteIntervalTBL(S s){

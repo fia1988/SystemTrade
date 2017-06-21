@@ -21,6 +21,7 @@ public class TBL_Name {
 
 	final public static String CODELISTTBL     = "00_codeListTBL";
 
+	final public static String OUT_PUT_LASTORDER	= "91_outPutlastOrderTBL";
 	final public static String INTERVAL_TIME_TBL	= "92_intervalTimeTBL";
 	final public static String ELETE_LIST_TEST_TBL	= "93_eleteListTestTBL";
 	final public static String ELETE_LIST_TBL		= "94_eleteListTBL";

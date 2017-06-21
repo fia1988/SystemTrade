@@ -16,6 +16,8 @@ public class Bean_Parameta {
 	//false;試験
 	private boolean realTimeMode = false;
 
+	private boolean realEntryVolumeFLG = false;
+
 	//Lメソッド
 	//Sメソッド
 	//パッケージ.クラス.メソッド
@@ -24,7 +26,27 @@ public class Bean_Parameta {
 
 	private String termType = "DD";
 
+	//
+	private boolean dollCostFLG = false;
 
+
+
+
+	public boolean isRealEntryVolumeFLG() {
+		return realEntryVolumeFLG;
+	}
+
+	public void setRealEntryVolumeFLG(boolean realEntryVolumeFLG) {
+		this.realEntryVolumeFLG = realEntryVolumeFLG;
+	}
+
+	public boolean isDollCostFLG() {
+		return dollCostFLG;
+	}
+
+	public void setDollCostFLG(boolean dollCostFLG) {
+		this.dollCostFLG = dollCostFLG;
+	}
 
 	public String getTermType() {
 		return termType;

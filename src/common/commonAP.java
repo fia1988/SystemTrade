@@ -139,6 +139,21 @@ public class commonAP {
 			case logWriting.CODE_SEPACON_ERR_LOG_FLG:
 				fileName = "sepaComERR_" + writeType + logWriting.logKakutyousi;
 				break;
+			case logWriting.CODE_DOLLCOST_RESULT_LOG_FLG:
+				fileName = "CODE_DOLLCOST_" + writeType + logWriting.logKakutyousi;
+				break;
+			case logWriting.CODE_DOLLCOST_STOCKLOST_RESULT_LOG_FLG:
+				fileName = "CODE_DOLLCOST_STOCK_RIST" + writeType + logWriting.logKakutyousi;
+				break;
+			case logWriting.CODE_DOLLCOST_L_PRICE_LISTRESULT_LOG_FLG:
+				fileName = "CODE_DOLLCOST_L_PRICE_LIST" + writeType + logWriting.logKakutyousi;
+				break;
+			case logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG:
+				fileName = "samaryResult_DOLLCOST_" + writeType + logWriting.logKakutyousi;
+				break;
+			case logWriting.DOLLCOST_BACKTEST_LOG_FLG:
+				fileName = "CODE_DOLLCOST_backtestLog" + logWriting.logKakutyousi;
+				break;
 			default:
 			break;
 		}
