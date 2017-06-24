@@ -1,5 +1,6 @@
 package bean;
 
+import proparty.PROPARTY;
 import proparty.controllDay;
 import constant.ReCord;
 
@@ -224,7 +225,7 @@ public class Bean_Parameta {
 	private int minDeki			=	0;
 
 	//一回のエントリーで支払う金額、単位万円
-	private double entryMoney = 1.2;
+	private double entryMoney = PROPARTY.ONE_SHOT_MONEY;
 	//観測期間。単位は日
 	private int obTerm = 10;
 

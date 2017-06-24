@@ -8,6 +8,8 @@ public class PROPARTY {
 	//サイトに株価更新時間
 	public static String UPDATETIME = "15:30:00";
 
+	//一回辺り投資資金（単位：万円）
+	public static double ONE_SHOT_MONEY = 1.2;
 
 	//連続アクセスを防ぐﾐﾘ秒数
 	public static int SLEEPTIME = 3600000;

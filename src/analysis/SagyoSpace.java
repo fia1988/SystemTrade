@@ -29,19 +29,19 @@ public class SagyoSpace {
 		//結論の出力方法
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
-		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultDay();
 		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
-//		resultDTO.setShoritu(0.75);
-		resultDTO.setShoritu(0.05);
-//		resultDTO.setTotalGames(10);
-		resultDTO.setTotalGames(1);
-//		resultDTO.setTotalRatio(0.65);
-		resultDTO.setTotalRatio(0.05);
+		resultDTO.setShoritu(0.75);
+//		resultDTO.setShoritu(0.05);
+		resultDTO.setTotalGames(10);
+//		resultDTO.setTotalGames(1);
+		resultDTO.setTotalRatio(0.65);
+//		resultDTO.setTotalRatio(0.05);
 		//手数料
-//		paraDTO.setTesuRYO(0.022);
+		paraDTO.setTesuRYO(0.022);
 //		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
@@ -49,12 +49,15 @@ public class SagyoSpace {
 //		paraDTO.setEntryMoney(0.83);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-		paraDTO.setOnEliteFLG();
+//		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 //		paraDTO.setMaxEntryTimes(30);
+//		paraDTO.setMaxKeepDays(5);
 //		System.out.println("【出来高"+ i + "】");
 		//ドルコスト法
 		paraDTO.setDollCostFLG(true);
+//		paraDTO.setRealEntryVolumeFLG(true);
+
 	}
 
 	public static void shokisettei_false(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
@@ -75,8 +78,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2016-12-31";
-		startDD	=	"2016-10-03";
-		endDD		=	"2016-10-31";
+//		startDD	=	"2016-10-03";
+//		endDD		=	"2016-10-31";
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
 //		dayList[0] =	"2017-04-25";
@@ -104,9 +107,9 @@ public class SagyoSpace {
 //			paraDTO.setOnEliteFLG();
 
 
-////			paraDTO.setMaxLoss(3);
-////			resultDTO.setMaxInterValTime(	30	);
-////			resultDTO.setOnResultDay();
+//////			paraDTO.setMaxLoss(3);
+//////			resultDTO.setMaxInterValTime(	30	);
+//////			resultDTO.setOnResultDay();
 			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 

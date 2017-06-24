@@ -23,7 +23,26 @@ public class Bean_Result {
 
 	private double doubleDaytime = 0.0;
 
+	private String lastEntryDay = "";
+	private String lastExitDay = "";
 
+
+
+	public String getLastEntryDay() {
+		return lastEntryDay;
+	}
+
+	public void setLastEntryDay(String lastEntryDay) {
+		this.lastEntryDay = lastEntryDay;
+	}
+
+	public String getLastExitDay() {
+		return lastExitDay;
+	}
+
+	public void setLastExitDay(String lastExitDay) {
+		this.lastExitDay = lastExitDay;
+	}
 
 	public void resetGetDoubleDaytime() {
 		doubleDaytime = 0.0;
@@ -263,6 +282,21 @@ public class Bean_Result {
 	}
 
 	public List<double[]> getDollerStockVolume() {
+
+		//最終日の売り日と
+		//最終日の買い日が一致するとき最終日を消す。
+//		if( dollerStockVolume.get(dollerStockVolume.size()-1)[2] == getDoubleDaytime()) {
+//			System.out.println("------------------------------------------------------------");
+//			System.out.println(dollerStockVolume.get(dollerStockVolume.size()-1)[2]);
+//			System.out.println("------------------------------------------------------------");
+//			dollerStockVolume.remove(dollerStockVolume.size()-1);
+//		};
+
+		if (getLastEntryDay().equals(getLastExitDay())){
+			dollerStockVolume.remove(dollerStockVolume.size()-1);
+		}
+		//一度LastExitDayを参照すると、後には使用しないためここで塗りつぶす。
+		setLastExitDay("");
 		return dollerStockVolume;
 	}
 
@@ -792,16 +826,17 @@ public class Bean_Result {
 				double totalCodeWinResult = getDollerCodeWinTotalResult() * 100;
 				double totalCodeLoseResult = getDollerCodeLoseTotalResult() * 100;
 				String elete = paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + paraDTO.getTermType() + "," + resultCode + "," + paraDTO.getMaxEntryTimes() + "," + paraDTO.getMaxKeepDays() + "," + getMaxInterValTime() + "," + paraDTO.getMaxLoss() + "\r\n";
-
-				if ( shouritu > shoritu){
-					if( totalCodeGame > totalGames){
+//				System.out.println("aaaaaaa:"+shouritu);
+//				System.out.println("bbbbbbb:"+shoritu);
+//				if ( shouritu > shoritu){
+//					if( totalCodeGame > totalGames){
 						commonAP.writeLog("ドルコスト法・" + resultCode +  "：勝【" + totalWinCount + "】",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
 						commonAP.writeInLog("／" +  "：負【" + totalLoseCount + "】",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
 						commonAP.writeInLog("ドルコスト法,トータル勝％：" + totalCodeWinResult,logWriting.DOLLCOST_BACKTEST_LOG_FLG);
 						commonAP.writeInLog("ドルコスト法,トータル負％：" + totalCodeLoseResult,logWriting.DOLLCOST_BACKTEST_LOG_FLG);
 						commonAP.writeLog( elete ,logWriting.CODE_DOLLCOST_RESULT_LOG_FLG);
-					}
-				}
+//					}
+//				}
 
 			}
 		}
@@ -857,6 +892,7 @@ public class Bean_Result {
 
 			if (entryDayList.get(entryDayList.size() -1 ).equals(exitDay) ){
 				if ( entryPriceList.size() > 0 ){
+
 					entryPriceList.remove(entryPriceList.size() - 1);
 				}
 
@@ -1296,13 +1332,13 @@ public class Bean_Result {
 //					commonAP.writeInLog("想定金利："	+	( (100 * paraDTO.getEntryMoney() * getCutAveReturn * dayRightUpTimes * yearDay) /needMoney )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 //					commonAP.writeInLog("想定金利："	+	( (100 *  getCutAveReturn * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 
-					commonAP.writeInLog("想定金利："	+	( (100) * yearEarnMoney/needMoney )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
+					commonAP.writeInLog("想定金利："	+	( (100) * (yearEarnMoney/needMoney) )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 //					commonAP.writeInLog("想定リスク："	+	( (100 *  getCutAveRisk * yearDay) /aveCutKeepDays )	 + "%"	,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("開始時期：" + paraDTO.getObStartDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() + " 営業日",logWriting.BACKTEST_LOG_FLG);
 
-					String resultLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getTOTAL_WIN() + "," + getTOTAL_LOSE() + "," + ( getTotalWinParcent() * 100 ) + "," +  ( getTotalLoseParcent() * 100 ) + "," + (totalReturn*100) + "," + ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + "," + ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + "," + (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + "," + ( getWinKeepTimeAverage() ) + "," + getLoseKeepTimeAverage() + "," + getEntryTimeAverage() + "," + getWinEntryTimeAverage() + "," + getLoseEntryTimeAverage() + "," +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + ( (100) * yearEarnMoney/needMoney ) + "%";
+					String resultLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getTOTAL_WIN() + "," + getTOTAL_LOSE() + "," + ( getTotalWinParcent() * 100 ) + "," +  ( getTotalLoseParcent() * 100 ) + "," + (totalReturn*100) + "," + ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + "," + ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + "," + (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + "," + ( getWinKeepTimeAverage() ) + "," + getLoseKeepTimeAverage() + "," + getEntryTimeAverage() + "," + getWinEntryTimeAverage() + "," + getLoseEntryTimeAverage() + "," +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + ( (100) * (yearEarnMoney/needMoney) ) + "%";
 					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,一回辺りリターン,保有期間,勝ち保有期間,負け保有期間,平均E数,勝ちE数,負けE数,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利
 					commonAP.writeInLog(resultLetter,logWriting.CODE_RESULT_LIST_LOG_FLG);
 
@@ -1362,18 +1398,22 @@ public class Bean_Result {
 										*	paraDTO.getEntryMoney()
 										*	aveCutKeepDays;
 
-					//一年間で稼ぐお金
+					//トータルで稼ぐお金
 					double earnMoneyDoll = (totalResult / 100) * paraDTO.getEntryMoney() ;
+					//一年間で稼ぐお金
+					double yearEarnMoney = (earnMoneyDoll  * yearDay) / paraDTO.getObTerm();
 					//単位：万円
 //					double cycleYear = ( ( totalResult * yearDay ) / paraDTO.getObTerm() );
-					double kinriPer = ( ( ( earnMoneyDoll ) ) / needMoney ) / 100;
+
+					double kinriPer = ( ( ( yearEarnMoney ) ) / needMoney ) * 100;
 
 					//この辺カット版の計算
 					double cutWinPer = getDollerTotalWinTotalResult(half) * 100;
 					double cutLosePer = getDollerTotalLoseTotalResult(half) * 100;
 					double cutEarnMoneyDoll = ( ( cutWinPer + cutLosePer ) / 100) * paraDTO.getEntryMoney() ;
+					double cutYearEarnMoney = (cutEarnMoneyDoll  * yearDay) / paraDTO.getObTerm();
 //					double cutCycleYear = ( ( ( cutWinPer+cutLosePer ) * yearDay ) / paraDTO.getObTerm() );
-					double cutKinriPer = ( ( ( cutEarnMoneyDoll ) ) / needMoney ) / 100;
+					double cutKinriPer = ( ( ( cutYearEarnMoney ) ) / needMoney ) * 100;
 
 
 					commonAP.writeInLog("----------------ここからドルコスト法--------------------"  ,logWriting.BACKTEST_LOG_FLG);
@@ -1388,11 +1428,11 @@ public class Bean_Result {
 					commonAP.writeInLog("上" + half * 100 + "カット" + "勝ち％　　　："  + cutWinPer + " %"						,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("下" + half * 100 + "カット" + "負け％　　　："  + cutLosePer + " %"						,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("カットトータル％　："  + (cutLosePer+cutWinPer) + " %"						,logWriting.BACKTEST_LOG_FLG);
-					commonAP.writeInLog("金利％　　　："  + cutKinriPer + " %"						,logWriting.BACKTEST_LOG_FLG);
+					commonAP.writeInLog("カット金利％　　　："  + cutKinriPer + " %"						,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("----------------ここまでドルコスト法--------------------"  ,logWriting.BACKTEST_LOG_FLG);
 
-					String resultDOLLCOSTLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getDollCostTotalWinCount() + "," + getDollCostTotalLoseCount() + "," + ( totalWinPer * 100 ) + "," +  ( totalLosePer * 100 ) + "," + (totalResult*100) + "," + ( ( ( 100 * totalResult ) / ( ( totalWinPer ) ) ) ) + ","  +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + (cutKinriPer ) + "%";
-					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利
+					String resultDOLLCOSTLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getDollCostTotalWinCount() + "," + getDollCostTotalLoseCount() + "," + ( totalWinPer  ) + "," +  ( totalLosePer ) + "," + (totalResult) + "," + ( ( ( totalResult ) / ( ( totalWinPer ) ) ) ) + ","  +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + kinriPer + "%" + "," + (cutKinriPer ) + "%";
+					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利,カット金利
 					commonAP.writeInLog(resultDOLLCOSTLetter,logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
 
 					commonAP.writeLog("-------" + paraDTO.getLMETHOD() +  "_" + paraDTO.getSMETHOD() + "-------" + "\r\n",logWriting.CODE_DOLLCOST_STOCKLOST_RESULT_LOG_FLG);

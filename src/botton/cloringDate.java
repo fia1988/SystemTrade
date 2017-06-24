@@ -9,6 +9,10 @@ import proparty.controllDay;
 import technique.CheckSign;
 import GamenDTO.TAB_MainDTO;
 import accesarrySQL.OneRecord_Update;
+import analysis.SagyoSpace;
+import bean.Bean_Parameta;
+import bean.Bean_Result;
+import bean.Bean_nowRecord;
 
 import common.commonAP;
 
@@ -72,8 +76,12 @@ public class cloringDate {
 		CheckSign.checkTodaySign();
 
 		//最後に今日の売買ファイルを出力する。
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 
-		switch (outPutKeepTable(folderPath)) {
+		switch (outPutKeepTable(paraDTO.getEntryMoney(),folderPath)) {
 			case ReturnCodeConst.SQL_ERR_0:
 				//成功
 				break;
@@ -220,11 +228,11 @@ public class cloringDate {
 	}
 
 	//今日の注文をログファイルとして出力
-	private int outPutKeepTable(String folderPath){
+	private int outPutKeepTable(double oneShotMoney,String folderPath){
 		String SQL = "";
 		S s = new S();
 		s.getCon();
-		copyOutPutTBL(s);
+		copyOutPutTBL(oneShotMoney,s);
 		int resultInt = 0;
 
 
@@ -275,7 +283,7 @@ public class cloringDate {
 		return resultInt;
 	}
 
-	private void copyOutPutTBL(S s){
+	private void copyOutPutTBL(double oneShotMoney,S s){
 
 
 
@@ -294,13 +302,20 @@ public class cloringDate {
 					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
 					+ COLUMN.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
 					+ COLUMN.CLOSE										 + " ,  "//今日の終値
+					+ COLUMN.VOLUME_UNIT	+	" as "	+ COLUMN.ENTRY_MONEY + " ,  " //アウトプットテーブルにコピーするに辺り、設定しないとエラーが出るのでダミーとして入れる。
 					+ COLUMN.REAL_ENTRY_VOLUME							 + "   " //現実的購入枚数
 					+ " from "
 					+ TBL_Name.LASTORDER;
 
 		s.freeUpdateQuery(SQL);
 
+		//COLUMN.ENTRY_MONEYがダミーなので正しい値を入れる
+//		COLUMN.ENTRY_MONEY
 
+		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
+				+ " set "
+				+ COLUMN.ENTRY_MONEY + " = " + (oneShotMoney*10000);
+		s.freeUpdateQuery(SQL);
 	}
 
 	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge){
@@ -327,33 +342,6 @@ public class cloringDate {
 	}
 
 
-	//株と指数の更新日付、出力ログをみて実行するか否かを判断する。
-	private boolean checkPreTodayLog(String folderPath){
-		S s = new S();
-		s.getCon();
-		String today = controllDay.getMAX_DD_INDEX(s);
-
-		//更新日付が同じであるかをチェック
-		//同じであれば、売買ファイルが出力されているかを調べる。
-		//売買ファイルが存在すれば処理しない。falseを返す。
-		if ( today.equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
-			//一致して、なおかつファイルが存在する場合はfalse
-
-
-
-			//戻り値1086の時はファイルが存在する
-			if(outPutKeepTable(folderPath)==ReturnCodeConst.SQL_ERR_1086){
-				System.out.println("ファイルあり");
-				s.closeConection();
-				return false;
-			}
-
-
-		}
-
-		s.closeConection();
-		return true;
-	}
 
 	//株と指数の更新日付が同じなら処理しない。
 	private boolean checkTodayLog(){

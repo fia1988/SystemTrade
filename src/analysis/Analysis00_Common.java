@@ -272,7 +272,7 @@ public class Analysis00_Common {
 						//決済が発生した日、決済金額を入れる。
 						resultDTO.setEntryDay(nowDTOList.get(i).getKessaiDay());
 						resultDTO.setEntryPrice(nowDTOList.get(i).getKessaiKingaku());
-
+						resultDTO.setLastEntryDay(nowDTOList.get(i).getKessaiDay() + nowDTOList.get(i).getCode_01());
 						//取引の発生した回数
 						resultDTO.setTradeCount();
 						resultDTO.setEntryTime();
@@ -314,7 +314,7 @@ public class Analysis00_Common {
 										resultDTO.setEntryDay(nowDTOList.get(i).getKessaiDay());
 										resultDTO.setEntryPrice(nowDTOList.get(i).getKessaiKingaku());
 										resultDTO.setEntryTime();
-
+										resultDTO.setLastEntryDay(nowDTOList.get(i).getKessaiDay() + nowDTOList.get(i).getCode_01());
 										//ドルコスト平均法でも買う
 										if (paraDTO.isDollCostFLG()){
 											//取得株数。注文するときは今日の終値をもとに数を計算する。ただしこれは理論値
@@ -354,7 +354,7 @@ public class Analysis00_Common {
 									//決済が発生した日、決済金額を入れる。
 									resultDTO.setExitDay(nowDTOList.get(i).getKessaiDay());
 									resultDTO.setExitPrice(nowDTOList.get(i).getKessaiKingaku());
-
+									resultDTO.setLastExitDay(nowDTOList.get(i).getKessaiDay() + nowDTOList.get(i).getCode_01());
 									//ドルコスト平均法での売り
 									if (paraDTO.isDollCostFLG()){
 										String nowDay = nowDTOList.get(i).getNowDay_01();
