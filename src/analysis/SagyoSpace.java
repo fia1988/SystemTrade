@@ -34,7 +34,7 @@ public class SagyoSpace {
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
-		resultDTO.setShoritu(0.75);
+		resultDTO.setShoritu(0.65);
 //		resultDTO.setShoritu(0.05);
 		resultDTO.setTotalGames(10);
 //		resultDTO.setTotalGames(1);

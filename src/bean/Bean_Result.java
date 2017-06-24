@@ -738,7 +738,7 @@ public class Bean_Result {
 					totalWARIAI = (totalWin+totalLose)/(totalWin);
 				} catch (Exception e) {
 					// TODO: handle exception
-					System.out.println("なんかあった");
+					System.out.println("BeanResult:なんかあった。ノーマル");
 				}
 
 				//設定した勝率（shoritu）以上の場合、結果を表示する
@@ -807,36 +807,48 @@ public class Bean_Result {
 //				2017/04/05 19:18:15,トータル勝％：1698.3196139066436
 //				2017/04/05 19:18:15,トータル負％：-652.7782675007876
 //				2017/04/05 19:18:15,トータル％ ／ トータル勝ち％：0.6156328513458065
-
-				int totalWinCount = getDollCostCodeWinCount();
-				int totalLoseCount = getDollCostCodeLoseCount();
-				int totalCodeGame = totalWinCount + totalLoseCount;
-				double shouritu = 0;
-				try{
+				if ( ( getWinCount() + getLoseCount() ) > 0){
+					int totalWinCount = getDollCostCodeWinCount();
+					int totalLoseCount = getDollCostCodeLoseCount();
+					double totalCodeGame = totalWinCount + totalLoseCount;
+					double shouritu = 0;
 					shouritu = totalWinCount/totalCodeGame;
-					if (totalCodeGame == 0){
-						shouritu = 1;
+
+
+
+					//結果を％表記する。0.5を50％に表記
+					double totalCodeWinResult = getDollerCodeWinTotalResult() * 100;
+					double totalCodeLoseResult = getDollerCodeLoseTotalResult() * 100;
+					String elete = paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + paraDTO.getTermType() + "," + resultCode + "," + paraDTO.getMaxEntryTimes() + "," + paraDTO.getMaxKeepDays() + "," + getMaxInterValTime() + "," + paraDTO.getMaxLoss() + "\r\n";
+					double totalWin = totalCodeWinResult;
+					double totalLose = totalCodeLoseResult;
+					double totalWARIAI = 0;
+					try {
+						if(totalWin==0){
+							totalWin = 0.01;
+						}
+						totalWARIAI = (totalWin+totalLose)/(totalWin);
+					} catch (Exception e) {
+						// TODO: handle exception
+						System.out.println("BeanResult:なんかあった。ドルコスト");
 					}
-				}catch (Exception e){
-					shouritu = 1;
+
+					if ( shouritu > shoritu){
+						if( totalCodeGame > totalGames){
+
+							if (checkTotalRatio){
+								if (totalWARIAI > getTotalRatio()){
+									commonAP.writeLog("ドルコスト法・" + resultCode +  "：勝【" + totalWinCount + "】",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
+									commonAP.writeInLog("／" +  "：負【" + totalLoseCount + "】",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
+									commonAP.writeInLog("ドルコスト法,トータル勝％：" + totalCodeWinResult,logWriting.DOLLCOST_BACKTEST_LOG_FLG);
+									commonAP.writeInLog("ドルコスト法,トータル負％：" + totalCodeLoseResult,logWriting.DOLLCOST_BACKTEST_LOG_FLG);
+									commonAP.writeLog( elete ,logWriting.CODE_DOLLCOST_RESULT_LOG_FLG);
+								}
+							}
+						}
+					}
+
 				}
-
-
-				//結果を％表記する。0.5を50％に表記
-				double totalCodeWinResult = getDollerCodeWinTotalResult() * 100;
-				double totalCodeLoseResult = getDollerCodeLoseTotalResult() * 100;
-				String elete = paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "," + paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + paraDTO.getTermType() + "," + resultCode + "," + paraDTO.getMaxEntryTimes() + "," + paraDTO.getMaxKeepDays() + "," + getMaxInterValTime() + "," + paraDTO.getMaxLoss() + "\r\n";
-//				System.out.println("aaaaaaa:"+shouritu);
-//				System.out.println("bbbbbbb:"+shoritu);
-//				if ( shouritu > shoritu){
-//					if( totalCodeGame > totalGames){
-						commonAP.writeLog("ドルコスト法・" + resultCode +  "：勝【" + totalWinCount + "】",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
-						commonAP.writeInLog("／" +  "：負【" + totalLoseCount + "】",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
-						commonAP.writeInLog("ドルコスト法,トータル勝％：" + totalCodeWinResult,logWriting.DOLLCOST_BACKTEST_LOG_FLG);
-						commonAP.writeInLog("ドルコスト法,トータル負％：" + totalCodeLoseResult,logWriting.DOLLCOST_BACKTEST_LOG_FLG);
-						commonAP.writeLog( elete ,logWriting.CODE_DOLLCOST_RESULT_LOG_FLG);
-//					}
-//				}
 
 			}
 		}
