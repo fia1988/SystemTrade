@@ -1,6 +1,10 @@
 package botton;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import proparty.PROPARTY;
 import proparty.S;
@@ -98,6 +102,17 @@ public class cloringDate {
 				break;
 		}
 
+
+
+		//売買ファイルを各個人フォルダにコピーする
+		S s = new S();
+		s.getCon();
+		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
+		s.closeConection();
+		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
+		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),false);
+
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
 		sepaComCheck.checkSepaComFile(mainDTO);
@@ -112,10 +127,7 @@ public class cloringDate {
 			}
 
 			String toDay = commonAP.getTODAY();
-			S s = new S();
-			s.getCon();
-			String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
-			s.closeConection();
+
 
 			if (commonAP.checkSabunDay(toDay,checkDay,PROPARTY.BACK_UP_KANkAKU)==false){
 				//同名ファイルのチェック
@@ -151,6 +163,75 @@ public class cloringDate {
 
 	}
 
+	//売買ファイルを各個人フォルダにコピーする
+	//true:買い
+	//false:売り
+	private void copyParsonalFolder(String TODAY,String folderPath,boolean checkFLG){
+        //ディレクトリ指定
+        File dir = new File(folderPath);
+
+        String fileName = "";
+
+        if (checkFLG){
+        	//2017-06-20_L.csv
+        	fileName = TODAY + "_L.csv";
+        }else{
+        	//2017-06-20_S.csv
+        	fileName = TODAY + "_S.csv";
+        }
+
+//        File copyMoto = new File(folderPath + File.separator + fileName);
+        Path copyMoto = Paths.get(folderPath + File.separator + fileName);
+
+
+        //全フォルダーを取得（fileを除く）
+        String[] folderList = dir.list();
+
+        for(String folderPathList : folderList){
+
+
+        	File parsonalFolderPath = new File(folderPathList);
+        	String parsonalFolderName = parsonalFolderPath.getName();
+        	switch (parsonalFolderName) {
+				case "00000.commonBoard_typeA":
+					break;
+				case "10000.commonBoard_typeB":
+					break;
+				case "old":
+					break;
+				default:
+
+					Path targetPath = Paths.get(folderPath + File.separator + folderPathList + File.separator + fileName);
+
+
+					try {
+						//ファイルかディレクトリかをチェックする。ディレクトリの場合は処理する。
+			        	File checkFile = new File(folderPathList);
+			        	if(checkFile.isDirectory()){
+			        		Files.copy(copyMoto, targetPath);
+			        	}else if(checkFile.isFile()){
+			        		System.out.println(copyMoto);
+			        		System.out.println(targetPath);
+			        	}else{
+			        		commonAP.writeInLog("以下のファイル？何か変なの来ています。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInLog("コピー元と思われるもの："+copyMoto,logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInLog("コピー先と思われるもの："+targetPath,logWriting.DATEDATE_LOG_FLG);
+			        	}
+
+					} catch (IOException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のファイルのコピーが失敗したっぽいです",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog("コピー元："+copyMoto,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog("コピー先："+targetPath,logWriting.DATEDATE_LOG_FLG);
+						e.printStackTrace();
+					}
+
+					break;
+			}
+
+        }
+
+	}
 
 	//時系列データの更新
 	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
@@ -245,8 +326,8 @@ public class cloringDate {
 						+ COLUMN.ENTRYMETHOD		+ " , " //
 						+ COLUMN.EXITMETHOD			+ " , "
 						+ COLUMN.MINI_CHECK_FLG		+ " , "
-						+ COLUMN.REAL_ENTRY_VOLUME	+ "  ";
-//						+ COLUMN.ENTRY_MONEY;
+						+ COLUMN.REAL_ENTRY_VOLUME	+ " , "
+						+ COLUMN.ENTRY_MONEY;
 
 		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
 						   + "'" +  COLUMN.DAYTIME				+ "' , " //
@@ -269,9 +350,9 @@ public class cloringDate {
 		fileNameS = today + "_" + "S.csv";
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
+
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
-
 		s.exportFile(SQL);
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
@@ -298,12 +379,12 @@ public class cloringDate {
 					+ COLUMN.CATE_FLG									 + " , " //
 					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
 					+ COLUMN.ENTRYMETHOD								 + " , " //
+					+ COLUMN.CLOSE										 + " ,  "//今日の終値
 					+ COLUMN.EXITMETHOD									 + " ,  " //
 					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
 					+ COLUMN.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-					+ COLUMN.CLOSE										 + " ,  "//今日の終値
-					+ COLUMN.VOLUME_UNIT	+	" as "	+ COLUMN.ENTRY_MONEY + " ,  " //アウトプットテーブルにコピーするに辺り、設定しないとエラーが出るのでダミーとして入れる。
-					+ COLUMN.REAL_ENTRY_VOLUME							 + "   " //現実的購入枚数
+					+ COLUMN.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+					+ COLUMN.VOLUME_UNIT	+	" as "	+ COLUMN.ENTRY_MONEY + "   " //アウトプットテーブルにコピーするに辺り、設定しないとエラーが出るのでダミーとして入れる。
 					+ " from "
 					+ TBL_Name.LASTORDER;
 
@@ -316,6 +397,17 @@ public class cloringDate {
 				+ " set "
 				+ COLUMN.ENTRY_MONEY + " = " + (oneShotMoney*10000);
 		s.freeUpdateQuery(SQL);
+
+
+		//TBL_Name.OUT_PUT_LASTORDERをCODE列を数字4桁にする。
+		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
+				+ " set "
+				+ COLUMN.CODE + " = " + " left(" + COLUMN.CODE + ",4)";
+		s.freeUpdateQuery(SQL);
+
+
+
+
 	}
 
 	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge){

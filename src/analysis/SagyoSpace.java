@@ -16,6 +16,7 @@ import common.commonAP;
 
 import constant.ReCord;
 import constant.TechCon;
+import constant.logWriting;
 
 public class SagyoSpace {
 
@@ -30,15 +31,15 @@ public class SagyoSpace {
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
 //		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
+//		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
-		resultDTO.setShoritu(0.65);
+		resultDTO.setShoritu(0.75);
 //		resultDTO.setShoritu(0.05);
 		resultDTO.setTotalGames(10);
 //		resultDTO.setTotalGames(1);
-		resultDTO.setTotalRatio(0.65);
+		resultDTO.setTotalRatio(0.75);
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
@@ -49,14 +50,14 @@ public class SagyoSpace {
 //		paraDTO.setEntryMoney(0.83);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 //		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
 //		System.out.println("【出来高"+ i + "】");
 		//ドルコスト法
 		paraDTO.setDollCostFLG(true);
-//		paraDTO.setRealEntryVolumeFLG(true);
+		paraDTO.setRealEntryVolumeFLG(true);
 
 	}
 
@@ -68,6 +69,10 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 		paraDTO.setCheckRenzokuSign(false);
 
+	}
+
+	public static void testCase77(){
+//		cloringDate.outPutKeepTable(1.2,"aaaa");
 	}
 
 	public static void testCase95(){
@@ -89,7 +94,49 @@ public class SagyoSpace {
 		dayList[1] =	endDD;
 		dayLists.add(dayList.clone());
 
+		dayList[0] = "2007-01-01";
+		dayList[1] = "2007-12-31";
+		dayLists.add(dayList.clone());
 
+		dayList[0] = "2008-01-01";
+		dayList[1] = "2008-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2009-01-01";
+		dayList[1] = "2009-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2010-01-01";
+		dayList[1] = "2010-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2011-01-01";
+		dayList[1] = "2011-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2012-01-01";
+		dayList[1] = "2012-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2013-01-01";
+		dayList[1] = "2013-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2014-01-01";
+		dayList[1] = "2014-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2015-01-01";
+		dayList[1] = "2015-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2016-01-01";
+		dayList[1] = "2016-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2017-01-01";
+		dayList[1] = "2017-06-30";
+		dayLists.add(dayList.clone());
 
 
 
@@ -105,7 +152,8 @@ public class SagyoSpace {
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO);
 //			paraDTO.setOnEliteFLG();
-
+			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
+			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_RESULT_LIST_LOG_FLG);
 
 //////			paraDTO.setMaxLoss(3);
 //////			resultDTO.setMaxInterValTime(	30	);

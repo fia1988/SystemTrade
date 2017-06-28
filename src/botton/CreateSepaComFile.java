@@ -224,7 +224,7 @@ public class CreateSepaComFile {
 			fileName = "01_separate_" + toDay + ".csv";
 			checkResult = ( phs.makeSplitCsv(mainDTO.getSepaFolderPath(), fileName	));
 		}else{
-			fileName = "01_combine_" + toDay + ".csv";
+			fileName = "02_combine_" + toDay + ".csv";
 			checkResult = ( phs.makeMergeCsv(mainDTO.getSepaFolderPath(), fileName	));
 		}
 
