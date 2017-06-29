@@ -206,7 +206,7 @@ public class cloringDate {
 
 					try {
 						//ファイルかディレクトリかをチェックする。ディレクトリの場合は処理する。
-			        	File checkFile = new File(folderPathList);
+			        	File checkFile = new File(folderPath + File.separator + folderPathList);
 			        	if(checkFile.isDirectory()){
 			        		Files.copy(copyMoto, targetPath);
 			        	}else if(checkFile.isFile()){
