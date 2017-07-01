@@ -43,11 +43,11 @@ public class SagyoSpace {
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
-//		paraDTO.setTesuRYO(0);
+		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
-//		paraDTO.setEntryMoney(0.83);
+		paraDTO.setEntryMoney(1.000);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
 		paraDTO.setOnEliteFLG();
@@ -83,12 +83,12 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2007-12-31";
-//		startDD	=	"2016-10-03";
-//		endDD		=	"2016-10-31";
+		startDD	=	"2016-10-03";
+		endDD		=	"2016-12-31";
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
-//		dayList[0] =	"2017-04-25";
-//		dayList[1] =	"2017-05-31";
+//		dayList[0] =	"2016-10-01";
+//		dayList[1] =	"2016-12-31";
 //		dayLists.add(dayList.clone());
 		dayList[0] =	startDD;
 		dayList[1] =	endDD;
@@ -161,78 +161,78 @@ public class SagyoSpace {
 			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(32);
-////			paraDTO.setMaxKeepDays(21);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
-//
-//
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(35);
-////			paraDTO.setMaxKeepDays(17);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
-//
-//
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(30);
-////			paraDTO.setMaxKeepDays(19);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
-//
-//
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(28);
-////			paraDTO.setMaxKeepDays(22);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
-//
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(28);
-////			paraDTO.setMaxKeepDays(16);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
-//
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(33);
-////			paraDTO.setMaxKeepDays(32);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
-//
-//			paraDTO = new Bean_Parameta();
-//			resultDTO = new Bean_Result();
-//			nowDTO = new Bean_nowRecord();
-//			shokisettei(paraDTO, nowDTO, resultDTO);
-////			paraDTO.setOnEliteFLG();
-//
-////			paraDTO.setMaxEntryTimes(20);
-////			paraDTO.setMaxKeepDays(19);
-//			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(32);
+//			paraDTO.setMaxKeepDays(21);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(35);
+//			paraDTO.setMaxKeepDays(17);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(30);
+//			paraDTO.setMaxKeepDays(19);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(28);
+//			paraDTO.setMaxKeepDays(22);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(28);
+//			paraDTO.setMaxKeepDays(16);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(33);
+//			paraDTO.setMaxKeepDays(32);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO);
+//			paraDTO.setOnEliteFLG();
+
+//			paraDTO.setMaxEntryTimes(20);
+//			paraDTO.setMaxKeepDays(19);
+			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique06","IDO_HEKIN_2_L",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
 		}
@@ -517,28 +517,27 @@ public class SagyoSpace {
 
 	public static void testCase98(){
 
-
 		List<String> dayList = new ArrayList<String>();
-		dayList.add("2016-10-03");
-		dayList.add("2016-10-04");
-		dayList.add("2016-10-05");
-		dayList.add("2016-10-06");
-		dayList.add("2016-10-07");
-		dayList.add("2016-10-11");
-		dayList.add("2016-10-12");
-		dayList.add("2016-10-13");
-		dayList.add("2016-10-14");
-		dayList.add("2016-10-17");
-		dayList.add("2016-10-18");
-		dayList.add("2016-10-19");
-		dayList.add("2016-10-20");
-		dayList.add("2016-10-21");
-		dayList.add("2016-10-24");
-		dayList.add("2016-10-25");
-		dayList.add("2016-10-26");
-		dayList.add("2016-10-27");
-		dayList.add("2016-10-28");
-		dayList.add("2016-10-31");
+//		dayList.add("2016-10-03");
+//		dayList.add("2016-10-04");
+//		dayList.add("2016-10-05");
+//		dayList.add("2016-10-06");
+//		dayList.add("2016-10-07");
+//		dayList.add("2016-10-11");
+//		dayList.add("2016-10-12");
+//		dayList.add("2016-10-13");
+//		dayList.add("2016-10-14");
+//		dayList.add("2016-10-17");
+//		dayList.add("2016-10-18");
+//		dayList.add("2016-10-19");
+//		dayList.add("2016-10-20");
+//		dayList.add("2016-10-21");
+//		dayList.add("2016-10-24");
+//		dayList.add("2016-10-25");
+//		dayList.add("2016-10-26");
+//		dayList.add("2016-10-27");
+//		dayList.add("2016-10-28");
+//		dayList.add("2016-10-31");
 //		dayList.add("2016-11-01");
 //		dayList.add("2016-11-02");
 //		dayList.add("2016-11-04");
@@ -559,27 +558,27 @@ public class SagyoSpace {
 //		dayList.add("2016-11-28");
 //		dayList.add("2016-11-29");
 //		dayList.add("2016-11-30");
-//		dayList.add("2016-12-01");
-//		dayList.add("2016-12-02");
-//		dayList.add("2016-12-05");
-//		dayList.add("2016-12-06");
-//		dayList.add("2016-12-07");
-//		dayList.add("2016-12-08");
-//		dayList.add("2016-12-09");
-//		dayList.add("2016-12-12");
-//		dayList.add("2016-12-13");
-//		dayList.add("2016-12-14");
-//		dayList.add("2016-12-15");
-//		dayList.add("2016-12-16");
-//		dayList.add("2016-12-19");
-//		dayList.add("2016-12-20");
-//		dayList.add("2016-12-21");
-//		dayList.add("2016-12-22");
-//		dayList.add("2016-12-26");
-//		dayList.add("2016-12-27");
-//		dayList.add("2016-12-28");
-//		dayList.add("2016-12-29");
-//		dayList.add("2016-12-30");
+		dayList.add("2016-12-01");
+		dayList.add("2016-12-02");
+		dayList.add("2016-12-05");
+		dayList.add("2016-12-06");
+		dayList.add("2016-12-07");
+		dayList.add("2016-12-08");
+		dayList.add("2016-12-09");
+		dayList.add("2016-12-12");
+		dayList.add("2016-12-13");
+		dayList.add("2016-12-14");
+		dayList.add("2016-12-15");
+		dayList.add("2016-12-16");
+		dayList.add("2016-12-19");
+		dayList.add("2016-12-20");
+		dayList.add("2016-12-21");
+		dayList.add("2016-12-22");
+		dayList.add("2016-12-26");
+		dayList.add("2016-12-27");
+		dayList.add("2016-12-28");
+		dayList.add("2016-12-29");
+		dayList.add("2016-12-30");
 
 
 
@@ -589,7 +588,9 @@ public class SagyoSpace {
 			Bean_Result resultDTO = new Bean_Result();
 			Bean_nowRecord nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO);
+
 			CheckSign.dealLastOrder(TODAY,paraDTO);
+
 			System.out.println(TODAY);
 			S s = new S();
 			s.getCon();

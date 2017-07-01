@@ -1447,6 +1447,7 @@ public class Bean_Result {
 					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利,カット金利
 					commonAP.writeInLog(resultDOLLCOSTLetter,logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
 
+					commonAP.writeLog("-------" + paraDTO.getLMETHOD() +  "_" + paraDTO.getSMETHOD() + "-------" + "\r\n",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
 					commonAP.writeLog("-------" + paraDTO.getLMETHOD() +  "_" + paraDTO.getSMETHOD() + "-------" + "\r\n",logWriting.CODE_DOLLCOST_STOCKLOST_RESULT_LOG_FLG);
 					commonAP.writeLog("-------" + paraDTO.getLMETHOD() +  "_" + paraDTO.getSMETHOD() + "-------" + "\r\n",logWriting.CODE_DOLLCOST_L_PRICE_LISTRESULT_LOG_FLG);
 				}

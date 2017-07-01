@@ -208,11 +208,14 @@ public class cloringDate {
 						//ファイルかディレクトリかをチェックする。ディレクトリの場合は処理する。
 			        	File checkFile = new File(folderPath + File.separator + folderPathList);
 			        	if(checkFile.isDirectory()){
+			        		//ディレクトリのとき
 			        		Files.copy(copyMoto, targetPath);
 			        	}else if(checkFile.isFile()){
+			        		//ファイルのとき
 			        		System.out.println(copyMoto);
 			        		System.out.println(targetPath);
 			        	}else{
+			        		//それ以外のとき
 			        		commonAP.writeInLog("以下のファイル？何か変なの来ています。",logWriting.DATEDATE_LOG_FLG);
 							commonAP.writeInLog("コピー元と思われるもの："+copyMoto,logWriting.DATEDATE_LOG_FLG);
 							commonAP.writeInLog("コピー先と思われるもの："+targetPath,logWriting.DATEDATE_LOG_FLG);

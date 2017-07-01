@@ -67,7 +67,7 @@ public class CheckSign {
 		//別メソッドを動かす前にメモリ解放
 		s.closeConection();
 
-		
+
 //		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 		//採用
@@ -81,7 +81,7 @@ public class CheckSign {
 //		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 //		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 //		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		
+
 		//採用
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
@@ -106,14 +106,37 @@ public class CheckSign {
 
 	public static void checkVolume(double entryMoney,String TODAY,S s){
 
-		//まずはクローズを一致させる
-		String SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.STOCK_DD
-					+ " set "
-					+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBL_Name.STOCK_DD + "." + COLUMN.CLOSE
-					+ " where "
-					+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.STOCK_DD + "." + COLUMN.CODE
-					+ " and "
-					+ TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+		//まずはクローズを一致させる。株の
+		String TBLName = TBL_Name.STOCK_DD;
+		String SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBLName
+				+ " set "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBLName + "." + COLUMN.CLOSE
+				+ " where "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBLName + "." + COLUMN.CODE
+				+ " and "
+				+ TBLName + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+		s.freeUpdateQuery(SQL);
+
+		//次はインデックス
+		TBLName = TBL_Name.INDEX_DD;
+		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBLName
+				+ " set "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBLName + "." + COLUMN.CLOSE
+				+ " where "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBLName + "." + COLUMN.CODE
+				+ " and "
+				+ TBLName + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+		s.freeUpdateQuery(SQL);
+
+		//次はETF
+		TBLName = TBL_Name.ETF_DD;
+		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBLName
+				+ " set "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBLName + "." + COLUMN.CLOSE
+				+ " where "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBLName + "." + COLUMN.CODE
+				+ " and "
+				+ TBLName + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
 		s.freeUpdateQuery(SQL);
 
 		//以下true:買い
@@ -144,10 +167,23 @@ public class CheckSign {
 		s.freeUpdateQuery(SQL);
 
 		//以下false売り
+		//現実的
 		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.KEEPLISTTBL
 				+ " set "
 				+ TBL_Name.LASTORDER + "." + COLUMN.REAL_ENTRY_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.REAL_ENTRY_VOLUME
 				+ " where "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.CODE
+				+ " and "
+				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false ";
+		s.freeUpdateQuery(SQL);
+
+		//理想的
+		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.KEEPLISTTBL
+				+ " set "
+				+ TBL_Name.LASTORDER + "." + COLUMN.IDEA_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.IDEA_VOLUME
+				+ " where "
+				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.CODE
+				+ " and "
 				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false ";
 		s.freeUpdateQuery(SQL);
 
@@ -168,7 +204,6 @@ public class CheckSign {
 				   + COLUMN.DAYTIME + " < '" + checkDay + "'";
 		S s = new S();
 		s.getCon();
-
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			while(s.rs2.next()){
@@ -184,19 +219,16 @@ public class CheckSign {
 
 		for ( String a[] : methodList){
 //			System.out.println(checkDay + ":" + a);
-
 			//前日の分を買う。
 			List<String[]> lastOrderCodeList_L = new ArrayList<String[]>();
 			getLastOrderCodeList(lastOrderCodeList_L,a[0],a[1],a[2],true,checkDay);
 			setEntryTBL_L(lastOrderCodeList_L, a[0],a[1],a[2],checkDay,paraDTO);
 			lastOrderCodeList_L = new ArrayList<String[]>();
-
 			//前日の分を売る
 			List<String[]> lastOrderCodeList_S = new ArrayList<String[]>();
 			getLastOrderCodeList(lastOrderCodeList_S,a[0],a[1],a[2],false,checkDay);
 			setResultTBL_S(lastOrderCodeList_S,a[0],a[1],a[2],checkDay,paraDTO);
 			lastOrderCodeList_S = new ArrayList<String[]>();
-
 		}
 
 
@@ -843,7 +875,8 @@ public class CheckSign {
 					codeStatus[6] = "false";
 				}
 
-
+//				double ideaVolume = Double.valueOf(codeList.get(i)[7]);
+//				double realVolume = Double.valueOf(codeList.get(i)[8]);
 				codeStatus[7] = s.rs2.getString(	COLUMN.IDEA_VOLUME		);
 				codeStatus[8] = s.rs2.getString(	COLUMN.REAL_ENTRY_VOLUME);
 
