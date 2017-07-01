@@ -212,8 +212,6 @@ public class cloringDate {
 			        		Files.copy(copyMoto, targetPath);
 			        	}else if(checkFile.isFile()){
 			        		//ファイルのとき
-			        		System.out.println(copyMoto);
-			        		System.out.println(targetPath);
 			        	}else{
 			        		//それ以外のとき
 			        		commonAP.writeInLog("以下のファイル？何か変なの来ています。",logWriting.DATEDATE_LOG_FLG);
