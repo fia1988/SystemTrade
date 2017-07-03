@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 
 import proparty.PROPARTY;
 import proparty.S;
@@ -85,9 +86,11 @@ public class cloringDate {
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 
+		commonAP.writeInLog("日々ファイル作成します。",logWriting.DATEDATE_LOG_FLG);
 		switch (outPutKeepTable(paraDTO.getEntryMoney(),folderPath)) {
 			case ReturnCodeConst.SQL_ERR_0:
 				//成功
+				commonAP.writeInLog("日々ファイル作成成功しました。",logWriting.DATEDATE_LOG_FLG);
 				break;
 			case ReturnCodeConst.SQL_ERR_1086:
 				//ファイルが既に存在する
@@ -315,6 +318,7 @@ public class cloringDate {
 		S s = new S();
 		s.getCon();
 		copyOutPutTBL(oneShotMoney,s);
+		s.resetConnection();
 		int resultInt = 0;
 
 
@@ -407,7 +411,106 @@ public class cloringDate {
 		s.freeUpdateQuery(SQL);
 
 
+		//売買単位をいい感じにする。
+		editVolumeUnit(s);
 
+	}
+
+	private void editVolumeUnit(S s){
+
+
+
+		checkMINI_NORMAL(s);
+
+	}
+
+	public static void checkMINI_NORMAL(S s){
+		String SQL1;
+		String SQL2;
+		String SQL3;
+		String TBL = TBL_Name.OUT_PUT_LASTORDER;
+//		update 99_separate_DD set SEPA_FLG = true  where dayTime_kenri_last = '2017-06-27' and code = '8011' and SEPA_FLG is false
+		//minicheckFLGがtrueのものに対して売買単位をチェックする。単元株数を超えるものをfalseで新規にインサートする。
+		SQL1 = " select * from " + TBL
+			+ " where "
+			+ COLUMN.VOLUME_UNIT + " < " + COLUMN.REAL_ENTRY_VOLUME
+			+ " and "
+			+ COLUMN.MINI_CHECK_FLG + " is true ";
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL1);
+
+			while ( s.rs.next() ) {
+				int volumeUnit = s.rs.getInt(COLUMN.VOLUME_UNIT);
+				int entryVolume = s.rs.getInt(COLUMN.REAL_ENTRY_VOLUME);
+				int miniVolume = entryVolume % volumeUnit;
+				int tangenVolume = entryVolume - miniVolume;
+				String code = s.rs.getString	(COLUMN.CODE);
+				String dayTYPE = s.rs.getString	(COLUMN.TYPE);
+				int cate = s.rs.getInt	(COLUMN.CATE_FLG);
+				boolean signFLG = s.rs.getBoolean(COLUMN.SIGN_FLG);
+				String entryMETHOD = s.rs.getString	(COLUMN.ENTRYMETHOD);
+				String exitMETHOD = s.rs.getString	(COLUMN.EXITMETHOD);
+				//単元株用の作成
+				SQL2 = " insert into " + TBL
+					+ " ( "
+					+ COLUMN.CODE										 + " , " //
+					+ COLUMN.DAYTIME									 + " , " //
+					+ COLUMN.TYPE									 	 + " , " //
+					+ COLUMN.CATE_FLG									 + " , " //
+					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
+					+ COLUMN.ENTRYMETHOD								 + " , " //
+					+ COLUMN.CLOSE										 + " , " //今日の終値
+					+ COLUMN.EXITMETHOD								 + " ,  " //
+					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
+					+ COLUMN.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+					+ COLUMN.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+					+ COLUMN.ENTRY_MONEY								 + "   "//一回辺り投資金額
+					+ " ) "
+					+ "values "
+					+ " ( "
+					+ "'" + code 			+ "'" + ","
+					+ "'" + s.rs.getString	(COLUMN.DAYTIME) 		+ "'" + ","
+					+ "'" + dayTYPE 			+ "'" + ","
+					+ " " + cate 		+ " " + ","
+					+ " " + signFLG 		+ " " + ","
+					+ "'" + entryMETHOD	+ "'" + ","
+					+ " " + s.rs.getDouble	(COLUMN.CLOSE) 			+ " " + ","
+					+ "'" + exitMETHOD 	+ "'" + ","
+					+ " " + s.rs.getInt	(COLUMN.VOLUME_UNIT) 	+ " " + ","
+					+ " " + "false" 									+ " " + ","
+					+ " " + tangenVolume								+ " " + ","
+					+ " " + s.rs.getInt	(COLUMN.ENTRY_MONEY) 	+ " " + " "
+					+ " ) ";
+				s.freeUpdateQuery(SQL2);
+
+
+				//ミニ株用のレコード作成
+//				s.rs.updateInt(COLUMN.REAL_ENTRY_VOLUME,miniVolume);
+//				s.rs.updateRow();
+				SQL3 = " update " + TBL
+					 + " set "
+					 + COLUMN.REAL_ENTRY_VOLUME + " = " + miniVolume
+					 + " where "
+					 + COLUMN.MINI_CHECK_FLG + " is true"
+					 + " and "
+					 + COLUMN.CODE + " = '" + code + "'"
+					 + " and "
+					 + COLUMN.ENTRYMETHOD + " = '" + entryMETHOD + "'"
+					 + " and "
+					 + COLUMN.EXITMETHOD + " = '" + exitMETHOD + "'"
+					 + " and "
+					 + COLUMN.TYPE + " = '" + dayTYPE + "'";
+				
+				s.freeUpdateQuery(SQL3);
+
+				s.rs = s.sqlGetter().executeQuery(SQL1);
+
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
 	}
 

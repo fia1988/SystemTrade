@@ -174,6 +174,10 @@ public class CheckSign {
 				+ " where "
 				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.CODE
 				+ " and "
+				+ TBL_Name.LASTORDER + "." + COLUMN.EXITMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.EXITMETHOD
+				+ " and "
+				+ TBL_Name.LASTORDER + "." + COLUMN.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.ENTRYMETHOD
+				+ " and "
 				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false ";
 		s.freeUpdateQuery(SQL);
 
@@ -1355,6 +1359,20 @@ public class CheckSign {
 		deleteIntervalTBL(s);
 		increMentIntervalTBL(s);
 
+		String SQL;
+		//volumeUnit列を更新する。
+		String TBL = TBL_Name.LASTORDER;
+
+		SQL  = " update "+ TBL
+				+ " set "
+				+ COLUMN.VOLUME_UNIT + " = 100";
+		s.freeUpdateQuery(SQL);
+		SQL  = " update "+ TBL
+			 + " set "
+			 + COLUMN.MINI_CHECK_FLG + " = false "
+			 + " where "
+			 + COLUMN.VOLUME_UNIT + " = " + COLUMN.REAL_ENTRY_VOLUME;
+		s.freeUpdateQuery(SQL);
 
 		//今日の購入株数を計算する
 		Bean_Parameta paraDTO = new Bean_Parameta();

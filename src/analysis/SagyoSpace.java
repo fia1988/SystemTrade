@@ -48,6 +48,7 @@ public class SagyoSpace {
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
 		paraDTO.setEntryMoney(1.000);
+//		paraDTO.setEntryMoney(111.000);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
 		paraDTO.setOnEliteFLG();
@@ -72,7 +73,9 @@ public class SagyoSpace {
 	}
 
 	public static void testCase77(){
-//		cloringDate.outPutKeepTable(1.2,"aaaa");
+//		S s = new S();
+//		s.getCon();
+//		cloringDate.checkMINI_NORMAL(s);
 	}
 
 	public static void testCase95(){

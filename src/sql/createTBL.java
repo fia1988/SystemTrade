@@ -32,6 +32,7 @@ public class createTBL {
 		createEleteTBL(s);
 		createIntervalTime(s);
 		createOutPutTable(s);
+//		createVolumeUnitListTBL(s);
 		return createLastOrderTable(s);
 	}
 
@@ -60,6 +61,8 @@ public class createTBL {
 		int intResult = s.freeUpdateQuery(SQL);
 
 	}
+
+
 
 	private void createEleteTBL(S s){
 		//SQL全文
@@ -122,6 +125,31 @@ public class createTBL {
 
 		s.freeUpdateQuery(SQL);
 	}
+
+
+	private void createVolumeUnitListTBL(S s){
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.VOLUME_UNIT_KATA								 + " ,  " //売買単位
+				+ "primary key ("
+				+ COLUMN.CODE +  ")) ";
+
+		SQL = create + TBL_Name.VOLUME_UNIT_LIST_TBL + colum;
+
+		s.freeUpdateQuery(SQL);
+
+
+	}
+
 
 	private String createLastOrderTable(S s){
 		//SQL全文
