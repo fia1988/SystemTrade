@@ -70,8 +70,7 @@ public class CheckSign {
 
 //		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
-		//採用
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L,			TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L,			TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 		//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
@@ -178,7 +177,9 @@ public class CheckSign {
 				+ " and "
 				+ TBL_Name.LASTORDER + "." + COLUMN.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.ENTRYMETHOD
 				+ " and "
-				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false ";
+				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false "
+				+ " and "
+				+ TBL_Name.LASTORDER + "."+ COLUMN.MINI_CHECK_FLG + " = " + TBL_Name.KEEPLISTTBL + "."+ COLUMN.MINI_CHECK_FLG;
 		s.freeUpdateQuery(SQL);
 
 		//理想的
@@ -188,19 +189,26 @@ public class CheckSign {
 				+ " where "
 				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.CODE
 				+ " and "
-				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false ";
+				+ TBL_Name.LASTORDER + "." + COLUMN.EXITMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.EXITMETHOD
+				+ " and "
+				+ TBL_Name.LASTORDER + "." + COLUMN.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.ENTRYMETHOD
+				+ " and "
+				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false "
+				+ " and "
+				+ TBL_Name.LASTORDER + "."+ COLUMN.MINI_CHECK_FLG + " = " + TBL_Name.KEEPLISTTBL + "."+ COLUMN.MINI_CHECK_FLG;
 		s.freeUpdateQuery(SQL);
 
 	}
 
 
+	//true:本番
+	//false:試験
 	public static void dealLastOrder(String checkDay,Bean_Parameta paraDTO){
 
 		List<String[]> methodList = new ArrayList<String[]>();
 		String SQL = " SELECT DISTINCT "
 				   + COLUMN.ENTRYMETHOD +	","
 				   + COLUMN.EXITMETHOD +	","
-//				   + COLUMN.MINI_CHECK_FLG +	","
 				   + COLUMN.TYPE +			" "
 				   + " from "
 				   + TBL_Name.LASTORDER
@@ -237,13 +245,15 @@ public class CheckSign {
 
 
 
-
+		//keepTBLのREALVOLUMEをいい感じにする
 
 
 
 	}
 
 
+	//true:本番
+	//false:試験
 	public static void CHECKTODAY(
 			int size,
 			String type,
@@ -258,7 +268,8 @@ public class CheckSign {
 			ArrayList<String[]> INDEXList,
 			ArrayList<String[]> ETFNameList,
 			ArrayList<String[]> keepCodeList,
-			String checkDay){
+			String checkDay
+			){
 
 
 
@@ -286,6 +297,8 @@ public class CheckSign {
 		paraDTO.setOnEliteFLG();
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
+
+
 		CHECKTODAY_S(size,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,keepCodeList,checkDay);
 
 
@@ -1355,6 +1368,8 @@ public class CheckSign {
 		s.freeUpdateQuery(SQL);
 	}
 
+	//true:本番
+	//false:試験
 	public static void afterCheck(String TODAY,S s){
 		deleteIntervalTBL(s);
 		increMentIntervalTBL(s);
@@ -1367,12 +1382,7 @@ public class CheckSign {
 				+ " set "
 				+ COLUMN.VOLUME_UNIT + " = 100";
 		s.freeUpdateQuery(SQL);
-		SQL  = " update "+ TBL
-			 + " set "
-			 + COLUMN.MINI_CHECK_FLG + " = false "
-			 + " where "
-			 + COLUMN.VOLUME_UNIT + " = " + COLUMN.REAL_ENTRY_VOLUME;
-		s.freeUpdateQuery(SQL);
+
 
 		//今日の購入株数を計算する
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -1383,7 +1393,13 @@ public class CheckSign {
 //		paraDTO.setEntryMoney(0.83);
 		checkVolume(paraDTO.getEntryMoney(),TODAY,s);
 
+
+		//ラストオーダーテーブルをミニ株単元株を分けるならここ
+
+
 	}
+
+
 
 	private static void deleteIntervalTBL(S s){
 		String SQL;

@@ -13,6 +13,12 @@ public class Bean_Parameta {
 	private boolean rumFLG = false;
 	private int rumNumber = 0;
 
+
+
+
+
+
+
 	//true;リアルタイム
 	//false;試験
 	private boolean realTimeMode = false;

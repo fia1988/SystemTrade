@@ -48,7 +48,7 @@ public class SagyoSpace {
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
 		paraDTO.setEntryMoney(1.000);
-//		paraDTO.setEntryMoney(111.000);
+		paraDTO.setEntryMoney(100.000);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
 		paraDTO.setOnEliteFLG();
@@ -59,6 +59,8 @@ public class SagyoSpace {
 		//ドルコスト法
 		paraDTO.setDollCostFLG(true);
 		paraDTO.setRealEntryVolumeFLG(true);
+
+
 
 	}
 
@@ -73,9 +75,11 @@ public class SagyoSpace {
 	}
 
 	public static void testCase77(){
-//		S s = new S();
-//		s.getCon();
+		S s = new S();
+		s.getCon();
 //		cloringDate.checkMINI_NORMAL(s);
+
+//		CheckSign.editVolumeUnitMINIcreate(1, s);
 	}
 
 	public static void testCase95(){
@@ -86,8 +90,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2007-12-31";
-		startDD	=	"2016-10-03";
-		endDD		=	"2016-12-31";
+		startDD	=	"2017-07-06";
+		endDD		=	"2017-07-31";
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
 //		dayList[0] =	"2016-10-01";

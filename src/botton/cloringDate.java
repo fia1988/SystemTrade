@@ -317,7 +317,9 @@ public class cloringDate {
 		String SQL = "";
 		S s = new S();
 		s.getCon();
+
 		copyOutPutTBL(oneShotMoney,s);
+
 		s.resetConnection();
 		int resultInt = 0;
 
@@ -344,11 +346,7 @@ public class cloringDate {
 						   + "'" +  COLUMN.ENTRY_MONEY			+ "'" ;
 
 
-//		+ COLUMN.VOLUME_UNIT_KATA								 + " ,  " //売買単位
-//		+ COLUMN.MINI_CHECK_FLG_KATA							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-//		+ COLUMN.REAL_ENTRY_VOLUME_KATA								 + " ,  " //現実的購入枚数
 
-//		COLUMN.MINI_CHECK_FLG;
 
 		String today = controllDay.getMAX_DD_INDEX(s);
 		fileNameL = today + "_" + "L.csv";
@@ -410,11 +408,19 @@ public class cloringDate {
 				+ COLUMN.CODE + " = " + " left(" + COLUMN.CODE + ",4)";
 		s.freeUpdateQuery(SQL);
 
+		String TBL = TBL_Name.OUT_PUT_LASTORDER;
+		SQL  = " update "+ TBL
+				 + " set "
+				 + COLUMN.MINI_CHECK_FLG + " = false "
+				 + " where "
+				 + COLUMN.VOLUME_UNIT + " = " + COLUMN.REAL_ENTRY_VOLUME;
+		s.freeUpdateQuery(SQL);
 
 		//売買単位をいい感じにする。
 		editVolumeUnit(s);
 
 	}
+
 
 	private void editVolumeUnit(S s){
 
@@ -424,7 +430,7 @@ public class cloringDate {
 
 	}
 
-	public static void checkMINI_NORMAL(S s){
+	private void checkMINI_NORMAL(S s){
 		String SQL1;
 		String SQL2;
 		String SQL3;
@@ -501,7 +507,7 @@ public class cloringDate {
 					 + COLUMN.EXITMETHOD + " = '" + exitMETHOD + "'"
 					 + " and "
 					 + COLUMN.TYPE + " = '" + dayTYPE + "'";
-				
+
 				s.freeUpdateQuery(SQL3);
 
 				s.rs = s.sqlGetter().executeQuery(SQL1);
@@ -513,6 +519,7 @@ public class cloringDate {
 		}
 
 	}
+
 
 	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge){
 		String SQL;

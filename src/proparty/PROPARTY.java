@@ -10,6 +10,8 @@ public class PROPARTY {
 
 	//一回辺り投資資金（単位：万円）
 	public static double ONE_SHOT_MONEY = 1.2;
+	//SBIにおけるミニ株の手数料が最小になる金額。単位：円
+	public static final int SBI_MINI_LOT = 10000;
 
 	//連続アクセスを防ぐﾐﾘ秒数
 	public static int SLEEPTIME = 3600000;
