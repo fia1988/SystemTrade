@@ -2,6 +2,11 @@ package proparty;
 
 public class PROPARTY {
 
+	//propartyTBLの項目名
+	//暗号化キー
+	public static String FBS_KEY = "FBS_KEY";
+	//各項目の初期値
+	public static String FIRST_SET = "firstRecord";
 
 //  集計する年数
 	public static int COLLECTYEAR = 100;

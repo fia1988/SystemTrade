@@ -818,4 +818,39 @@ public class commonAP {
 	    }
 	}
 
+	//特定のテーブルから特定の列名に等しい特定の列の値を持ってくる
+	public static String getParametaChoseTBL(String TBL,String kensakuRetu,String getColumn,String kensakuWord,S s){
+		String returnResult = "";
+
+		String SQL;
+
+		//-を_に変える。DBには_で入っている
+		SQL = "select " + getColumn + " from " + TBL + " where " + kensakuRetu + " ='" + kensakuWord + "'";
+
+		s.setPstmt(SQL);
+
+		try {
+
+			s.p_rs = s.getPstmt().executeQuery(SQL);
+
+			while (s.p_rs.next()) {
+
+				returnResult = s.p_rs.getString(getColumn);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// TODO 自動生成された catch ブロック
+		} catch(NullPointerException e1){
+
+
+		}
+
+
+
+
+		return returnResult;
+	}
+
 }

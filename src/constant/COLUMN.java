@@ -53,7 +53,6 @@ public class COLUMN {
 	public static String STAMP_KATA										= STAMP + " TIMESTAMP ";
 
 
-
 	//効力発生日
 	public static String EFFECT_STARTDAY									= "effect_startDay";
 	public static String EFFECT_STARTDAY_KATA								= EFFECT_STARTDAY + " DATE not null ";
@@ -667,5 +666,14 @@ public class COLUMN {
 	//備考
 	public static String BIKOU													= "bikou";
 	public static String BIKOU_KATA	 											= BIKOU + " varchar(30) ";
+
+	//プロパティテーブルの列
+	//項目
+	public static String ITEMNAME										= "itemName";
+	public static String ITEMNAME_KATA									= ITEMNAME + " varchar(100) ";
+
+	//項目内容
+	public static String ITEMNAME_DESC										= "itemNameDesc";
+	public static String ITEMNAME_DESC_KATA									= ITEMNAME_DESC + " varchar(100) ";
 
 }

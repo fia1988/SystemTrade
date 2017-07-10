@@ -13,7 +13,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import proparty.S;
 import proparty.TBL_Name;
+import proparty.controllDay;
 import GamenDTO.TAB_MainDTO;
 import GamenNyuryokuCheck.nyuryokuCheck;
 import botton.BackUp;
@@ -23,6 +25,7 @@ import botton.SepaCombine;
 import botton.TimeClornigDate;
 import botton.cloringDate;
 import botton.setUp;
+import constant.ReCord;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
 
@@ -327,11 +330,11 @@ public class TAB_main extends JPanel {
 
 		sepaFolderPath = new JTextField();
 		sepaFolderPath.setColumns(10);
-		sepaFolderPath.setBounds(42, 504, 330, 25);
+		sepaFolderPath.setBounds(42, 566, 330, 25);
 		add(sepaFolderPath);
 
 		JLabel label_9 = new JLabel("分割併合ファイル出力先");
-		label_9.setBounds(42, 474, 330, 19);
+		label_9.setBounds(42, 532, 330, 19);
 		add(label_9);
 
 		JLabel label_10 = new JLabel("結果：");
@@ -352,7 +355,7 @@ public class TAB_main extends JPanel {
 		add(button_3);
 
 
-		checkBox.setBounds(39, 582, 333, 29);
+		checkBox.setBounds(42, 605, 333, 29);
 		add(checkBox);
 
 		JLabel label_14 = new JLabel("sepaComKakodataは後に取り込むこと。");
@@ -367,6 +370,15 @@ public class TAB_main extends JPanel {
 		checkBox_2.setBounds(42, 281, 239, 29);
 		add(checkBox_2);
 
+		JButton btnNewButton_3 = new JButton("キックファイル作成ボタン");
+		btnNewButton_3.setAction(action_13);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_3.setBounds(42, 464, 212, 27);
+		add(btnNewButton_3);
+
 
 
 	}
@@ -376,6 +388,7 @@ public class TAB_main extends JPanel {
 	private final Action action_11 = new SwingAction_11();
 	private JTextField sepaFolderPath;
 	private final Action action_12 = new SwingAction_12();
+	private final Action action_13 = new SwingAction_13();
 
 
 	private void gamenNyuryoku(TAB_MainDTO mainDTO){
@@ -962,6 +975,25 @@ public class TAB_main extends JPanel {
 
 			//メモリの解放
 			sepaComCheck = new CreateSepaComFile();
+		}
+	}
+	private class SwingAction_13 extends AbstractAction {
+		public SwingAction_13() {
+			putValue(NAME, "キックファイル作成ボタン");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			TAB_MainDTO mainDTO = new TAB_MainDTO();
+			gamenNyuryoku(mainDTO);
+
+			cloringDate CD = new cloringDate();
+			S s = new S();
+			s.getCon();
+			String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+			s.closeConection();
+
+			CD.createSecureFile(TODAY,mainDTO.getEntryFolderPath());
+
 		}
 	}
 }

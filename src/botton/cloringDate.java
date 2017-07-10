@@ -116,6 +116,12 @@ public class cloringDate {
 		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
 		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),false);
 
+		//暗号化ファイル作成
+		createSecureFile(TODAY,mainDTO.getEntryFolderPath());
+		//暗号化ファイルばら撒き
+//		copySecurityFile(TODAY,mainDTO.getEntryFolderPath());
+
+
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
 		sepaComCheck.checkSepaComFile(mainDTO);
@@ -166,6 +172,84 @@ public class cloringDate {
 
 	}
 
+	//暗号化ファイル作成メソッド()
+	//TODAY = YYYY-MM-DD
+	public void createSecureFile(String TODAY,String folderPath){
+		S s = new S();
+		s.getCon();
+
+		String FBS_KEY = commonAP.getParametaChoseTBL(TBL_Name.PROPARTY_TBL,COLUMN.ITEMNAME,COLUMN.ITEMNAME_DESC,PROPARTY.FBS_KEY,s);
+		FBS_KEY = FBS_KEY + "_" + TODAY;
+		commonAP.writeInLog(FBS_KEY,logWriting.DATEDATE_LOG_FLG);
+		s.closeConection();
+	}
+
+	//暗号化ファイルばら撒きメソッド
+	private void copySecurityFile(String TODAY,String folderPath){
+        //ディレクトリ指定
+        File dir = new File(folderPath);
+
+        String fileName = "FBS_KICK_" + TODAY + ".fbs";
+
+
+        Path copyMoto = Paths.get(folderPath + File.separator + fileName);
+
+
+        //全フォルダーを取得（fileを除く）
+        String[] folderList = dir.list();
+
+        for(String personalFolderPath : folderList){
+
+
+        	File parsonalFolderPath = new File(personalFolderPath);
+        	String parsonalFolderName = parsonalFolderPath.getName();
+        	switch (parsonalFolderName) {
+				case "00000.commonBoard_typeA":
+					break;
+				case "10000.commonBoard_typeB":
+					break;
+				case "old":
+					break;
+				//ここから自動売買ツールを使わない人リスト
+				case "10270.shigeta":
+					break;
+				//ここまで自動売買ツールを使わない人リスト
+				default:
+
+					Path targetPath = Paths.get(folderPath + File.separator + personalFolderPath + File.separator + fileName);
+					copyFile(copyMoto,targetPath,(folderPath + File.separator + personalFolderPath));
+
+					break;
+			}
+
+        }
+	}
+
+	private void copyFile(Path copyMoto,Path targetPath,String checkPath){
+		try {
+			//ファイルかディレクトリかをチェックする。ディレクトリの場合は処理する。
+        	File checkFile = new File(checkPath);
+        	if(checkFile.isDirectory()){
+        		//ディレクトリのとき
+        		Files.copy(copyMoto, targetPath);
+        	}else if(checkFile.isFile()){
+        		//ファイルのとき
+        	}else{
+        		//それ以外のとき
+        		commonAP.writeInLog("以下のファイル？何か変なの来ています。",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("コピー元と思われるもの："+copyMoto,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("コピー先と思われるもの："+targetPath,logWriting.DATEDATE_LOG_FLG);
+        	}
+
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			commonAP.writeInLog("以下のファイルのコピーが失敗したっぽいです",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog("コピー元："+copyMoto,logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog("コピー先："+targetPath,logWriting.DATEDATE_LOG_FLG);
+			e.printStackTrace();
+		}
+	}
+
 	//売買ファイルを各個人フォルダにコピーする
 	//true:買い
 	//false:売り
@@ -190,10 +274,10 @@ public class cloringDate {
         //全フォルダーを取得（fileを除く）
         String[] folderList = dir.list();
 
-        for(String folderPathList : folderList){
+        for(String personalFolderPath : folderList){
 
 
-        	File parsonalFolderPath = new File(folderPathList);
+        	File parsonalFolderPath = new File(personalFolderPath);
         	String parsonalFolderName = parsonalFolderPath.getName();
         	switch (parsonalFolderName) {
 				case "00000.commonBoard_typeA":
@@ -204,31 +288,8 @@ public class cloringDate {
 					break;
 				default:
 
-					Path targetPath = Paths.get(folderPath + File.separator + folderPathList + File.separator + fileName);
-
-
-					try {
-						//ファイルかディレクトリかをチェックする。ディレクトリの場合は処理する。
-			        	File checkFile = new File(folderPath + File.separator + folderPathList);
-			        	if(checkFile.isDirectory()){
-			        		//ディレクトリのとき
-			        		Files.copy(copyMoto, targetPath);
-			        	}else if(checkFile.isFile()){
-			        		//ファイルのとき
-			        	}else{
-			        		//それ以外のとき
-			        		commonAP.writeInLog("以下のファイル？何か変なの来ています。",logWriting.DATEDATE_LOG_FLG);
-							commonAP.writeInLog("コピー元と思われるもの："+copyMoto,logWriting.DATEDATE_LOG_FLG);
-							commonAP.writeInLog("コピー先と思われるもの："+targetPath,logWriting.DATEDATE_LOG_FLG);
-			        	}
-
-					} catch (IOException e) {
-						// TODO 自動生成された catch ブロック
-						commonAP.writeInLog("以下のファイルのコピーが失敗したっぽいです",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog("コピー元："+copyMoto,logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog("コピー先："+targetPath,logWriting.DATEDATE_LOG_FLG);
-						e.printStackTrace();
-					}
+					Path targetPath = Paths.get(folderPath + File.separator + personalFolderPath + File.separator + fileName);
+					copyFile(copyMoto,targetPath,(folderPath + File.separator + personalFolderPath));
 
 					break;
 			}

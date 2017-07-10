@@ -1,5 +1,6 @@
 package sql;
 
+import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import constant.COLUMN;
@@ -32,8 +33,51 @@ public class createTBL {
 		createEleteTBL(s);
 		createIntervalTime(s);
 		createOutPutTable(s);
+
+		createPROPARTYTBL(s);
+		createPROPARTYLIST(s);
+
 //		createVolumeUnitListTBL(s);
 		return createLastOrderTable(s);
+	}
+
+	private void createPROPARTYLIST(S s){
+
+		//SQL全文
+		String SQL;
+
+		//初期値の設定
+		SQL = "insert into "
+				+ TBL_Name.PROPARTY_TBL
+				+ " ( " + COLUMN.ITEMNAME
+				+ " , "
+				+ COLUMN.ITEMNAME_DESC
+				+ ") values ('" + PROPARTY.FBS_KEY + "' , '"+ PROPARTY.FIRST_SET + "' )  " ;
+
+		s.freeUpdateQuery(SQL);
+
+	}
+
+	private void createPROPARTYTBL(S s){
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.ITEMNAME_KATA							 + " ,  " //項目
+				+ COLUMN.ITEMNAME_DESC_KATA								 + " ,  " //項目内容
+				+ "primary key ("
+				+ COLUMN.ITEMNAME +  ")) ";
+
+		SQL = create + TBL_Name.PROPARTY_TBL + colum;
+
+		s.freeUpdateQuery(SQL);
 	}
 
 	private void createIntervalTime(S s){
