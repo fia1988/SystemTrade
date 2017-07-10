@@ -56,6 +56,7 @@ public class TAB_main extends JPanel {
 	JLabel inBackupResult = new JLabel("成／否");
 	JLabel outBackupResult = new JLabel("成／否");
 	JLabel oneShotResult = new JLabel("成／否");
+	JLabel kickResult = new JLabel("成／否");
 	JLabel timerResult = new JLabel("ボタンを押してね");
 	JLabel oneShotSepaComResult = new JLabel("成／否");
 
@@ -378,6 +379,14 @@ public class TAB_main extends JPanel {
 		});
 		btnNewButton_3.setBounds(42, 464, 212, 27);
 		add(btnNewButton_3);
+
+		JLabel label_15 = new JLabel("結果：");
+		label_15.setBounds(42, 497, 60, 19);
+		add(label_15);
+
+
+		kickResult.setBounds(95, 497, 316, 19);
+		add(kickResult);
 
 
 
@@ -985,6 +994,32 @@ public class TAB_main extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			TAB_MainDTO mainDTO = new TAB_MainDTO();
 			gamenNyuryoku(mainDTO);
+
+			nyuryokuCheck kickFileCheck = new nyuryokuCheck();
+
+			//入力チェック
+			String kickFileResult = kickFileCheck.kickNyuryokuChecker(mainDTO);
+
+			switch (kickFileResult) {
+			case nyuryokuCheckResultConst.SUCCESS:
+				kickResult.setText(kickFileResult);
+				break;
+			case nyuryokuCheckResultConst.ON_TIMER_ERR:
+				kickResult.setText(kickFileResult);
+				return;
+			case nyuryokuCheckResultConst.MYSQL_ERR:
+				kickResult.setText(kickFileResult);
+				return;
+			case nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR:
+				kickResult.setText(kickFileResult);
+				return;
+			case nyuryokuCheckResultConst.NO_ENTRY_FOLDER_ERR:
+				kickResult.setText(kickFileResult);
+				return;
+			default:
+				kickResult.setText("そのほかエラー");
+				return;
+			}
 
 			cloringDate CD = new cloringDate();
 			S s = new S();
