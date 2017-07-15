@@ -110,7 +110,8 @@ public class cloringDate {
 		//売買ファイルを各個人フォルダにコピーする
 		S s = new S();
 		s.getCon();
-		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+//		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+		String TODAY = controllDay.getTODAY();
 		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
 		s.closeConection();
 		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
@@ -180,7 +181,11 @@ public class cloringDate {
 
 		String FBS_KEY = commonAP.getParametaChoseTBL(TBL_Name.PROPARTY_TBL,COLUMN.ITEMNAME,COLUMN.ITEMNAME_DESC,PROPARTY.FBS_KEY,s);
 		FBS_KEY = FBS_KEY + "_" + TODAY;
-		commonAP.writeInLog(FBS_KEY,logWriting.DATEDATE_LOG_FLG);
+
+		//FBS_KICK_2017-07-31.fbs
+		String fileName = "FBS_KICK_" + TODAY + ".fbs";
+		String filePath = folderPath + File.separator + fileName;
+
 		s.closeConection();
 	}
 
@@ -189,6 +194,7 @@ public class cloringDate {
         //ディレクトリ指定
         File dir = new File(folderPath);
 
+		//FBS_KICK_2017-07-31.fbs
         String fileName = "FBS_KICK_" + TODAY + ".fbs";
 
 
@@ -210,10 +216,14 @@ public class cloringDate {
 					break;
 				case "old":
 					break;
-				//ここから自動売買ツールを使わない人リスト
+//--------------------------ここから自動売買ツールを使わない人リスト--------------------------
 				case "10270.shigeta":
 					break;
-				//ここまで自動売買ツールを使わない人リスト
+				case "10280.testUserA":
+					break;
+				case "10290.testUserB":
+					break;
+//--------------------------ここまで自動売買ツールを使わない人リスト--------------------------
 				default:
 
 					Path targetPath = Paths.get(folderPath + File.separator + personalFolderPath + File.separator + fileName);
@@ -489,6 +499,9 @@ public class cloringDate {
 
 		checkMINI_NORMAL(s);
 
+		
+		String SQL = " delete from " + TBL_Name.OUT_PUT_LASTORDER + " where " + COLUMN.REAL_ENTRY_VOLUME + " = 0 ";
+		s.freeUpdateQuery(SQL);
 	}
 
 	private void checkMINI_NORMAL(S s){
