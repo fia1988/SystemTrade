@@ -499,7 +499,7 @@ public class cloringDate {
 
 		checkMINI_NORMAL(s);
 
-		
+		//91_outPutlastOrderTBLにある、購入数0株の銘柄を削除する
 		String SQL = " delete from " + TBL_Name.OUT_PUT_LASTORDER + " where " + COLUMN.REAL_ENTRY_VOLUME + " = 0 ";
 		s.freeUpdateQuery(SQL);
 	}
