@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import proparty.S;
 import proparty.TBL_Name;
@@ -82,10 +81,6 @@ public class TAB_main extends JPanel {
 		logFolderPath.setBounds(42, 362, 330, 25);
 		add(logFolderPath);
 		logFolderPath.setColumns(10);
-
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(477, 658, 183, 110);
-		add(textPane);
 
 		JButton btnNewButton = new JButton("timerOn");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -354,6 +349,7 @@ public class TAB_main extends JPanel {
 		});
 		button_3.setBounds(821, 302, 193, 27);
 		add(button_3);
+		checkBox.setSelected(true);
 
 
 		checkBox.setBounds(42, 605, 333, 29);
@@ -366,6 +362,7 @@ public class TAB_main extends JPanel {
 
 		checkBox_1.setBounds(434, 301, 212, 29);
 		add(checkBox_1);
+		checkBox_2.setSelected(true);
 
 
 		checkBox_2.setBounds(42, 281, 239, 29);
@@ -377,15 +374,15 @@ public class TAB_main extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_3.setBounds(42, 464, 212, 27);
+		btnNewButton_3.setBounds(434, 581, 212, 27);
 		add(btnNewButton_3);
 
 		JLabel label_15 = new JLabel("結果：");
-		label_15.setBounds(42, 497, 60, 19);
+		label_15.setBounds(435, 615, 60, 19);
 		add(label_15);
 
 
-		kickResult.setBounds(95, 497, 316, 19);
+		kickResult.setBounds(488, 615, 316, 19);
 		add(kickResult);
 
 

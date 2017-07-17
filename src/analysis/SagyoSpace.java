@@ -92,6 +92,9 @@ public class SagyoSpace {
 		String endDD		=	"2007-12-31";
 		startDD	=	"2017-07-06";
 		endDD		=	"2017-07-31";
+		//一部はここからスタート
+		startDD	=	"2017-07-18";
+		
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
 //		dayList[0] =	"2016-10-01";
