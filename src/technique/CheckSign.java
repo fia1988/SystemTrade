@@ -18,6 +18,7 @@ import common.commonAP;
 import constant.COLUMN;
 import constant.ReCord;
 import constant.TechCon;
+import constant.logWriting;
 
 public class CheckSign {
 
@@ -287,6 +288,9 @@ public class CheckSign {
 		paraDTO.setOnEliteFLG();
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
+
+		commonAP.writeInLog("次のメソッドを処理開始します！:" + paraDTO.getLMETHOD() + "&" + paraDTO.getSMETHOD(),logWriting.DATEDATE_LOG_FLG);
+
 		CHECKTODAY_L(size,type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName,paraDTO, nowDTOList, resultDTO,STOCKList,SATISTICSList,INDEXList,ETFNameList,checkDay);
 
 		paraDTO = new Bean_Parameta();
@@ -305,6 +309,7 @@ public class CheckSign {
 		//同日に売りと買いが同時に出ていないかチェック。存在する場合、買いログに出力する。
 		checkWsign(type,L_packageName,L_className,L_methodName,S_packageName,S_className,S_methodName);
 
+		commonAP.writeInLog("次のメソッドを処理終了します！:" + paraDTO.getLMETHOD() + "&" + paraDTO.getSMETHOD(),logWriting.DATEDATE_LOG_FLG);
 		//メモリの解放
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();

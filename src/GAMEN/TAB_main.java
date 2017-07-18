@@ -326,11 +326,11 @@ public class TAB_main extends JPanel {
 
 		sepaFolderPath = new JTextField();
 		sepaFolderPath.setColumns(10);
-		sepaFolderPath.setBounds(42, 566, 330, 25);
+		sepaFolderPath.setBounds(42, 502, 330, 25);
 		add(sepaFolderPath);
 
 		JLabel label_9 = new JLabel("分割併合ファイル出力先");
-		label_9.setBounds(42, 532, 330, 19);
+		label_9.setBounds(42, 474, 330, 19);
 		add(label_9);
 
 		JLabel label_10 = new JLabel("結果：");
@@ -352,7 +352,7 @@ public class TAB_main extends JPanel {
 		checkBox.setSelected(true);
 
 
-		checkBox.setBounds(42, 605, 333, 29);
+		checkBox.setBounds(42, 536, 333, 29);
 		add(checkBox);
 
 		JLabel label_14 = new JLabel("sepaComKakodataは後に取り込むこと。");
