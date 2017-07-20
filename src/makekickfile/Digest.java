@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 public class Digest {
 
@@ -23,44 +21,7 @@ public class Digest {
 	public Digest() {
 	}
 
-	public static void main(String[] args) throws Exception {
-		//
-		Digest digSample = new Digest();
 
-		String key = digSample.getKeyStr();
-
-		System.out.println("key:" + key);
-
-		System.out.println("key Digest         : " + digSample.getDigestStr(key));
-
-		System.out.println("other key Digest   : " + digSample.getDigestStr("test"));
-
-		System.out.println("make               : " + digSample.makeDigestFile(target1, key, 0));
-
-		System.out.println("success            : " + digSample.checkDigestFile(target1, key));
-
-		System.out.println("failed(illegal key): " + digSample.checkDigestFile(target2, key));
-
-		System.out.println("failed(no file)    : " + digSample.checkDigestFile(target3, key));
-
-		System.out.println("make(count 5)      : " + digSample.makeDigestFile(target4, key, 5));
-
-		System.out.println("failed(count 5)    : " + digSample.checkDigestFile(target4, key));
-
-	}
-
-	private String getKeyStr() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateToday = new Date();
-
-		String strToday = sdf.format(dateToday);
-
-		String key = "GOD_BLESS_ME_SYO_UME_" + strToday;
-
-		System.out.println(key);
-
-		return key;
-	}
 
 	public boolean makeDigestFile(String path, String key, int count) {
 		String digest = getDigestStr(key);
