@@ -37,8 +37,33 @@ public class createTBL {
 		createPROPARTYTBL(s);
 		createPROPARTYLIST(s);
 
+		createKICK_FILE_USER_LIST_TBL(s);
 //		createVolumeUnitListTBL(s);
 		return createLastOrderTable(s);
+	}
+
+	private void createKICK_FILE_USER_LIST_TBL(S s){
+
+		String TBL = TBL_Name.KICK_FILE_USER_LIST_TBL;
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = " ( "
+				+ COLUMN.KICK_FILE_USER_FOLDER_KATA							 + "   " //キックファイル配布フォルダ名
+				+ " , "
+				+ "primary key ("
+				+ COLUMN.KICK_FILE_USER_FOLDER +  ") )";;
+
+		SQL = create + TBL + colum;
+
+		s.freeUpdateQuery(SQL);
 	}
 
 	private void createPROPARTYLIST(S s){

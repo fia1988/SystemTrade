@@ -676,4 +676,7 @@ public class COLUMN {
 	public static String ITEMNAME_DESC										= "itemNameDesc";
 	public static String ITEMNAME_DESC_KATA									= ITEMNAME_DESC + " varchar(100) ";
 
+	//キックファイルを配るフォルダ名
+	public static String KICK_FILE_USER_FOLDER								= "kick_file_user";
+	public static String KICK_FILE_USER_FOLDER_KATA								= KICK_FILE_USER_FOLDER + " varchar(100) ";
 }

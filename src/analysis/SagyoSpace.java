@@ -75,12 +75,10 @@ public class SagyoSpace {
 	}
 
 	public static void testCase77(){
-		S s = new S();
-		s.getCon();
-//		cloringDate.checkMINI_NORMAL(s);
 
-//		CheckSign.editVolumeUnitMINIcreate(1, s);
 	}
+
+
 
 	public static void testCase95(){
 		//連続取引するエリートの全メソッドの一覧を作る
@@ -94,7 +92,7 @@ public class SagyoSpace {
 		endDD		=	"2017-07-31";
 		//一部はここからスタート
 		startDD	=	"2017-07-18";
-		
+
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];
 //		dayList[0] =	"2016-10-01";

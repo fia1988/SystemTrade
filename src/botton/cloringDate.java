@@ -6,7 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import makekickfile.Digest;
 import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
@@ -185,8 +187,13 @@ public class cloringDate {
 		//FBS_KICK_2017-07-31.fbs
 		String fileName = "FBS_KICK_" + TODAY + ".fbs";
 		String filePath = folderPath + File.separator + fileName;
-
 		s.closeConection();
+		
+		Digest digest = new Digest();
+		digest.makeDigestFile(filePath, FBS_KEY, 0);
+
+
+		
 	}
 
 	//暗号化ファイルばら撒きメソッド
@@ -201,36 +208,39 @@ public class cloringDate {
         Path copyMoto = Paths.get(folderPath + File.separator + fileName);
 
 
+
+        //キックファイル配布リスト取得
+        S s = new S();
+        s.getCon();
+
+        //キックファイルユーザーリスト
+        ArrayList<String> kickFileUserList = new ArrayList<String>();
+
+        String SQL = " select * from " + TBL_Name.KICK_FILE_USER_LIST_TBL;
+
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				kickFileUserList.add(s.rs.getString(COLUMN.KICK_FILE_USER_FOLDER));
+			}
+		} catch (SQLException e) {}
+        s.closeConection();
+
+
         //全フォルダーを取得（fileを除く）
         String[] folderList = dir.list();
 
         for(String personalFolderPath : folderList){
 
-
         	File parsonalFolderPath = new File(personalFolderPath);
         	String parsonalFolderName = parsonalFolderPath.getName();
-        	switch (parsonalFolderName) {
-				case "00000.commonBoard_typeA":
-					break;
-				case "10000.commonBoard_typeB":
-					break;
-				case "old":
-					break;
-//--------------------------ここから自動売買ツールを使わない人リスト--------------------------
-				case "10270.shigeta":
-					break;
-				case "10280.testUserA":
-					break;
-				case "10290.testUserB":
-					break;
-//--------------------------ここまで自動売買ツールを使わない人リスト--------------------------
-				default:
 
-					Path targetPath = Paths.get(folderPath + File.separator + personalFolderPath + File.separator + fileName);
-					copyFile(copyMoto,targetPath,(folderPath + File.separator + personalFolderPath));
-
-					break;
-			}
+        	if(kickFileUserList.indexOf(parsonalFolderName) != -1){
+        		//自動売買ツールを使う場合はこれ
+				Path targetPath = Paths.get(folderPath + File.separator + personalFolderPath + File.separator + fileName);
+				copyFile(copyMoto,targetPath,(folderPath + File.separator + personalFolderPath));
+        	};
 
         }
 	}

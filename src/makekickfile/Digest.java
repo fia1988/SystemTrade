@@ -24,15 +24,15 @@ public class Digest {
 	}
 
 	public static void main(String[] args) throws Exception {
-
+		//
 		Digest digSample = new Digest();
 
 		String key = digSample.getKeyStr();
-		
+
 		System.out.println("key:" + key);
-		
+
 		System.out.println("key Digest         : " + digSample.getDigestStr(key));
-		
+
 		System.out.println("other key Digest   : " + digSample.getDigestStr("test"));
 
 		System.out.println("make               : " + digSample.makeDigestFile(target1, key, 0));
@@ -42,7 +42,7 @@ public class Digest {
 		System.out.println("failed(illegal key): " + digSample.checkDigestFile(target2, key));
 
 		System.out.println("failed(no file)    : " + digSample.checkDigestFile(target3, key));
-		
+
 		System.out.println("make(count 5)      : " + digSample.makeDigestFile(target4, key, 5));
 
 		System.out.println("failed(count 5)    : " + digSample.checkDigestFile(target4, key));
@@ -104,11 +104,11 @@ public class Digest {
 			digestInFile = br.readLine();
 			String strCount = br.readLine();
 			System.out.println(strCount);
-			
+
 			if (strCount!=null) {
 				count = Integer.parseInt(strCount);
 			}
-			
+
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,7 +118,7 @@ public class Digest {
 			System.out.println(digestInFile);
 			return false;
 		}
-		
+
 		if (count >= 5) {
 			return false;
 		}
@@ -143,13 +143,13 @@ public class Digest {
 		byte[] digest = null;
 		try {
 			msgDig = MessageDigest.getInstance(DIG_ALGORITHM);
-			digest = msgDig.digest(key.getBytes()); 
+			digest = msgDig.digest(key.getBytes());
 
 		} catch (Exception e) {
 			//e.printStackTrace();
 			Arrays.fill(digest,(byte)0);
 			return digest;
-		} 
+		}
 
 		return digest;
 	}
