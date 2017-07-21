@@ -11,6 +11,7 @@ import technique.Technique98_CONST;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
+import botton.cloringDate;
 
 import common.commonAP;
 
@@ -75,6 +76,8 @@ public class SagyoSpace {
 	}
 
 	public static void testCase77(){
+		cloringDate CD = new cloringDate();
+
 
 	}
 

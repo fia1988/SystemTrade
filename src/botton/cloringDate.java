@@ -122,7 +122,7 @@ public class cloringDate {
 		//暗号化ファイル作成
 		createSecureFile(TODAY,mainDTO.getEntryFolderPath());
 		//暗号化ファイルばら撒き
-//		copySecurityFile(TODAY,mainDTO.getEntryFolderPath());
+		copySecurityFile(TODAY,mainDTO.getEntryFolderPath());
 
 
 		//分割ファイルの作成/取込を行う。
@@ -188,12 +188,12 @@ public class cloringDate {
 		String fileName = "FBS_KICK_" + TODAY + ".fbs";
 		String filePath = folderPath + File.separator + fileName;
 		s.closeConection();
-		
+
 		Digest digest = new Digest();
 		digest.makeDigestFile(filePath, FBS_KEY, 0);
 
 
-		
+
 	}
 
 	//暗号化ファイルばら撒きメソッド
