@@ -142,10 +142,25 @@ public class Technique00_Common {
 		//買いメソッドの場合の処理
 		if ( judge==false ) {return Technique98_CONST.NO_GAME;	}
 
+		//今日の終値
+		double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+
 
 		//インターバルタイムかどうかをチェックする
 		//なお、リアルタイムモードのときはそもそもインターバルテーブルのレコードで制御するため記述しない
 		if ( paraDTO.getRealTimeMode()==false ){
+			//この中はバックテストモード
+
+			//株でないものは取引しない。
+			if (paraDTO.isJustSTOCK()){
+				if (nowDTOList.get(nowDTOadress).getCateflg_01().equals( ReCord.CODE_01_STOCK )){
+
+				}else{
+					return Technique98_CONST.NO_GAME;
+				}
+			}
+
+
 			if (resultDTO.isNowInterValFLG()==true){
 				//今のインターバルタイムが設定したマックスよりも大きければ買う
 				if( resultDTO.getNowInterValTime() < resultDTO.getMaxInterValTime()){
@@ -156,11 +171,16 @@ public class Technique00_Common {
 					resultDTO.setNowInterValFLG(false);
 				}
 			}
+
+
+			if (nowPrice > paraDTO.getMaxEntryClose()){
+				return Technique98_CONST.NO_GAME;
+			}
 		}
 
 
-		//今日の終値
-		double nowPrice=nowDTOList.get(nowDTOadress).getNowCLOSE_01() ;
+
+
 		//昨日までの平均取得価格
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);

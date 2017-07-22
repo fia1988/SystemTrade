@@ -14,7 +14,29 @@ public class Bean_Parameta {
 	private int rumNumber = 0;
 
 
+	//最大株価、あんまり高い株は買えないし。。。
+	double maxEntryClose = 1000000000;
 
+	//true:株のみ
+	//false:なんでも受け付ける
+	private boolean justSTOCK = false;
+
+
+	public boolean isJustSTOCK() {
+		return justSTOCK;
+	}
+
+	public void setJustSTOCK(boolean justSTOCK) {
+		this.justSTOCK = justSTOCK;
+	}
+
+	public double getMaxEntryClose() {
+		return maxEntryClose;
+	}
+
+	public void setMaxEntryClose(double maxEntryClose) {
+		this.maxEntryClose = maxEntryClose;
+	}
 
 
 

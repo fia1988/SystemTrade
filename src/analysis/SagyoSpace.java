@@ -61,7 +61,9 @@ public class SagyoSpace {
 		paraDTO.setDollCostFLG(true);
 		paraDTO.setRealEntryVolumeFLG(true);
 
-
+//		paraDTO.setMaxEntryClose(15000);
+		//株のみ取り引きする
+//		paraDTO.setJustSTOCK(true);
 
 	}
 
