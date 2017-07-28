@@ -111,7 +111,9 @@ public class SEPARATE_CHECK {
 					//キープテーブルの更新をする。
 					SQL = " update " + TBL_Name.KEEPLISTTBL
 							+ " set "
-							+ getColumnSEPA(COLUMN.AVERAGEPRICE	, COLUMN.IDEA_AVERAGEPRICE	,COLUMN.REAL_AVERAGEPRICE ,	RATE,	enXan_1) + "  "
+							+ getColumnSEPA(COLUMN.AVERAGEPRICE			,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN.IDEA_AVERAGEPRICE	,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN.REAL_AVERAGEPRICE	,	RATE,	enXan_1) + "  "
 							+ " where "
 							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
 					commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
