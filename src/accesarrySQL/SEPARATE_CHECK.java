@@ -111,7 +111,7 @@ public class SEPARATE_CHECK {
 					//キープテーブルの更新をする。
 					SQL = " update " + TBL_Name.KEEPLISTTBL
 							+ " set "
-							+ getColumnSEPA(COLUMN.AVERAGEPRICE		,	RATE,	enXan_1) + "  "
+							+ getColumnSEPA(COLUMN.AVERAGEPRICE	, COLUMN.IDEA_AVERAGEPRICE	,COLUMN.REAL_AVERAGEPRICE ,	RATE,	enXan_1) + "  "
 							+ " where "
 							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
 					commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
@@ -228,6 +228,16 @@ public class SEPARATE_CHECK {
 
 	}
 
+	public static String getColumnSEPA(String columnName1,String columnName2,String columnName3,double WARIAI,String enXan ){
+		String RESULT = columnName1 + " = ( " + columnName1 + " ) " + enXan + " ( " + WARIAI + " ) , ";
+
+		RESULT = RESULT + columnName2 + " = ( " + columnName2 + " ) " + enXan + " ( " + WARIAI + " ) , ";
+		
+		RESULT = RESULT + columnName3 + " = ( " + columnName3 + " ) " + enXan + " ( " + WARIAI + " ) ";
+		
+		return RESULT;
+	}
+	
 	public static String getColumnSEPA(String columnName,double WARIAI,String enXan ){
 		String RESULT = columnName + " = ( " + columnName + " ) " + enXan + " ( " + WARIAI + " ) ";
 
