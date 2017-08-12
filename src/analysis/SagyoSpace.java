@@ -44,12 +44,12 @@ public class SagyoSpace {
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
-//		paraDTO.setTesuRYO(0);
+		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
-		paraDTO.setEntryMoney(1.000);
-		paraDTO.setEntryMoney(100.000);
+		paraDTO.setEntryMoney(1.100);
+//		paraDTO.setEntryMoney(100.000);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
 		paraDTO.setOnEliteFLG();
@@ -94,7 +94,7 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2007-12-31";
 		startDD	=	"2017-07-06";
-		endDD		=	"2017-07-31";
+		endDD		=	"2017-08-01";
 		//一部はここからスタート
 		startDD	=	"2017-07-18";
 

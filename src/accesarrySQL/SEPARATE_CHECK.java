@@ -230,16 +230,7 @@ public class SEPARATE_CHECK {
 
 	}
 
-	public static String getColumnSEPA(String columnName1,String columnName2,String columnName3,double WARIAI,String enXan ){
-		String RESULT = columnName1 + " = ( " + columnName1 + " ) " + enXan + " ( " + WARIAI + " ) , ";
 
-		RESULT = RESULT + columnName2 + " = ( " + columnName2 + " ) " + enXan + " ( " + WARIAI + " ) , ";
-		
-		RESULT = RESULT + columnName3 + " = ( " + columnName3 + " ) " + enXan + " ( " + WARIAI + " ) ";
-		
-		return RESULT;
-	}
-	
 	public static String getColumnSEPA(String columnName,double WARIAI,String enXan ){
 		String RESULT = columnName + " = ( " + columnName + " ) " + enXan + " ( " + WARIAI + " ) ";
 
