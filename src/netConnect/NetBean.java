@@ -338,7 +338,21 @@ public class NetBean extends NetSuper{
 				e4.printStackTrace();
 			}
 		}
-		return true;
+
+		if ( netFile.size() < 20 ){
+			commonAP.writeInLog("レコードが少なすぎるエラー",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog("アクセスURLは以下",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog("レコード内容は以下",logWriting.DATEDATE_LOG_FLG);
+		    for (String naka: netFile){
+		    	commonAP.writeInLog(naka,logWriting.DATEDATE_LOG_FLG);
+		    }
+			return false;
+		}else{
+			return true;
+		}
+
+		
 	}
 
 

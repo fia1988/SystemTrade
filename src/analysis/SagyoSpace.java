@@ -31,8 +31,8 @@ public class SagyoSpace {
 		//結論の出力方法
 		resultDTO.setOffResultDay();
 		resultDTO.setOffResultCode();
-		resultDTO.setOnResultDay();
-//		resultDTO.setOnResultCode();
+//		resultDTO.setOnResultDay();
+		resultDTO.setOnResultCode();
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
@@ -44,7 +44,8 @@ public class SagyoSpace {
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
 		paraDTO.setTesuRYO(0.022);
-		paraDTO.setTesuRYO(0);
+		paraDTO.setTesuRYO(0.03);
+//		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
@@ -61,9 +62,10 @@ public class SagyoSpace {
 		paraDTO.setDollCostFLG(true);
 		paraDTO.setRealEntryVolumeFLG(true);
 
-//		paraDTO.setMaxEntryClose(15000);
+		paraDTO.setMaxEntryClose(15000);
 		//株のみ取り引きする
-//		paraDTO.setJustSTOCK(true);
+		paraDTO.setJustSTOCK(true);
+
 
 	}
 
@@ -94,9 +96,11 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2007-12-31";
 		startDD	=	"2017-07-06";
-		endDD		=	"2017-08-01";
+		endDD		=	"2017-08-10";
+		startDD	=	"2007-01-04";
+		endDD		=	"2016-12-31";
 		//一部はここからスタート
-		startDD	=	"2017-07-18";
+//		startDD	=	"2017-07-18";
 
 		List<String[]> dayLists = new ArrayList<String[]>();
 		String dayList[] = new String[2];

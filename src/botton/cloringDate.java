@@ -119,11 +119,19 @@ public class cloringDate {
 		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
 		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),false);
 
-		//暗号化ファイル作成
-		createSecureFile(TODAY,mainDTO.getEntryFolderPath());
-		//暗号化ファイルばら撒き
-		copySecurityFile(TODAY,mainDTO.getEntryFolderPath());
 
+		//FBS_KICK_2017-07-31.fbs
+        String fileName = "FBS_KICK_" + TODAY + ".fbs";
+		//暗号化ファイル作成
+		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
+		//暗号化ファイルばら撒き、ただしキックファイル出力者のみ
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName);
+
+		//保有銘柄一覧作成
+		fileName = TODAY + "_fias_keep.csv";
+		createKeepListFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
+		//保有銘柄一覧ばら撒き、ただしキックファイル出力者のみ
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName);
 
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
@@ -175,9 +183,86 @@ public class cloringDate {
 
 	}
 
+
+	//保有銘柄一覧作成
+	public void createKeepListFile(String TODAY,String folderPath,String fileName){
+
+		S s = new S();
+		s.getCon();
+
+		String SQL;
+		String filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileName;
+		String column = COLUMN.CODE										 + " , " //
+						+ COLUMN.ENTRYDAY									 + " , " //
+						+ COLUMN.LASTENTRYDAY								 + " , " //
+						+ COLUMN.ENTRYTIMES								 + " , " //
+						+ COLUMN.AVERAGEPRICE								 + " , " //
+						+ COLUMN.TYPE									 	 + " , " //
+						+ COLUMN.ENTRYMETHOD								 + " , " //
+						+ COLUMN.EXITMETHOD								 + " ,  " //
+						+ COLUMN.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+						+ COLUMN.IDEA_VOLUME								 + " ,  "  //理想的保持数
+						+ COLUMN.IDEA_AVERAGEPRICE							 + " ,  "  //理想的平均取得価格
+						+ COLUMN.IDEA_TOTAL_ENTRY_MONEY					 + " ,  "  //理想的合計投資金額
+						+ COLUMN.REAL_ENTRY_VOLUME							 + " ,  "  //現実保有数
+						+ COLUMN.REAL_AVERAGEPRICE							 + " ,  "  //現実平均取得価格
+						+ COLUMN.REAL_TOTAL_ENTRY_MONEY					 + "   " ;	//現実的合計投資金額
+
+//		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
+//							+ "'" +  COLUMN.DAYTIME				+ "' , " //
+//							+ "'" +  COLUMN.TYPE					+ "' , " //
+//							+ "'" +  COLUMN.ENTRYMETHOD			+ "' , " //
+//							+ "'" +  COLUMN.EXITMETHOD			+ "' , "
+//							+ "'" +  COLUMN.MINI_CHECK_FLG		+ "' , "
+//							+ "'" +  COLUMN.REAL_ENTRY_VOLUME	+ "' , "
+//							+ "'" +  COLUMN.ENTRY_MONEY			+ "'" ;
+
+
+		String heddaColumn =  "'" + COLUMN.CODE									 + "' , " //
+					+  "'" + COLUMN.ENTRYDAY								 + "' , " //
+					+  "'" + COLUMN.LASTENTRYDAY							 + "' , " //
+					+  "'" + COLUMN.ENTRYTIMES								 + "' , "  //
+					+  "'" + COLUMN.AVERAGEPRICE							 + "' , "  //
+					+  "'" + COLUMN.TYPE								 	 + "' , "  //
+					+  "'" + COLUMN.ENTRYMETHOD							 + "' , "  //
+					+  "'" + COLUMN.EXITMETHOD								 + "' , "  //
+					+  "'" + COLUMN.MINI_CHECK_FLG							 + "' , "  //ミニ株本株チェック trueミニ株、false普通株
+					+  "'" + COLUMN.IDEA_VOLUME							 + "' , "   //理想的保持数
+					+  "'" + COLUMN.IDEA_AVERAGEPRICE						 + "' , "   //理想的平均取得価格
+					+  "'" + COLUMN.IDEA_TOTAL_ENTRY_MONEY					 + "' , "   //理想的合計投資金額
+					+  "'" + COLUMN.REAL_ENTRY_VOLUME						 + "' , "   //現実保有数
+					+  "'" + COLUMN.REAL_AVERAGEPRICE						 + "' , "   //現実平均取得価格
+					+  "'" + COLUMN.REAL_TOTAL_ENTRY_MONEY					 +  "'  "  ;	//現実的合計投資金額
+
+		SQL =	" SELECT "
+				+ heddaColumn
+				+ " union "
+				+ " SELECT "
+				+ " " + column + " "
+				+ " FROM " + TBL_Name.KEEPLISTTBL
+				+	" INTO OUTFILE '" + filePath +  "'"
+				+	" FIELDS TERMINATED BY ','"
+				+	" OPTIONALLY ENCLOSED BY '\"'";
+
+//		SQL =	" SELECT "
+//				+ " * "
+//				+ " FROM " + TBL_Name.KEEPLISTTBL
+//				+	" INTO OUTFILE '" + filePath +  "'"
+//				+	" FIELDS TERMINATED BY ','"
+//				+	" OPTIONALLY ENCLOSED BY '\"'";
+
+
+
+		s.exportFile(SQL);
+
+		s.closeConection();
+	}
+
+
+
 	//暗号化ファイル作成メソッド()
 	//TODAY = YYYY-MM-DD
-	public void createSecureFile(String TODAY,String folderPath){
+	public void createSecureFile(String TODAY,String folderPath,String fileName){
 		S s = new S();
 		s.getCon();
 
@@ -185,7 +270,6 @@ public class cloringDate {
 		FBS_KEY = FBS_KEY + "_" + TODAY;
 
 		//FBS_KICK_2017-07-31.fbs
-		String fileName = "FBS_KICK_" + TODAY + ".fbs";
 		String filePath = folderPath + File.separator + fileName;
 		s.closeConection();
 
@@ -196,13 +280,10 @@ public class cloringDate {
 
 	}
 
-	//暗号化ファイルばら撒きメソッド
-	private void copySecurityFile(String TODAY,String folderPath){
+	//暗号化ファイルばら撒きメソッド、キックファイルユーザーリストから抽出する。
+	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName){
         //ディレクトリ指定
         File dir = new File(folderPath);
-
-		//FBS_KICK_2017-07-31.fbs
-        String fileName = "FBS_KICK_" + TODAY + ".fbs";
 
 
         Path copyMoto = Paths.get(folderPath + File.separator + fileName);

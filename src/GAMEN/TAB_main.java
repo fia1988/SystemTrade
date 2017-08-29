@@ -1024,7 +1024,9 @@ public class TAB_main extends JPanel {
 			String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 			s.closeConection();
 
-			CD.createSecureFile(TODAY,mainDTO.getEntryFolderPath());
+			//FBS_KICK_2017-07-31.fbs
+	        String fileName = "FBS_KICK_" + TODAY + ".fbs";
+			CD.createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
 
 		}
 	}
