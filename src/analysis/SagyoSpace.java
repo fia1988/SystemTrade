@@ -81,7 +81,10 @@ public class SagyoSpace {
 
 	public static void testCase77(){
 		cloringDate CD = new cloringDate();
+		String fileName = "2017-10-30_fias_keep.csv";
+		String folderPath = "C:/Users/NOBORU1988/Dropbox/01.kabu/02.everyDayFile";
 
+		CD.createKeepListFile(folderPath,fileName);
 
 	}
 
