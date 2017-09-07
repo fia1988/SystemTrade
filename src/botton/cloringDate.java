@@ -477,11 +477,15 @@ public class cloringDate {
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
+
+
 	//今日の注文をログファイルとして出力
 	private int outPutKeepTable(double oneShotMoney,String folderPath){
 		String SQL = "";
 		S s = new S();
 		s.getCon();
+
+
 
 		copyOutPutTBL(oneShotMoney,s);
 

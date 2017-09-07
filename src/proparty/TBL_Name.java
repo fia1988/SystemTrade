@@ -21,6 +21,7 @@ public class TBL_Name {
 
 	final public static String CODELISTTBL     = "00_codeListTBL";
 
+	final public static String FORCE_S_TBL	= "87_ForceS_TBL";
 	final public static String KICK_FILE_USER_LIST_TBL	= "88_kickFileUserFolderListTBL";
 	final public static String PROPARTY_TBL	= "89_propartyTBL";
 	final public static String VOLUME_UNIT_LIST_TBL	= "90_VolumeUnitListTBL";

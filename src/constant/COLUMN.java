@@ -679,4 +679,8 @@ public class COLUMN {
 	//キックファイルを配るフォルダ名
 	public static String KICK_FILE_USER_FOLDER								= "kick_file_user";
 	public static String KICK_FILE_USER_FOLDER_KATA								= KICK_FILE_USER_FOLDER + " varchar(100) ";
+
+	//オールチェックフラグ true全部株、false特定手法のみ
+	public static String ALL_CHECK_FLG											= "ALL_CHECK_flg";
+	public static String ALL_CHECK_FLG_KATA 									= ALL_CHECK_FLG + " tinyint(1) ";
 }

@@ -1388,6 +1388,8 @@ public class CheckSign {
 				+ COLUMN.VOLUME_UNIT + " = 100";
 		s.freeUpdateQuery(SQL);
 
+		//強制デリートのチェック
+		forceDelete(s,TODAY);
 
 		//今日の購入株数を計算する
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -1405,6 +1407,117 @@ public class CheckSign {
 	}
 
 
+	//売りをチェックする
+	private static void forceDelete(S s,String TODAY){
+		String SQL = "";
+		List<String[]> forceDleteList = new ArrayList<String[]>();
+		List<String> insertSQLList = new ArrayList<String>();
+		List<String> deleteSQLList = new ArrayList<String>();
+
+		String TBL = TBL_Name.FORCE_S_TBL;
+
+		SQL = " select * from " + TBL;
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				String[] forceDeleteS = new String[5];
+				forceDeleteS[0] = s.rs.getString(	COLUMN.CODE				);
+				forceDeleteS[1] = s.rs.getString(	COLUMN.ENTRYMETHOD		);
+				forceDeleteS[2] = s.rs.getString(	COLUMN.EXITMETHOD		);
+				forceDeleteS[3] = s.rs.getString(	COLUMN.TYPE				);
+				//オールチェックフラグ true全部株、false特定手法のみ
+				if ( s.rs.getString(COLUMN.ALL_CHECK_FLG).equals("1") ){
+					forceDeleteS[4] = "true";
+				}else{
+					forceDeleteS[4] = "false";
+				}
+				forceDleteList.add(forceDeleteS.clone());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		for (String[] sCode: forceDleteList){
+			//オールチェックフラグ true全部株、false特定手法のみ
+			String Where = " where ";
+			if ( sCode[4].equals("true") ){
+				Where	= Where
+						+ COLUMN.CODE		 +	" = '" + sCode[0] + "'";
+			}else{
+				Where	= Where
+						+ COLUMN.CODE		 +	" = '" + sCode[0] + "'"
+						+ " and "
+						+ COLUMN.ENTRYMETHOD +	" = '" + sCode[1] + "'"
+						+ " and "
+						+ COLUMN.EXITMETHOD  +	" = '" + sCode[2] + "'"
+						+ " and "
+						+ COLUMN.TYPE		 +	" = '" + sCode[3] + "'";
+			}
+
+			SQL  = " delete from "+ TBL_Name.LASTORDER
+					+ "  "
+					+ Where;
+
+			deleteSQLList.add(SQL);
+
+
+			//ここからキープテーブルを元にLASTORDERをいじる。
+			SQL = " select * from " + TBL_Name.KEEPLISTTBL + Where;
+			String insertSQL = "";
+			try {
+				s.rs = s.sqlGetter().executeQuery(SQL);
+				while ( s.rs.next() ) {
+					insertSQL ="insert into " + TBL_Name.LASTORDER
+							+ " ( "
+							+ COLUMN.CODE										 + " , " //
+							+ COLUMN.DAYTIME									 + " , " //
+							+ COLUMN.ENTRYMETHOD								 + " , " //
+							+ COLUMN.EXITMETHOD									 + " , "
+							+ COLUMN.TYPE									 	 + " , " ////
+							+ COLUMN.CATE_FLG							 	 + " , " ////
+							+ COLUMN.MINI_CHECK_FLG							 	 + " , " ////
+							+ COLUMN.SIGN_FLG								 	 + "  " ////
+							+ " ) value ( "
+							+ "'" + sCode[0] + "'"	 + ","
+							+ "'" + TODAY + "'"	 + ","
+							+ "'" + s.rs.getString(	COLUMN.ENTRYMETHOD		) + "'"	 + ","
+							+ "'" + s.rs.getString(	COLUMN.EXITMETHOD		) + "'"	 + ","
+							+ "'" + s.rs.getString(	COLUMN.TYPE				) + "'"	 + ", "
+							+ 		"'1'"			 + ","
+							+ " " + " true "+ " "	 + ", "
+							+ " " + " false "+ " "	 + " "
+							+ ")";
+					insertSQLList.add(insertSQL);
+
+				}
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+
+
+		}
+
+
+		for (String SQLs: deleteSQLList){
+			s.freeUpdateQuery(SQLs);
+			System.out.println("ccccccccccccccc:" + SQLs);
+		}
+
+		for (String SQLs: insertSQLList){
+			s.freeUpdateQuery(SQLs);
+			System.out.println("aaaaaaaaaaaaaaa:" + SQLs);
+		}
+
+
+
+		deleteSQLList = new ArrayList<String>();
+		insertSQLList = new ArrayList<String>();
+		forceDleteList = new ArrayList<String[]>();
+
+		s.resetConnection();
+	}
 
 	private static void deleteIntervalTBL(S s){
 		String SQL;

@@ -36,10 +36,35 @@ public class createTBL {
 
 		createPROPARTYTBL(s);
 		createPROPARTYLIST(s);
-
+		createFORCE_S_TBL(s);
 		createKICK_FILE_USER_LIST_TBL(s);
 //		createVolumeUnitListTBL(s);
 		return createLastOrderTable(s);
+	}
+
+	private void createFORCE_S_TBL(S s){
+		String TBL = TBL_Name.FORCE_S_TBL;
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = " ( "
+				+ COLUMN.CODE_KATA										 + " , " //
+				+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
+				+ COLUMN.EXITMETHOD_KATA								 + " ,  " //
+				+ COLUMN.TYPE_KATA									 	 + " , " //
+				+ COLUMN.ALL_CHECK_FLG_KATA								 + "   " //オールチェックフラグ true全部株、false特定手法のみ
+				+  " )";;
+
+		SQL = create + TBL + colum;
+
+		s.freeUpdateQuery(SQL);
+
 	}
 
 	private void createKICK_FILE_USER_LIST_TBL(S s){
