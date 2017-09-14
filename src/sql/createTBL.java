@@ -37,9 +37,38 @@ public class createTBL {
 		createPROPARTYTBL(s);
 		createPROPARTYLIST(s);
 		createFORCE_S_TBL(s);
+		createPayMemberList_TBL(s);
 		createKICK_FILE_USER_LIST_TBL(s);
 //		createVolumeUnitListTBL(s);
 		return createLastOrderTable(s);
+	}
+
+
+	private void createPayMemberList_TBL(S s){
+		String TBL = TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL;
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = " ( "
+				+ COLUMN.KICK_FILE_USER_FOLDER_KATA							 + " ,  " //キックファイル配布フォルダ名
+				+ COLUMN.KOSIN_DAYTIME_KATA										 + " ,  "
+				+ COLUMN.LIMIT_DAYTIME_KATA										 + "   "
+				+ " , "
+				+ "primary key ("
+				+ COLUMN.KICK_FILE_USER_FOLDER +  ") )";;
+
+		SQL = create + TBL + colum;
+
+		s.freeUpdateQuery(SQL);
+
+
 	}
 
 	private void createFORCE_S_TBL(S s){

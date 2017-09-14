@@ -1379,17 +1379,18 @@ public class CheckSign {
 		deleteIntervalTBL(s);
 		increMentIntervalTBL(s);
 
+
+
+		//強制デリートのチェック
+		forceDelete(s,TODAY);
+
 		String SQL;
 		//volumeUnit列を更新する。
 		String TBL = TBL_Name.LASTORDER;
-
 		SQL  = " update "+ TBL
 				+ " set "
 				+ COLUMN.VOLUME_UNIT + " = 100";
 		s.freeUpdateQuery(SQL);
-
-		//強制デリートのチェック
-		forceDelete(s,TODAY);
 
 		//今日の購入株数を計算する
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -1474,7 +1475,7 @@ public class CheckSign {
 							+ COLUMN.ENTRYMETHOD								 + " , " //
 							+ COLUMN.EXITMETHOD									 + " , "
 							+ COLUMN.TYPE									 	 + " , " ////
-							+ COLUMN.CATE_FLG							 	 + " , " ////
+							+ COLUMN.CATE_FLG								 	 + " , " ////
 							+ COLUMN.MINI_CHECK_FLG							 	 + " , " ////
 							+ COLUMN.SIGN_FLG								 	 + "  " ////
 							+ " ) value ( "

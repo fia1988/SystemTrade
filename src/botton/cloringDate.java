@@ -109,7 +109,7 @@ public class cloringDate {
 
 
 
-		//売買ファイルを各個人フォルダにコピーする
+		//売買ファイル（LSファイル）を各個人フォルダにコピーする
 		S s = new S();
 		s.getCon();
 //		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
@@ -125,13 +125,20 @@ public class cloringDate {
 		//暗号化ファイル作成
 		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
 		//暗号化ファイルばら撒き、ただしキックファイル出力者のみ
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName);
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		//有料ユーザー分のキックファイルばらまき
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
 
 		//保有銘柄一覧作成
 		fileName = TODAY + "_fias_keep.csv";
 		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
 		//保有銘柄一覧ばら撒き、ただしキックファイル出力者のみ
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName);
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		//有料ユーザーユーザー分のキックファイルばら撒き
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		//有料ユーザー後処理
+		afterDealPayingUser(TODAY);
+
 
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
@@ -183,6 +190,28 @@ public class cloringDate {
 
 	}
 
+
+	//有料ユーザー後処理
+	public void afterDealPayingUser(String TODAY){
+		S s = new S();
+		s.getCon();
+		String SQL;
+		String TBL = TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL;
+
+		SQL = "update " + TBL
+				+ " set "
+				+ COLUMN.KOSIN_DAYTIME + " = '" + TODAY + "'";
+		s.freeUpdateQuery(SQL);
+
+
+		SQL = " delete from " + TBL
+			+	" where "
+			+	COLUMN.KOSIN_DAYTIME + " >= " + COLUMN.LIMIT_DAYTIME;
+		int a = s.freeUpdateQuery(SQL);
+
+
+		s.closeConection();
+	}
 
 	//保有銘柄一覧作成
 	public void createKeepListFile(String folderPath,String fileName){
@@ -284,7 +313,7 @@ public class cloringDate {
 	}
 
 	//暗号化ファイルばら撒きメソッド、キックファイルユーザーリストから抽出する。
-	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName){
+	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName,String TBL){
         //ディレクトリ指定
         File dir = new File(folderPath);
 
@@ -300,7 +329,7 @@ public class cloringDate {
         //キックファイルユーザーリスト
         ArrayList<String> kickFileUserList = new ArrayList<String>();
 
-        String SQL = " select * from " + TBL_Name.KICK_FILE_USER_LIST_TBL;
+        String SQL = " select * from " + TBL;
 
 
 		try {

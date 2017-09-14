@@ -683,4 +683,15 @@ public class COLUMN {
 	//オールチェックフラグ true全部株、false特定手法のみ
 	public static String ALL_CHECK_FLG											= "ALL_CHECK_flg";
 	public static String ALL_CHECK_FLG_KATA 									= ALL_CHECK_FLG + " tinyint(1) ";
+
+	//有料会員リストの列名
+	//期限日付
+	public static String LIMIT_DAYTIME											= "limit_dayTime";
+	public static String LIMIT_DAYTIME_KATA										= LIMIT_DAYTIME + " DATE not null ";
+
+	//今日の更新日
+	public static String KOSIN_DAYTIME											= "kosin_dayTime";
+	public static String KOSIN_DAYTIME_KATA										= KOSIN_DAYTIME + " DATE not null ";
+
+
 }
