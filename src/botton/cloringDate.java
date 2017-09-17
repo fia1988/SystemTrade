@@ -76,10 +76,7 @@ public class cloringDate {
 		}
 
 
-
-
-
-		//今日のサインの点灯をチェックする。
+		//今日のサインの点灯をチェックする。LSファイルの元ネタ作成
 		CheckSign.checkTodaySign();
 
 		//最後に今日の売買ファイルを出力する。
@@ -88,6 +85,7 @@ public class cloringDate {
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
 
+//		LSファイル作成
 		commonAP.writeInLog("日々ファイル作成します。",logWriting.DATEDATE_LOG_FLG);
 		switch (outPutKeepTable(paraDTO.getEntryMoney(),folderPath)) {
 			case ReturnCodeConst.SQL_ERR_0:
@@ -109,6 +107,8 @@ public class cloringDate {
 
 
 
+
+
 		//売買ファイル（LSファイル）を各個人フォルダにコピーする
 		S s = new S();
 		s.getCon();
@@ -116,29 +116,9 @@ public class cloringDate {
 		String TODAY = controllDay.getTODAY();
 		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
 		s.closeConection();
-		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
-		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),false);
 
-
-		//FBS_KICK_2017-07-31.fbs
-        String fileName = "FBS_KICK_" + TODAY + ".fbs";
-		//暗号化ファイル作成
-		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
-		//暗号化ファイルばら撒き、ただしキックファイル出力者のみ
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
-		//有料ユーザー分のキックファイルばらまき
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
-
-		//保有銘柄一覧作成
-		fileName = TODAY + "_fias_keep.csv";
-		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
-		//保有銘柄一覧ばら撒き、ただしキックファイル出力者のみ
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
-		//有料ユーザーユーザー分のキックファイルばら撒き
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
-		//有料ユーザー後処理
-		afterDealPayingUser(TODAY);
-
+		//LSファイルばら撒き、FBS用ファイルのばら撒きとか
+		fileCOPY(mainDTO,TODAY);
 
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
@@ -153,14 +133,11 @@ public class cloringDate {
 				BU.optimizeDB(mainDTO);
 			}
 
-			String toDay = commonAP.getTODAY();
-
-
-			if (commonAP.checkSabunDay(toDay,checkDay,PROPARTY.BACK_UP_KANkAKU)==false){
+			if (commonAP.checkSabunDay(TODAY,checkDay,PROPARTY.BACK_UP_KANkAKU)==false){
 				//同名ファイルのチェック
 				//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
 //
-				String todayDump = mainDTO.getOutBackUpFolderPath() + File.separator + toDay + ".dump";
+				String todayDump = mainDTO.getOutBackUpFolderPath() + File.separator + TODAY + ".dump";
 				String todayFolder = mainDTO.getOutBackUpFolderPath();
 				File file =  new File(todayDump);
 				if (file.isFile()==true){
@@ -191,6 +168,34 @@ public class cloringDate {
 	}
 
 
+	//LSファイルばら撒き、FBS用ファイルのばら撒きとか
+	private void fileCOPY(TAB_MainDTO mainDTO,String TODAY){
+
+		//LSファイルばら撒き
+		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
+		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),false);
+
+
+		//FBS_KICK_2017-07-31.fbs
+        String fileName = "FBS_KICK_" + TODAY + ".fbs";
+		//暗号化ファイル作成（キックファイル）
+		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
+		//暗号化ファイルばら撒き、ただし無料ユーザーのみ
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		//有料ユーザー分のキックファイルばらまき
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+
+		//保有銘柄一覧作成
+		fileName = TODAY + "_fias_keep.csv";
+		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
+		//保有銘柄一覧ばら撒き、ただし無料ユーザーのみ
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		//有料ユーザーユーザー分のキックファイルばら撒き
+		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		//有料ユーザー後処理
+		afterDealPayingUser(TODAY);
+	}
+
 	//有料ユーザー後処理
 	public void afterDealPayingUser(String TODAY){
 		S s = new S();
@@ -207,7 +212,7 @@ public class cloringDate {
 		SQL = " delete from " + TBL
 			+	" where "
 			+	COLUMN.KOSIN_DAYTIME + " >= " + COLUMN.LIMIT_DAYTIME;
-		int a = s.freeUpdateQuery(SQL);
+		s.freeUpdateQuery(SQL);
 
 
 		s.closeConection();
