@@ -125,6 +125,18 @@ public class cloringDate {
 		sepaComCheck.checkSepaComFile(mainDTO);
 
 		//backUp開始
+		backUpLogic(mainDTO,TODAY,checkDay);
+
+
+		stop = System.currentTimeMillis();
+		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
+
+		return TimerShoriConst.SUCCESS;
+
+	}
+
+	//DBのbackUp開始
+	private void backUpLogic(TAB_MainDTO mainDTO,String TODAY,String checkDay){
 		if (mainDTO.isAutoBackUp()){
 			BackUp BU = new BackUp();
 
@@ -159,12 +171,6 @@ public class cloringDate {
 
 			BU = new BackUp();
 		}
-
-		stop = System.currentTimeMillis();
-		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
-
-		return TimerShoriConst.SUCCESS;
-
 	}
 
 
