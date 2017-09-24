@@ -48,6 +48,8 @@ public class cloringDate {
 //			return;
 //		}
 
+//		outPutKeepTable(1.1,folderPath);
+
 		//時系列データの更新
 		switch (zikeiretuDataUpdate(mainDTO)){
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
@@ -763,11 +765,22 @@ public class cloringDate {
 		S s = new S();
 		s.getCon();
 		String today = controllDay.getMAX_DD_INDEX(s);
-
+		String satisDay = controllDay.getMAX_DD_STATISTICS(s);
 		if ( today.equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
 			//一致する場合、ヘッダを出力する。
 //			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_L);
 //			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_S);
+			//更新日付を更新する。
+			s.closeConection();
+
+		}else{
+			//一致しないエラーを出す。
+			System.out.println("株か指数かどっちかが更新できず。");
+			s.closeConection();
+			return false;
+		};
+
+		if ( today.equals(satisDay)){
 			//更新日付を更新する。
 			s.closeConection();
 

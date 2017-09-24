@@ -277,8 +277,8 @@ public class SagyoSpace {
 //		dayList[0] =	"2017-04-25";
 //		dayList[1] =	"2017-05-31";
 //		dayLists.add(dayList.clone());
-		dayList[0] =	"2017-05-29";
-		dayList[1] =	"2017-06-30";
+		dayList[0] =	"2017-07-01";
+		dayList[1] =	"2017-09-22";
 		dayLists.add(dayList.clone());
 //		dayList[0] = "2007-01-01";
 //		dayList[1] = "2007-12-31";
@@ -578,29 +578,86 @@ public class SagyoSpace {
 //		dayList.add("2016-11-28");
 //		dayList.add("2016-11-29");
 //		dayList.add("2016-11-30");
-		dayList.add("2016-12-01");
-		dayList.add("2016-12-02");
-		dayList.add("2016-12-05");
-		dayList.add("2016-12-06");
-		dayList.add("2016-12-07");
-		dayList.add("2016-12-08");
-		dayList.add("2016-12-09");
-		dayList.add("2016-12-12");
-		dayList.add("2016-12-13");
-		dayList.add("2016-12-14");
-		dayList.add("2016-12-15");
-		dayList.add("2016-12-16");
-		dayList.add("2016-12-19");
-		dayList.add("2016-12-20");
-		dayList.add("2016-12-21");
-		dayList.add("2016-12-22");
-		dayList.add("2016-12-26");
-		dayList.add("2016-12-27");
-		dayList.add("2016-12-28");
-		dayList.add("2016-12-29");
-		dayList.add("2016-12-30");
+//		dayList.add("2016-12-01");
+//		dayList.add("2016-12-02");
+//		dayList.add("2016-12-05");
+//		dayList.add("2016-12-06");
+//		dayList.add("2016-12-07");
+//		dayList.add("2016-12-08");
+//		dayList.add("2016-12-09");
+//		dayList.add("2016-12-12");
+//		dayList.add("2016-12-13");
+//		dayList.add("2016-12-14");
+//		dayList.add("2016-12-15");
+//		dayList.add("2016-12-16");
+//		dayList.add("2016-12-19");
+//		dayList.add("2016-12-20");
+//		dayList.add("2016-12-21");
+//		dayList.add("2016-12-22");
+//		dayList.add("2016-12-26");
+//		dayList.add("2016-12-27");
+//		dayList.add("2016-12-28");
+//		dayList.add("2016-12-29");
+//		dayList.add("2016-12-30");
 
 
+//		dayList.add("2017-07-03");
+//		dayList.add("2017-07-04");
+//		dayList.add("2017-07-05");
+//		dayList.add("2017-07-06");
+//		dayList.add("2017-07-07");
+//		dayList.add("2017-07-10");
+//		dayList.add("2017-07-11");
+//		dayList.add("2017-07-12");
+//		dayList.add("2017-07-13");
+//		dayList.add("2017-07-14");
+//		dayList.add("2017-07-18");
+//		dayList.add("2017-07-19");
+//		dayList.add("2017-07-20");
+//		dayList.add("2017-07-21");
+//		dayList.add("2017-07-24");
+//		dayList.add("2017-07-25");
+//		dayList.add("2017-07-26");
+//		dayList.add("2017-07-27");
+//		dayList.add("2017-07-28");
+//		dayList.add("2017-07-31");
+//		dayList.add("2017-08-01");
+//		dayList.add("2017-08-02");
+//		dayList.add("2017-08-03");
+//		dayList.add("2017-08-04");
+//		dayList.add("2017-08-07");
+//		dayList.add("2017-08-08");
+//		dayList.add("2017-08-09");
+//		dayList.add("2017-08-10");
+//		dayList.add("2017-08-14");
+//		dayList.add("2017-08-15");
+//		dayList.add("2017-08-16");
+//		dayList.add("2017-08-17");
+//		dayList.add("2017-08-18");
+//		dayList.add("2017-08-21");
+//		dayList.add("2017-08-22");
+//		dayList.add("2017-08-23");
+//		dayList.add("2017-08-24");
+//		dayList.add("2017-08-25");
+//		dayList.add("2017-08-28");
+//		dayList.add("2017-08-29");
+//		dayList.add("2017-08-30");
+//		dayList.add("2017-08-31");
+		dayList.add("2017-09-01");
+		dayList.add("2017-09-04");
+		dayList.add("2017-09-05");
+		dayList.add("2017-09-06");
+		dayList.add("2017-09-07");
+		dayList.add("2017-09-08");
+		dayList.add("2017-09-11");
+		dayList.add("2017-09-12");
+		dayList.add("2017-09-13");
+		dayList.add("2017-09-14");
+		dayList.add("2017-09-15");
+		dayList.add("2017-09-19");
+		dayList.add("2017-09-20");
+		dayList.add("2017-09-21");
+		dayList.add("2017-09-22");
 
 
 		for (String TODAY:dayList){
@@ -646,9 +703,20 @@ public class SagyoSpace {
 //			CheckSign.CHECKTODAY(1,"DD","technique","Techinique00_TEST","MACD_M_L_OVER0","technique","Techinique00_TEST","MACD_M_S_OVER0",STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 			int sleepTime = 7000;
 
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L,			TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-
 			CheckSign.CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 

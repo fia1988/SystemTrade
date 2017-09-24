@@ -1,5 +1,8 @@
 package proparty;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,7 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import common.commonAP;
+
 import constant.ReturnCodeConst;
+import constant.logWriting;
 
 public class S {
 	public static Connection con = null;
@@ -106,10 +112,7 @@ public class S {
 		return p_rs;
 	}
 
-	//sql文を入力するとSQLを実行できる。
-	//使い回し可能。
-	//ただし適当なタイミングでS.P_createclose()すべし。
-	public static int freeUpdateQuery(String sql){
+	public static int freeUpdateQuery_makeLastOrderTBL(String sql){
 		try {
 
 			pstmt = con.prepareStatement(sql);
@@ -131,8 +134,132 @@ public class S {
 					return e.getErrorCode();
 
 				default:
-					System.out.println(sql);
-					System.out.println(e.getErrorCode());
+					commonAP.writeInLog("freeUpdateQuery_makeLastOrderTBLでエラー(その他)：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
+
+		            StringWriter swB = null;
+		            PrintWriter  pwB = null;
+
+		            swB = new StringWriter();
+		            pwB = new PrintWriter(swB);
+		            e.printStackTrace(pwB);
+		            String traceB = swB.toString();
+		            commonAP.writeInLog(traceB,logWriting.DATEDATE_LOG_FLG);
+
+		            try {
+		                if ( swB != null ) {
+		                    swB.flush();
+		                    swB.close();
+		                }
+		                if ( pwB != null ) {
+		                    pwB.flush();
+		                    pwB.close();
+		                }
+		            } catch (IOException ignore){}
+
+					return e.getErrorCode();
+			}
+
+
+
+
+
+		}
+
+		return ReturnCodeConst.SQL_ERR_0;
+	}
+
+	//sql文を入力するとSQLを実行できる。
+	//使い回し可能。
+	//ただし適当なタイミングでS.P_createclose()すべし。
+	public static int freeUpdateQuery(String sql){
+		try {
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+
+
+//			System.out.println("S:普通のテーブル重複");
+			//同じテーブルが存在した以外のエラーの場合以下を処理する。
+			//1062エラーも一応出す
+			switch (e.getErrorCode()) {
+				case ReturnCodeConst.SQL_ERR_1062:
+					commonAP.writeInLog("freeUpdateQueryでエラー：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
+		            StringWriter sw = null;
+		            PrintWriter  pw = null;
+
+		            sw = new StringWriter();
+		            pw = new PrintWriter(sw);
+		            e.printStackTrace(pw);
+		            String trace = sw.toString();
+		            commonAP.writeInLog(trace,logWriting.DATEDATE_LOG_FLG);
+
+		            try {
+		                if ( sw != null ) {
+		                    sw.flush();
+		                    sw.close();
+		                }
+		                if ( pw != null ) {
+		                    pw.flush();
+		                    pw.close();
+		                }
+		            } catch (IOException ignore){}
+					return e.getErrorCode();
+
+				case ReturnCodeConst.SQL_ERR_1050:
+					commonAP.writeInLog("freeUpdateQueryでエラー：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
+
+		            StringWriter swA = null;
+		            PrintWriter  pwA = null;
+
+		            swA = new StringWriter();
+		            pwA = new PrintWriter(swA);
+		            e.printStackTrace(pwA);
+		            String traceA = swA.toString();
+		            commonAP.writeInLog(traceA,logWriting.DATEDATE_LOG_FLG);
+
+		            try {
+		                if ( swA != null ) {
+		                    swA.flush();
+		                    swA.close();
+		                }
+		                if ( pwA != null ) {
+		                    pwA.flush();
+		                    pwA.close();
+		                }
+		            } catch (IOException ignore){}
+					return e.getErrorCode();
+
+				default:
+					commonAP.writeInLog("freeUpdateQueryでエラー(その他)：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
+
+		            StringWriter swB = null;
+		            PrintWriter  pwB = null;
+
+		            swB = new StringWriter();
+		            pwB = new PrintWriter(swB);
+		            e.printStackTrace(pwB);
+		            String traceB = swB.toString();
+		            commonAP.writeInLog(traceB,logWriting.DATEDATE_LOG_FLG);
+
+		            try {
+		                if ( swB != null ) {
+		                    swB.flush();
+		                    swB.close();
+		                }
+		                if ( pwB != null ) {
+		                    pwB.flush();
+		                    pwB.close();
+		                }
+		            } catch (IOException ignore){}
+
 					return e.getErrorCode();
 			}
 
@@ -160,15 +287,39 @@ public class S {
 
 			switch (e.getErrorCode()) {
 			case ReturnCodeConst.SQL_ERR_1086:
+				commonAP.writeInLog("exportFileでエラー(ファイルが既に存在する)：" + e.getErrorCode() + ":SQL;" + SQL,logWriting.DATEDATE_LOG_FLG);
 				//ファイルが既に存在する
 				return e.getErrorCode();
 			case ReturnCodeConst.SQL_ERR_1:
+				commonAP.writeInLog("exportFileでエラー(ディレクトリが存在しない)：" + e.getErrorCode() + ":SQL;" + SQL,logWriting.DATEDATE_LOG_FLG);
 				//ディレクトリが存在しない
 				return e.getErrorCode();
 
 			default:
 				//そのほかのエラー
+				commonAP.writeInLog("exportFileでエラー(その他)：" + e.getErrorCode() + ":SQL;" + SQL,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
 				e.printStackTrace();
+	            StringWriter sw = null;
+	            PrintWriter  pw = null;
+
+	            sw = new StringWriter();
+	            pw = new PrintWriter(sw);
+	            e.printStackTrace(pw);
+	            String trace = sw.toString();
+	            commonAP.writeInLog(trace,logWriting.DATEDATE_LOG_FLG);
+
+	            try {
+	                if ( sw != null ) {
+	                    sw.flush();
+	                    sw.close();
+	                }
+	                if ( pw != null ) {
+	                    pw.flush();
+	                    pw.close();
+	                }
+	            } catch (IOException ignore){}
+
 				return e.getErrorCode();
 			}
 

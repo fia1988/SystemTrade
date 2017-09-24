@@ -38,11 +38,11 @@ public class PROPARTY {
 	//7:月、翌週火、翌週水・・・
 	//8:月、翌週水、翌週金
 	//バックアップを何日間隔でやるか
-	public static int BACK_UP_KANkAKU			=	4;
+	public static int BACK_UP_KANkAKU			=	0;
 	//分割併合ファイルを何日間隔でとるか
 	public static int SEPA_COM_KANKAKU			=	0;
-	//バックアップファイルの世代、いくつdumpファイルを残すか
-	public static int MAX_DUMP_FILES			=	5;
+	//バックアップファイルの世代、いくつdumpファイルを残すか（1つはoldなので6＝5ファイル）
+	public static int MAX_DUMP_FILES			=	6;
 
 	//503エラー？たまに出るへんなやつ
 	public static String NAZO = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\"http://www.w3.org/TR/html4/strict.dtd\">";

@@ -70,19 +70,12 @@ public class CheckSign {
 
 
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L,			TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-		//採用
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-
-		//採用
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 
@@ -490,7 +483,7 @@ public class CheckSign {
 //						+ COLUMN.REAL_AVERAGEPRICE_KATA							 + " ,  "  //現実平均取得価格
 //						+ COLUMN.REAL_RETURN_KATA								 + " ,  "//現実的的トータルリターン
 
-						s.freeUpdateQuery(SQL);
+						s.freeUpdateQuery_makeLastOrderTBL(SQL);
 
 						//ここからはキープテーブルの削除
 						SQL = " delete from " + TBL_Name.KEEPLISTTBL
@@ -635,8 +628,7 @@ public class CheckSign {
 					+ "'" + Lmethod			+ "'"	 + ","
 					+ "'" + Smethod			+ "'"	 + " "
 					+ ")";
-
-			s.freeUpdateQuery(SQL);
+			s.freeUpdateQuery_makeLastOrderTBL(SQL);
 			//サインの出た持ってる銘柄だけ表示する。ログ
 			//			if (signFlg){
 			//				commonAP.writeInLog(check + "," + TODAY + "," +  code + "," + Lmethod + "," + Smethod,logWriting.STOCK_RESULT_LOG_FLG_L);
@@ -836,7 +828,7 @@ public class CheckSign {
 								+ "'" + Smethod	+ "'"+ " "
 								+ ")";
 
-						s.freeUpdateQuery(SQL);
+						s.freeUpdateQuery_makeLastOrderTBL(SQL);
 
 					}
 
@@ -1370,7 +1362,7 @@ public class CheckSign {
 				+ "1"					 + ","
 				+ maxInterval			 + " "
 				+ ")";
-		s.freeUpdateQuery(SQL);
+		s.freeUpdateQuery_makeLastOrderTBL(SQL);
 	}
 
 	//true:本番
