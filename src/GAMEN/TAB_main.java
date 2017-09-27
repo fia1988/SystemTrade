@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
 import GamenDTO.TAB_MainDTO;
@@ -24,7 +23,6 @@ import botton.SepaCombine;
 import botton.TimeClornigDate;
 import botton.cloringDate;
 import botton.setUp;
-import constant.ReCord;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
 
@@ -918,7 +916,7 @@ public class TAB_main extends JPanel {
 
 			//一回分のセパ取込
 			CreateSepaComFile sepaComCheck = new CreateSepaComFile();
-			checkShotResult = sepaComCheck.checkSepaComFile(mainDTO);
+			checkShotResult = sepaComCheck.checkSepaComFile(mainDTO,controllDay.getTODAY());
 			oneShotResult.setText(checkShotResult);
 
 			//メモリの解放
@@ -976,7 +974,7 @@ public class TAB_main extends JPanel {
 			}
 
 
-			checkShotResult = sepaComCheck.checkSepaComFile(mainDTO);
+			checkShotResult = sepaComCheck.checkSepaComFile(mainDTO,controllDay.getTODAY());
 			oneShotSepaComResult.setText(checkShotResult);
 
 			//メモリの解放
@@ -1019,10 +1017,12 @@ public class TAB_main extends JPanel {
 			}
 
 			cloringDate CD = new cloringDate();
-			S s = new S();
-			s.getCon();
-			String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
-			s.closeConection();
+//			S s = new S();
+//			s.getCon();
+//			String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+//			s.closeConection();
+
+			String TODAY = controllDay.getTODAY();
 
 			//FBS_KICK_2017-07-31.fbs
 	        String fileName = "FBS_KICK_" + TODAY + ".fbs";

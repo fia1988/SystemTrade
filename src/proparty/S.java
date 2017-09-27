@@ -288,16 +288,19 @@ public class S {
 			switch (e.getErrorCode()) {
 			case ReturnCodeConst.SQL_ERR_1086:
 				commonAP.writeInLog("exportFileでエラー(ファイルが既に存在する)：" + e.getErrorCode() + ":SQL;" + SQL,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeLog("\r\n",logWriting.DATEDATE_LOG_FLG);
 				//ファイルが既に存在する
 				return e.getErrorCode();
 			case ReturnCodeConst.SQL_ERR_1:
 				commonAP.writeInLog("exportFileでエラー(ディレクトリが存在しない)：" + e.getErrorCode() + ":SQL;" + SQL,logWriting.DATEDATE_LOG_FLG);
 				//ディレクトリが存在しない
+				commonAP.writeLog("\r\n",logWriting.DATEDATE_LOG_FLG);
 				return e.getErrorCode();
 
 			default:
 				//そのほかのエラー
 				commonAP.writeInLog("exportFileでエラー(その他)：" + e.getErrorCode() + ":SQL;" + SQL,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeLog("\r\n",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
 				e.printStackTrace();
 	            StringWriter sw = null;

@@ -56,14 +56,14 @@ public class CreateSepaComFile {
 	}
 
 
-	public String checkSepaComFile(TAB_MainDTO mainDTO){
+	public String checkSepaComFile(TAB_MainDTO mainDTO,String LS_TODAY){
 
 		commonAP.writeInLog("分割併合チェック開始",logWriting.DATEDATE_LOG_FLG);
 		//分割ファイルを取り込む前に今現在、falseのものを消す！
 
 
 		String letterSepaCOM = "分割";
-		switch (createSepaComFileAndLoad(mainDTO,true)) {
+		switch (createSepaComFileAndLoad(mainDTO,true,LS_TODAY)) {
 			case ParseHtmlStockSplit.NO_UPDATE:
 				commonAP.writeInLog(letterSepaCOM + "ファイル更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
@@ -102,7 +102,7 @@ public class CreateSepaComFile {
 		}
 
 		letterSepaCOM = "併合";
-		switch (createSepaComFileAndLoad(mainDTO,false)) {
+		switch (createSepaComFileAndLoad(mainDTO,false,LS_TODAY)) {
 			case ParseHtmlStockSplit.NO_UPDATE:
 				commonAP.writeInLog(letterSepaCOM + "ファイル更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
@@ -188,7 +188,7 @@ public class CreateSepaComFile {
 
 	//true:分割
 	//false:併合
-	private int createSepaComFileAndLoad(TAB_MainDTO mainDTO,boolean checkFLG){
+	private int createSepaComFileAndLoad(TAB_MainDTO mainDTO,boolean checkFLG,String LS_TODAY){
 		String checkDay;
 		String toDay = controllDay.getTODAY();
 		String letter = "";
@@ -221,18 +221,18 @@ public class CreateSepaComFile {
 		ParseHtmlStockSplit phs = new ParseHtmlStockSplit();
 
 		if ( checkFLG ){
-			fileName = "01_separate_" + toDay + ".csv";
+			fileName = "01_separate_" + LS_TODAY + ".csv";
 			checkResult = ( phs.makeSplitCsv(mainDTO.getSepaFolderPath(), fileName	));
 		}else{
-			fileName = "02_combine_" + toDay + ".csv";
+			fileName = "02_combine_" + LS_TODAY + ".csv";
 			checkResult = ( phs.makeMergeCsv(mainDTO.getSepaFolderPath(), fileName	));
 		}
 
 		if ( checkResult == ParseHtmlStockSplit.NORMAL_END ){
 			if ( checkFLG ){
-				controllDay.update_KOSHINBI(toDay, ReCord.KOSHINBI_SEPA_CHECK, s);
+				controllDay.update_KOSHINBI(LS_TODAY, ReCord.KOSHINBI_SEPA_CHECK, s);
 			}else{
-				controllDay.update_KOSHINBI(toDay, ReCord.KOSHINBI_COMBINE_CHECK, s);
+				controllDay.update_KOSHINBI(LS_TODAY, ReCord.KOSHINBI_COMBINE_CHECK, s);
 			}
 		}else{
 			phs = new ParseHtmlStockSplit();

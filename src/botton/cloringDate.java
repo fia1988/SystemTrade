@@ -114,17 +114,17 @@ public class cloringDate {
 		//売買ファイル（LSファイル）を各個人フォルダにコピーする
 		S s = new S();
 		s.getCon();
-//		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+		String LS_TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		String TODAY = controllDay.getTODAY();
 		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
 		s.closeConection();
 
 		//LSファイルばら撒き、FBS用ファイルのばら撒きとか
-		fileCOPY(mainDTO,TODAY);
+		fileCOPY(mainDTO,TODAY,LS_TODAY);
 
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
-		sepaComCheck.checkSepaComFile(mainDTO);
+		sepaComCheck.checkSepaComFile(mainDTO,LS_TODAY);
 
 		//backUp開始
 		backUpLogic(mainDTO,TODAY,checkDay);
@@ -177,11 +177,11 @@ public class cloringDate {
 
 
 	//LSファイルばら撒き、FBS用ファイルのばら撒きとか
-	private void fileCOPY(TAB_MainDTO mainDTO,String TODAY){
+	private void fileCOPY(TAB_MainDTO mainDTO,String TODAY,String LS_TODAY){
 
 		//LSファイルばら撒き
-		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),true);
-		copyParsonalFolder(TODAY,mainDTO.getEntryFolderPath(),false);
+		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),true);
+		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),false);
 
 
 		//FBS_KICK_2017-07-31.fbs
@@ -194,14 +194,14 @@ public class cloringDate {
 		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
 
 		//保有銘柄一覧作成
-		fileName = TODAY + "_fias_keep.csv";
+		fileName = LS_TODAY + "_fias_keep.csv";
 		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
 		//保有銘柄一覧ばら撒き、ただし無料ユーザーのみ
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
 		//有料ユーザーユーザー分のキックファイルばら撒き
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
 		//有料ユーザー後処理
-		afterDealPayingUser(TODAY);
+		afterDealPayingUser(LS_TODAY);
 	}
 
 	//有料ユーザー後処理
@@ -386,6 +386,7 @@ public class cloringDate {
 				commonAP.writeInLog("コピー元と思われるもの："+copyMoto,logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog("コピー先と思われるもの："+targetPath,logWriting.DATEDATE_LOG_FLG);
         	}
+//		} catch (IOSuch a) {
 
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
