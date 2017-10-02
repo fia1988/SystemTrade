@@ -119,15 +119,15 @@ public class cloringDate {
 		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
 		s.closeConection();
 
-		//LSファイルばら撒き、FBS用ファイルのばら撒きとか
-		fileCOPY(mainDTO,TODAY,LS_TODAY);
-
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
 		sepaComCheck.checkSepaComFile(mainDTO,LS_TODAY);
 
+		//LSファイルばら撒き、FBS用ファイル(保有銘柄一覧、キックファイル、分割併合ファイル確認用ファイル)のばら撒きとか
+		fileCOPY(mainDTO,TODAY,LS_TODAY);
+
 		//backUp開始
-		backUpLogic(mainDTO,TODAY,checkDay);
+		backUpLogic(mainDTO,LS_TODAY,checkDay);
 
 
 		stop = System.currentTimeMillis();
@@ -183,25 +183,88 @@ public class cloringDate {
 		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),true);
 		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),false);
 
+		//今日のセパコンバインレコードの作成
+		String fileName = "FBSsepaCombine.csv";
+		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//		createTODAYSepaComBine("2017-09-26",mainDTO.getEntryFolderPath(),fileName);
 
 		//FBS_KICK_2017-07-31.fbs
-        String fileName = "FBS_KICK_" + TODAY + ".fbs";
+        fileName = "FBS_KICK_" + TODAY + ".fbs";
 		//暗号化ファイル作成（キックファイル）
 		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
-		//暗号化ファイルばら撒き、ただし無料ユーザーのみ
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
-		//有料ユーザー分のキックファイルばらまき
-		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		//ばら撒き
+		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//		//暗号化ファイルばら撒き、ただし無料ユーザーのみ
+//		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+//		//有料ユーザー分のキックファイルばらまき
+//		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
 
 		//保有銘柄一覧作成
 		fileName = LS_TODAY + "_fias_keep.csv";
 		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
-		//保有銘柄一覧ばら撒き、ただし無料ユーザーのみ
-		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
-		//有料ユーザーユーザー分のキックファイルばら撒き
-		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		//ばら撒き
+		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//		//保有銘柄一覧ばら撒き、ただし無料ユーザーのみ
+//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+//		//有料ユーザー分の保有銘柄一覧ばら撒き
+//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
 		//有料ユーザー後処理
 		afterDealPayingUser(LS_TODAY);
+	}
+
+	public void createTODAYSepaComBine(String TODAY,String folderPath,String fileName){
+		S s = new S();
+		s.getCon();
+		String TBL = TBL_Name.SEPARATE_DD;
+		String SQL1 = "select * from " + TBL + " where "+ COLUMN.DAYTIME_KENRI_LAST + " = '" + TODAY + "'";
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL1);
+
+			if (s.rs.next()){
+				//レコードが存在する場合はココ
+				String filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileName;
+				filePath = filePath.replace(File.separator,ReturnCodeConst.SQL_SEPA);
+
+				String column = COLUMN.CODE						 + " , "
+								+ COLUMN.CHECKSEPA_COMBINE		 + " , "//falseは併合、trueは分割
+//								+ COLUMN.DAYTIME_KENRI_LAST		 + " , " //権利付最終売買日。効力は権利付最終日の翌営業日から発生する
+								+ COLUMN.AJUSTRATE				 + "  "; //調整レート。仕様はまだ決まっていないが、
+
+				String heddaColumn =  "'" +  COLUMN.CODE		 			+ "' , "
+									+ "'" +  COLUMN.CHECKSEPA_COMBINE		+ "' , "
+//									+ "'" +  COLUMN.DAYTIME_KENRI_LAST		+ "' , "
+									+ "'" +  COLUMN.AJUSTRATE				+ "'  ";
+
+				String SQL2 =	" SELECT "
+							+ heddaColumn
+							+ " union "
+							+ " SELECT "
+							+ " " + column + " "
+							+ " FROM " + TBL
+							+ " where "+ COLUMN.DAYTIME_KENRI_LAST + " = '" + TODAY + "'"
+							+	" INTO OUTFILE '" + filePath +  "'"
+							+	" FIELDS TERMINATED BY ','"
+							+	" OPTIONALLY ENCLOSED BY '\"'";
+
+				s.exportFile(SQL2);
+				//セパコンバインレコードばら撒き
+				copyFile_for_KICK_USER(TODAY,folderPath,fileName);
+
+				//作ったファイルの削除
+		        File file = new File(filePath);
+
+		        if(file.delete()){
+		        	//成功
+		        	commonAP.writeInLog(file + "の削除に成功しました。",logWriting.DATEDATE_LOG_FLG);
+		        }else{
+		        	//失敗
+		        	commonAP.writeInLog(file + "の削除に失敗しました。",logWriting.DATEDATE_LOG_FLG);
+		        }
+			};
+
+		} catch (SQLException e) {}
+
+		s.closeConection();
 	}
 
 	//有料ユーザー後処理
@@ -325,6 +388,14 @@ public class cloringDate {
 
 	}
 
+	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName){
+		//ばら撒き、ただし無料ユーザーのみ
+		copyFile_for_KICK_USER(TODAY,folderPath,fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		//有料ユーザーユーザー分のばら撒き
+		copyFile_for_KICK_USER(TODAY,folderPath,fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+	}
+
+
 	//暗号化ファイルばら撒きメソッド、キックファイルユーザーリストから抽出する。
 	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName,String TBL){
         //ディレクトリ指定
@@ -377,6 +448,12 @@ public class cloringDate {
         	File checkFile = new File(checkPath);
         	if(checkFile.isDirectory()){
         		//ディレクトリのとき
+        		File file = new File(targetPath.toString());
+		        if(file.delete()){
+		        	//成功
+		        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+		        };
+
         		Files.copy(copyMoto, targetPath);
         	}else if(checkFile.isFile()){
         		//ファイルのとき

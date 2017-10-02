@@ -76,10 +76,11 @@ public class BackUp {
 			return nyuryokuCheckResultConst.NO_LOG_FOLDER_ERR;
 		}
 
-		s = new S();
-		s.getCon();
-		String TODAY = controllDay.getMAX_DD_STOCK_ETF(s);
-		s.closeConection();
+//		s = new S();
+//		s.getCon();
+//		String TODAY = controllDay.getMAX_DD_STOCK_ETF(s);
+		String TODAY = controllDay.getTODAY();
+//		s.closeConection();
 		//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
 		mainDTO.setOutBackUpFilePath(mainDTO.getOutBackUpFolderPath() + File.separator + TODAY + ".dump");
 		file =  new File(mainDTO.getOutBackUpFilePath());

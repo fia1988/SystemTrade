@@ -59,7 +59,7 @@ public class createTBL {
 		colum = " ( "
 				+ COLUMN.KICK_FILE_USER_FOLDER_KATA							 + " ,  " //キックファイル配布フォルダ名
 				+ COLUMN.KOSIN_DAYTIME_KATA										 + " ,  "
-				+ COLUMN.LIMIT_DAYTIME_KATA										 + "   "
+				+ COLUMN.LIMIT_DAYTIME_KATA										 + "   "//最終配布日
 				+ " , "
 				+ "primary key ("
 				+ COLUMN.KICK_FILE_USER_FOLDER +  ") )";;

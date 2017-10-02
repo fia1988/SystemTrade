@@ -81,10 +81,15 @@ public class SagyoSpace {
 
 	public static void testCase77(){
 		cloringDate CD = new cloringDate();
-		String fileName = "2017-10-30_fias_keep.csv";
+//		String fileName = "2017-10-30_fias_keep.csv";
 		String folderPath = "C:/Users/NOBORU1988/Dropbox/01.kabu/02.everyDayFile";
 
-		CD.createKeepListFile(folderPath,fileName);
+//		CD.createKeepListFile(folderPath,fileName);
+		
+		//今日のセパコンバインレコードの作成
+		String fileName = "FBSsepaCombine.csv";
+//		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+		CD.createTODAYSepaComBine("2017-09-25",folderPath,fileName);
 
 	}
 
@@ -277,8 +282,8 @@ public class SagyoSpace {
 //		dayList[0] =	"2017-04-25";
 //		dayList[1] =	"2017-05-31";
 //		dayLists.add(dayList.clone());
-		dayList[0] =	"2017-07-01";
-		dayList[1] =	"2017-09-22";
+		dayList[0] =	"2017-08-01";
+		dayList[1] =	"2017-09-29";
 		dayLists.add(dayList.clone());
 //		dayList[0] = "2007-01-01";
 //		dayList[1] = "2007-12-31";
