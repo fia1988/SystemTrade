@@ -186,7 +186,6 @@ public class cloringDate {
 		//今日のセパコンバインレコードの作成
 		String fileName = "FBSsepaCombine.csv";
 		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
-//		createTODAYSepaComBine("2017-09-26",mainDTO.getEntryFolderPath(),fileName);
 
 		//FBS_KICK_2017-07-31.fbs
         fileName = "FBS_KICK_" + TODAY + ".fbs";
@@ -194,20 +193,13 @@ public class cloringDate {
 		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
 		//ばら撒き
 		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
-//		//暗号化ファイルばら撒き、ただし無料ユーザーのみ
-//		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
-//		//有料ユーザー分のキックファイルばらまき
-//		copyFile_for_KICK_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
 
 		//保有銘柄一覧作成
 		fileName = LS_TODAY + "_fias_keep.csv";
 		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
 		//ばら撒き
 		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
-//		//保有銘柄一覧ばら撒き、ただし無料ユーザーのみ
-//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
-//		//有料ユーザー分の保有銘柄一覧ばら撒き
-//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+
 		//有料ユーザー後処理
 		afterDealPayingUser(LS_TODAY);
 	}
@@ -390,9 +382,11 @@ public class cloringDate {
 
 	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName){
 		//ばら撒き、ただし無料ユーザーのみ
+		commonAP.writeInLog(fileName + "を各フォルダにばらまきます。",logWriting.DATEDATE_LOG_FLG);
 		copyFile_for_KICK_USER(TODAY,folderPath,fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
 		//有料ユーザーユーザー分のばら撒き
 		copyFile_for_KICK_USER(TODAY,folderPath,fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		commonAP.writeInLog(fileName + "を各フォルダにばらまきました。",logWriting.DATEDATE_LOG_FLG);
 	}
 
 

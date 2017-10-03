@@ -63,7 +63,8 @@ public class CreateSepaComFile {
 
 
 		String letterSepaCOM = "分割";
-		switch (createSepaComFileAndLoad(mainDTO,true,LS_TODAY)) {
+		int resultInt = createSepaComFileAndLoad(mainDTO,true,LS_TODAY);
+		switch (resultInt) {
 			case ParseHtmlStockSplit.NO_UPDATE:
 				commonAP.writeInLog(letterSepaCOM + "ファイル更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
@@ -102,7 +103,8 @@ public class CreateSepaComFile {
 		}
 
 		letterSepaCOM = "併合";
-		switch (createSepaComFileAndLoad(mainDTO,false,LS_TODAY)) {
+		resultInt = createSepaComFileAndLoad(mainDTO,false,LS_TODAY);
+		switch (resultInt) {
 			case ParseHtmlStockSplit.NO_UPDATE:
 				commonAP.writeInLog(letterSepaCOM + "ファイル更新なし",logWriting.DATEDATE_LOG_FLG);
 				break;
@@ -112,32 +114,32 @@ public class CreateSepaComFile {
 			case ParseHtmlStockSplit.ERROR_DATAINCOLLECT:
 				commonAP.writeInLog(letterSepaCOM + "ファイルのレイアウトがおかしい",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "ファイルのレイアウトがおかしい",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 			case ParseHtmlStockSplit.ERROR_IOERROR:
 				commonAP.writeInLog(letterSepaCOM + "ファイルをフォルダに書き込めない",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "ファイルをフォルダに書き込めない",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 			case ParseHtmlStockSplit.ERROR_NOFOLDEREXIST:
 				commonAP.writeInLog(letterSepaCOM + "指定フォルダが存在しない",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "指定フォルダが存在しない",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 			case ParseHtmlStockSplit.ERROR_SAMEFILENAME:
 				commonAP.writeInLog(letterSepaCOM + "同名ファイルがある",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "同名ファイルがある",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 			case ParseHtmlStockSplit.ERROR_WEBCONNECT:
 				commonAP.writeInLog(letterSepaCOM + "WEBがつながらない",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "WEBがつながらない",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 			case ParseHtmlStockSplit.ERROR_OTHER:
 				commonAP.writeInLog(letterSepaCOM + "原因不明エラー",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "原因不明エラー",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 			default:
 				//SQLエラー
 				commonAP.writeInLog(letterSepaCOM + "原因不明エラー。たぶんSQL",logWriting.DATEDATE_LOG_FLG);
 				commonAP.writeInLog(letterSepaCOM + "原因不明エラー。たぶんSQL",logWriting.CODE_SEPACON_ERR_LOG_FLG);
-				break;
+				return nyuryokuCheckResultConst.FAILED;
 		}
 
 //		return nyuryokuCheckResultConst.FAILED;
