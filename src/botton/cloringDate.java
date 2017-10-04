@@ -484,7 +484,7 @@ public class cloringDate {
         	//2017-06-20_S.csv
         	fileName = TODAY + "_S.csv";
         }
-
+		commonAP.writeInLog(fileName + "を各フォルダにばらまきます。",logWriting.DATEDATE_LOG_FLG);
 //        File copyMoto = new File(folderPath + File.separator + fileName);
         Path copyMoto = Paths.get(folderPath + File.separator + fileName);
 
@@ -513,6 +513,8 @@ public class cloringDate {
 			}
 
         }
+
+		commonAP.writeInLog(fileName + "を各フォルダにばらまきました。",logWriting.DATEDATE_LOG_FLG);
 
 	}
 
