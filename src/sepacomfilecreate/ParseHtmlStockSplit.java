@@ -3,16 +3,11 @@
  */
 package sepacomfilecreate;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +38,6 @@ public class ParseHtmlStockSplit {
 	public final static int ERROR_DATAINCOLLECT = 6;
 	public final static int NO_UPDATE = 7;
 	public final static int ERROR_SQL = 8;
-
 
 	/**
 	 *
@@ -182,12 +176,11 @@ public class ParseHtmlStockSplit {
 		SplitMergeInfo info = new SplitMergeInfo();
 		//boolean halfFlag = true;
 
-//		document = Jsoup.connect(url).get();
+		document = Jsoup.connect(url).ignoreContentType(true).get();
 
 		//System.out.println(document.html());
 
-		String strSite = getPageText(url);
-		//document.html().replace("\n", "");
+		String strSite = document.html().replace("\n", "");
 
 		String regex = "document.write\\(\\'\\s*<tr>\\s*\\\\\\s*<td>(.*?)</td>\\\\\\s*<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\<td>'\\);";
 
@@ -222,18 +215,7 @@ public class ParseHtmlStockSplit {
 			count += 1;
 		}
 
-		regex = "ARatioW\\s=\\s\"(.*?)\";";
-		p = Pattern.compile(regex);
-
-		count = 0;
-
-		m = p.matcher(strSite);
-		while (m.find()){
-			groupList.get(count).setIntWariateRate1(m.group(1));
-			count += 1;
-		}
-
-		regex = "BRatioW\\s=\\s\"(.*?)\";";
+		regex = "BRatioW\\s=\\s&quot;(.*?)&quot;;";
 		p = Pattern.compile(regex);
 
 		count = 0;
@@ -241,6 +223,17 @@ public class ParseHtmlStockSplit {
 		m = p.matcher(strSite);
 		while (m.find()){
 			groupList.get(count).setIntWariateRate2(m.group(1));
+			count += 1;
+		}
+
+		regex = "ARatioW\\s=\\s&quot;(.*?)&quot;;";
+		p = Pattern.compile(regex);
+
+		count = 0;
+
+		m = p.matcher(strSite);
+		while (m.find()){
+			groupList.get(count).setIntWariateRate1(m.group(1));
 			count += 1;
 		}
 		//
@@ -257,60 +250,48 @@ public class ParseHtmlStockSplit {
 		//String url = "http://kabu.com/process/bunkatu.js";
 		List<SplitMergeInfo> groupList = new ArrayList<>();
 		SplitMergeInfo info = new SplitMergeInfo();
-//
-//		document = Jsoup.connect(url).get();
-//
-//		System.out.println(document.html());
+		boolean halfFlag = true;
 
-		String strSite = getPageText(url);
-		//document.html().replace("\n", "");
+		document = Jsoup.connect(url).ignoreContentType(true).get();
 
-		String regex = "document.write\\(\\'\\s*<tr>\\s*\\\\\\s*<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
-		//String regex = "document.write\\(\\'.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
+		//System.out.println(document.html());
+
+		String strSite = document.html().replace("\n", "");
+
+		String regex = "document.write\\(\\'.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
 
 		//System.out.println(strSite);
 		Pattern p = Pattern.compile(regex);
 
 		Matcher m = p.matcher(strSite);
 		while (m.find()){
-			//System.out.println("groupcount:" + m.group());
+			//System.out.println("groupcount:" + m.groupCount());
 			//System.out.println("group1:" + m.group(1) + m.group(2) + m.group(3));
-			info = new SplitMergeInfo();
-			info.setStrWariateDate(m.group(1));
-			info.setStrStockCode(m.group(2));
-			info.setStrStockName(m.group(3));
+			if (halfFlag) {
+				info = new SplitMergeInfo();
+				info.setStrWariateDate(m.group(1));
+				info.setStrStockCode(m.group(2));
+				info.setStrStockName(m.group(3));
+				halfFlag = !halfFlag;
+			} else {
+				info.setStrLastDate(m.group(1));
+				info.setStrStartDate(m.group(2));
+				info.setStrSalableDate(m.group(3));
+				info.setIsSplit(1);
+				//test
+				groupList.add(info);
+				halfFlag = !halfFlag;
 
-			groupList.add(info);
+			}
 		}
 
 		if (groupList.size()==0) throw new NoDataException();
 
-		regex = "document.write\\(\\'</td>\\\\\\s*<td>(.*?)</td>.*?<td>(.*?)</td>.*?<td>(.*?)</td>.*?\\'\\);";
-
-		//System.out.println(strSite);
-		p = Pattern.compile(regex);
-
-		int count = 0;
-
-		m = p.matcher(strSite);
-		while (m.find()){
-			//System.out.println("groupcount:" + m.group());
-			//System.out.println("group1:" + m.group(1) + m.group(2) + m.group(3));
-
-			groupList.get(count).setStrLastDate(m.group(1));
-			groupList.get(count).setStrStartDate(m.group(2));
-			groupList.get(count).setStrSalableDate(m.group(3));
-			groupList.get(count).setIsSplit(1);
-
-			count += 1;
-		}
-
-
-		regex = "BRatioW\\s*=\\s*\"(.*?)\";";
+		regex = "BRatioW\\s=\\s&quot;(.*?)&quot;;";
 		p = Pattern.compile(regex);
 
 		//System.out.println(regex);
-		count = 0;
+		int count = 0;
 
 		m = p.matcher(strSite);
 		while (m.find()){
@@ -319,7 +300,7 @@ public class ParseHtmlStockSplit {
 		}
 
 
-		regex = "ARatioW\\s*=\\s*\"(.*?)\";";
+		regex = "ARatioW\\s=\\s&quot;(.*?)&quot;;";
 		p = Pattern.compile(regex);
 
 		//System.out.println(regex);
@@ -331,9 +312,9 @@ public class ParseHtmlStockSplit {
 			count += 1;
 		}
 
-//		for (SplitMergeInfo group : groupList) {
-//			System.out.println(group.toString());
-//		}
+		//		for (SplitMergeInfo group : groupList) {
+		//			System.out.println(group.toString());
+		//		}
 
 		return groupList;
 	}
@@ -376,7 +357,6 @@ public class ParseHtmlStockSplit {
 			if (formatDate1.after(formatDate2)){
 				return false;
 			}
-
 		} catch (Exception e) {
 			return false;
 		}
@@ -395,7 +375,7 @@ public class ParseHtmlStockSplit {
 		String strUpdate = "";
 		Date dateUpdate = null;
 
-		Document document = Jsoup.connect("http://kabu.com/process/LastUpdate.js").get();
+		Document document = Jsoup.connect("http://kabu.com/process/LastUpdate.js").ignoreContentType(true).get();
 
 		for (String line : document.html().split("; ")) {
 			if (line.startsWith(name)) {
@@ -407,37 +387,6 @@ public class ParseHtmlStockSplit {
 		dateUpdate = sdf.parse(strUpdate);
 
 		return strUpdate;
-	}
-
-	private String getPageText(String strUrl) throws IOException {
-		URL url = new URL(strUrl); // ダウンロードする URL
-		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader(in));
-
-		StringBuilder sb = new StringBuilder();
-
-		String line;
-
-		while ((line = br.readLine()) != null) {
-			sb.append(line);
-		}
-
-		//System.out.println(sb.toString());
-
-		br.close();
-
-		//		File file = new File("c:\\download\\file.zip"); // 保存先
-		//		FileOutputStream out = new FileOutputStream(file, false);
-		//		int b;
-		//		while((b = in.read()) != -1){
-		//		    out.write(b);
-		//		}
-
-		in.close();
-		return sb.toString();
 	}
 }
 

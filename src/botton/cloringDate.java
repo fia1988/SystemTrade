@@ -188,7 +188,8 @@ public class cloringDate {
 		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
 
 		//FBS_KICK_2017-07-31.fbs
-        fileName = "FBS_KICK_" + TODAY + ".fbs";
+//        fileName = "FBS_KICK_" + TODAY + ".fbs";
+        fileName = TODAY + "_FBS_KICK" + ".fbs";
 		//暗号化ファイル作成（キックファイル）
 		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
 		//ばら撒き

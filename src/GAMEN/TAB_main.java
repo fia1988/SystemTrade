@@ -1025,7 +1025,7 @@ public class TAB_main extends JPanel {
 			String TODAY = controllDay.getTODAY();
 
 			//FBS_KICK_2017-07-31.fbs
-	        String fileName = "FBS_KICK_" + TODAY + ".fbs";
+	        String fileName = TODAY + "_FBS_KICK" + ".fbs";
 			CD.createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
 
 		}
