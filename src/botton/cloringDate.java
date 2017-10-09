@@ -531,7 +531,8 @@ public class cloringDate {
 
 		//コードリストテーブルを作る、日々の更新をする。
 		//統計
-		statisticsResult = CB.everyDayBottonContoroll(	controllDay.getMAX_DD_STATISTICS(s) 		,
+		statisticsResult = CB.everyDayBottonContoroll(	mainDTO										,
+														controllDay.getMAX_DD_STATISTICS(s) 		,
 														controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
 														ReCord.CODE_02_SATISTICS					,
 														s											);
@@ -540,7 +541,8 @@ public class cloringDate {
 		CB = new CONTOLLBOTTON();
 		s.resetConnection();
 
-		stockResult = CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_STOCK_ETF(s) 			,
+		stockResult = CB.everyDayBottonContoroll	(	mainDTO										,
+														controllDay.getMAX_DD_STOCK_ETF(s) 			,
 														controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
 														ReCord.CODE_01_STOCK						,
 														s											);
@@ -548,7 +550,8 @@ public class cloringDate {
 		s.resetConnection();
 		//CBのなかを破棄する。メモリ解放
 		CB = new CONTOLLBOTTON();
-		indexResult = CB.everyDayBottonContoroll	(	controllDay.getMAX_DD_INDEX(s) 	 			,
+		indexResult = CB.everyDayBottonContoroll	(	mainDTO										,
+														controllDay.getMAX_DD_INDEX(s) 	 			,
 														controllDay.getAJUSTMAXDAY_INDEX(s)			,
 														ReCord.CODE_03_INDEX						,
 														s											);

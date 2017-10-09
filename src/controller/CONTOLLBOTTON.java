@@ -11,9 +11,11 @@ import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.Net_Adress;
 import proparty.S;
+import GamenDTO.TAB_MainDTO;
 import accesarrySQL.SEPARATE_CHECK;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
+import botton.CreateSepaComFile;
 
 import common.commonAP;
 
@@ -24,13 +26,13 @@ import createTBL.GetCodeTBL;
 
 public class CONTOLLBOTTON {
 
-	public int everyDayBottonContoroll(String MAXDAY ,String TODAY,String cate,S s){
+	public int everyDayBottonContoroll(TAB_MainDTO mainDTO,String MAXDAY ,String TODAY,String cate,S s){
 
 
 
 		//日々テーブルの更新
 		int hibiResult;
-		hibiResult = hisabisaDayBotton(MAXDAY, TODAY, cate, s);
+		hibiResult = hisabisaDayBotton(mainDTO,MAXDAY, TODAY, cate, s);
 
 		switch (hibiResult){
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
@@ -210,7 +212,7 @@ public class CONTOLLBOTTON {
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
-	private int hisabisaDayBotton(String MAXDAY,String TODAY,String cate,S s){
+	private int hisabisaDayBotton(TAB_MainDTO mainDTO,String MAXDAY,String TODAY,String cate,S s){
 
 		NetBean NB = new NetBean();
 		Bean_Bean bbb = new Bean_Bean();
@@ -221,7 +223,7 @@ public class CONTOLLBOTTON {
 
 		switch(cate){
 		case ReCord.CODE_01_STOCK:
-			resultInsert=insertDD_STOCK_ETF(MAXDAY,TODAY,s);
+			resultInsert=insertDD_STOCK_ETF(mainDTO,MAXDAY,TODAY,s);
 
 			break;
 		case ReCord.CODE_02_SATISTICS:
@@ -231,7 +233,7 @@ public class CONTOLLBOTTON {
 			resultInsert=insertDD_INDEX(MAXDAY,TODAY,s);
 			break;
 		case ReCord.CODE_04_ETF:
-			resultInsert=(insertDD_STOCK_ETF(MAXDAY,TODAY,s));
+			resultInsert=(insertDD_STOCK_ETF(mainDTO,MAXDAY,TODAY,s));
 
 			break;
 		case ReCord.CODE_05_SAKIMONO:
@@ -499,7 +501,7 @@ public class CONTOLLBOTTON {
 //
 //	}
 
-	private int insertDD_STOCK_ETF(String MAXDAY,String TODAY,S s){
+	private int insertDD_STOCK_ETF(TAB_MainDTO mainDTO,String MAXDAY,String TODAY,S s){
 		NC_Controller NC = new NC_Controller();
 
 		commonAP cAP = new commonAP();
@@ -536,6 +538,9 @@ public class CONTOLLBOTTON {
 				i_d.InsertDD_STOCK_ETF(B_B.getList_CSVtoDTO_STOCK_ETF(),MAXDAY, s);
 				check = 0;
 
+				//分割ファイルの作成/取込を行う。
+				CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+				sepaComCheck.checkSepaComFile(mainDTO,TODAY);
 
 				//分割チェック。
 				SEPARATE_CHECK.checkSEPARATE_controll(s);
