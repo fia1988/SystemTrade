@@ -119,9 +119,9 @@ public class cloringDate {
 		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_BACK_UP, s);
 		s.closeConection();
 
-		//分割ファイルの作成/取込を行う。
-		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
-		sepaComCheck.checkSepaComFile(mainDTO,LS_TODAY);
+//		//分割ファイルの作成/取込を行う。
+//		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+//		sepaComCheck.checkSepaComFile(mainDTO,LS_TODAY);
 
 		//LSファイルばら撒き、FBS用ファイル(保有銘柄一覧、キックファイル、分割併合ファイル確認用ファイル)のばら撒きとか
 		fileCOPY(mainDTO,TODAY,LS_TODAY);

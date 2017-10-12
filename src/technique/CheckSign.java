@@ -1495,7 +1495,6 @@ public class CheckSign {
 
 		for (String SQLs: deleteSQLList){
 			s.freeUpdateQuery(SQLs);
-			System.out.println("ccccccccccccccc:" + SQLs);
 		}
 
 		for (String SQLs: insertSQLList){

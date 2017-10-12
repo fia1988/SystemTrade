@@ -58,7 +58,7 @@ public class CreateSepaComFile {
 
 	public String checkSepaComFile(TAB_MainDTO mainDTO,String LS_TODAY){
 
-		commonAP.writeInLog("分割併合チェック開始",logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog(LS_TODAY + "の分割併合チェック開始",logWriting.DATEDATE_LOG_FLG);
 		//分割ファイルを取り込む前に今現在、falseのものを消す！
 
 
@@ -170,7 +170,7 @@ public class CreateSepaComFile {
 
 		int deleteRecord = 0;
 		try {
-			commonAP.writeInLog("sepa_flg is falseを削除します。",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog(letter + "のsepa_flg is falseを削除します。",logWriting.DATEDATE_LOG_FLG);
 			deleteRecord = s.sqlGetter().executeUpdate(SQL);
 			commonAP.writeInLog(letter + "を" + deleteRecord + "件削除しました。",logWriting.DATEDATE_LOG_FLG);
 		} catch (SQLException e) {

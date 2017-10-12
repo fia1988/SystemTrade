@@ -37,6 +37,7 @@ public class CONTOLLBOTTON {
 		switch (hibiResult){
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
 				//成功時は抜ける
+				s.resetConnection();
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				s.resetConnection();
@@ -543,6 +544,7 @@ public class CONTOLLBOTTON {
 				sepaComCheck.checkSepaComFile(mainDTO,TODAY);
 
 				//分割チェック。
+				s.resetConnection();
 				SEPARATE_CHECK.checkSEPARATE_controll(s);
 
 				//一回でも通ればtrueにする。

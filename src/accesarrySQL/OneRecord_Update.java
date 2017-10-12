@@ -4,8 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import proparty.S;
+
+import common.commonAP;
+
 import constant.COLUMN;
 import constant.ReCord;
+import constant.logWriting;
 
 
 public class OneRecord_Update {
@@ -98,10 +102,12 @@ public class OneRecord_Update {
 //		if(commonAP.getTODAY().equals(controllDay.getMAX_DD_STOCK_ETF(s) )){
 //			return;
 //		}
+
+		commonAP.writeInLog("1行レコードのみで比較できるものの更新開始",logWriting.DATEDATE_LOG_FLG);
 		windowScale(ReCord.CODE_01_STOCK,s);
 		windowScale(ReCord.CODE_03_INDEX,s);
 		windowScale(ReCord.CODE_04_ETF,s);
-
+		commonAP.writeInLog("1行レコードのみで比較できるものの更新終了",logWriting.DATEDATE_LOG_FLG);
 	}
 
 
