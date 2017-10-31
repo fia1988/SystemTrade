@@ -201,6 +201,12 @@ public class cloringDate {
 		//ばら撒き
 		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
 
+		//エリートファイルの作成
+		fileName = LS_TODAY + "_order_STOCK_LIST.csv";
+		createOrderListFile(mainDTO.getEntryFolderPath(),fileName);
+		//ばら撒き
+		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+
 		//有料ユーザー後処理
 		afterDealPayingUser(LS_TODAY);
 	}
@@ -278,6 +284,44 @@ public class cloringDate {
 			+	COLUMN.KOSIN_DAYTIME + " >= " + COLUMN.LIMIT_DAYTIME;
 		s.freeUpdateQuery(SQL);
 
+
+		s.closeConection();
+	}
+
+	//エリートリスト作成
+	public void createOrderListFile(String folderPath,String fileName){
+
+		S s = new S();
+		s.getCon();
+
+		String SQL;
+		String filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileName;
+		String TBL = TBL_Name.ELETE_LIST_TBL;
+
+		filePath = filePath.replace(File.separator,ReturnCodeConst.SQL_SEPA);
+
+		String column =  COLUMN.ENTRYMETHOD							 + " , " //
+						+ COLUMN.EXITMETHOD							 + " ,  " //
+						+ COLUMN.TYPE								 + " , " //
+						+ COLUMN.CODE								 + "   "; //
+
+
+		String heddaColumn =   "'" + COLUMN.ENTRYMETHOD				 + "' , " //
+							+  "'" + COLUMN.EXITMETHOD				 + "' , " //
+							+  "'" + COLUMN.TYPE					 + "' , " //
+							+  "'" + COLUMN.CODE					 + "'  ";  //
+
+		SQL =	" SELECT "
+				+ heddaColumn
+				+ " union "
+				+ " SELECT "
+				+ " " + column + " "
+				+ " FROM " + TBL
+				+	" INTO OUTFILE '" + filePath +  "'"
+				+	" FIELDS TERMINATED BY ','"
+				+	" OPTIONALLY ENCLOSED BY '\"'";
+
+		s.exportFile(SQL);
 
 		s.closeConection();
 	}
@@ -537,15 +581,6 @@ public class cloringDate {
 														ReCord.CODE_02_SATISTICS					,
 														s											);
 
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-		s.resetConnection();
-
-		stockResult = CB.everyDayBottonContoroll	(	mainDTO										,
-														controllDay.getMAX_DD_STOCK_ETF(s) 			,
-														controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
-														ReCord.CODE_01_STOCK						,
-														s											);
 
 		s.resetConnection();
 		//CBのなかを破棄する。メモリ解放
@@ -554,6 +589,16 @@ public class cloringDate {
 														controllDay.getMAX_DD_INDEX(s) 	 			,
 														controllDay.getAJUSTMAXDAY_INDEX(s)			,
 														ReCord.CODE_03_INDEX						,
+														s											);
+
+		//CBのなかを破棄する。メモリ解放
+		CB = new CONTOLLBOTTON();
+		s.resetConnection();
+
+		stockResult = CB.everyDayBottonContoroll	(	mainDTO										,
+														controllDay.getMAX_DD_STOCK_ETF(s) 			,
+														controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
+														ReCord.CODE_01_STOCK						,
 														s											);
 
 

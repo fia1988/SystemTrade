@@ -55,7 +55,7 @@ public class SagyoSpace {
 		paraDTO.setOffEliteFLG();
 		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
-//		paraDTO.setMaxEntryTimes(30);
+		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
 //		System.out.println("【出来高"+ i + "】");
 		//ドルコスト法
@@ -85,7 +85,7 @@ public class SagyoSpace {
 		String folderPath = "C:/Users/NOBORU1988/Dropbox/01.kabu/02.everyDayFile";
 
 //		CD.createKeepListFile(folderPath,fileName);
-		
+
 		//今日のセパコンバインレコードの作成
 		String fileName = "FBSsepaCombine.csv";
 //		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
@@ -103,10 +103,10 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2007-12-31";
-		startDD	=	"2017-07-06";
-		endDD		=	"2017-08-10";
-		startDD	=	"2007-01-04";
-		endDD		=	"2016-12-31";
+		startDD	=	"2017-08-29";
+		endDD		=	"2017-10-13";
+//		startDD	=	"2007-01-04";
+//		endDD		=	"2016-12-31";
 		//一部はここからスタート
 //		startDD	=	"2017-07-18";
 

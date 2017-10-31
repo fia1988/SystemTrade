@@ -295,6 +295,14 @@ public class COLUMN {
 	//信用売り残前日比
 	public static String CREDIT_SHORT_CHANGERATE = "Credit_Short_ChangeRate";
 	public static String CREDIT_SHORT_CHANGERATE_KATA = CREDIT_SHORT_CHANGERATE + " double ";
+
+	//信用買い残前週比
+	public static String CREDIT_LONG_CHANGERATE_W = "Credit_Long_ChangeRate";
+	public static String CREDIT_LONG_CHANGERATE_W_KATA = CREDIT_LONG_CHANGERATE_W + " double ";
+	//信用売り残前週比
+	public static String CREDIT_SHORT_CHANGERATE_W = "Credit_Short_ChangeRate";
+	public static String CREDIT_SHORT_CHANGERATE_W_KATA = CREDIT_SHORT_CHANGERATE_W + " double ";
+
 	//信用倍率前日比
 	public static String CREDIT_RATIO_CHANGERATE = "Credit_Ratio_ChangeRate";
 	public static String CREDIT_RATIO_CHANGERATE_KATA = CREDIT_RATIO_CHANGERATE + " double ";
@@ -630,7 +638,7 @@ public class COLUMN {
 	public static String SIGN_FLG											= "sign_flg";
 	public static String SIGN_FLG_KATA 									= SIGN_FLG + " tinyint(1) ";
 
-	//売買単位
+	//売買単位、単元株
 	public static String VOLUME_UNIT = "volumeUnit";
 	public static String VOLUME_UNIT_KATA = VOLUME_UNIT + " int unsigned  ";
 
@@ -692,6 +700,124 @@ public class COLUMN {
 	//今日の更新日
 	public static String KOSIN_DAYTIME											= "kosin_dayTime";
 	public static String KOSIN_DAYTIME_KATA										= KOSIN_DAYTIME + " DATE not null ";
+
+
+	//この辺はjapan-all-stock-financial-resul
+	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results.csv
+	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results_20171007.csv
+	//決算期
+	public static String KESSAN_TERM_YYYY_MM_STRING						= "KESSAN_TERM_YYYY_MM_STRING";
+	public static String KESSAN_TERM_YYYY_MM_STRING_KATA				= KESSAN_TERM_YYYY_MM_STRING + " varchar(10)";
+
+	//決算発表日
+	public static String YEAR_KESSAN_TIME_YYYYMMDD						= "YEAR_KESSAN_TIME_YYYYMMDD";
+	public static String YEAR_KESSAN_TIME_YYYYMMDD_KATA					= YEAR_KESSAN_TIME_YYYYMMDD + " DATE ";
+
+	//売上高_単位：百万円
+	public static String URIAGE_DAKA_PPT 								= "URIAGE_DAKA_PPT";
+	public static String URIAGE_DAKA_PPT_KATA							= URIAGE_DAKA_PPT + " BIGINT ";
+
+	//営業利益_単位：百万円
+	public static String EIGYO_PROF_PPT 								= "EIGYO_PROF_PPT";
+	public static String EIGYO_PROF_PPT_KATA							= EIGYO_PROF_PPT + " BIGINT  ";
+
+	//経常利益_単位：百万円
+	public static String KEIJO_PROF_PPT 								= "KEIJO_PROF_PPT";
+	public static String KEIJO_PROF_PPT_KATA							= KEIJO_PROF_PPT + " BIGINT  ";
+
+	//当期純利益_単位：百万円
+	public static String BOTTON_LINE_PPT 								= "BOTTON_LINE_PPT";
+	public static String BOTTON_LINE_PPT_KATA							= BOTTON_LINE_PPT + " BIGINT ";
+
+	//総資産_単位：百万円
+	public static String TOTAL_ASSET_PPT 								= "TOTAL_ASSET_PPT";
+	public static String TOTAL_ASSET_PPT_KATA							= TOTAL_ASSET_PPT + " BIGINT ";
+
+	//自己資本_単位：百万円
+	public static String SELF_ASSET_PPT 								= "SELF_ASSET_PPT";
+	public static String SELF_ASSET_PPT_KATA							= SELF_ASSET_PPT + " BIGINT ";
+
+	//資本金_単位：百万円
+	public static String SHIHONKIN_ASSET_PPT 							= "SHIHONKIN_ASSET_PPT";
+	public static String SHIHONKIN_ASSET_PPT_KATA						= SHIHONKIN_ASSET_PPT + " BIGINT ";
+
+	//有利子負債_単位：百万円
+	public static String LOAN_PPT 										= "LOAN_PPT";
+	public static String LOAN_PPT_KATA									= LOAN_PPT + " BIGINT ";
+
+	//自己資本比率
+	public static String SELF_ASSET_WARIAI 								= "SELF_ASSET_WARIAI";
+	public static String SELF_ASSET_WARIAI_KATA 						= SELF_ASSET_WARIAI + " double ";
+
+	//ROE
+	public static String ROE 											= "ROE";
+	public static String ROE_KATA 										= ROE + " double ";
+
+	//ROA
+	public static String ROA 											= "ROA";
+	public static String ROA_KATA 										= ROA + " double ";
+
+
+	//この辺はjapan-all-stock-data_20171031.csv
+	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data_20171031.csv
+	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data.csv
+	//時価総額_単位：百万円
+	public static String MARKET_CAP_PPT									= "Market_Cap_PPT";
+	public static String MARKET_CAP_PPT_KATA							= MARKET_CAP_PPT + " BIGINT unsigned  ";
+
+//	配当利回り
+	public static String DIVIDEND_PER 									= "DIVIDEND_PER";
+	public static String DIVIDEND_PER_KATA 								= DIVIDEND_PER + " double ";
+//	1株配当
+	public static String DIVIDEND 										= "DIVIDEND";
+	public static String DIVIDEND_KATA 									= DIVIDEND + " double ";
+//	PER（予想）
+	public static String PER_YOSO 										= "PER_YOSO";
+	public static String PER_YOSO_KATA 									= PER_YOSO + " double ";
+//	PBR（実績）
+	public static String PBR_REAL 										= "PBR_REAL";
+	public static String PBR_REAL_KATA 									= PBR_REAL + " double ";
+//	EPS（予想）
+	public static String EPS_YOSO 										= "EPS_YOSO";
+	public static String EPS_YOSO_KATA 									= EPS_YOSO + " double ";
+//	BPS（実績）
+	public static String BPS_REAL 										= "BPS_REAL";
+	public static String BPS_REAL_KATA 									= BPS_REAL + " double ";
+//	最低購入額
+	public static String MIN_BUY_PRICE 									= "MIN_BUY_PRICE";
+	public static String MIN_BUY_PRICE_KATA 							= MIN_BUY_PRICE + " double ";
+
+//	高値日付
+	public static String YEAR_MAX_DAY_YYYYMMDD							= "YEAR_MAX_DAY_YYYYMMDD_YYYYMMDD";
+	public static String YEAR_MAX_DAY_YYYYMMDD_KATA						= YEAR_MAX_DAY_YYYYMMDD + " DATE ";
+//	年初来高値
+	public static String YEAR_MAX										= "YEAR_MAX";
+	public static String YEAR_MAX_KATA									= YEAR_MAX + " double unsigned  ";
+//	安値日付
+	public static String YEAR_MIN_DAY_YYYYMMDD							= "YEAR_MIN_DAY_YYYYMMDD_YYYYMMDD";
+	public static String YEAR_MIN_DAY_YYYYMMDD_KATA						= YEAR_MIN_DAY_YYYYMMDD + " DATE ";
+//	年初来安値
+	public static String YEAR_MIN										= "YEAR_min";
+	public static String YEAR_MIN_KATA									= YEAR_MIN + " double unsigned  ";
+
+	//この辺はshareholding-ratio.csv
+	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio.csv
+	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio_20171008.csv
+	//浮動株数比率
+	public static String ANOTHER_STOCK_HOLDER_RATIO						= "ANOTHER_STOCK_HOLDER_RATIO";
+	public static String ANOTHER_STOCK_HOLDER_RATIO_KATA				= ANOTHER_STOCK_HOLDER_RATIO + " double unsigned  ";
+	//少数特定者持株数比率
+	public static String MAJOR_STOCK_HOLDER_RATIO						= "MAJOR_STOCK_HOLDER_RATIO";
+	public static String MAJOR_STOCK_HOLDER_RATIO_KATA					= MAJOR_STOCK_HOLDER_RATIO + " double unsigned  ";
+	//投資信託持株数比率
+	public static String ETF_STOCK_HOLDER_RATIO							= "ETF_STOCK_HOLDER_RATIO";
+	public static String ETF_STOCK_HOLDER_RATIO_KATA					= ETF_STOCK_HOLDER_RATIO + " double unsigned  ";
+	//外国人持株数比率
+	public static String FOREIGNER_STOCK_HOLDER_RATIO					= "FOREIGNER_STOCK_HOLDER_RATIO";
+	public static String FOREIGNER_STOCK_HOLDER_RATIO_KATA				= FOREIGNER_STOCK_HOLDER_RATIO + " double unsigned  ";
+
+	//_単位：百万円
+
 
 
 }
