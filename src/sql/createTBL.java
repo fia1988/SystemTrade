@@ -39,10 +39,163 @@ public class createTBL {
 		createFORCE_S_TBL(s);
 		createPayMemberList_TBL(s);
 		createKICK_FILE_USER_LIST_TBL(s);
+		createFINANCIAL_MM_TBL(s);
+		createINVEST_SIHYO_TBL(s);
 //		createVolumeUnitListTBL(s);
+		createFORRIGN_RATIO_TBL(s);
+		createCREDIT_WW_TBL(s);
 		return createLastOrderTable(s);
 	}
 
+
+	//全上場企業 決算・財務・業績データ
+	//財務諸表データ
+	//japan-all-stock-financial-results_20170107.csv
+	private void createFINANCIAL_MM_TBL(S s){
+		String TBL = TBL_Name.FINANCIAL_MM_TBL;
+//													ROE	ROA	発行済株式数
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = " ( "
+				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+				+ COLUMN.CODE_KATA									 + " , " //銘柄名
+				+ COLUMN.CODENAME_KATA								 + " , " //名称
+				+ COLUMN.KESSAN_TERM_YYYY_MM_STRING_KATA			 + " , " //決算期
+				+ COLUMN.YEAR_KESSAN_TIME_YYYYMMDD_KATA				 + " , " //決算発表日（本決算）
+				+ COLUMN.URIAGE_DAKA_PPT_KATA						 + " , " //売上高（百万円）
+				+ COLUMN.EIGYO_PROF_PPT_KATA						 + " , " //営業利益（百万円）
+				+ COLUMN.KEIJO_PROF_PPT_KATA						 + " , " //経常利益（百万円）
+				+ COLUMN.BOTTOM_LINE_PPT_KATA						 + " , " //当期利益（百万円）
+				+ COLUMN.TOTAL_ASSET_PPT_KATA						 + " , " //総資産（百万円）
+				+ COLUMN.SELF_ASSET_PPT_KATA						 + " , " //自己資本（百万円）
+				+ COLUMN.SHIHONKIN_ASSET_PPT_KATA					 + " , " //資本金（百万円）
+				+ COLUMN.LOAN_PPT_KATA								 + " , " //有利子負債（百万円）
+				+ COLUMN.SELF_ASSET_WARIAI_KATA						 + " , " //自己資本比率
+				+ COLUMN.ROE_KATA									 + " , " //ROE
+				+ COLUMN.ROA_KATA									 + " , " //ROA
+				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済株式数
+				+ "primary key ( "
+				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
+
+		SQL = create + TBL + colum;
+
+		s.createTBL(SQL);
+	}
+
+	//日本株全銘柄 投資指標データ
+	//配当比率とか
+	//japan-all-stock-data.csv
+	private void createINVEST_SIHYO_TBL(S s){
+		String TBL = TBL_Name.INVEST_SIHYO_DD_TBL;
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = " ( "
+				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+				+ COLUMN.CODE_KATA									 + " , " //銘柄名
+				+ COLUMN.CODENAME_KATA								 + " , " //名称
+				+ COLUMN.MARKET_KATA								 + " , " //市場
+				+ COLUMN.CATEGORY_KATA								 + " , " //業種
+				+ COLUMN.MARKET_CAP_PPT_KATA						 + " , " //時価総額（百万円）
+				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済株式数
+				+ COLUMN.DIVIDEND_PER_KATA 							 + " , " //配当利回り
+				+ COLUMN.DIVIDEND_KATA  							 + " , " //1株配当
+				+ COLUMN.PER_YOSO_KATA  							 + " , " //PER（予想）
+				+ COLUMN.PBR_REAL_KATA  							 + " , " //PBR（実績）
+				+ COLUMN.EPS_YOSO_KATA 								 + " , " //EPS（予想）
+				+ COLUMN.BPS_REAL_KATA 								 + " , " //BPS（実績）
+				+ COLUMN.MIN_BUY_PRICE_KATA  						 + " , " //最低購入額
+				+ COLUMN.VOLUME_UNIT_KATA 							 + " , " //単元株
+				+ COLUMN.YEAR_MAX_DAY_YYYYMMDD_KATA 				 + " , " //高値日付
+				+ COLUMN.YEAR_MAX_KATA 								 + " , " //年初来高値
+				+ COLUMN.YEAR_MIN_DAY_YYYYMMDD_KATA 				 + " , " //安値日付
+				+ COLUMN.YEAR_MIN_KATA 								 + " , " //年初来安値
+				+ "primary key ( "
+				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
+
+		SQL = create + TBL + colum;
+
+		s.createTBL(SQL);
+	}
+
+
+	//日本株全銘柄 基本データ
+	//外人保有比率
+	//japan-all-stock-information/
+	private void createFORRIGN_RATIO_TBL(S s){
+		String TBL = TBL_Name.FORRIGN_RATIO_TBL;
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = " ( "
+				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+				+ COLUMN.CODE_KATA									 + " , " //銘柄名
+				+ COLUMN.ANOTHER_STOCK_HOLDER_RATIO_KATA			 + " , " //浮動株数比率
+				+ COLUMN.MAJOR_STOCK_HOLDER_RATIO_KATA				 + " , " //少数特定者持株数比率
+				+ COLUMN.ETF_STOCK_HOLDER_RATIO_KATA				 + " , " //投資信託持株数比率
+				+ COLUMN.FOREIGNER_STOCK_HOLDER_RATIO_KATA			 + " , " //外国人持株数比率
+				+ "primary key ( "
+				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
+
+		SQL = create + TBL + colum;
+
+		s.createTBL(SQL);
+	}
+
+
+	//信用取引残高
+	//	japan-all-stock-margin-transactions.csv
+	private void createCREDIT_WW_TBL(S s){
+		String TBL = TBL_Name.CREDIT_WW_TBL;
+
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		//SQL文の取得
+		String create = "create table ";
+//
+
+		colum = " ( "
+				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+				+ COLUMN.CODE_KATA									 + " , " //銘柄名
+				+ COLUMN.CREDIT_LONG_KATA							 + " , " //信用買残高
+				+ COLUMN.CREDIT_LONG_CHANGERATE_W_KATA				 + " , " //信用買残高前週比
+				+ COLUMN.CREDIT_SHORT_KATA							 + " , " //信用売残高
+				+ COLUMN.CREDIT_SHORT_CHANGERATE_W_KATA				 + " , " //信用売残高前週比
+				+ COLUMN.CREDIT_RATIO_KATA							 + " , " //貸借倍率
+				+ "primary key ( "
+				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
+
+		SQL = create + TBL + colum;
+
+		s.createTBL(SQL);
+
+
+	}
 
 	private void createPayMemberList_TBL(S s){
 		String TBL = TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL;
@@ -66,7 +219,7 @@ public class createTBL {
 
 		SQL = create + TBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 
 	}
@@ -92,7 +245,7 @@ public class createTBL {
 
 		SQL = create + TBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 	}
 
@@ -117,7 +270,7 @@ public class createTBL {
 
 		SQL = create + TBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	private void createPROPARTYLIST(S s){
@@ -133,7 +286,7 @@ public class createTBL {
 				+ COLUMN.ITEMNAME_DESC
 				+ ") values ('" + PROPARTY.FBS_KEY + "' , '"+ PROPARTY.FIRST_SET + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 	}
 
@@ -156,7 +309,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.PROPARTY_TBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	private void createIntervalTime(S s){
@@ -181,7 +334,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.INTERVAL_TIME_TBL + colum;
 
-		int intResult = s.freeUpdateQuery(SQL);
+		int intResult = s.createTBL(SQL);
 
 	}
 
@@ -211,11 +364,11 @@ public class createTBL {
 
 		SQL = create + TBL_Name.ELETE_LIST_TBL + colum;
 
-		int intResult = s.freeUpdateQuery(SQL);
+		int intResult = s.createTBL(SQL);
 
 		SQL = create + TBL_Name.ELETE_LIST_TEST_TBL + colum;
 
-		intResult = s.freeUpdateQuery(SQL);
+		intResult = s.createTBL(SQL);
 	}
 
 	private void createOutPutTable(S s){
@@ -246,7 +399,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.OUT_PUT_LASTORDER + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 
@@ -268,7 +421,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.VOLUME_UNIT_LIST_TBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 
 	}
@@ -301,9 +454,9 @@ public class createTBL {
 
 		SQL = create + TBL_Name.LASTORDER + colum;
 
-		int intResult = s.freeUpdateQuery(SQL);
+		int intResult = s.createTBL(SQL);
 
-		switch (s.freeUpdateQuery(SQL)) {
+		switch (s.createTBL(SQL)) {
 			case ReturnCodeConst.SQL_ERR_0:
 				return nyuryokuCheckResultConst.SUCCESS;
 			case ReturnCodeConst.SQL_ERR_1050:
@@ -347,7 +500,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.KEEPLISTTBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 	}
 
@@ -390,7 +543,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.RESULTHISTROYTBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 	}
 
@@ -419,7 +572,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.SEPARATE_DD + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	//個別銘柄・・・1
@@ -553,7 +706,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.STOCK_DD + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	//統計・・・2
@@ -657,7 +810,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.STATISTICS_DD + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	//指数・・・3
@@ -746,7 +899,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.INDEX_DD + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	//ETF・・・4
@@ -871,7 +1024,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.ETF_DD + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 	//先物・・・5
@@ -899,7 +1052,7 @@ public class createTBL {
 //
 //		SQL = create + TBL_Name.UPDATE_MANAGE + colum;
 //
-//		s.freeUpdateQuery(SQL);
+//		s.createTBL(SQL);
 //
 //		s.closeConection();
 	}
@@ -923,7 +1076,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.UPDATE_MANAGE + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		//初期値の設定
 		SQL = "insert into "
@@ -933,7 +1086,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_STOCK_ETF + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		SQL = "insert into "
 				+ TBL_Name.UPDATE_MANAGE
@@ -942,7 +1095,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_INDEX + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		SQL = "insert into "
 				+ TBL_Name.UPDATE_MANAGE
@@ -951,7 +1104,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_STATISTICS + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		SQL = "insert into "
 				+ TBL_Name.UPDATE_MANAGE
@@ -960,7 +1113,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_CURRENCY + "' , '"+ ReCord.CURRENCY_KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		SQL = "insert into "
 				+ TBL_Name.UPDATE_MANAGE
@@ -969,7 +1122,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_SEPA_CHECK + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		SQL = "insert into "
 				+ TBL_Name.UPDATE_MANAGE
@@ -978,7 +1131,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_COMBINE_CHECK + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 		SQL = "insert into "
 				+ TBL_Name.UPDATE_MANAGE
@@ -987,7 +1140,7 @@ public class createTBL {
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_BACK_UP + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 
 
@@ -1027,7 +1180,7 @@ public class createTBL {
 
 		SQL = create + TBL_Name.CODELISTTBL + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 //		SQL = "insert into "
 //				+ TBL_Name.CODELISTTBL
 //				+ " ( " + COLUMN.CODE
@@ -1035,7 +1188,7 @@ public class createTBL {
 //				+ COLUMN.CODENAME
 //				+ ") values ('" + ReCord.KOSHINBI_STOCK_INDEX + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 //
-//		s.freeUpdateQuery(SQL);
+//		s.createTBL(SQL);
 //
 //		SQL = "insert into "
 //				+ TBL_Name.CODELISTTBL
@@ -1044,7 +1197,7 @@ public class createTBL {
 //				+ COLUMN.CODENAME
 //				+ ") values ('" + ReCord.KOSHINBI_STATISTICS + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 //
-//		s.freeUpdateQuery(SQL);
+//		s.createTBL(SQL);
 
 
 	}
@@ -1160,7 +1313,7 @@ public class createTBL {
 
 		SQL = create + TBLNAME + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 
 	}
 
@@ -1231,7 +1384,7 @@ public class createTBL {
 
 		SQL = create + TBLNAME + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 
@@ -1269,7 +1422,7 @@ public class createTBL {
 
 		SQL = create + TBLNAME + colum;
 
-		s.freeUpdateQuery(SQL);
+		s.createTBL(SQL);
 	}
 
 

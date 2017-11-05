@@ -169,6 +169,67 @@ public class S {
 		return ReturnCodeConst.SQL_ERR_0;
 	}
 
+	//テーブルを作るためのメソッド
+	//中身はfreeUpdateQueryと同じ
+	public static int createTBL(String sql){
+		try {
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+
+
+//			System.out.println("S:普通のテーブル重複");
+			//同じテーブルが存在した以外のエラーの場合以下を処理する。
+			//1062エラーも一応出す
+			switch (e.getErrorCode()) {
+				case ReturnCodeConst.SQL_ERR_1062:
+					commonAP.writeInLog("createTBL：このinsertは実行されない。：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+
+					break;
+				case ReturnCodeConst.SQL_ERR_1050:
+					commonAP.writeInLog("createTBL：このTBLはすでに存在する。：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+					break;
+				default:
+					commonAP.writeInLog("createTBL：" + e.getErrorCode() + ":SQL;" + sql,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
+
+		            StringWriter swB = null;
+		            PrintWriter  pwB = null;
+
+		            swB = new StringWriter();
+		            pwB = new PrintWriter(swB);
+		            e.printStackTrace(pwB);
+		            String traceB = swB.toString();
+		            commonAP.writeInLog(traceB,logWriting.DATEDATE_LOG_FLG);
+
+		            try {
+		                if ( swB != null ) {
+		                    swB.flush();
+		                    swB.close();
+		                }
+		                if ( pwB != null ) {
+		                    pwB.flush();
+		                    pwB.close();
+		                }
+		            } catch (IOException ignore){}
+
+					return e.getErrorCode();
+			}
+
+
+
+
+
+		}
+
+		return ReturnCodeConst.SQL_ERR_0;
+	}
+
+
 	//sql文を入力するとSQLを実行できる。
 	//使い回し可能。
 	//ただし適当なタイミングでS.P_createclose()すべし。

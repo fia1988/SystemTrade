@@ -18,6 +18,23 @@ public class TBL_Name {
 	final public static String TAIL_5Minite    = "_5M";
 	final public static String TAIL_Accessories   = "_AC";
 
+	//全上場企業 決算・財務・業績データ
+	//財務諸表データ
+	//japan-all-stock-financial-results_20170107.csv
+	final public static String FINANCIAL_MM_TBL    = "21_financialTBL" + TAIL_MONTH;
+	//信用取引残高
+	//	japan-all-stock-margin-transactions.csv
+	final public static String CREDIT_WW_TBL    = "22_creditlTBL" + TAIL_WEEK;
+
+	//日本株全銘柄 投資指標データ
+	//配当比率とか
+	//japan-all-stock-data.csv
+	final public static String INVEST_SIHYO_DD_TBL    = "23_INVEST_SIHYO_TBL" + TAIL_DAY;
+
+	//日本株全銘柄 基本データ
+	//外人保有比率
+	//japan-all-stock-information/
+	final public static String FORRIGN_RATIO_TBL    = "24_FORRIGN_RATIO_TBL" + TAIL_MONTH;
 
 	final public static String CODELISTTBL     = "00_codeListTBL";
 

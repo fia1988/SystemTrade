@@ -726,8 +726,8 @@ public class COLUMN {
 	public static String KEIJO_PROF_PPT_KATA							= KEIJO_PROF_PPT + " BIGINT  ";
 
 	//当期純利益_単位：百万円
-	public static String BOTTON_LINE_PPT 								= "BOTTON_LINE_PPT";
-	public static String BOTTON_LINE_PPT_KATA							= BOTTON_LINE_PPT + " BIGINT ";
+	public static String BOTTOM_LINE_PPT 								= "BOTTOM_LINE_PPT";
+	public static String BOTTOM_LINE_PPT_KATA							= BOTTOM_LINE_PPT + " BIGINT ";
 
 	//総資産_単位：百万円
 	public static String TOTAL_ASSET_PPT 								= "TOTAL_ASSET_PPT";
