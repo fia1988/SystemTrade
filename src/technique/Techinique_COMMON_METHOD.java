@@ -38,7 +38,7 @@ public class Techinique_COMMON_METHOD {
 			List<Bean_nowRecord> thisNowDTOList = new ArrayList<>();
 			String cate = SQLChecker.getCate(code, this_s);
 //			String SQL = " select *  from " + SQLChecker.getTBL(cate) + " where " + COLUMN.DAYTIME + " <= '" + dayTime +  "' and " + COLUMN.CODE  + "='" + code +  "' order by daytime desc limit " + size;
-			String SQL = Analysis00_Common.makekabuSQL(code, this_s);
+			String SQL = Analysis00_Common.makekabuSQL(code, this_s,paraDTO,nowDTOList.get(nowDTOadress),resultDTO);
 //			switch(cate){
 //				case ReCord.CODE_01_STOCK:
 //					break;
@@ -133,7 +133,7 @@ public class Techinique_COMMON_METHOD {
 		//			String SQL = " select *  from " + SQLChecker.getTBL(cate) + " where " + COLUMN.DAYTIME + " <= '" + dayTime +  "' and " + COLUMN.CODE  + "='" + code +  "' order by daytime desc limit " + size;
 
 		//			String SQL = Analysis00_Common.makekabuDaySQL(code,startDay,endDay, this_s);
-		String SQL = Analysis00_Common.makekabuSQL(code, s);
+		String SQL = Analysis00_Common.makekabuSQL(code, s,paraDTO,nowDTOList.get(nowDTOadress),resultDTO);
 		String headLetter = "";
 		switch(cate){
 			case ReCord.CODE_01_STOCK:

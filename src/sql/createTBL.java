@@ -124,6 +124,18 @@ public class createTBL {
 				+ COLUMN.YEAR_MAX_KATA 								 + " , " //年初来高値
 				+ COLUMN.YEAR_MIN_DAY_YYYYMMDD_KATA 				 + " , " //安値日付
 				+ COLUMN.YEAR_MIN_KATA 								 + " , " //年初来安値
+				+ COLUMN.MARKET_CAP_PPT_PRE_KATA						 + " , " //時価総額（百万円）_PRE
+				+ COLUMN.STOCK_NUM_PRE_KATA								 + " , " //発行済株式数_PRE
+				+ COLUMN.DIVIDEND_PER_PRE_KATA 							 + " , " //配当利回り_PRE
+				+ COLUMN.DIVIDEND_PRE_KATA  							 + " , " //1株配当_PRE
+				+ COLUMN.PER_YOSO_PRE_KATA  							 + " , " //PER（予想）_PRE
+				+ COLUMN.PBR_REAL_PRE_KATA  							 + " , " //PBR（実績）_PRE
+				+ COLUMN.EPS_YOSO_PRE_KATA 								 + " , " //EPS（予想）_PRE
+				+ COLUMN.BPS_REAL_PRE_KATA 								 + " , " //BPS（実績）_PRE
+				+ COLUMN.YEAR_MAX_DAY_YYYYMMDD_PRE_KATA 				 + " , " //高値日付_PRE
+				+ COLUMN.YEAR_MAX_PRE_KATA 								 + " , " //年初来高値_PRE
+				+ COLUMN.YEAR_MIN_DAY_YYYYMMDD_PRE_KATA 				 + " , " //安値日付_PRE
+				+ COLUMN.YEAR_MIN_PRE_KATA 								 + " , " //年初来安値_PRE
 				+ "primary key ( "
 				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
 
@@ -1142,6 +1154,42 @@ public class createTBL {
 
 		s.createTBL(SQL);
 
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_INVEST + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_CREDIT + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_FORRIGN_RATIO + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_FINANCIAL + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
 
 
 	}

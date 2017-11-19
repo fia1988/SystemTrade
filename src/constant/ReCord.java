@@ -6,9 +6,14 @@ public class ReCord {
 	public static String KOSHINBI_INDEX									= "指数更新日";
 	public static String KOSHINBI_STATISTICS							= "統計更新日";
 	public static String KOSHINBI_CURRENCY								= "通貨更新日";
+	public static String KOSHINBI_FINANCIAL								= "財務データ更新日";
+	public static String KOSHINBI_INVEST								= "投資データ更新日";
+	public static String KOSHINBI_FORRIGN_RATIO								= "株主比率更新日";
+	public static String KOSHINBI_CREDIT								= "信用売買残更新日";
 	public static String KOSHINBI_SEPA_CHECK					= "分割ファイル更新日";
 	public static String KOSHINBI_COMBINE_CHECK					= "併合ファイル更新日";
 	public static String KOSHINBI_BACK_UP						= "バックアップ作成日";
+
 
 	//個別銘柄・・・1
 	//統計・・・2

@@ -10,6 +10,7 @@ import proparty.controllDay;
 import accesarrySQL.SQLChecker;
 import analysis.SagyoSpace;
 import bean.Bean_Parameta;
+import bean.Bean_Proccesing;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
 
@@ -1285,8 +1286,15 @@ public class CheckSign {
 			methodName = S_methodName;
 		}
 
+
+
 		S s = new S();
 		s.getCon();
+
+
+		//ここでファイナンスとか入れる
+		Bean_Proccesing B_PRO = new Bean_Proccesing();
+		B_PRO.proceccingParaDTO(paraDTO, nowDTOList.get(nowDTOadress), resultDTO,s);
 
 		//以下を設定する
 		//resultDTO.setEntryTime

@@ -2,10 +2,12 @@ package analysis;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import proparty.S;
+import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
@@ -15,6 +17,7 @@ import botton.cloringDate;
 
 import common.commonAP;
 
+import constant.COLUMN;
 import constant.ReCord;
 import constant.TechCon;
 import constant.logWriting;
@@ -77,6 +80,54 @@ public class SagyoSpace {
 		shokisettei(paraDTO, nowDTO, resultDTO);
 		paraDTO.setCheckRenzokuSign(false);
 
+	}
+
+	public static void testCase80(){
+		S s = new S();
+		s.getCon();
+		Bean_nowRecord nowDTO= new Bean_nowRecord ();
+		String SQL = " select * from " + TBL_Name.FINANCIAL_MM_TBL
+				+ " where  "
+				+ " ( "
+				+ COLUMN.CODENAME								 + " is not null and " //名称
+				+ COLUMN.KESSAN_TERM_YYYY_MM_STRING			 + " is not null and " //決算期
+				+ COLUMN.YEAR_KESSAN_TIME_YYYYMMDD				 + " is not null and " //決算発表日（本決算）
+				+ COLUMN.URIAGE_DAKA_PPT						 + " is not null and " //売上高（百万円）
+				+ COLUMN.EIGYO_PROF_PPT						 + " is not null and " //営業利益（百万円）
+				+ COLUMN.KEIJO_PROF_PPT						 + " is not null and " //経常利益（百万円）
+				+ COLUMN.BOTTOM_LINE_PPT						 + " is not null and " //当期利益（百万円）
+				+ COLUMN.TOTAL_ASSET_PPT						 + " is not null and " //総資産（百万円）
+				+ COLUMN.SELF_ASSET_PPT						 + " is not null and " //自己資本（百万円）
+				+ COLUMN.SHIHONKIN_ASSET_PPT					 + " is not null and " //資本金（百万円）
+				+ COLUMN.LOAN_PPT								 + " is not null and " //有利子負債（百万円）
+				+ COLUMN.SELF_ASSET_WARIAI						 + " is not null and " //自己資本比率
+				+ COLUMN.ROE									 + " is not null and " //ROE
+				+ COLUMN.ROA									 + " is not null and " //ROA
+				+ COLUMN.STOCK_NUM
+				+ " ) "
+				;
+		System.out.println(SQL);
+		try {
+			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs2.next() ) {
+
+//				nowDTO.setCode_01(s.rs2.getString(	  COLUMN.TOTAL_ASSET_PPT		));
+//				System.out.println(nowDTO.getCode_01());
+//
+//				nowDTO.setTotal_asset_ppt(s.rs2.getInt(	  COLUMN.TOTAL_ASSET_PPT		));
+//				System.out.println(nowDTO.getTotal_asset_ppt());
+//
+//				if (nowDTO.getTotal_asset_ppt()==0){
+//					System.out.println("aaaaaaaaaaaaaaaaa");
+//				}
+//				nowDTOList.add(	setNowRecord(code,cate,s.rs2,paraDTO)	);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		s.closeConection();
 	}
 
 	public static void testCase77(){

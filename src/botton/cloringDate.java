@@ -6,7 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import makekickfile.Digest;
 import proparty.PROPARTY;
@@ -643,6 +645,34 @@ public class cloringDate {
 	}
 
 
+	//財務データとかを落とす
+	//URLで指定したCSVファイルを指定したフォルダに指定した名前でダウンロードする。
+	//パスワードが求められるページではない場合、パスワードをスキップする。（オーバーロードでもいいかも）
+	//"-"をnullに変える
+	//行の先頭に日付を入れる
+	private void financialCredit(TAB_MainDTO mainDTO,String TBL,String TODAY,String URL,String urlID,String urlPASS,String folderPath,String fileName){
+		commonAP cAP = new commonAP();
+		String lastUpDateDay = "";
+		//String"yyyy-mm-dd"できた日付を分割
+		String[] lastUpDateDay_SPRIT = lastUpDateDay.split("-");
+
+		//今日の日付をカレンダーにいれまーす。
+		//月だけ0 ＝ 1月
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Integer.parseInt(lastUpDateDay_SPRIT[0]), Integer.parseInt(lastUpDateDay_SPRIT[1]) - 1, Integer.parseInt(lastUpDateDay_SPRIT[2]));
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+
+
+		calendar.add(Calendar.DAY_OF_MONTH, +1);
+		lastUpDateDay = sdf1.format(calendar.getTime());
+
+		while(cAP.checkDay(TODAY, lastUpDateDay)){
+
+			calendar.add(Calendar.DAY_OF_MONTH, +1);
+			lastUpDateDay = sdf1.format(calendar.getTime());
+
+		}
+	}
 
 	//今日の注文をログファイルとして出力
 	private int outPutKeepTable(double oneShotMoney,String folderPath){

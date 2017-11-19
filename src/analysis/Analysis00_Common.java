@@ -13,6 +13,7 @@ import proparty.controllDay;
 import technique.Technique98_CONST;
 import accesarrySQL.SQLChecker;
 import bean.Bean_Parameta;
+import bean.Bean_Proccesing;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
 
@@ -102,7 +103,7 @@ public class Analysis00_Common {
 		//全銘柄でループする
 		for (int i=0;i<commonAP.getCodeList().size();i++){
 			String code = commonAP.getCodeList().get(i)[0];
-			String SQL = makekabuSQL(code,startDay,s);
+			String SQL = makekabuSQL(code,startDay,s,paraDTO,nowDTO,resultDTO);
 			Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, SQL, s);
 
 		}
@@ -124,6 +125,7 @@ public class Analysis00_Common {
 		s.closeConection();
 		s = new S();
 		s.getCon();
+
 
 
 		//全銘柄をリストに入れる
@@ -156,7 +158,7 @@ public class Analysis00_Common {
 				resultDTO.setMaxInterValTime(	Integer.parseInt(codeListwithiCate.get(i)[4])	);
 				paraDTO.setMaxLoss			(	Double.parseDouble(codeListwithiCate.get(i)[5])	);
 			}
-			String SQL = makekabuSQL(code,startDay,endDay,s);
+			String SQL = makekabuSQL(code,startDay,endDay,s,paraDTO,nowDTO,resultDTO);
 			Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, SQL, s);
 
 		}
@@ -179,7 +181,7 @@ public class Analysis00_Common {
 	//引数10:コード
 	//引数11:s
 	public static int Analysis_COMMON(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,String code,S s){
-		return Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, makekabuSQL(code,s), s);
+		return Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, makekabuSQL(code,s,paraDTO,nowDTO,resultDTO), s);
 	}
 
 	//引数1:買いメソッドのパッケージ名
@@ -195,11 +197,11 @@ public class Analysis00_Common {
 	//引数11:開始日
 	//引数12:s
 	public static void Analysis_COMMON(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,String code,String startDay,S s){
-		Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, makekabuSQL(code,startDay,s), s);
+		Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, makekabuSQL(code,startDay,s,paraDTO,nowDTO,resultDTO), s);
 	}
 
 	public static void Analysis_COMMON(String L_packageName,String L_className,String L_methodName,String S_packageName,String S_className,String S_methodName,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO,String code,String startDay,String endDay,S s){
-		Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, makekabuSQL(code,startDay,endDay,s), s);
+		Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, makekabuSQL(code,startDay,endDay,s,paraDTO,nowDTO,resultDTO), s);
 	}
 
 
@@ -220,6 +222,11 @@ public class Analysis00_Common {
 		String cate = SQLChecker.getCate(code,s);
 
 		//リストのクリア
+		//paraDTOにセットするテーブル用のメソッドを取得する。
+
+		//ここでファイナンスとか入れる
+		Bean_Proccesing B_PRO = new Bean_Proccesing();
+		B_PRO.proceccingParaDTO(paraDTO, nowDTO, resultDTO,s);
 
 		int check_L_method_result;
 		int check_S_method_result;
@@ -450,11 +457,14 @@ public class Analysis00_Common {
 	//02_statistics_dd c
 	//株：日経平均、JASDAC平均、なんちゃら400
 	//指数：自己結合；日経平均、JASDAC平均、なんちゃら400
-	public static String makekabuSQL(String code,S s){
+	public static String makekabuSQL(String code,S s,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
 
 		String cate = SQLChecker.getCate(code,s);
 
 		String SQL = " select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'";
+
+		//ここをなおす
+//		 select * from 01_STOCK_DD b left outer join 21_financialTBL_MM a  on  a.daytime = b.daytime  where left(b.code,4) = '1518' and  ( a.codeName is not null and a.KESSAN_TERM_YYYY_MM_STRING is not null and a.YEAR_KESSAN_TIME_YYYYMMDD is not null and a.URIAGE_DAKA_PPT is not null and a.EIGYO_PROF_PPT is not null and a.KEIJO_PROF_PPT is not null and a.BOTTOM_LINE_PPT is not null and a.TOTAL_ASSET_PPT is not null and a.SELF_ASSET_PPT is not null and a.SHIHONKIN_ASSET_PPT is not null and a.LOAN_PPT is not null and a.SELF_ASSET_WARIAI is not null and a.ROE is not null and a.ROA is not null and a.STOCK_NUM )
 
 		//株の時だけ挙動が違う
 		switch(cate){
@@ -577,7 +587,7 @@ public class Analysis00_Common {
 
 
 
-	public static String makekabuSQL(String code,String startDay,S s){
+	public static String makekabuSQL(String code,String startDay,S s,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
 		String cate = SQLChecker.getCate(code,s);
 
 
@@ -585,7 +595,7 @@ public class Analysis00_Common {
 //				+ " and "
 //				+ COLUMN.DAYTIME + " >= '" + startDay + "'";
 
-		String SQL = makekabuSQL(code,s) + " and "+ COLUMN.DAYTIME + " >= '" + startDay + "'";
+		String SQL = makekabuSQL(code,s,paraDTO,nowDTO,resultDTO) + " and "+ COLUMN.DAYTIME + " >= '" + startDay + "'";
 
 
 		switch(cate){
@@ -598,7 +608,7 @@ public class Analysis00_Common {
 //						+	" on " + ReCord.CODELIST_B +  "." + COLUMN.CATEGORY  + "= " + ReCord.STATISTICS_DD_C + "." +  COLUMN.CODE + " and  " + ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " = " + ReCord.STATISTICS_DD_C +"." + COLUMN.DAYTIME
 //						+	" where " + ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' and " +ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " >= '" + startDay + "'";
 
-				SQL = makekabuSQL(code,s) + " and " +	ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " >= '" + startDay + "'";
+				SQL = makekabuSQL(code,s,paraDTO,nowDTO,resultDTO) + " and " +	ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " >= '" + startDay + "'";
 //				SQL = makekabuSQL(code,s) + " and "+ COLUMN.DAYTIME + " >= '" + startDay + "'";
 				break;
 			case ReCord.CODE_02_SATISTICS:
@@ -609,7 +619,7 @@ public class Analysis00_Common {
 				break;
 			case ReCord.CODE_04_ETF:
 
-				SQL = makekabuSQL(code,s) + " and " +	ReCord.ETF_DD_E + "." + COLUMN.DAYTIME + " >= '" + startDay + "'";
+				SQL = makekabuSQL(code,s,paraDTO,nowDTO,resultDTO) + " and " +	ReCord.ETF_DD_E + "." + COLUMN.DAYTIME + " >= '" + startDay + "'";
 //				SQL = " select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'"
 //						+ " and "
 //						+ COLUMN.DAYTIME + " >= '" + startDay + "'";
@@ -626,7 +636,7 @@ public class Analysis00_Common {
 		return  SQL;
 	}
 
-	public static String makekabuSQL(String code,String startDay,String endDay,S s){
+	public static String makekabuSQL(String code,String startDay,String endDay,S s,Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
 		String cate = SQLChecker.getCate(code,s);
 
 		String SQL=" select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'"
@@ -635,12 +645,12 @@ public class Analysis00_Common {
 				+ " and "
 				+ COLUMN.DAYTIME + " >= '" + startDay + "'";
 
-		SQL = makekabuSQL(code,startDay,s) + " and "+ "'" +  endDay + "' >= " + COLUMN.DAYTIME + "";
+		SQL = makekabuSQL(code,startDay,s,paraDTO,nowDTO,resultDTO) + " and "+ "'" +  endDay + "' >= " + COLUMN.DAYTIME + "";
 
 
 		switch(cate){
 			case ReCord.CODE_01_STOCK:
-				SQL = makekabuSQL(code,startDay,s) + " and "	+ "'" +  endDay + "' >= " + ReCord.STOCK_TBK_DD_A +"." + COLUMN.DAYTIME + "";
+				SQL = makekabuSQL(code,startDay,s,paraDTO,nowDTO,resultDTO) + " and "	+ "'" +  endDay + "' >= " + ReCord.STOCK_TBK_DD_A +"." + COLUMN.DAYTIME + "";
 				break;
 			case ReCord.CODE_02_SATISTICS:
 
@@ -649,7 +659,7 @@ public class Analysis00_Common {
 
 				break;
 			case ReCord.CODE_04_ETF:
-				SQL = makekabuSQL(code,startDay,s) + " and "	+ "'" +  endDay + "' >= " + ReCord.ETF_DD_E +"." + COLUMN.DAYTIME + "";
+				SQL = makekabuSQL(code,startDay,s,paraDTO,nowDTO,resultDTO) + " and "	+ "'" +  endDay + "' >= " + ReCord.ETF_DD_E +"." + COLUMN.DAYTIME + "";
 				break;
 			case ReCord.CODE_05_SAKIMONO:
 				break;
@@ -2263,5 +2273,8 @@ public class Analysis00_Common {
 		}
 		return nowDTO;
 	}
+
+
+
 
 }

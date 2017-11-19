@@ -111,6 +111,9 @@ public class COLUMN {
 	//発行済み株式数
 	public static String STOCK_NUM 											= "STOCK_NUM";
 	public static String STOCK_NUM_KATA										= STOCK_NUM + " BIGINT unsigned  ";
+	//発行済み株式数
+	public static String STOCK_NUM_PRE 										= "STOCK_NUM_PRE";
+	public static String STOCK_NUM_PRE_KATA									= STOCK_NUM_PRE + " BIGINT unsigned  ";
 	//時価総額
 	public static String MARKET_CAP											= "Market_Cap";
 	public static String MARKET_CAP_KATA									= MARKET_CAP + " BIGINT unsigned  ";
@@ -757,7 +760,57 @@ public class COLUMN {
 	public static String ROA 											= "ROA";
 	public static String ROA_KATA 										= ROA + " double ";
 
+	//決算期
+	public static String KESSAN_TERM_YYYY_MM_STRING_PRE						= "KESSAN_TERM_YYYY_MM_STRING_PRE";
+	public static String KESSAN_TERM_YYYY_MM_STRING_PRE_KATA				= KESSAN_TERM_YYYY_MM_STRING_PRE + " varchar(10)";
 
+	//決算発表日
+	public static String YEAR_KESSAN_TIME_YYYYMMDD_PRE						= "YEAR_KESSAN_TIME_YYYYMMDD_PRE";
+	public static String YEAR_KESSAN_TIME_YYYYMMDD_PRE_KATA					= YEAR_KESSAN_TIME_YYYYMMDD_PRE + " DATE ";
+
+	//売上高_単位：百万円
+	public static String URIAGE_DAKA_PPT_PRE 								= "URIAGE_DAKA_PPT_PRE";
+	public static String URIAGE_DAKA_PPT_PRE_KATA							= URIAGE_DAKA_PPT_PRE + " BIGINT ";
+
+	//営業利益_単位：百万円
+	public static String EIGYO_PROF_PPT_PRE 								= "EIGYO_PROF_PPT_PRE";
+	public static String EIGYO_PROF_PPT_PRE_KATA							= EIGYO_PROF_PPT_PRE + " BIGINT  ";
+
+	//経常利益_単位：百万円
+	public static String KEIJO_PROF_PPT_PRE 								= "KEIJO_PROF_PPT_PRE";
+	public static String KEIJO_PROF_PPT_PRE_KATA							= KEIJO_PROF_PPT_PRE + " BIGINT  ";
+
+	//当期純利益_単位：百万円
+	public static String BOTTOM_LINE_PPT_PRE 								= "BOTTOM_LINE_PPT_PRE";
+	public static String BOTTOM_LINE_PPT_PRE_KATA							= BOTTOM_LINE_PPT_PRE + " BIGINT ";
+
+	//総資産_単位：百万円
+	public static String TOTAL_ASSET_PPT_PRE 								= "TOTAL_ASSET_PPT_PRE";
+	public static String TOTAL_ASSET_PPT_PRE_KATA							= TOTAL_ASSET_PPT_PRE + " BIGINT ";
+
+	//自己資本_単位：百万円
+	public static String SELF_ASSET_PPT_PRE 								= "SELF_ASSET_PPT_PRE";
+	public static String SELF_ASSET_PPT_PRE_KATA							= SELF_ASSET_PPT_PRE + " BIGINT ";
+
+	//資本金_単位：百万円
+	public static String SHIHONKIN_ASSET_PPT_PRE 							= "SHIHONKIN_ASSET_PPT_PRE";
+	public static String SHIHONKIN_ASSET_PPT_PRE_KATA						= SHIHONKIN_ASSET_PPT_PRE + " BIGINT ";
+
+	//有利子負債_単位：百万円
+	public static String LOAN_PPT_PRE 										= "LOAN_PPT_PRE";
+	public static String LOAN_PPT_PRE_KATA									= LOAN_PPT_PRE + " BIGINT ";
+
+	//自己資本比率
+	public static String SELF_ASSET_WARIAI_PRE 								= "SELF_ASSET_WARIAI_PRE";
+	public static String SELF_ASSET_WARIAI_PRE_KATA 						= SELF_ASSET_WARIAI_PRE + " double ";
+
+	//ROE
+	public static String ROE_PRE 											= "ROE_PRE";
+	public static String ROE_PRE_KATA 										= ROE_PRE + " double ";
+
+	//ROA
+	public static String ROA_PRE 											= "ROA_PRE";
+	public static String ROA_PRE_KATA 										= ROA_PRE + " double ";
 	//この辺はjapan-all-stock-data_20171031.csv
 	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data_20171031.csv
 	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data.csv
@@ -786,7 +839,6 @@ public class COLUMN {
 //	最低購入額
 	public static String MIN_BUY_PRICE 									= "MIN_BUY_PRICE";
 	public static String MIN_BUY_PRICE_KATA 							= MIN_BUY_PRICE + " double ";
-
 //	高値日付
 	public static String YEAR_MAX_DAY_YYYYMMDD							= "YEAR_MAX_DAY_YYYYMMDD_YYYYMMDD";
 	public static String YEAR_MAX_DAY_YYYYMMDD_KATA						= YEAR_MAX_DAY_YYYYMMDD + " DATE ";
@@ -799,6 +851,45 @@ public class COLUMN {
 //	年初来安値
 	public static String YEAR_MIN										= "YEAR_min";
 	public static String YEAR_MIN_KATA									= YEAR_MIN + " double unsigned  ";
+
+
+	//時価総額_単位：百万円
+	public static String MARKET_CAP_PPT_PRE									= "Market_Cap_PPT_PRE";
+	public static String MARKET_CAP_PPT_PRE_KATA							= MARKET_CAP_PPT_PRE + " BIGINT unsigned  ";
+
+//	配当利回り
+	public static String DIVIDEND_PER_PRE 									= "DIVIDEND_PER_PRE";
+	public static String DIVIDEND_PER_PRE_KATA 								= DIVIDEND_PER_PRE + " double ";
+//	1株配当
+	public static String DIVIDEND_PRE 										= "DIVIDEND_PRE";
+	public static String DIVIDEND_PRE_KATA 									= DIVIDEND_PRE + " double ";
+//	PER（予想）
+	public static String PER_YOSO_PRE 										= "PER_YOSO_PRE";
+	public static String PER_YOSO_PRE_KATA 									= PER_YOSO_PRE + " double ";
+//	PBR（実績）
+	public static String PBR_REAL_PRE 										= "PBR_REAL_PRE";
+	public static String PBR_REAL_PRE_KATA 									= PBR_REAL_PRE + " double ";
+//	EPS（予想）
+	public static String EPS_YOSO_PRE 										= "EPS_YOSO_PRE";
+	public static String EPS_YOSO_PRE_KATA 									= EPS_YOSO_PRE + " double ";
+//	BPS（実績）
+	public static String BPS_REAL_PRE 										= "BPS_REAL_PRE";
+	public static String BPS_REAL_PRE_KATA 									= BPS_REAL_PRE + " double ";
+//	最低購入額
+	public static String MIN_BUY_PRICE_PRE 									= "MIN_BUY_PRICE_PRE";
+	public static String MIN_BUY_PRICE_PRE_KATA 							= MIN_BUY_PRICE_PRE + " double ";
+//	高値日付
+	public static String YEAR_MAX_DAY_YYYYMMDD_PRE							= "YEAR_MAX_DAY_YYYYMMDD_YYYYMMDD_PRE";
+	public static String YEAR_MAX_DAY_YYYYMMDD_PRE_KATA						= YEAR_MAX_DAY_YYYYMMDD_PRE + " DATE ";
+//	年初来高値
+	public static String YEAR_MAX_PRE										= "YEAR_MAX_PRE";
+	public static String YEAR_MAX_PRE_KATA									= YEAR_MAX_PRE + " double unsigned  ";
+//	安値日付
+	public static String YEAR_MIN_DAY_YYYYMMDD_PRE							= "YEAR_MIN_DAY_YYYYMMDD_YYYYMMDD_PRE";
+	public static String YEAR_MIN_DAY_YYYYMMDD_PRE_KATA						= YEAR_MIN_DAY_YYYYMMDD_PRE + " DATE ";
+//	年初来安値
+	public static String YEAR_MIN_PRE										= "YEAR_min_PRE";
+	public static String YEAR_MIN_PRE_KATA									= YEAR_MIN_PRE + " double unsigned  ";
 
 	//この辺はshareholding-ratio.csv
 	//https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio.csv
