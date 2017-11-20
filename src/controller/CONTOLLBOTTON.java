@@ -26,6 +26,11 @@ import createTBL.GetCodeTBL;
 
 public class CONTOLLBOTTON {
 
+	//投資情報テーブル
+	public void proccesingInvestTBL(S s){
+
+	}
+
 	public int everyDayBottonContoroll(TAB_MainDTO mainDTO,String MAXDAY ,String TODAY,String cate,S s){
 
 

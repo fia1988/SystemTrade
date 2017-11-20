@@ -21,10 +21,18 @@ public class ReCord {
 	//ETF・・・4
 	//先物・・・5
 	//通貨・・・6
+	//財務情報・・・21
+	//信用売買残・・・22
+	//投資情報・・・23
+	//外国人保有比率・・・24
 	public static final String CODE_01_STOCK = "1";
 	public static final String CODE_02_SATISTICS = "2";
 	public static final String CODE_03_INDEX = "3";
 	public static final String CODE_04_ETF = "4";
+	public static final String CODE_21_FINANCIAL = "21";
+	public static final String CODE_22_CREDIT = "22";
+	public static final String CODE_23_INVEST = "23";
+	public static final String CODE_24_FORRIGN_RATIO = "24";
 	public static final String CODE_05_SAKIMONO = "5";
 	public static final String CODE_06_CURRENCY = "6";
 	public static final String CODE_99_ALLTYPE = "99";
