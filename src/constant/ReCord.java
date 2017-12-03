@@ -37,6 +37,19 @@ public class ReCord {
 	public static final String CODE_06_CURRENCY = "6";
 	public static final String CODE_99_ALLTYPE = "99";
 
+	//へそのごまのファイルのアレ
+	//株
+	public static final String CODE_HESO_01_STOCK = "1111";
+	//投資情報
+	public static final String CODE_HESO_02_INVEST = "2222";
+	//財務情報
+	public static final String CODE_HESO_03_FINANCE = "3333";
+	//保有比率
+	public static final String CODE_HESO_04_RATIO = "4444";
+	//信用残高
+	public static final String CODE_HESO_05_CREDIT = "5555";
+
+
 	 //01_stock_dd a
 	 //00_codelisttbl b
 	 //02_statistics_dd c

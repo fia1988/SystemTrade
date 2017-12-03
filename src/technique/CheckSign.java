@@ -1294,7 +1294,7 @@ public class CheckSign {
 
 		//ここでファイナンスとか入れる
 		Bean_Proccesing B_PRO = new Bean_Proccesing();
-		B_PRO.proceccingParaDTO(paraDTO,  resultDTO,s);
+		B_PRO.proceccingParaDTO(paraDTO,  resultDTO,code,s);
 
 		//以下を設定する
 		//resultDTO.setEntryTime

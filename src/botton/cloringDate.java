@@ -1,14 +1,14 @@
 package botton;
 
+import hesoGomaEdit.editHesogomaFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import makekickfile.Digest;
 import proparty.PROPARTY;
@@ -131,7 +131,6 @@ public class cloringDate {
 		//backUp開始
 		backUpLogic(mainDTO,LS_TODAY,checkDay);
 
-
 		stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
 
@@ -177,45 +176,197 @@ public class cloringDate {
 		}
 	}
 
+	//Lファイル
+	//2017-06-20_L.csv
+	private final String L_FILE = "_L.csv";
+	//Sファイル
+	//2017-06-20_S.csv
+	private final String S_FILE = "_S.csv";
+	//今日のセパコンバインレコードの作成
+	private final String FBSsepaCombine = "FBSsepaCombine.csv";
+	//キックファイル,FBS_KICK_2017-07-31.fbs
+	private final String YYYY_MM_DD_FBS_KICK = "_FBS_KICK" + ".fbs";
+	//保有銘柄一覧作成
+	private final String YYYY_MM_DD_FIAS_KEEP = "_fias_keep.csv";
+	//エリートファイルの作成
+	private final String YYYY_MM_DD_ORDER_STOCK_LIST = "_order_STOCK_LIST.csv";
 
+	private boolean createFiasFiles(TAB_MainDTO mainDTO,String TODAY,String LS_TODAY){
+
+		//LSファイルばらまき
+		//全てのユーザーにばら撒く必要がある。ただし有料ユーザーはタイミングはずらすが全員に配る
+		//これだけクリエイトはもう済んでいる。
+
+
+
+		String fileName = TODAY + YYYY_MM_DD_FBS_KICK;
+		//暗号化ファイル作成（キックファイル）
+		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
+
+
+		//保有銘柄一覧作成
+		fileName = LS_TODAY + YYYY_MM_DD_FIAS_KEEP;
+		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
+
+		//エリートファイルの作成
+		fileName = LS_TODAY + YYYY_MM_DD_ORDER_STOCK_LIST;
+		createOrderListFile(mainDTO.getEntryFolderPath(),fileName);
+
+
+		//今日のセパコンバインレコードの作成
+		//作った後にフォルダから消す処理が必要
+		//作成に成功したらtrue
+		//作成しない場合はfalse
+		fileName = FBSsepaCombine;
+		return createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+
+
+	}
+
+	//true：我々
+	//false:客
+	private void distributeFile_SUPER_USER(TAB_MainDTO mainDTO,String TODAY,String LS_TODAY,boolean judge,boolean FBSsepaCombineJudge){
+
+		//今日のセパコンバインレコードのばら撒き
+		//作った後にフォルダから消す処理が必要
+		String fileName = FBSsepaCombine;
+		if (FBSsepaCombineJudge){
+			distributeFile(TODAY,mainDTO.getEntryFolderPath(),fileName,judge);
+		}
+
+
+		//暗号化ファイル（キックファイル）のばら撒き
+        fileName = TODAY + YYYY_MM_DD_FBS_KICK;
+        distributeFile(TODAY,mainDTO.getEntryFolderPath(),fileName,judge);
+
+		//保有銘柄一覧のばら撒き
+		fileName = LS_TODAY + YYYY_MM_DD_FIAS_KEEP;
+		distributeFile(TODAY,mainDTO.getEntryFolderPath(),fileName,judge);
+
+		//エリートファイルのばら撒き
+		fileName = LS_TODAY + YYYY_MM_DD_ORDER_STOCK_LIST;
+		distributeFile(TODAY,mainDTO.getEntryFolderPath(),fileName,judge);
+
+		//LSファイルばらまき
+		//Lファイルのばら撒き
+		if (judge){
+			fileName = LS_TODAY + L_FILE;
+			distributeFile(TODAY,mainDTO.getEntryFolderPath(),fileName,judge);
+			//Sファイルのばら撒き
+			fileName = LS_TODAY + S_FILE;
+			distributeFile(TODAY,mainDTO.getEntryFolderPath(),fileName,judge);
+		}else{
+			fileName = LS_TODAY + L_FILE;
+			commonAP.writeInLog(fileName + "を管理者以外の各フォルダにばらまきます。",logWriting.DATEDATE_LOG_FLG);
+			copyL_S_File_for_PAY_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+			commonAP.writeInLog(fileName + "を管理者以外の各フォルダにばらまきました。",logWriting.DATEDATE_LOG_FLG);
+			fileName = LS_TODAY + S_FILE;
+			commonAP.writeInLog(fileName + "を管理者以外の各フォルダにばらまきます。",logWriting.DATEDATE_LOG_FLG);
+			copyL_S_File_for_PAY_USER(TODAY,mainDTO.getEntryFolderPath(),fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+			commonAP.writeInLog(fileName + "を管理者以外の各フォルダにばらまきました。",logWriting.DATEDATE_LOG_FLG);
+//			ArrayList<String> array = new ArrayList<String>();
+//
+//		    array.add("東京");
+//		    int last = array.lastIndexOf("東京");
+//		    if (last != -1){
+//		      System.out.println("最後のインデックス番号は " + last);
+//		    }
+//			select kick_file_user from 88_kickfileuserfolderlisttbl union select kick_file_user from 87_kickfilepayinguserfolderlisttbl
+		}
+
+	}
+
+
+	//true：我々
+	//false:客
+	private void distributeFile(String TODAY,String folderPath,String fileName,boolean checkFLG){
+		commonAP.writeInLog(fileName + "を各フォルダにばらまきます。",logWriting.DATEDATE_LOG_FLG);
+		if (checkFLG) {
+			//true
+			//ばら撒き、ただし無料ユーザーのみ
+			copyFile_for_KICK_USER(TODAY,folderPath,fileName,TBL_Name.KICK_FILE_USER_LIST_TBL);
+		}else{
+			//false
+			//有料ユーザーユーザー分のばら撒き
+			copyFile_for_KICK_USER(TODAY,folderPath,fileName,TBL_Name.KICK_FILE_PAYING_USER_LIST_TBL);
+		}
+		commonAP.writeInLog(fileName + "を各フォルダにばらまきました。",logWriting.DATEDATE_LOG_FLG);
+	}
 	//LSファイルばら撒き、FBS用ファイルのばら撒きとか
 	private void fileCOPY(TAB_MainDTO mainDTO,String TODAY,String LS_TODAY){
 
-		//LSファイルばら撒き
-		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),true);
-		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),false);
+		//ファイルを作る
+		boolean resultSepaCombineCreateFile = createFiasFiles(mainDTO,TODAY,LS_TODAY);
 
-		//今日のセパコンバインレコードの作成
-		String fileName = "FBSsepaCombine.csv";
-		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+		//特権階級
+		commonAP.writeInLog("管理者にファイルをばらまきます",logWriting.DATEDATE_LOG_FLG);
+		distributeFile_SUPER_USER(mainDTO,TODAY,LS_TODAY,true,resultSepaCombineCreateFile);
+		commonAP.writeInLog("管理者のファイルをばらまきおえました",logWriting.DATEDATE_LOG_FLG);
 
-		//FBS_KICK_2017-07-31.fbs
-//        fileName = "FBS_KICK_" + TODAY + ".fbs";
-        fileName = TODAY + "_FBS_KICK" + ".fbs";
-		//暗号化ファイル作成（キックファイル）
-		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
-		//ばら撒き
-		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+		//有料会員は管理者よりあとに動かす
+		int sleepTime = 3600 * 1500 * 1;
+		commonAP.writeInLog(sleepTime + "ミリ秒停止します。",logWriting.DATEDATE_LOG_FLG);
+		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 
-		//保有銘柄一覧作成
-		fileName = LS_TODAY + "_fias_keep.csv";
-		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
-		//ばら撒き
-		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
-
-		//エリートファイルの作成
-		fileName = LS_TODAY + "_order_STOCK_LIST.csv";
-		createOrderListFile(mainDTO.getEntryFolderPath(),fileName);
-		//ばら撒き
-		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
-
+		//有料会員、たっぷり時間をかける
+		commonAP.writeInLog("お客様にファイルをばらまきます",logWriting.DATEDATE_LOG_FLG);
+		distributeFile_SUPER_USER(mainDTO,TODAY,LS_TODAY,false,resultSepaCombineCreateFile);
+		commonAP.writeInLog("お客様のファイルをばらまきおえました",logWriting.DATEDATE_LOG_FLG);
+		//あとで削除する必要のあるファイルは削除する。
+		if (resultSepaCombineCreateFile){
+			String fileName = FBSsepaCombine;
+			String filePath = mainDTO.getEntryFolderPath() + ReturnCodeConst.SQL_SEPA + fileName;
+			filePath = filePath.replace(File.separator,ReturnCodeConst.SQL_SEPA);
+			//作ったファイルの削除
+	        File file = new File(filePath);
+	        if(file.delete()){
+	        	//成功
+	        	commonAP.writeInLog(file + "の削除に成功しました。",logWriting.DATEDATE_LOG_FLG);
+	        }else{
+	        	//失敗
+	        	commonAP.writeInLog(file + "の削除に失敗しました。",logWriting.DATEDATE_LOG_FLG);
+	        }
+		}
 		//有料ユーザー後処理
 		afterDealPayingUser(LS_TODAY);
+
+
+//		//LSファイルばら撒き
+//		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),true);
+//		copyParsonalFolder(LS_TODAY,mainDTO.getEntryFolderPath(),false);
+//
+//		//今日のセパコンバインレコードの作成
+//		String fileName = "FBSsepaCombine.csv";
+//		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//
+//		//FBS_KICK_2017-07-31.fbs
+////        fileName = "FBS_KICK_" + TODAY + ".fbs";
+//        fileName = TODAY + "_FBS_KICK" + ".fbs";
+//		//暗号化ファイル作成（キックファイル）
+//		createSecureFile(TODAY,mainDTO.getEntryFolderPath(),fileName);
+//		//ばら撒き
+//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//
+//		//保有銘柄一覧作成
+//		fileName = LS_TODAY + "_fias_keep.csv";
+//		createKeepListFile(mainDTO.getEntryFolderPath(),fileName);
+//		//ばら撒き
+//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//
+//		//エリートファイルの作成
+//		fileName = LS_TODAY + "_order_STOCK_LIST.csv";
+//		createOrderListFile(mainDTO.getEntryFolderPath(),fileName);
+//		//ばら撒き
+//		copyFile_for_KICK_USER(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
+//
+//		//有料ユーザー後処理
+//		afterDealPayingUser(LS_TODAY);
 	}
 
-	public void createTODAYSepaComBine(String TODAY,String folderPath,String fileName){
+	public boolean createTODAYSepaComBine(String TODAY,String folderPath,String fileName){
 		S s = new S();
 		s.getCon();
+		boolean resultBoolean = false;
 		String TBL = TBL_Name.SEPARATE_DD;
 		String SQL1 = "select * from " + TBL + " where "+ COLUMN.DAYTIME_KENRI_LAST + " = '" + TODAY + "'";
 		try {
@@ -248,24 +399,29 @@ public class cloringDate {
 							+	" OPTIONALLY ENCLOSED BY '\"'";
 
 				s.exportFile(SQL2);
-				//セパコンバインレコードばら撒き
-				copyFile_for_KICK_USER(TODAY,folderPath,fileName);
 
-				//作ったファイルの削除
-		        File file = new File(filePath);
+				resultBoolean = true;
 
-		        if(file.delete()){
-		        	//成功
-		        	commonAP.writeInLog(file + "の削除に成功しました。",logWriting.DATEDATE_LOG_FLG);
-		        }else{
-		        	//失敗
-		        	commonAP.writeInLog(file + "の削除に失敗しました。",logWriting.DATEDATE_LOG_FLG);
-		        }
+//				//セパコンバインレコードばら撒き
+//				copyFile_for_KICK_USER(TODAY,folderPath,fileName);
+//
+//				//作ったファイルの削除
+//		        File file = new File(filePath);
+//
+//		        if(file.delete()){
+//		        	//成功
+//		        	commonAP.writeInLog(file + "の削除に成功しました。",logWriting.DATEDATE_LOG_FLG);
+//		        }else{
+//		        	//失敗
+//		        	commonAP.writeInLog(file + "の削除に失敗しました。",logWriting.DATEDATE_LOG_FLG);
+//		        }
 			};
 
 		} catch (SQLException e) {}
 
 		s.closeConection();
+
+		return resultBoolean;
 	}
 
 	//有料ユーザー後処理
@@ -427,6 +583,9 @@ public class cloringDate {
 
 	}
 
+
+
+
 	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName){
 		//ばら撒き、ただし無料ユーザーのみ
 		commonAP.writeInLog(fileName + "を各フォルダにばらまきます。",logWriting.DATEDATE_LOG_FLG);
@@ -437,7 +596,65 @@ public class cloringDate {
 	}
 
 
+	private void copyL_S_File_for_PAY_USER(String TODAY,String folderPath,String fileName,String TBL){
+		//ディレクトリ指定
+        File dir = new File(folderPath);
+
+
+        Path copyMoto = Paths.get(folderPath + File.separator + fileName);
+
+
+
+        //キックファイル配布リスト取得
+        S s = new S();
+        s.getCon();
+
+        //キックファイルユーザーリスト
+        ArrayList<String> kickFileUserList = new ArrayList<String>();
+
+        String SQL = " select * from " + TBL;
+
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				kickFileUserList.add(s.rs.getString(COLUMN.KICK_FILE_USER_FOLDER));
+			}
+		} catch (SQLException e) {}
+        s.closeConection();
+
+
+        //全フォルダーを取得（fileを除く）
+        String[] folderList = dir.list();
+
+        for(String personalFolderPath : folderList){
+
+        	File parsonalFolderPath = new File(personalFolderPath);
+        	String parsonalFolderName = parsonalFolderPath.getName();
+
+        	switch (parsonalFolderName) {
+				case "00000.commonBoard_typeA":
+					break;
+				case "10000.commonBoard_typeB":
+					break;
+				case "old":
+					break;
+				default:
+		        	if(kickFileUserList.indexOf(parsonalFolderName) == -1){
+		        		//自動売買ツールを使う場合はこれ
+						Path targetPath = Paths.get(folderPath + File.separator + personalFolderPath + File.separator + fileName);
+						copyFile(copyMoto,targetPath,(folderPath + File.separator + personalFolderPath));
+		        	};
+
+					break;
+			}
+
+
+        }
+	}
+
 	//暗号化ファイルばら撒きメソッド、キックファイルユーザーリストから抽出する。
+	//なんやかんやでTODAYは必要ない引数となった
 	private void copyFile_for_KICK_USER(String TODAY,String folderPath,String fileName,String TBL){
         //ディレクトリ指定
         File dir = new File(folderPath);
@@ -494,7 +711,6 @@ public class cloringDate {
 		        	//成功
 		        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
 		        };
-
         		Files.copy(copyMoto, targetPath);
         	}else if(checkFile.isFile()){
         		//ファイルのとき
@@ -567,77 +783,92 @@ public class cloringDate {
 
 	//時系列データの更新
 	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
-		CONTOLLBOTTON CB = new CONTOLLBOTTON();
+
 		S s = new S();
 		s.getCon();
 
-		int stockResult;
-		int statisticsResult;
-		int indexResult;
+		if (mainDTO.isHesogomaFile()){
+			//へそのごま使う
+			editHesogomaFile editHeso = new editHesogomaFile();
+			String TODAY = controllDay.getTODAY();
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_01_STOCK ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s)		, TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_02_INVEST ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST, s)			, TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)		, TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
 
-		//コードリストテーブルを作る、日々の更新をする。
-		//統計
-		statisticsResult = CB.everyDayBottonContoroll(	mainDTO										,
-														controllDay.getMAX_DD_STATISTICS(s) 		,
-														controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
-														ReCord.CODE_02_SATISTICS					,
-														s											);
-
-
-		s.resetConnection();
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-		indexResult = CB.everyDayBottonContoroll	(	mainDTO										,
-														controllDay.getMAX_DD_INDEX(s) 	 			,
-														controllDay.getAJUSTMAXDAY_INDEX(s)			,
-														ReCord.CODE_03_INDEX						,
-														s											);
-
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-		s.resetConnection();
-
-		stockResult = CB.everyDayBottonContoroll	(	mainDTO										,
-														controllDay.getMAX_DD_STOCK_ETF(s) 			,
-														controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
-														ReCord.CODE_01_STOCK						,
-														s											);
+		}else{
+			//使わない
+			CONTOLLBOTTON CB = new CONTOLLBOTTON();
 
 
+			int stockResult;
+			int statisticsResult;
+			int indexResult;
 
-		//CBのなかを破棄する。メモリ解放
-		CB = new CONTOLLBOTTON();
-		s.resetConnection();
+			//コードリストテーブルを作る、日々の更新をする。
+			//統計
+			statisticsResult = CB.everyDayBottonContoroll(	mainDTO										,
+															controllDay.getMAX_DD_STATISTICS(s) 		,
+															controllDay.getAJUSTMAXDAY_STATISTICS (s) 	,
+															ReCord.CODE_02_SATISTICS					,
+															s											);
 
-		//一つでも異常があれば停止する。
-		if ( stockResult == ReturnCodeConst.EVERY_UPDATE_ERR){
-			s.closeConection();
-			return ReturnCodeConst.EVERY_UPDATE_ERR;
+
+			s.resetConnection();
+			//CBのなかを破棄する。メモリ解放
+			CB = new CONTOLLBOTTON();
+			indexResult = CB.everyDayBottonContoroll	(	mainDTO										,
+															controllDay.getMAX_DD_INDEX(s) 	 			,
+															controllDay.getAJUSTMAXDAY_INDEX(s)			,
+															ReCord.CODE_03_INDEX						,
+															s											);
+
+			//CBのなかを破棄する。メモリ解放
+			CB = new CONTOLLBOTTON();
+			s.resetConnection();
+
+			stockResult = CB.everyDayBottonContoroll	(	mainDTO										,
+															controllDay.getMAX_DD_STOCK_ETF(s) 			,
+															controllDay.getAJUSTMAXDAY_STOCK_ETF(s)		,
+															ReCord.CODE_01_STOCK						,
+															s											);
+
+
+
+			//CBのなかを破棄する。メモリ解放
+			CB = new CONTOLLBOTTON();
+			s.resetConnection();
+
+			//一つでも異常があれば停止する。
+			if ( stockResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
+			}
+
+			if ( statisticsResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
+			}
+
+			if ( indexResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
+			}
+
+			//３つとも更新なしなら更新なし
+			if ( indexResult == stockResult && stockResult == statisticsResult && statisticsResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+			}
+
+
+
+			//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
+			OneRecord_Update.OneRecord(s);
+
+
 		}
-
-		if ( statisticsResult == ReturnCodeConst.EVERY_UPDATE_ERR){
-			s.closeConection();
-			return ReturnCodeConst.EVERY_UPDATE_ERR;
-		}
-
-		if ( indexResult == ReturnCodeConst.EVERY_UPDATE_ERR){
-			s.closeConection();
-			return ReturnCodeConst.EVERY_UPDATE_ERR;
-		}
-
-		//３つとも更新なしなら更新なし
-		if ( indexResult == stockResult && stockResult == statisticsResult && statisticsResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
-			s.closeConection();
-			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
-		}
-
-//		//一部分しか更新がなかった
-//		if ( indexResult == stockResult && stockResult == statisticsResult && statisticsResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
-//			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
-//		}
-
-		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
-		OneRecord_Update.OneRecord(s);
 
 		s.closeConection();
 
@@ -645,34 +876,6 @@ public class cloringDate {
 	}
 
 
-	//財務データとかを落とす
-	//URLで指定したCSVファイルを指定したフォルダに指定した名前でダウンロードする。
-	//パスワードが求められるページではない場合、パスワードをスキップする。（オーバーロードでもいいかも）
-	//"-"をnullに変える
-	//行の先頭に日付を入れる
-	private void financialCredit(TAB_MainDTO mainDTO,String TBL,String TODAY,String URL,String urlID,String urlPASS,String folderPath,String fileName){
-		commonAP cAP = new commonAP();
-		String lastUpDateDay = "";
-		//String"yyyy-mm-dd"できた日付を分割
-		String[] lastUpDateDay_SPRIT = lastUpDateDay.split("-");
-
-		//今日の日付をカレンダーにいれまーす。
-		//月だけ0 ＝ 1月
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Integer.parseInt(lastUpDateDay_SPRIT[0]), Integer.parseInt(lastUpDateDay_SPRIT[1]) - 1, Integer.parseInt(lastUpDateDay_SPRIT[2]));
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-
-
-		calendar.add(Calendar.DAY_OF_MONTH, +1);
-		lastUpDateDay = sdf1.format(calendar.getTime());
-
-		while(cAP.checkDay(TODAY, lastUpDateDay)){
-
-			calendar.add(Calendar.DAY_OF_MONTH, +1);
-			lastUpDateDay = sdf1.format(calendar.getTime());
-
-		}
-	}
 
 	//今日の注文をログファイルとして出力
 	private int outPutKeepTable(double oneShotMoney,String folderPath){

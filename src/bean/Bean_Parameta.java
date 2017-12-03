@@ -13,6 +13,41 @@ public class Bean_Parameta {
 	private boolean rumFLG = false;
 	private int rumNumber = 0;
 
+	//投資情報指標を参照するかどうかをチェックするフラグ（PBRとか）
+	//false:参照しない
+	//true:参照する
+	private boolean checkInvest = false;
+
+	//財務諸表などの年単位のデータを参照するかを確認する。
+	//false:参照しない
+	//true:参照する
+	private boolean monthYearDateFLG = false;
+
+	public boolean isMonthYearDateFLG() {
+		return monthYearDateFLG;
+	}
+
+	public void setMonthYearDateFLG(boolean monthYearDateFLG) {
+		this.monthYearDateFLG = monthYearDateFLG;
+	}
+
+
+
+
+	private Bean_FinancialStatement B_FS = new Bean_FinancialStatement();
+	private Bean_Forrign_Ratio B_FR = new Bean_Forrign_Ratio();
+	private Bean_Credit B_Cr = new Bean_Credit();
+
+	public boolean isCheckInvest() {
+		return checkInvest;
+	}
+
+	public void setCheckInvest(boolean checkInvest) {
+		this.checkInvest = checkInvest;
+	}
+
+
+
 
 	//最大株価、あんまり高い株は買えないし。。。
 	double maxEntryClose = 1000000000;

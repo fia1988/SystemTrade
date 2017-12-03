@@ -70,6 +70,7 @@ public class SagyoSpace {
 		paraDTO.setJustSTOCK(true);
 
 
+
 	}
 
 	public static void shokisettei_false(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){

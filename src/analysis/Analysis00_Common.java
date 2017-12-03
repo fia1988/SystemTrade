@@ -226,7 +226,7 @@ public class Analysis00_Common {
 
 		//ここでファイナンスとか入れる
 		Bean_Proccesing B_PRO = new Bean_Proccesing();
-		B_PRO.proceccingParaDTO(paraDTO,resultDTO,s);
+		B_PRO.proceccingParaDTO(paraDTO,resultDTO,code,s);
 
 		int check_L_method_result;
 		int check_S_method_result;

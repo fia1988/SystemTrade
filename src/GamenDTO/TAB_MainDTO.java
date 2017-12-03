@@ -30,15 +30,43 @@ public class TAB_MainDTO {
 	//自動バックアップファイル作成を判断するフラグ
 	private boolean autoBackUp = false;
 
-	//日々データ作成時に利用するバックアップフォルダ名
-	
-	//日々データ作成時に利用するバックアップファイル名
+	//へそのごまのファイルを毎日CSVに利用するかを判断するフラグ
+	//false:しない、true:する
+	private boolean hesogomaFile = false;
+	//毎日へそごまCSVファイルの出力先
+	private String everyDayHesoGomaCsvFolderPath;
+	//へそのごまのファイルをネットからとるかローカルからとるかをチェックする
+	//false:オンライン、true:ローカル
+	private boolean hesoGomaOnlineCheck = false;
 
+	public boolean isHesoGomaOnlineCheck() {
+		return hesoGomaOnlineCheck;
+	}
 
+	public void setHesoGomaOnlineCheck(boolean hesogomaOnlineCheck) {
+		this.hesoGomaOnlineCheck = hesogomaOnlineCheck;
+	}
 
 	public boolean isAutoBackUp() {
 		return autoBackUp;
 	}
+
+	public String getEveryDayHesoGomaCsvFolderPath() {
+		return everyDayHesoGomaCsvFolderPath;
+	}
+
+	public void setEveryDayHesoGomaCsvFolderPath(
+			String everyDayHesoGomaCsvFolderPath) {
+		this.everyDayHesoGomaCsvFolderPath = everyDayHesoGomaCsvFolderPath;
+	}
+
+	public boolean isHesogomaFile() {
+		return hesogomaFile;
+	}
+	public void setHesogomaFile(boolean hesogomaFile) {
+		this.hesogomaFile = hesogomaFile;
+	}
+
 	public void setAutoBackUp(boolean autoBackUp) {
 		this.autoBackUp = autoBackUp;
 	}

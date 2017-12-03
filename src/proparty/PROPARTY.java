@@ -12,6 +12,8 @@ public class PROPARTY {
 	public static int COLLECTYEAR = 100;
 	//サイトに株価更新時間
 	public static String UPDATETIME = "15:30:00";
+	//有料のお客様へのファイルを配る時間
+	public final static String DIVITETIME = "18:30:00";
 
 	//一回辺り投資資金（単位：万円）
 	public static double ONE_SHOT_MONEY = 1.2;
@@ -54,6 +56,11 @@ public class PROPARTY {
 	public static String DBUSER = "";
 //	DBのパス。
 	public static String DBPASS = "";
+
+	//へそのごまのID
+	public static final String hesoGomaID = "trial";
+	//へそのごまのパスワード
+	public static final String hesoGomePASS = "PW@20170129";
 
 
 }
