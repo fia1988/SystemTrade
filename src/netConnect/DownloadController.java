@@ -33,11 +33,14 @@ public class DownloadController {
 	 * @param id		認証ID
 	 * @param pass		認証パスワード
 	 * @return			CSVを1行ごとにわけたStringリスト
-	 * @throws IOException				取得した文字列が処理失敗したい場合
+	 * @throws IOException				取得した文字列が処理失敗した場合
 	 * @throws UnknownHostException		サイト自体が存在しない場合
 	 * @throws WebAccessException		ファイルが存在しない場合
 	 * @throws MalformedURLException	httpじゃないURLが入った場合
 	 */
+
+
+
 	public List<String> getData(String strUrl, String id, String pass)
 			throws IOException, UnknownHostException, WebAccessException, MalformedURLException {
 
@@ -74,25 +77,3 @@ public class DownloadController {
 	}
 }
 
-/**
- * URLにアクセス失敗したときに投げる例外
- * codeにエラーコードが入る
- * @author sigre
- *
- */
-class WebAccessException extends Exception {
-
-	private int code;
-
-	public WebAccessException(int code) {
-		this.code = code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public int getCode() {
-		return code;
-	}
-}

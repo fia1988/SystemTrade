@@ -3,6 +3,8 @@ package common;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,6 +90,30 @@ public class commonAP {
 		}
 
 		return 0;
+
+	}
+
+	public static void writeInErrLog(Exception e) {
+
+        StringWriter sw = null;
+        PrintWriter  pw = null;
+
+        sw = new StringWriter();
+        pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        String trace = sw.toString();
+        commonAP.writeInLog(trace,logWriting.DATEDATE_LOG_FLG);
+
+        try {
+            if ( sw != null ) {
+                sw.flush();
+                sw.close();
+            }
+            if ( pw != null ) {
+                pw.flush();
+                pw.close();
+            }
+        } catch (IOException ignore){}
 
 	}
 

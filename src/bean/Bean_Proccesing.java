@@ -16,7 +16,7 @@ import constant.logWriting;
 public class Bean_Proccesing {
 	public void proceccingParaDTO(Bean_Parameta paraDTO,Bean_Result resultDTO ,String code,S s){
 
-		
+
 		//本番環境だけここを通る
 //		if(paraDTO.getRealTimeMode()){
 ////			paraDTO.setCheckInvest(true);
@@ -26,11 +26,9 @@ public class Bean_Proccesing {
 		//年単位とか月単位のデータ(財務諸表データ)を使うかどうか
 		if (paraDTO.isMonthYearDateFLG()==false){
 			//財務諸表データとか使わない。
-			commonAP.writeInLog("proceccingParaDTO：こことおった:" + code,logWriting.DATEDATE_LOG_FLG);
 			return;
 		}else{
 			//財務諸表データとか使う
-			commonAP.writeInLog("proceccingParaDTO：こことおったdadadadada:" + code,logWriting.DATEDATE_LOG_FLG);
 		}
 
 		Bean_FinancialStatement B_FS = new Bean_FinancialStatement();

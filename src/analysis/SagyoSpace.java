@@ -83,6 +83,8 @@ public class SagyoSpace {
 
 	}
 
+
+
 	public static void testCase80(){
 		S s = new S();
 		s.getCon();

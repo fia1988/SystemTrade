@@ -1,10 +1,18 @@
 package hesoGomaEdit;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import netConnect.DownloadController;
+import netConnect.WebAccessException;
+import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import GamenDTO.TAB_MainDTO;
@@ -13,6 +21,7 @@ import common.commonAP;
 
 import constant.ReCord;
 import constant.ReturnCodeConst;
+import constant.logWriting;
 
 public class editHesogomaFile {
 	//投資情報ファイル
@@ -26,13 +35,12 @@ public class editHesogomaFile {
 	private final String CREDIT_FILE = "_creditFile.csv";
 	//保有比率ファイル
 	private final String RATIO_FILE = "_ratioFile.csv";
-	public int editHesoGomaString(TAB_MainDTO mainDTO,String cate,String lastUpdateDay,String TODAY,S s){
+	public int editHesoGomaString(TAB_MainDTO mainDTO,String cate,String lastUpDateDay,String TODAY,S s){
 
 		String URL_parts = "";
-		String hesogomaFileName = cate;
+		String hesogomaFileName = "";
 		String TBL = TBL_Name.CODELISTTBL;
-//		PROPARTY.hesoGomaID;
-//		PROPARTY.hesoGomePASS;
+
 		switch (cate){
 		case ReCord.CODE_HESO_01_STOCK:
 			hesogomaFileName = hesogomaFileName + STOCK_DATA_FILE;
@@ -68,7 +76,9 @@ public class editHesogomaFile {
 			break;
 		}
 
-		String hesogomaFilePath = mainDTO.getEveryDayHesoGomaCsvFolderPath() + File.separator + hesogomaFileName;
+//		String hesogomaFilePath = mainDTO.getEveryDayHesoGomaCsvFolderPath() + File.separator + hesogomaFileName;
+
+		hesoGomaFileInsertFIAS(mainDTO, TBL, TODAY, lastUpDateDay, URL_parts, PROPARTY.hesoGomaID, PROPARTY.hesoGomePASS, mainDTO.getEveryDayHesoGomaCsvFolderPath(), hesogomaFileName, cate, s);
 
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
@@ -77,7 +87,7 @@ public class editHesogomaFile {
 	//パスワードが求められるページではない場合、パスワードをスキップする。（オーバーロードでもいいかも）
 	//"-"をnullに変える
 	//行の先頭に日付を入れる
-	private void financialCredit(TAB_MainDTO mainDTO,String TBL,String TODAY,String lastUpDateDay,String URL,String urlID,String urlPASS,String folderPath,String fileName,String cate,S s){
+	private int hesoGomaFileInsertFIAS(TAB_MainDTO mainDTO,String TBL,String TODAY,String lastUpDateDay,String URL,String urlID,String urlPASS,String folderPath,String fileName,String cate,S s){
 		commonAP cAP = new commonAP();
 		DownloadController dCon = new DownloadController();
 
@@ -89,62 +99,146 @@ public class editHesogomaFile {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(lastUpDateDay_SPRIT[0]), Integer.parseInt(lastUpDateDay_SPRIT[1]) - 1, Integer.parseInt(lastUpDateDay_SPRIT[2]));
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-
+		boolean insertChecker = false;
 		calendar.add(Calendar.DAY_OF_MONTH, +1);
 		lastUpDateDay = sdf1.format(calendar.getTime());
 		while(cAP.checkDay(TODAY, lastUpDateDay)){
-			calendar.add(Calendar.DAY_OF_MONTH, +1);
+
+			insertChecker = false;
+
 			String filePath = folderPath + File.separator + lastUpDateDay + fileName + ".csv";
+			File file =  new File(filePath);
+
 			if ( mainDTO.isHesoGomaOnlineCheck() == false ){
-				//ファイルをへそのゴマからダウンロード
-				URL = URL + lastUpDateDay + ".csv";
-//				try {
-//					dCon.getData(URL, urlID, urlPASS);
-//				} catch (UnknownHostException e) {
-//					// TODO 自動生成された catch ブロック
-//					e.printStackTrace();
-//				} catch (MalformedURLException e) {
-//					// TODO 自動生成された catch ブロック
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					// TODO 自動生成された catch ブロック
-//					e.printStackTrace();
-//				} catch (WebAccessException e) {
-//					// TODO 自動生成された catch ブロック
-//					e.printStackTrace();
-//				}
+
+				if (file.isFile()==false){
+					//ファイルが存在する場合はネットからダウンロードしない
+					//ファイルが存在しない場合はこの中を通る。ダウンロード開始
+					//ファイルをへそのゴマからダウンロード
+					URL = URL + lastUpDateDay + ".csv";
+
+					try {
+						List<String> csvStringList = new ArrayList<String>();
+						csvStringList = dCon.getData(URL, urlID, urlPASS);
+						insertChecker = true;
+						writtingString(csvStringList,filePath);
+					} catch (UnknownHostException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のURLは存在しません",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
+
+					} catch (MalformedURLException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のURLは正規のURLがありません。いい加減な文字を打つな",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
+					} catch (IOException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のURLで文字列のエラー発生！もしくは接続失敗。",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
+
+					} catch (WebAccessException e) {
+						// TODO 自動生成された catch ブロック
+
+						commonAP.writeInLog("以下のURLで「" + e.getCode() + "」発生！",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						switch (e.getCode()) {
+						case 401:
+							commonAP.writeInLog("認証失敗。ID：" + urlID + "とパスワード：" + urlPASS + "が違います。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 403:
+							//禁止されてるパターン
+							//へそのごまでは出てこない。
+							commonAP.writeInLog("403が出ています。上記のURLへのアクセスが拒否されています。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 404:
+							//ファイルがないパターン
+							break;
+						case 502:
+							commonAP.writeInLog("上記のURLのプロキシとかゲートウェイ辺りに問題あり。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 503:
+							commonAP.writeInLog("上記のURLのサーバーが死んでいます。しばらくたってからアクセスしてください。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 504:
+							commonAP.writeInLog("タイムアウトしました。処理を止めます。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						default:
+							commonAP.writeInLog("理由がさっぱりわからんエラー",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						}
+					}
+				}
+
+			}else{
+				insertChecker = true;
 			}
-			//ここからインサート
-			insHego.insertHesoGomaFileController(mainDTO, filePath, lastUpDateDay, cate);
+
+			if (insertChecker = true){
+				//ここからインサート
+				insHego.insertHesoGomaFileController(mainDTO, filePath, lastUpDateDay, cate,TBL,s);
+			}
+
+
+			calendar.add(Calendar.DAY_OF_MONTH, +1);
 			lastUpDateDay = sdf1.format(calendar.getTime());
 
 		}
-	}
 
 
-
-	private String editReplaceHesogomaFile(String record,String cate){
-
-		String replaceRecord = "";
-
-		switch (cate){
-		case ReCord.CODE_HESO_01_STOCK:
-			//成功時は抜ける
-		case ReCord.CODE_HESO_02_INVEST:
-			break;
-		case  ReCord.CODE_HESO_03_FINANCE:
-			break;
-		case  ReCord.CODE_HESO_04_RATIO:
-			break;
-		case  ReCord.CODE_HESO_05_CREDIT:
-			break;
-		default:
-			break;
+		if (insertChecker){
+			return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
+		}else{
+			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
 		}
 
 
-		return replaceRecord;
 	}
+
+
+	private void writtingString(List<String> csvStringList , String filePath){
+		commonAP.writeInLog("下記ファイルを作成します。",logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog("作成場所:" + filePath,logWriting.DATEDATE_LOG_FLG);
+
+
+		File file = new File(filePath);
+
+
+
+		try {
+			file.createNewFile();
+			FileWriter filewriter = new FileWriter(file,true);
+			for (String writing: csvStringList){
+//				  System.out.println(writing);
+				  filewriter.write( writing );
+			}
+
+			filewriter.close();
+		} catch (IOException e1) {
+			// TODO 自動生成された catch ブロック
+			commonAP.writeInErrLog(e1);
+			try {
+				FileWriter filewriter = new FileWriter(file,true);
+			} catch (IOException e) {}
+			commonAP.writeInLog("上記ファイルの作成が失敗しました。",logWriting.DATEDATE_LOG_FLG);
+			return;
+		}
+
+		commonAP.writeInLog("上記ファイルの作成が成功しました。",logWriting.DATEDATE_LOG_FLG);
+	}
+
+
 
 
 

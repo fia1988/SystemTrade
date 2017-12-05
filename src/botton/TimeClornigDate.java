@@ -1,8 +1,5 @@
 package botton;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,25 +50,8 @@ public class TimeClornigDate {
 			} catch (Exception e) {
 				commonAP.writeInLog("何か致命的にエラーが発生している。以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
 				e.printStackTrace();
-	            StringWriter sw = null;
-	            PrintWriter  pw = null;
-
-	            sw = new StringWriter();
-	            pw = new PrintWriter(sw);
-	            e.printStackTrace(pw);
-	            String trace = sw.toString();
-	            commonAP.writeInLog(trace,logWriting.DATEDATE_LOG_FLG);
-
-	            try {
-	                if ( sw != null ) {
-	                    sw.flush();
-	                    sw.close();
-	                }
-	                if ( pw != null ) {
-	                    pw.flush();
-	                    pw.close();
-	                }
-	            } catch (IOException ignore){}
+				
+				commonAP.writeInErrLog(e);
 
 
 			}
@@ -80,4 +60,7 @@ public class TimeClornigDate {
 			C_D = new cloringDate();
 		}
 	};
+	
+	
+
 }
