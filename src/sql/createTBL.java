@@ -1191,6 +1191,15 @@ public class createTBL {
 
 		s.createTBL(SQL);
 
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_STOCK_LIST + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
 
 	}
 

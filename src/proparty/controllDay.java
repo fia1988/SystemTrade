@@ -154,7 +154,25 @@ public class controllDay {
 
 		calendar.add(Calendar.DAY_OF_MONTH, 0);
 		return sdf1.format(calendar.getTime());
+	}
 
+
+	public static String getTODAYnoYesterDay(String TODAY){
+		Calendar calendar = Calendar.getInstance();
+		String[] TODAY_SPRIT = TODAY.split("-");
+		calendar.set(Integer.parseInt(TODAY_SPRIT[0]), Integer.parseInt(TODAY_SPRIT[1]) - 1, Integer.parseInt(TODAY_SPRIT[2]));
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		return sdf1.format(calendar.getTime());
+	}
+
+	//今日の日付をyyyy-mm-ddでとる
+	public static String getYesterDay(){
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		return sdf1.format(calendar.getTime());
 	}
 
 	//UPDATEMANAGEテーブルから引数で指定した値の日付を取得する。

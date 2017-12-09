@@ -64,6 +64,117 @@ public class Bean_Bean {
 		return B_Css;
 	}
 
+	public List<Bean_CodeList> getList_CSVtoDTO(){
+		return B_Cs;
+	}
+
+	public void setList_CSVtoDTO(List<String> listCSV,String DAY,String cate){
+		//2015年12月04日 一行目にこんな感じで日付が入っている。
+//		String DAY = listCSV.get(0);
+		B_Cs = new ArrayList<Bean_CodeList>();
+
+
+
+		switch (cate){
+			case ReCord.CODE_HESO_00_CODE_LIST:
+				hesoGomaStockList	(listCSV, DAY, 1, cate);
+				break;
+			case ReCord.CODE_HESO_01_STOCK:
+				hesoGomaStock		(listCSV, DAY, 3, cate);
+				break;
+			case ReCord.CODE_HESO_02_INVEST:
+				hesoGomaInvest		(listCSV, DAY, 1, cate);
+				break;
+			case  ReCord.CODE_HESO_03_FINANCE:
+				hesoGomaFinance		(listCSV, DAY, 1, cate);
+				break;
+			case  ReCord.CODE_HESO_04_RATIO:
+				hesoGomaRatio		(listCSV, DAY, 1, cate);
+				break;
+			case  ReCord.CODE_HESO_05_CREDIT:
+				hesoGomaCredit		(listCSV, DAY, 1, cate);
+				break;
+			default:
+				break;
+		}
+
+
+	}
+
+
+	private void hesoGomaFinance(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+		}
+		B_C = new Bean_CodeList();
+	}
+
+	private void hesoGomaInvest(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+		}
+		B_C = new Bean_CodeList();
+	}
+
+	private void hesoGomaStockList(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+		}
+		B_C = new Bean_CodeList();
+	}
+
+	private void hesoGomaRatio(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+		}
+		B_C = new Bean_CodeList();
+	}
+
+	private void hesoGomaCredit(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+		}
+		B_C = new Bean_CodeList();
+	}
+
+	private void hesoGomaStock(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+
+//			System.out.println(listCSV.get(i));
+
+			B_C.setDay					(DAY);
+			B_C.setCode					(listCSV_SPRIT[0].replace("東証1部_", ""));
+			B_C.setCodeName				(listCSV_SPRIT[0]);
+			B_C.setDeki					(listCSV_SPRIT[1]);
+			B_C.setBaybay				(listCSV_SPRIT[2]);
+			B_C.setStockCount			(listCSV_SPRIT[3]);
+			B_C.setTakePrice			(listCSV_SPRIT[4]);
+			B_C.setUpPrice				(listCSV_SPRIT[5]);
+			B_C.setNoChange				(listCSV_SPRIT[6]);
+			B_C.setDownPrice			(listCSV_SPRIT[7]);
+			B_C.setNoCompare			(listCSV_SPRIT[8]);
+			//へそごまのcateを入れたいがこれしかないのです。
+			B_C.setCatelfg(ReCord.CODE_01_STOCK);
+			B_Cs.add(B_C);
+
+
+		}
+		B_C = new Bean_CodeList();
+	}
+
 	public void setList_CSVtoDTO_STATISTICA(List<String> listCSV,String DAY,int skipLine){
 		//2015年12月04日 一行目にこんな感じで日付が入っている。
 //		String DAY = listCSV.get(0);
@@ -97,6 +208,8 @@ public class Bean_Bean {
 	public List<Bean_CodeList> getList_CSVtoDTO_STATISTICA(){
 		return B_Cs;
 	}
+
+
 
 	public void setList_CSVtoDTO_STOCK_ETF(List<String> listCSV,String DAY,int skipLine){
 		//一行目に2015-12-04,全銘柄日足,http://k-db.com/ ←こんな感じではいっているので分割する。

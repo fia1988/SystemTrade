@@ -791,11 +791,16 @@ public class cloringDate {
 			//へそのごま使う
 			editHesogomaFile editHeso = new editHesogomaFile();
 			String TODAY = controllDay.getTODAY();
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_01_STOCK ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s)		, TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_02_INVEST ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST, s)			, TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)		, TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT ,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
+
+			//株の更新ができたらリストの更新をやる
+			int stockCloalingResult = editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_01_STOCK		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s)		, TODAY , s);
+			if (stockCloalingResult == ReturnCodeConst.EVERY_UPDATE_SUCSESS){
+				editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_00_CODE_LIST	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_LIST, s)		, TODAY , s);
+			}
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_02_INVEST		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST, s)			, TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)		, TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
 
 		}else{
 			//使わない

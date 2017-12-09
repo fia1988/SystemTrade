@@ -83,6 +83,14 @@ public class nyuryokuCheck {
 			}
 		}
 
+		//もしもへそごまファイルを使うとする場合はフォルダパスが正しいかを調べる
+		if (mainDTO.isHesogomaFile()){
+			file =  new File(mainDTO.getEveryDayHesoGomaCsvFolderPath());
+			if (file.isDirectory()==false){
+			    return nyuryokuCheckResultConst.HESO_GOMA_FOLDER_ERR;
+			}
+		}
+
 		return nyuryokuCheckResultConst.SUCCESS;
 	}
 }

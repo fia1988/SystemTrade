@@ -42,6 +42,8 @@ public class TAB_main extends JPanel {
 	JCheckBox checkBox = new JCheckBox("分割併合ファイル自動取込チェック");
 	JCheckBox checkBox_1 = new JCheckBox("最適化チェックフラグ");
 	JCheckBox checkBox_2 = new JCheckBox("自動バックアップ制御");
+	JCheckBox checkBox_3 = new JCheckBox("へそごまローカルフラグ");
+	JCheckBox checkBox_4 = new JCheckBox("へそごま利用チェック");
 
 	JLabel timerCheck = new JLabel("false");
 	JLabel sepaComResult = new JLabel("成／否");
@@ -167,7 +169,7 @@ public class TAB_main extends JPanel {
 			}
 		});
 		btnNewButton_1.setAction(action_2);
-		btnNewButton_1.setBounds(201, 671, 119, 71);
+		btnNewButton_1.setBounds(201, 710, 119, 71);
 		add(btnNewButton_1);
 
 		JLabel label_6 = new JLabel("バックアップ");
@@ -384,6 +386,23 @@ public class TAB_main extends JPanel {
 		add(kickResult);
 
 
+		checkBox_3.setBounds(42, 666, 278, 29);
+		add(checkBox_3);
+
+
+		checkBox_4.setBounds(42, 631, 224, 29);
+		add(checkBox_4);
+
+		hesoGomaFolderPath = new JTextField();
+		hesoGomaFolderPath.setBounds(42, 603, 330, 25);
+		add(hesoGomaFolderPath);
+		hesoGomaFolderPath.setColumns(10);
+
+		JLabel label_22 = new JLabel("へそごまファイル格納場所");
+		label_22.setBounds(42, 572, 330, 19);
+		add(label_22);
+
+
 
 	}
 
@@ -393,6 +412,7 @@ public class TAB_main extends JPanel {
 	private JTextField sepaFolderPath;
 	private final Action action_12 = new SwingAction_12();
 	private final Action action_13 = new SwingAction_13();
+	private JTextField hesoGomaFolderPath;
 
 
 	private void gamenNyuryoku(TAB_MainDTO mainDTO){
@@ -410,6 +430,13 @@ public class TAB_main extends JPanel {
 		mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
 		mainDTO.setOptimazeFLG(checkBox_1.isSelected());
 		mainDTO.setAutoBackUp(checkBox_2.isSelected());
+
+		//へそのごまのファイルを毎日CSVに利用するかを判断するフラグ
+		//false:しない、true:する
+		mainDTO.setHesogomaFile(checkBox_4.isSelected());
+		//false:オンライン、true:ローカル
+		mainDTO.setHesoGomaOnlineCheck(checkBox_3.isSelected());
+		mainDTO.setEveryDayHesoGomaCsvFolderPath(hesoGomaFolderPath.getText());
 
 	}
 
@@ -449,6 +476,9 @@ public class TAB_main extends JPanel {
 				timerResult.setText(checkResult);
 			return;
 			case nyuryokuCheckResultConst.NO_BACKUP_FOLDER_ERR:
+				timerResult.setText(checkResult);
+			return;
+			case nyuryokuCheckResultConst.HESO_GOMA_FOLDER_ERR:
 				timerResult.setText(checkResult);
 			return;
 			default:

@@ -1,5 +1,7 @@
 package hesoGomaEdit;
 
+import insertPackage.InsertDay;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,7 +12,10 @@ import java.util.List;
 import proparty.S;
 import proparty.controllDay;
 import GamenDTO.TAB_MainDTO;
+import accesarrySQL.SEPARATE_CHECK;
 import bean.Bean_Bean;
+import bean.Bean_CodeList;
+import botton.CreateSepaComFile;
 
 import common.commonAP;
 
@@ -21,15 +26,15 @@ public class insertHesoGomaFile {
 
 	static int checkCount = 0;
 
+	//true:成功
+	//falseなし
+	public boolean insertHesoGomaFileController(TAB_MainDTO mainDTO,String filePath,String TODAY,String cate,String TBL,String updateColumn,S s){
 
-	public void insertHesoGomaFileController(TAB_MainDTO mainDTO,String filePath,String TODAY,String cate,String TBL,S s){
-
-		String updateColumn = "";
 
 		File file =  new File(filePath);
 		if (file.isFile()==false){
 			//ファイルが存在しない場合は更新しない
-			return;
+			return false;
 		}
 		List<String> csvStringList = new ArrayList<String>();
 		csvStringList = csvToStringList(filePath);
@@ -37,51 +42,52 @@ public class insertHesoGomaFile {
 		if (csvStringList.size() == 0 ){
 			commonAP.writeInLog("下記URLのファイルが存在しません。",logWriting.DATEDATE_LOG_FLG);
 			commonAP.writeInLog(filePath,logWriting.DATEDATE_LOG_FLG);
-			return;
+			return false;
 		}
 
 		Bean_Bean B_B = new Bean_Bean();
-		B_B.getList_CSVtoDTO_STOCK_ETF();
+//		B_B.getList_CSVtoDTO_STOCK_ETF();
 //		B_B.setList_CSVtoDTO_INDEX(listCSV, TODAY, skipLine);
-		for (String record: csvStringList){
 
+		List<String> csvProcessedStringList = new ArrayList<String>();
+		for (String record: csvStringList){
+			csvProcessedStringList.add(editReplaceHesogomaFile(record,cate));
 		}
+
+		B_B.setList_CSVtoDTO(csvProcessedStringList,TODAY,cate);
+
+		
+
 		switch (cate){
-		case ReCord.CODE_HESO_01_STOCK:
-			updateColumn = ReCord.KOSHINBI_STOCK_ETF;
-			insertStock(mainDTO,filePath,TODAY,updateColumn,TBL,s);
-			break;
-		case ReCord.CODE_HESO_02_INVEST:
-			updateColumn = ReCord.KOSHINBI_INVEST;
-			insertInvest(mainDTO,filePath,TODAY,updateColumn,TBL,s);
-			break;
-		case  ReCord.CODE_HESO_03_FINANCE:
-			updateColumn = ReCord.KOSHINBI_FINANCIAL;
-			insertFinance(mainDTO,filePath,TODAY,updateColumn,TBL,s);
-			break;
-		case  ReCord.CODE_HESO_04_RATIO:
-			updateColumn = ReCord.KOSHINBI_FORRIGN_RATIO;
-			insertRatio(mainDTO,filePath,TODAY,updateColumn,TBL,s);
-			break;
-		case  ReCord.CODE_HESO_05_CREDIT:
-			updateColumn = ReCord.KOSHINBI_CREDIT;
-			insertCredit(mainDTO,filePath,TODAY,updateColumn,TBL,s);
-			break;
-		default:
-			break;
+			case ReCord.CODE_HESO_00_CODE_LIST:
+				insertCodeList	(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
+				break;
+			case ReCord.CODE_HESO_01_STOCK:
+				insertStock		(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
+				break;
+			case ReCord.CODE_HESO_02_INVEST:
+				insertInvest	(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
+				break;
+			case  ReCord.CODE_HESO_03_FINANCE:
+				insertFinance	(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
+				break;
+			case  ReCord.CODE_HESO_04_RATIO:
+				insertRatio		(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
+				break;
+			case  ReCord.CODE_HESO_05_CREDIT:
+				insertCredit	(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
+				break;
+			default:
+				commonAP.writeInLog("insertHesoGomaFileControllerのcateがおかしい:" + cate,logWriting.DATEDATE_LOG_FLG);
+				return false;
 		}
 
+		commonAP.writeInLog(updateColumn + ":" + TODAY,logWriting.DATEDATE_LOG_FLG);
 		controllDay.update_KOSHINBI(TODAY,updateColumn, s);
+		return true;
 	}
 
 
-	private void testCase00(){
-		List<String> csvStringList = new ArrayList<String>();
-		csvStringList = csvToStringList("C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\03.sepaFile\\00_00_sepaComKakodata.csv");
-		for (String record: csvStringList){
-			System.out.println(record);
-		}
-	}
 
 	private List<String> csvToStringList(String filePath){
 		List<String> csvStringList = new ArrayList<String>();
@@ -115,18 +121,22 @@ public class insertHesoGomaFile {
 		String replaceRecord = record;
 
 		switch (cate){
-		case ReCord.CODE_HESO_01_STOCK:
-			break;
-		case ReCord.CODE_HESO_02_INVEST:
-			break;
-		case  ReCord.CODE_HESO_03_FINANCE:
-			break;
-		case  ReCord.CODE_HESO_04_RATIO:
-			break;
-		case  ReCord.CODE_HESO_05_CREDIT:
-			break;
-		default:
-			break;
+			case ReCord.CODE_HESO_00_CODE_LIST:
+				break;
+			case ReCord.CODE_HESO_01_STOCK:
+				//変換前が左、変換後が→
+				replaceRecord = replaceRecord.replaceAll("-","_");
+				break;
+			case ReCord.CODE_HESO_02_INVEST:
+				break;
+			case  ReCord.CODE_HESO_03_FINANCE:
+				break;
+			case  ReCord.CODE_HESO_04_RATIO:
+				break;
+			case  ReCord.CODE_HESO_05_CREDIT:
+				break;
+			default:
+				break;
 		}
 
 
@@ -149,23 +159,38 @@ public class insertHesoGomaFile {
 		return hesogomaFile;
 	}
 
-	private void insertStock(TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+	private void insertCodeList(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 
 	}
 
-	private void insertInvest(TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+	private void insertStock(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+		InsertDay i_d = new InsertDay();
+//		i_d.InsertDD_STOCK_ETF(B_B.getList_CSVtoDTO_STOCK_ETF(),MAXDAY, s);
+		i_d.InsertDD_STOCK_ETF(DTO,TODAY, s);
+
+
+		//分割ファイルの作成/取込を行う。
+		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+		sepaComCheck.checkSepaComFile(mainDTO,TODAY);
+
+		//分割チェック。
+		s.resetConnection();
+		SEPARATE_CHECK.checkSEPARATE_controll(s);
+	}
+
+	private void insertInvest(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 
 	}
 
-	private void insertFinance(TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+	private void insertFinance(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 
 	}
 
-	private void insertRatio(TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+	private void insertRatio(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 
 	}
 
-	private void insertCredit(TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+	private void insertCredit(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 
 	}
 }

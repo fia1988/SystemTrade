@@ -13,6 +13,7 @@ public class ReCord {
 	public static String KOSHINBI_SEPA_CHECK					= "分割ファイル更新日";
 	public static String KOSHINBI_COMBINE_CHECK					= "併合ファイル更新日";
 	public static String KOSHINBI_BACK_UP						= "バックアップ作成日";
+	public static String KOSHINBI_STOCK_LIST						= "銘柄一覧作成日";
 
 
 	//個別銘柄・・・1
@@ -48,7 +49,8 @@ public class ReCord {
 	public static final String CODE_HESO_04_RATIO = "4444";
 	//信用残高
 	public static final String CODE_HESO_05_CREDIT = "5555";
-
+	//リスト
+	public static final String CODE_HESO_00_CODE_LIST = "555512";
 
 	 //01_stock_dd a
 	 //00_codelisttbl b
