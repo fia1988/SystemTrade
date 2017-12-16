@@ -93,7 +93,9 @@ public class ReCord {
 	public static final String TOSYO_01 = "東証1部";
 
 	//初期値
-	public static String KOSHINBI_SHOKI									= "2007-01-03";
+	public static final String KOSHINBI_SHOKI									= "2007-01-03";
+	//リストテーブルの更新日初期値
+	public static final String LIST_KOSHINBI_SHOKI								= "2017-12-03";
 	//通貨初期値
 	public static String CURRENCY_KOSHINBI_SHOKI						= "2007-01-03";
 

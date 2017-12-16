@@ -102,7 +102,7 @@ public class editHesogomaFile {
 	//パスワードが求められるページではない場合、パスワードをスキップする。（オーバーロードでもいいかも）
 	//"-"をnullに変える
 	//行の先頭に日付を入れる
-	private int hesoGomaFileInsertFIAS(TAB_MainDTO mainDTO,String TBL,String TODAY,String lastUpDateDay,String URL,String urlID,String urlPASS,String folderPath,String fileName,String cate,String updateColumn,S s){
+	private int hesoGomaFileInsertFIAS(TAB_MainDTO mainDTO,String TBL,String TODAY,String lastUpDateDay,String URL_parts,String urlID,String urlPASS,String folderPath,String fileName,String cate,String updateColumn,S s){
 		commonAP cAP = new commonAP();
 		DownloadController dCon = new DownloadController();
 
@@ -119,6 +119,7 @@ public class editHesogomaFile {
 		calendar.add(Calendar.DAY_OF_MONTH, +1);
 		lastUpDateDay = sdf1.format(calendar.getTime());
 		int upCounter = 0;
+		String downURL;
 		while(cAP.checkDay(TODAY, lastUpDateDay)){
 
 			insertChecker = false;
@@ -132,38 +133,42 @@ public class editHesogomaFile {
 					//ファイルが存在する場合はネットからダウンロードしない
 					//ファイルが存在しない場合はこの中を通る。ダウンロード開始
 					//ファイルをへそのゴマからダウンロード
-					URL = URL + lastUpDateDay + ".csv";
+					String downDay = lastUpDateDay.replaceAll("-", "");
+					downURL = URL_parts + downDay + ".csv";
 
 					try {
 						List<String> csvStringList = new ArrayList<String>();
-						csvStringList = dCon.getData(URL, urlID, urlPASS);
+						csvStringList = dCon.getData(downURL, urlID, urlPASS);
 						insertChecker = true;
-						writtingString(csvStringList,filePath);
+						writtingString(csvStringList,filePath,cate);
 					} catch (UnknownHostException e) {
 						// TODO 自動生成された catch ブロック
 						commonAP.writeInLog("以下のURLは存在しません",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
 						commonAP.writeInErrLog(e);
 						return ReturnCodeConst.EVERY_UPDATE_ERR;
 
 					} catch (MalformedURLException e) {
 						// TODO 自動生成された catch ブロック
 						commonAP.writeInLog("以下のURLは正規のURLがありません。いい加減な文字を打つな",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
 						commonAP.writeInErrLog(e);
 						return ReturnCodeConst.EVERY_UPDATE_ERR;
 					} catch (IOException e) {
 						// TODO 自動生成された catch ブロック
 						commonAP.writeInLog("以下のURLで文字列のエラー発生！もしくは接続失敗。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
 						commonAP.writeInErrLog(e);
 						return ReturnCodeConst.EVERY_UPDATE_ERR;
 
 					} catch (WebAccessException e) {
 						// TODO 自動生成された catch ブロック
 
-						commonAP.writeInLog("以下のURLで「" + e.getCode() + "」発生！",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog(URL,logWriting.DATEDATE_LOG_FLG);
+						if ( e.getCode() != 404) {
+							commonAP.writeInLog("以下のURLで「" + e.getCode() + "」発生！",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
+						}
+
 						switch (e.getCode()) {
 						case 401:
 							commonAP.writeInLog("認証失敗。ID：" + urlID + "とパスワード：" + urlPASS + "が違います。",logWriting.DATEDATE_LOG_FLG);
@@ -202,10 +207,12 @@ public class editHesogomaFile {
 				insertChecker = true;
 			}
 
-			if (insertChecker = true){
+			if (insertChecker == true){
 				//ここからインサート
 				insertHesoGomaFile insHego = new insertHesoGomaFile();
-				resultInsertExit = insHego.insertHesoGomaFileController(mainDTO, filePath, lastUpDateDay, cate,TBL,updateColumn,s);
+				insHego.insertHesoGomaFileController(mainDTO, filePath, lastUpDateDay, cate,TBL,updateColumn,s);
+				s.resetConnection();
+				resultInsertExit = true;
 			}
 
 			upCounter++;
@@ -225,7 +232,6 @@ public class editHesogomaFile {
 				commonAP.writeInLog(updateColumn + ":" + updateDay,logWriting.DATEDATE_LOG_FLG);
 				controllDay.update_KOSHINBI(updateDay,updateColumn, s);
 			}
-
 			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
 		}
 
@@ -233,21 +239,32 @@ public class editHesogomaFile {
 	}
 
 
-	private void writtingString(List<String> csvStringList , String filePath){
+	private void writtingString(List<String> csvStringList , String filePath,String cate){
 		commonAP.writeInLog("下記ファイルを作成します。",logWriting.DATEDATE_LOG_FLG);
 		commonAP.writeInLog("作成場所:" + filePath,logWriting.DATEDATE_LOG_FLG);
 
 
 		File file = new File(filePath);
 
-
+		if (file.isFile()==true){
+			//ファイルが存在する場合は何もしない。
+			//リストの時は黙ってスキップ
+			switch (cate) {
+				case ReCord.CODE_HESO_00_CODE_LIST:
+					break;
+				default:
+					commonAP.writeInLog("これもう存在します。スキップします。→:" + filePath,logWriting.DATEDATE_LOG_FLG);
+					break;
+			}
+			return;
+		}
 
 		try {
 			file.createNewFile();
 			FileWriter filewriter = new FileWriter(file,true);
 			for (String writing: csvStringList){
 //				  System.out.println(writing);
-				  filewriter.write( writing );
+				  filewriter.write( writing  + "\r\n");
 			}
 
 			filewriter.close();

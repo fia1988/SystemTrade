@@ -125,6 +125,24 @@ public class Bean_Bean {
 		for(int i = skipLine;i<listCSV.size();i++){
 			B_C = new Bean_CodeList();
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+
+
+//			System.out.println(listCSV.get(i));
+
+			B_C.setCode			(listCSV_SPRIT[0]);
+			B_C.setCodeName		(listCSV_SPRIT[1]);
+			B_C.setMarket		(listCSV_SPRIT[2]);
+			B_C.setCategory		(listCSV_SPRIT[3]);
+			B_C.setOpen			(listCSV_SPRIT[9]);
+			B_C.setMax			(listCSV_SPRIT[10]);
+			B_C.setMin			(listCSV_SPRIT[11]);
+			B_C.setClose		(listCSV_SPRIT[5]);
+			B_C.setDeki			(listCSV_SPRIT[12]);
+			B_C.setBaybay		(listCSV_SPRIT[13]);
+			//へそごまのcateを入れたいがこれしかないのです。
+			B_C.setCatelfg(ReCord.CODE_01_STOCK);
+			B_Cs.add(B_C);
+
 		}
 		B_C = new Bean_CodeList();
 	}
@@ -153,21 +171,34 @@ public class Bean_Bean {
 			B_C = new Bean_CodeList();
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
 
-//			System.out.println(listCSV.get(i));
-
 			B_C.setDay					(DAY);
-			B_C.setCode					(listCSV_SPRIT[0].replace("東証1部_", ""));
-			B_C.setCodeName				(listCSV_SPRIT[0]);
-			B_C.setDeki					(listCSV_SPRIT[1]);
-			B_C.setBaybay				(listCSV_SPRIT[2]);
-			B_C.setStockCount			(listCSV_SPRIT[3]);
-			B_C.setTakePrice			(listCSV_SPRIT[4]);
-			B_C.setUpPrice				(listCSV_SPRIT[5]);
-			B_C.setNoChange				(listCSV_SPRIT[6]);
-			B_C.setDownPrice			(listCSV_SPRIT[7]);
-			B_C.setNoCompare			(listCSV_SPRIT[8]);
-			//へそごまのcateを入れたいがこれしかないのです。
-			B_C.setCatelfg(ReCord.CODE_01_STOCK);
+			B_C.setCode			(listCSV_SPRIT[0]);
+			B_C.setCodeName		(listCSV_SPRIT[1]);
+			B_C.setMarket		(listCSV_SPRIT[2]);
+			B_C.setCategory		(listCSV_SPRIT[3]);
+			B_C.setOpen			(listCSV_SPRIT[9]);
+			B_C.setMax			(listCSV_SPRIT[10]);
+			B_C.setMin			(listCSV_SPRIT[11]);
+			B_C.setClose		(listCSV_SPRIT[5]);
+			B_C.setDeki			(listCSV_SPRIT[12]);
+			B_C.setBaybay		(listCSV_SPRIT[13]);
+
+			switch(listCSV_SPRIT[0]){
+			case "0001":
+//				日経225（日経平均株価）
+				B_C.setCatelfg(ReCord.CODE_04_ETF);
+				break;
+			case "0002":
+//				TOPIX（東証株価指数）
+				B_C.setCatelfg(ReCord.CODE_04_ETF);
+				break;
+			default:
+				//へそごまのcateを入れたいがこれしかないのです。
+				B_C.setCatelfg(ReCord.CODE_01_STOCK);
+				break;
+			}
+
+
 			B_Cs.add(B_C);
 
 

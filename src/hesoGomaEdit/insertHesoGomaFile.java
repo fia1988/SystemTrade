@@ -1,6 +1,7 @@
 package hesoGomaEdit;
 
 import insertPackage.InsertDay;
+import insertPackage.InsertList;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,13 +35,15 @@ public class insertHesoGomaFile {
 		File file =  new File(filePath);
 		if (file.isFile()==false){
 			//ファイルが存在しない場合は更新しない
+			commonAP.writeInLog("下記URLのファイルが存在しません。",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog(filePath,logWriting.DATEDATE_LOG_FLG);
 			return false;
 		}
 		List<String> csvStringList = new ArrayList<String>();
 		csvStringList = csvToStringList(filePath);
 
 		if (csvStringList.size() == 0 ){
-			commonAP.writeInLog("下記URLのファイルが存在しません。",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog("下記URLのファイルのレコード数が0件です。",logWriting.DATEDATE_LOG_FLG);
 			commonAP.writeInLog(filePath,logWriting.DATEDATE_LOG_FLG);
 			return false;
 		}
@@ -49,14 +52,14 @@ public class insertHesoGomaFile {
 //		B_B.getList_CSVtoDTO_STOCK_ETF();
 //		B_B.setList_CSVtoDTO_INDEX(listCSV, TODAY, skipLine);
 
+
 		List<String> csvProcessedStringList = new ArrayList<String>();
 		for (String record: csvStringList){
 			csvProcessedStringList.add(editReplaceHesogomaFile(record,cate));
 		}
-
 		B_B.setList_CSVtoDTO(csvProcessedStringList,TODAY,cate);
 
-		
+
 
 		switch (cate){
 			case ReCord.CODE_HESO_00_CODE_LIST:
@@ -125,19 +128,26 @@ public class insertHesoGomaFile {
 				break;
 			case ReCord.CODE_HESO_01_STOCK:
 				//変換前が左、変換後が→
-				replaceRecord = replaceRecord.replaceAll("-","_");
+				//DTOにするときに-は0になって0の時は前日比が入る
+				replaceRecord = replaceRecord.replaceAll("\"-\"","");
 				break;
 			case ReCord.CODE_HESO_02_INVEST:
+
 				break;
 			case  ReCord.CODE_HESO_03_FINANCE:
+
 				break;
 			case  ReCord.CODE_HESO_04_RATIO:
+				replaceRecord = replaceRecord.replaceAll("\"-\"","");
 				break;
 			case  ReCord.CODE_HESO_05_CREDIT:
 				break;
 			default:
 				break;
 		}
+
+		//「"」を削除する処理は共通と思われる
+		replaceRecord = replaceRecord.replaceAll("\"","");
 
 
 		return replaceRecord;
@@ -160,14 +170,16 @@ public class insertHesoGomaFile {
 	}
 
 	private void insertCodeList(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
-
+		InsertList BBB = new InsertList();
+		BBB.hesoGomaInsertList_Day(DTO, s);
 	}
 
 	private void insertStock(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 		InsertDay i_d = new InsertDay();
 //		i_d.InsertDD_STOCK_ETF(B_B.getList_CSVtoDTO_STOCK_ETF(),MAXDAY, s);
-		i_d.InsertDD_STOCK_ETF(DTO,TODAY, s);
+//		i_d.InsertDD_STOCK_ETF(DTO,TODAY, s);
 
+		i_d.hesoGomaInsertDD(DTO, s);
 
 		//分割ファイルの作成/取込を行う。
 		CreateSepaComFile sepaComCheck = new CreateSepaComFile();

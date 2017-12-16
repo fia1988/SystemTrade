@@ -78,6 +78,64 @@ public class InsertDay {
 //		}
 //	}
 
+
+	public void hesoGomaInsertDD(List<Bean_CodeList> DTO , S s){
+
+		for(int i = DTO.size() - 1; i>=0; i-- ){
+			switch(DTO.get(i).getCateflg()){
+			case ReCord.CODE_01_STOCK:
+
+				//値が存在しない場合、前日の価格を挿入する。
+				if(DTO.get(i).getMax().equals("0")){
+
+					String price = ZenzituEnd.getZenzituClose(DTO.get(i).getCode(),DTO.get(i).getCateflg(),s);
+					if (!price.equals("0")){
+						//0ではないとき、前日のpriceを全ての値にsetする。
+						DTO.get(i).setOpen (price);
+						DTO.get(i).setMax  (price);
+						DTO.get(i).setMin  (price);
+						DTO.get(i).setClose(price);
+
+						InsertDD_case1(DTO.get(i),s);
+						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//						System.out.println(DTO.get(i).getCode() + ":" + DTO.get(i).getDay());
+						//0のとき＝前日の価格が存在しない。レコードが存在しない。
+						//0の時は何もしない。
+					}
+
+				}else{
+					InsertDD_case1(DTO.get(i),s);
+
+					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+				}
+
+				break;
+			case ReCord.CODE_02_SATISTICS:
+				break;
+			case ReCord.CODE_03_INDEX:
+				break;
+			case ReCord.CODE_04_ETF:
+				break;
+			case ReCord.CODE_05_SAKIMONO:
+
+				break;
+			case ReCord.CODE_06_CURRENCY:
+
+				break;
+			default:
+				System.out.println("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName());
+				break;
+			}
+
+
+
+			//基本テーブルにインサート
+
+			//アクセサリテーブルにインサート
+
+		}
+	}
+
 	//CSVファイルを入れたら各テーブルにインサート開始
 	public void InsertDD(List<Bean_CodeList> DTO , S s){
 		//アクセサリ

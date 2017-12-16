@@ -794,6 +794,8 @@ public class cloringDate {
 
 			//株の更新ができたらリストの更新をやる
 			int stockCloalingResult = editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_01_STOCK		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s)		, TODAY , s);
+
+
 			if (stockCloalingResult == ReturnCodeConst.EVERY_UPDATE_SUCSESS){
 				editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_00_CODE_LIST	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_LIST, s)		, TODAY , s);
 			}
@@ -959,22 +961,23 @@ public class cloringDate {
 					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
 					+ COLUMN.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
 					+ COLUMN.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
-					+ COLUMN.VOLUME_UNIT	+	" as "	+ COLUMN.ENTRY_MONEY + "   " //アウトプットテーブルにコピーするに辺り、設定しないとエラーが出るのでダミーとして入れる。
+					+ " ( " + COLUMN.CLOSE + " * " + COLUMN.IDEA_VOLUME	+	" ) as "	+ COLUMN.ENTRY_MONEY + "   " //エントリーマネーを出す。
 					+ " from "
 					+ TBL_Name.LASTORDER;
-
+//		System.out.println(SQL);
 		s.freeUpdateQuery(SQL);
 
 		//COLUMN.ENTRY_MONEYがダミーなので正しい値を入れる
 //		COLUMN.ENTRY_MONEY
 
-		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
-				+ " set "
-				+ COLUMN.ENTRY_MONEY + " = " + (oneShotMoney*10000);
-		s.freeUpdateQuery(SQL);
+//		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
+//				+ " set "
+//				+ COLUMN.ENTRY_MONEY + " = " + (oneShotMoney*10000);
+//		s.freeUpdateQuery(SQL);
 
 
 		//TBL_Name.OUT_PUT_LASTORDERをCODE列を数字4桁にする。
+		//へそのゴマに移行したら消す
 		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
 				+ " set "
 				+ COLUMN.CODE + " = " + " left(" + COLUMN.CODE + ",4)";

@@ -3,6 +3,7 @@ package sql;
 import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
+import proparty.controllDay;
 import constant.COLUMN;
 import constant.ReCord;
 import constant.ReturnCodeConst;
@@ -1196,7 +1197,8 @@ public class createTBL {
 				+ " ( " + COLUMN.KOSIN
 				+ " , "
 				+ COLUMN.KOSIN_DAY
-				+ ") values ('" + ReCord.KOSHINBI_STOCK_LIST + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+//				+ ") values ('" + ReCord.KOSHINBI_STOCK_LIST + "' , '"+ ReCord.LIST_KOSHINBI_SHOKI + "' )  " ;
+				+ ") values ('" + ReCord.KOSHINBI_STOCK_LIST + "' , '"+ controllDay.getYesterDay() + "' )  " ;
 
 		s.createTBL(SQL);
 

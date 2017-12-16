@@ -98,6 +98,48 @@ public class CheckSign {
 
 	}
 
+	private static void setEleteMethod(S s){
+
+//		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,10,s);
+	}
+
+	//特定のメソッドだけ購入価格を変える
+	private static void setEleteMethodUpdate(	String type,
+												String L_packageName,
+												String L_className,
+												String L_methodName,
+												String S_packageName,
+												String S_className,
+												String S_methodName,
+												double entryMoney,
+												S s){
+
+		String L_method = (L_packageName + "." + L_className + "." + L_methodName);
+		String S_method = (S_packageName + "." + S_className + "." + S_methodName);
+
+		String SQL = "";
+		//以下true:買い
+		//理想的株数を計算する
+		SQL  = " update "+ TBL_Name.LASTORDER
+				+ " set "
+				+ COLUMN.IDEA_VOLUME + " = " + "( " + (entryMoney*10000) + " / " + COLUMN.CLOSE + " ) "
+				+ " where "
+				+ COLUMN.SIGN_FLG + " is true and "
+				+ COLUMN.ENTRYMETHOD + " = '" + L_method + "' and "
+				+ COLUMN.EXITMETHOD + " = '" + S_method + "'";
+		s.freeUpdateQuery(SQL);
+
+		//現実的株数を計算する
+		SQL  = " update "+ TBL_Name.LASTORDER
+				+ " set "
+				+ COLUMN.REAL_ENTRY_VOLUME + " = " + COLUMN.IDEA_VOLUME
+				+ " where "
+				+ COLUMN.SIGN_FLG + " is true and "
+				+ COLUMN.ENTRYMETHOD + " = '" + L_method + "' and "
+				+ COLUMN.EXITMETHOD + " = '" + S_method + "'";
+		s.freeUpdateQuery(SQL);
+	}
+
 	public static void checkVolume(double entryMoney,String TODAY,S s){
 
 		//まずはクローズを一致させる。株の
@@ -149,6 +191,8 @@ public class CheckSign {
 				+ " where "
 				+ COLUMN.SIGN_FLG + " is true";
 		s.freeUpdateQuery(SQL);
+
+		setEleteMethod(s);
 
 		//切り上げ処理
 		SQL  = " update "+ TBL_Name.LASTORDER

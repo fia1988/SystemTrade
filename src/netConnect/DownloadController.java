@@ -51,7 +51,7 @@ public class DownloadController {
 		String encodedBytes = new String(Base64.encodeBase64(strKey.getBytes()));
 
 		conn.setRequestProperty("Authorization", "Basic " + encodedBytes);
-		System.out.println(conn.getResponseCode());
+//		System.out.println(conn.getResponseCode());
 
 		int intRes = conn.getResponseCode();
 

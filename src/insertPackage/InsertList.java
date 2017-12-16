@@ -17,6 +17,28 @@ public class InsertList {
 	String SQL;
 
 
+	public void hesoGomaInsertList_Day(List<Bean_CodeList> DTO , S s){
+
+		//テーブルをクリアする。
+		deleteTBL(TBL_Name.CODELISTTBL, s);
+
+		for(int i = 0;i<DTO.size();i++){
+			switch(DTO.get(i).getCateflg()){
+				case ReCord.CODE_01_STOCK:
+					InsertList_case1(DTO.get(i),s);
+					break;
+				default:
+					commonAP.writeInLog("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName(),logWriting.DATEDATE_LOG_FLG);
+					break;
+			}
+		}
+	}
+
+	public void deleteTBL(String TBL , S s ){
+		String SQL = " delete from " + TBL;
+		s.freeUpdateQuery(SQL);
+	}
+
 	//個別銘柄・・・1
 	//統計・・・2
 	//指数・・・3
