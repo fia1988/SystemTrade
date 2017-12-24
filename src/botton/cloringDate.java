@@ -72,7 +72,7 @@ public class cloringDate {
 
 
 
-		if ( checkTodayLog() == false ){
+		if ( checkTodayLog(mainDTO) == false ){
 			//更新日が一致しない場合は終了する。
 			stop = System.currentTimeMillis();
 			commonAP.writeInLog("一部分のみが更新されている。" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
@@ -828,6 +828,9 @@ public class cloringDate {
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO_CHECK_POINT	, s),controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT_CHECK_POINT, s),	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
 
+			//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
+			OneRecord_Update.OneRecord(s);
+
 		}else{
 			//使わない
 			CONTOLLBOTTON CB = new CONTOLLBOTTON();
@@ -1149,11 +1152,35 @@ public class cloringDate {
 
 
 	//株と指数の更新日付が同じなら処理しない。
-	private boolean checkTodayLog(){
+	private boolean checkTodayLog(TAB_MainDTO mainDTO){
 		S s = new S();
 		s.getCon();
+
+		if (mainDTO.isHesogomaFile()){
+			//へそのごま使う
+			String stockDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+			String investDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST, s);
+
+			if ( stockDay.equals(investDay)){
+				//更新日付を更新する。
+				s.closeConection();
+
+			}else{
+				//一致しないエラーを出す。
+				System.out.println("株か投資指標かどっちかが更新できず。");
+				s.closeConection();
+				return false;
+			};
+
+			return true;
+		}
+
 		String today = controllDay.getMAX_DD_INDEX(s);
 		String satisDay = controllDay.getMAX_DD_STATISTICS(s);
+
+
+
+
 		if ( today.equals(controllDay.getMAX_DD_STOCK_ETF(s)) ){
 			//一致する場合、ヘッダを出力する。
 //			commonAP.writeInLog("売買区分,日付,code,Lmethod,Smethod",logWriting.STOCK_RESULT_LOG_FLG_L);
