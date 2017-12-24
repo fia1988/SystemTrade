@@ -1,9 +1,15 @@
 package bean;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.commonAP;
+
 import constant.ReCord;
+import constant.logWriting;
 
 public class Bean_Bean {
 
@@ -68,7 +74,8 @@ public class Bean_Bean {
 		return B_Cs;
 	}
 
-	public void setList_CSVtoDTO(List<String> listCSV,String DAY,String cate){
+	//株の日々データと株一覧以外は仮ファイルを作ってそれをインサートする
+	public void setList_CSVtoDTO(List<String> listCSV,String DAY,String cate,String kariFilePath){
 		//2015年12月04日 一行目にこんな感じで日付が入っている。
 //		String DAY = listCSV.get(0);
 		B_Cs = new ArrayList<Bean_CodeList>();
@@ -78,21 +85,21 @@ public class Bean_Bean {
 		switch (cate){
 			case ReCord.CODE_HESO_00_CODE_LIST:
 				hesoGomaStockList	(listCSV, DAY, 1, cate);
-				break;
+				return;
 			case ReCord.CODE_HESO_01_STOCK:
 				hesoGomaStock		(listCSV, DAY, 3, cate);
-				break;
+				return;
 			case ReCord.CODE_HESO_02_INVEST:
-				hesoGomaInvest		(listCSV, DAY, 1, cate);
+				makingKariFile		(listCSV, DAY, 3, cate,kariFilePath);
 				break;
 			case  ReCord.CODE_HESO_03_FINANCE:
-				hesoGomaFinance		(listCSV, DAY, 1, cate);
+				makingKariFile		(listCSV, DAY, 1, cate,kariFilePath);
 				break;
 			case  ReCord.CODE_HESO_04_RATIO:
-				hesoGomaRatio		(listCSV, DAY, 1, cate);
+				makingKariFile		(listCSV, DAY, 1, cate,kariFilePath);
 				break;
 			case  ReCord.CODE_HESO_05_CREDIT:
-				hesoGomaCredit		(listCSV, DAY, 1, cate);
+				makingKariFile		(listCSV, DAY, 1, cate,kariFilePath);
 				break;
 			default:
 				break;
@@ -101,6 +108,42 @@ public class Bean_Bean {
 
 	}
 
+	private void makingKariFile(List<String> listCSV,String DAY,int skipLine,String cate,String kariFilePath){
+
+
+		File file = new File(kariFilePath);
+
+		if (file.isFile()==true){
+			//ファイルが存在する場合は何もしない。
+			//リストの時は黙ってスキップ
+			commonAP.writeInLog("makingKariFile：これもう存在します。スキップします。→:" + kariFilePath,logWriting.DATEDATE_LOG_FLG);
+			return;
+		}
+
+		try {
+			file.createNewFile();
+			FileWriter filewriter = new FileWriter(file,true);
+
+
+			for(int i = skipLine;i<listCSV.size();i++){
+				filewriter.write( DAY + "," + listCSV.get(i)  + "\r\n");
+			}
+			filewriter.close();
+		} catch (IOException e1) {
+			// TODO 自動生成された catch ブロック
+			commonAP.writeInErrLog(e1);
+			try {
+				FileWriter filewriter = new FileWriter(file,true);
+			} catch (IOException e) {}
+			commonAP.writeInLog("makingKariFile：下記ファイルの作成が失敗しました。",logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog(kariFilePath,logWriting.DATEDATE_LOG_FLG);
+			return;
+		}
+
+
+
+
+	}
 
 	private void hesoGomaFinance(List<String> listCSV,String DAY,int skipLine,String cate){
 		Bean_CodeList B_C = new Bean_CodeList();

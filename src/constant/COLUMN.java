@@ -306,6 +306,32 @@ public class COLUMN {
 	public static String CREDIT_SHORT_CHANGERATE_W = "Credit_Short_ChangeRate";
 	public static String CREDIT_SHORT_CHANGERATE_W_KATA = CREDIT_SHORT_CHANGERATE_W + " double ";
 
+
+
+	//信用買い残
+	public static String CREDIT_LONG_PRE = "Credit_Long_PRE";
+	public static String CREDIT_LONG_PRE_KATA = CREDIT_LONG_PRE + " double ";
+	//信用売り残
+	public static String CREDIT_SHORT_PRE = "Credit_Short_PRE";
+	public static String CREDIT_SHORT_PRE_KATA = CREDIT_SHORT_PRE + " double ";
+	//信用倍率＝信用買い残÷信用売り残
+	public static String CREDIT_RATIO_PRE = "Credit_Ratio_PRE";
+	public static String CREDIT_RATIO_PRE_KATA = CREDIT_RATIO_PRE + " double ";
+	//信用買い残前日比
+	public static String CREDIT_LONG_CHANGERATE_PRE = "Credit_Long_ChangeRate_PRE";
+	public static String CREDIT_LONG_CHANGERATE_PRE_KATA = CREDIT_LONG_CHANGERATE_PRE + " double ";
+	//信用売り残前日比
+	public static String CREDIT_SHORT_CHANGERATE_PRE = "Credit_Short_ChangeRate_PRE";
+	public static String CREDIT_SHORT_CHANGERATE_PRE_KATA = CREDIT_SHORT_CHANGERATE_PRE + " double ";
+
+	//信用買い残前週比
+	public static String CREDIT_LONG_CHANGERATE_W_PRE = "Credit_Long_ChangeRate_PRE";
+	public static String CREDIT_LONG_CHANGERATE_W_PRE_KATA = CREDIT_LONG_CHANGERATE_W_PRE + " double ";
+	//信用売り残前週比
+	public static String CREDIT_SHORT_CHANGERATE_W_PRE = "Credit_Short_ChangeRate_PRE";
+	public static String CREDIT_SHORT_CHANGERATE_W_PRE_KATA = CREDIT_SHORT_CHANGERATE_W_PRE + " double ";
+
+
 	//信用倍率前日比
 	public static String CREDIT_RATIO_CHANGERATE = "Credit_Ratio_ChangeRate";
 	public static String CREDIT_RATIO_CHANGERATE_KATA = CREDIT_RATIO_CHANGERATE + " double ";
@@ -906,6 +932,19 @@ public class COLUMN {
 	//外国人持株数比率
 	public static String FOREIGNER_STOCK_HOLDER_RATIO					= "FOREIGNER_STOCK_HOLDER_RATIO";
 	public static String FOREIGNER_STOCK_HOLDER_RATIO_KATA				= FOREIGNER_STOCK_HOLDER_RATIO + " double unsigned  ";
+
+	//浮動株数比率
+	public static String ANOTHER_STOCK_HOLDER_RATIO_PRE						= "ANOTHER_STOCK_HOLDER_RATIO_PRE";
+	public static String ANOTHER_STOCK_HOLDER_RATIO_PRE_KATA				= ANOTHER_STOCK_HOLDER_RATIO_PRE + " double unsigned  ";
+	//少数特定者持株数比率
+	public static String MAJOR_STOCK_HOLDER_RATIO_PRE						= "MAJOR_STOCK_HOLDER_RATIO_PRE";
+	public static String MAJOR_STOCK_HOLDER_RATIO_PRE_KATA					= MAJOR_STOCK_HOLDER_RATIO_PRE + " double unsigned  ";
+	//投資信託持株数比率
+	public static String ETF_STOCK_HOLDER_RATIO_PRE							= "ETF_STOCK_HOLDER_RATIO_PRE";
+	public static String ETF_STOCK_HOLDER_RATIO_PRE_KATA					= ETF_STOCK_HOLDER_RATIO_PRE + " double unsigned  ";
+	//外国人持株数比率
+	public static String FOREIGNER_STOCK_HOLDER_RATIO_PRE					= "FOREIGNER_STOCK_HOLDER_RATIO_PRE";
+	public static String FOREIGNER_STOCK_HOLDER_RATIO_PRE_KATA				= FOREIGNER_STOCK_HOLDER_RATIO_PRE + " double unsigned  ";
 
 	//_単位：百万円
 

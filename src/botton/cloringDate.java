@@ -793,16 +793,40 @@ public class cloringDate {
 			String TODAY = controllDay.getTODAY();
 
 			//株の更新ができたらリストの更新をやる
-			int stockCloalingResult = editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_01_STOCK		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s)		, TODAY , s);
+			String lastUpdateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+			int stockCloalingResult = editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_01_STOCK		,lastUpdateDay,lastUpdateDay	, TODAY , s);
 
+			//一つでも異常があれば停止する。
+			if ( stockCloalingResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
+			}
 
 			if (stockCloalingResult == ReturnCodeConst.EVERY_UPDATE_SUCSESS){
-				editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_00_CODE_LIST	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_LIST, s)		, TODAY , s);
+				lastUpdateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_LIST, s);
+				editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_00_CODE_LIST	,lastUpdateDay,lastUpdateDay, TODAY , s);
 			}
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_02_INVEST		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST, s)			, TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)		, TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
-			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
+
+			int stockInvestResult = editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_02_INVEST		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST_CHECK_POINT, s)	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_INVEST, s)			, TODAY , s);
+
+
+
+			//一つでも異常があれば停止する。
+			if ( stockInvestResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_ERR;
+			}
+
+
+			//2つとも更新なしなら更新なし
+			if ( stockInvestResult == stockCloalingResult && stockCloalingResult == ReturnCodeConst.EVERY_UPDATE_NOTHING ){
+				s.closeConection();
+				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+			}
+
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL_CHECK_POINT, s)	,controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)	, TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO_CHECK_POINT	, s),controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
+			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT_CHECK_POINT, s),	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
 
 		}else{
 			//使わない

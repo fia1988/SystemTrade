@@ -16,8 +16,6 @@ public class controllDay {
 	static String COMDAY;
 	static String TBLName;
 
-
-
 	public static String getAJUSTMAXDAY_STATISTICS(S s){
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");

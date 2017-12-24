@@ -168,6 +168,10 @@ public class createTBL {
 				+ COLUMN.MAJOR_STOCK_HOLDER_RATIO_KATA				 + " , " //少数特定者持株数比率
 				+ COLUMN.ETF_STOCK_HOLDER_RATIO_KATA				 + " , " //投資信託持株数比率
 				+ COLUMN.FOREIGNER_STOCK_HOLDER_RATIO_KATA			 + " , " //外国人持株数比率
+				+ COLUMN.ANOTHER_STOCK_HOLDER_RATIO_PRE_KATA			 + " , " //浮動株数比率_PRE
+				+ COLUMN.MAJOR_STOCK_HOLDER_RATIO_PRE_KATA				 + " , " //少数特定者持株数比率_PRE
+				+ COLUMN.ETF_STOCK_HOLDER_RATIO_PRE_KATA				 + " , " //投資信託持株数比率_PRE
+				+ COLUMN.FOREIGNER_STOCK_HOLDER_RATIO_PRE_KATA			 + " , " //外国人持株数比率_PRE
 				+ "primary key ( "
 				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
 
@@ -200,6 +204,11 @@ public class createTBL {
 				+ COLUMN.CREDIT_SHORT_KATA							 + " , " //信用売残高
 				+ COLUMN.CREDIT_SHORT_CHANGERATE_W_KATA				 + " , " //信用売残高前週比
 				+ COLUMN.CREDIT_RATIO_KATA							 + " , " //貸借倍率
+				+ COLUMN.CREDIT_LONG_PRE_KATA							 + " , " //信用買残高_PRE
+				+ COLUMN.CREDIT_LONG_CHANGERATE_W_PRE_KATA				 + " , " //信用買残高前週比_PRE
+				+ COLUMN.CREDIT_SHORT_PRE_KATA							 + " , " //信用売残高_PRE
+				+ COLUMN.CREDIT_SHORT_CHANGERATE_W_PRE_KATA				 + " , " //信用売残高前週比_PRE
+				+ COLUMN.CREDIT_RATIO_PRE_KATA							 + " , " //貸借倍率_PRE
 				+ "primary key ( "
 				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
 
@@ -1201,6 +1210,54 @@ public class createTBL {
 				+ ") values ('" + ReCord.KOSHINBI_STOCK_LIST + "' , '"+ controllDay.getYesterDay() + "' )  " ;
 
 		s.createTBL(SQL);
+
+
+
+
+
+
+
+
+
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_INVEST_CHECK_POINT + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_CREDIT_CHECK_POINT + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_FORRIGN_RATIO_CHECK_POINT + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_FINANCIAL_CHECK_POINT + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
 
 
 	}

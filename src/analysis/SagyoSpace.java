@@ -10,6 +10,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
+import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
@@ -24,6 +25,9 @@ import constant.logWriting;
 
 public class SagyoSpace {
 
+
+//	mysql> update 23_invest_sihyo_tbl_dd b left join 23_invest_sihyo_tbl_dd a on a.code = b.code set b.m
+//			arket_cap_ppt_pre = a.market_cap_ppt where b.daytime = '2017-01-02' and a.daytime = '2017-01-01' ;
 
 	public static void shokisettei(Bean_Parameta paraDTO,Bean_nowRecord nowDTO,Bean_Result resultDTO){
 
@@ -83,12 +87,20 @@ public class SagyoSpace {
 
 	}
 
+	public static void testCase89(){
+		String replaceRecord = "132+456";
+		System.out.println(replaceRecord);
+		replaceRecord = replaceRecord.replaceAll("\"-\"","");
+		replaceRecord = replaceRecord.replaceAll("\\+","");
+		
+		System.out.println(replaceRecord);
+	}
 
-
+	
 	public static void testCase80(){
 		S s = new S();
 		s.getCon();
-		Bean_nowRecord nowDTO= new Bean_nowRecord ();
+		Bean_FinancialStatement nowDTO = new Bean_FinancialStatement ();
 		String SQL = " select * from " + TBL_Name.FINANCIAL_MM_TBL
 				+ " where  "
 				+ " ( "
@@ -109,26 +121,35 @@ public class SagyoSpace {
 				+ COLUMN.STOCK_NUM
 				+ " ) "
 				;
+		SQL = " select * from " + TBL_Name.FINANCIAL_MM_TBL;
 		System.out.println(SQL);
+
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs2.next() ) {
 
-//				nowDTO.setCode_01(s.rs2.getString(	  COLUMN.TOTAL_ASSET_PPT		));
-//				System.out.println(nowDTO.getCode_01());
-//
-//				nowDTO.setTotal_asset_ppt(s.rs2.getInt(	  COLUMN.TOTAL_ASSET_PPT		));
-//				System.out.println(nowDTO.getTotal_asset_ppt());
-//
-//				if (nowDTO.getTotal_asset_ppt()==0){
-//					System.out.println("aaaaaaaaaaaaaaaaa");
-//				}
+				nowDTO.setCode_01(s.rs2.getString(	  COLUMN.TOTAL_ASSET_PPT		));
+				System.out.println(nowDTO.getCode_01());
+
+				nowDTO.setTotal_asset_ppt(s.rs2.getInt(	  COLUMN.TOTAL_ASSET_PPT		));
+				System.out.println(nowDTO.getTotal_asset_ppt());
+
+				if (nowDTO.getTotal_asset_ppt()==0){
+					System.out.println("aaaaaaaaaaaaaaaaa");
+				}
 //				nowDTOList.add(	setNowRecord(code,cate,s.rs2,paraDTO)	);
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+
+//		 select * from 21_financialTBL_MM
+//		 null
+//		 0.0
+//		 aaaaaaaaaaaaaaaaa
+		//→==0ならnullチェックするとかでいいかも
+//		 実行にかかった時間は 35 ミリ秒です。
 
 		s.closeConection();
 	}

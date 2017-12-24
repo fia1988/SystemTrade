@@ -31,4 +31,6 @@ public class ReturnCodeConst {
 	final public static int EVERY_UPDATE_NOTHING	=20000;
 	//時系列更新に異常があった
 	final public static int EVERY_UPDATE_ERR		=30000;
+	//意図しないよくわからんエラー
+	final public static int NAZO_ERR		=99999;
 }
