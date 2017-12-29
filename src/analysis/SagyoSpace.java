@@ -92,7 +92,15 @@ public class SagyoSpace {
 		System.out.println(replaceRecord);
 		replaceRecord = replaceRecord.replaceAll("\"-\"","");
 		replaceRecord = replaceRecord.replaceAll("\\+","");
+		String testLetter = ",\"-\",";
 		
+//		replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
+		System.out.println("\\N");
+		System.out.println("\"-\"");
+		System.out.println(testLetter);
+//		testLetter = testLetter.replaceAll("\"-\"","");
+		testLetter = testLetter.replaceAll("\"-\"","\\\\N");
+		System.out.println(testLetter);
 		System.out.println(replaceRecord);
 	}
 

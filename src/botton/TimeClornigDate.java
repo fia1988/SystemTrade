@@ -3,6 +3,7 @@ package botton;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import proparty.PROPARTY;
 import GamenDTO.TAB_MainDTO;
 
 import common.commonAP;
@@ -24,7 +25,8 @@ public class TimeClornigDate {
 			timer = new Timer();
 			this.MainDTO = mainDTO;
 //			timer.scheduleAtFixedRate(task,0, 1800000);
-			timer.schedule(task,0, 1200000);
+			
+			timer.schedule(task,0, PROPARTY.CLOALING_TIME);
 //			timer.schedule(task,0, 18);
 //			timer.scheduleWithFixedDelay(task,0,0);
 		} catch (Exception e) {

@@ -43,11 +43,13 @@ public class editHesogomaFile {
 		String TBL = TBL_Name.CODELISTTBL;
 		String updateColumn = "";
 		String updateCheckPointColumn = "";
+		String KOSHINMOZI = "";
 		switch (cate){
 			case ReCord.CODE_HESO_00_CODE_LIST:
 				hesogomaFileName = hesogomaFileName + STOCK_DATA_FILE;
 				TBL = TBL_Name.CODELISTTBL;
 				updateColumn = ReCord.KOSHINBI_STOCK_LIST;
+				KOSHINMOZI = "銘柄一覧";
 				updateCheckPointColumn = ReCord.KOSHINBI_STOCK_LIST;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices_";
@@ -57,6 +59,7 @@ public class editHesogomaFile {
 				TBL = TBL_Name.STOCK_DD;
 				updateColumn = ReCord.KOSHINBI_STOCK_ETF;
 				updateCheckPointColumn = ReCord.KOSHINBI_STOCK_ETF;
+				KOSHINMOZI = "株";
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices_";
 				break;
@@ -67,13 +70,14 @@ public class editHesogomaFile {
 				updateCheckPointColumn = ReCord.KOSHINBI_INVEST_CHECK_POINT;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data_";
-
+				KOSHINMOZI = "投資データ";
 
 				break;
 			case  ReCord.CODE_HESO_03_FINANCE:
 				hesogomaFileName = hesogomaFileName + FINANCIAL_FILE;
 				TBL = TBL_Name.FINANCIAL_MM_TBL;
 				updateColumn = ReCord.KOSHINBI_FINANCIAL;
+				KOSHINMOZI = "財務データ";
 				updateCheckPointColumn = ReCord.KOSHINBI_FINANCIAL_CHECK_POINT;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results_";
@@ -83,6 +87,7 @@ public class editHesogomaFile {
 				hesogomaFileName = hesogomaFileName + RATIO_FILE;
 				updateColumn = ReCord.KOSHINBI_FORRIGN_RATIO;
 				updateCheckPointColumn = ReCord.KOSHINBI_FORRIGN_RATIO_CHECK_POINT;
+				KOSHINMOZI = "株主比率";
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio_";
 				break;
@@ -90,6 +95,7 @@ public class editHesogomaFile {
 				TBL = TBL_Name.CREDIT_WW_TBL;
 				hesogomaFileName = hesogomaFileName + CREDIT_FILE;
 				updateColumn = ReCord.KOSHINBI_CREDIT;
+				KOSHINMOZI = "株信用売買残";
 				updateCheckPointColumn = ReCord.KOSHINBI_CREDIT_CHECK_POINT;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions_";
@@ -100,7 +106,7 @@ public class editHesogomaFile {
 		}
 
 //		String hesogomaFilePath = mainDTO.getEveryDayHesoGomaCsvFolderPath() + File.separator + hesogomaFileName;
-
+		commonAP.writeInLog(KOSHINMOZI + "のチェックをします。",logWriting.DATEDATE_LOG_FLG);
 
 		int hesoGomaFileInsertFIASresult = hesoGomaFileInsertFIAS(mainDTO, TBL, TODAY,checkPointDay, lastUpDateDay, URL_parts, PROPARTY.hesoGomaID, PROPARTY.hesoGomePASS, mainDTO.getEveryDayHesoGomaCsvFolderPath(), hesogomaFileName, cate,updateColumn,updateCheckPointColumn, s);
 		s.resetConnection();
@@ -172,15 +178,18 @@ public class editHesogomaFile {
 
 				try {
 					List<String> csvStringList = new ArrayList<String>();
-					csvStringList = dCon.getData(downURL, urlID, urlPASS);
+
 
 					if (file.isFile()){
 						//ファイルが存在する場合は削除する。
-						commonAP.writeInLog("左記のファイルが既に存在するので上書きします。:" + file,logWriting.DATEDATE_LOG_FLG);
-						file.delete();
+						commonAP.writeInLog("左記のファイルが既に存在するのでスキップします。:" + file,logWriting.DATEDATE_LOG_FLG);
+//						file.delete();
+					}else{
+						csvStringList = dCon.getData(downURL, urlID, urlPASS);
+						writtingString(csvStringList,filePath,cate);
 					}
 					insertChecker = true;
-					writtingString(csvStringList,filePath,cate);
+
 				} catch (UnknownHostException e) {
 					// TODO 自動生成された catch ブロック
 					commonAP.writeInLog("以下のURLは存在しません",logWriting.DATEDATE_LOG_FLG);
@@ -258,25 +267,29 @@ public class editHesogomaFile {
 				insHego.insertHesoGomaFileController(mainDTO, filePath, checkPointDay,lastUpDateDay, cate,TBL,updateColumn,updateCheckPointColumn,s);
 				s.resetConnection();
 				resultInsertExit = true;
+				upCounter = 0;
+			}else{
+				upCounter++;
 			}
 
-			upCounter++;
+
 			calendar.add(Calendar.DAY_OF_MONTH, +1);
 			checkPointDay = sdf1.format(calendar.getTime());
 			lastUpDateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(checkPointColumn, s);
 
 		}
 
-
+//		System.out.println("a:" + upCounter);
 		if (resultInsertExit){
 			return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 		}else{
-
-			if (upCounter>6){
+//			System.out.println("b:" + upCounter);
+			if (upCounter>5){
 //				commonAP.writeInLog(updateCheckPointColumn + ":" + TODAY,logWriting.DATEDATE_LOG_FLG);
 				String updateDay = controllDay.getTODAYnoYesterDay(TODAY);
 				controllDay.update_KOSHINBI(updateDay,updateCheckPointColumn, s);
 				commonAP.writeInLog(updateCheckPointColumn + ":" + updateDay,logWriting.DATEDATE_LOG_FLG);
+				upCounter = 0;
 			}
 
 			return ReturnCodeConst.EVERY_UPDATE_NOTHING;

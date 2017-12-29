@@ -31,6 +31,9 @@ public class PROPARTY {
 	public static int HISABISADAY_STATISTICS	=	5210;
 	public static int HISABISADAY_INDEX			=	5210;
 
+	//株データを監視するスパン単位：ﾐﾘ秒
+	public final static int CLOALING_TIME			=	900000;
+
 
 	//0:毎日
 	//1:月水金

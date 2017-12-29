@@ -83,7 +83,8 @@ public class createTBL {
 				+ COLUMN.ROA_KATA									 + " , " //ROA
 				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済株式数
 				+ "primary key ( "
-				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
+//				+ COLUMN.DAYTIME + " , " + COLUMN.CODE +  " ) )";
+				+ COLUMN.YEAR_KESSAN_TIME_YYYYMMDD + " , " + COLUMN.CODE +  " ) )";
 
 		SQL = create + TBL + colum;
 

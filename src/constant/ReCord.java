@@ -3,6 +3,7 @@ package constant;
 public class ReCord {
 	//コードリストテーブルを作成した際にcode列に入れられる作成列
 	public static String KOSHINBI_STOCK_ETF								= "株とETF更新日";
+	public static String KOSHINBI_STOCK_ETF_CHECK_POINT					= "株とETF更新日のチェックポイント更新日";
 	public static String KOSHINBI_INDEX									= "指数更新日";
 	public static String KOSHINBI_STATISTICS							= "統計更新日";
 	public static String KOSHINBI_CURRENCY								= "通貨更新日";

@@ -81,7 +81,8 @@ public class SEPARATE_CHECK {
 						+ " from "
 						+ TBL_Name.CODELISTTBL
 						+ " where "
-						+ "left(" + COLUMN.CODE + ",4) = '" + s.rs.getString(COLUMN.CODE) + "'";
+//						+ "left(" + COLUMN.CODE + ",4) = '" + s.rs.getString(COLUMN.CODE) + "'";
+						+ COLUMN.CODE + " = '" + s.rs.getString(COLUMN.CODE) + "'";
 
 				s.rs = s.sqlGetter().executeQuery(SQL);
 				//リストの中から一致するコードを探す。

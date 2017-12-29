@@ -98,7 +98,7 @@ public class insertHesoGomaFile {
 
 		commonAP.writeInLog(updateColumn + ":" + TODAY,logWriting.DATEDATE_LOG_FLG);
 		controllDay.update_KOSHINBI(TODAY,updateColumn, s);
-		commonAP.writeInLog(updateCheckPointColumn + ":" + TODAY,logWriting.DATEDATE_LOG_FLG);
+//		commonAP.writeInLog(updateCheckPointColumn + ":" + TODAY,logWriting.DATEDATE_LOG_FLG);
 		controllDay.update_KOSHINBI(TODAY,updateCheckPointColumn, s);
 		return true;
 	}
@@ -145,19 +145,20 @@ public class insertHesoGomaFile {
 				replaceRecord = replaceRecord.replaceAll("\"-\"","");
 				break;
 			case ReCord.CODE_HESO_02_INVEST:
-				replaceRecord = replaceRecord.replaceAll("\"-\"","");
+				//"-"を"\N"にする
+				replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
 				replaceRecord = replaceRecord.replaceAll("/","-");
 				break;
 			case  ReCord.CODE_HESO_03_FINANCE:
-				replaceRecord = replaceRecord.replaceAll("\"-\"","");
+				replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
 				replaceRecord = replaceRecord.replaceAll("/","-");
 				break;
 			case  ReCord.CODE_HESO_04_RATIO:
-				replaceRecord = replaceRecord.replaceAll("\"-\"","");
+				replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
 				replaceRecord = replaceRecord.replaceAll("%","");
 				break;
 			case  ReCord.CODE_HESO_05_CREDIT:
-				replaceRecord = replaceRecord.replaceAll("\"-\"","");
+				replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
 				replaceRecord = replaceRecord.replaceAll("\\+","");
 				break;
 			default:
@@ -228,13 +229,13 @@ public class insertHesoGomaFile {
 
 
 //		//仮ファイルを削除
-//        File file = new File(kariFilePath);
-//        if(file.delete()){
-//        	//成功
-//
-//        }else{
-//        	//失敗
-//        }
+        File file = new File(kariFilePath);
+        if(file.delete()){
+        	//成功
+
+        }else{
+        	//失敗
+        }
 
 	}
 

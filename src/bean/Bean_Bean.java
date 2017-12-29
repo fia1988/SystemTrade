@@ -114,10 +114,14 @@ public class Bean_Bean {
 		File file = new File(kariFilePath);
 
 		if (file.isFile()==true){
-			//ファイルが存在する場合は何もしない。
+			//ファイルが存在する場合は上書き
 			//リストの時は黙ってスキップ
-			commonAP.writeInLog("makingKariFile：これもう存在します。スキップします。→:" + kariFilePath,logWriting.DATEDATE_LOG_FLG);
-			return;
+			commonAP.writeInLog("makingKariFile：これもう存在します。上書きします。→:" + kariFilePath,logWriting.DATEDATE_LOG_FLG);
+	        if(file.delete()){
+	        	//成功
+	        	commonAP.writeInLog("makingKariFile：これ削除成功。新しく作ります。→:" + kariFilePath,logWriting.DATEDATE_LOG_FLG);
+	        }
+
 		}
 
 		try {
@@ -224,7 +228,7 @@ public class Bean_Bean {
 			B_C.setMin			(listCSV_SPRIT[11]);
 			B_C.setClose		(listCSV_SPRIT[5]);
 			B_C.setDeki			(listCSV_SPRIT[12]);
-			B_C.setBaybay		(listCSV_SPRIT[13]);
+			B_C.setBaybay		(listCSV_SPRIT[13] + "000");
 
 			switch(listCSV_SPRIT[0]){
 			case "0001":

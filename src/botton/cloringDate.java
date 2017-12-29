@@ -304,7 +304,7 @@ public class cloringDate {
 		commonAP.writeInLog("管理者のファイルをばらまきおえました",logWriting.DATEDATE_LOG_FLG);
 
 		//有料会員は管理者よりあとに動かす
-		int sleepTime = 3600 * 1500 * 1;
+		int sleepTime = PROPARTY.CLOALING_TIME * 2;
 		commonAP.writeInLog(sleepTime + "ミリ秒停止します。",logWriting.DATEDATE_LOG_FLG);
 		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 
@@ -790,6 +790,9 @@ public class cloringDate {
 		if (mainDTO.isHesogomaFile()){
 			//へそのごま使う
 			editHesogomaFile editHeso = new editHesogomaFile();
+			
+			commonAP.writeInLog("チェック開始！",logWriting.DATEDATE_LOG_FLG);
+			
 			String TODAY = controllDay.getTODAY();
 
 			//株の更新ができたらリストの更新をやる
@@ -798,6 +801,7 @@ public class cloringDate {
 
 			//一つでも異常があれば停止する。
 			if ( stockCloalingResult == ReturnCodeConst.EVERY_UPDATE_ERR){
+				commonAP.writeInLog("へそごまの株で何かエラー",logWriting.DATEDATE_LOG_FLG);
 				s.closeConection();
 				return ReturnCodeConst.EVERY_UPDATE_ERR;
 			}
@@ -823,6 +827,8 @@ public class cloringDate {
 				s.closeConection();
 				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
 			}
+			
+			commonAP.writeInLog("株と投資情報の更新成功したので他のもチェックしま！",logWriting.DATEDATE_LOG_FLG);
 
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL_CHECK_POINT, s)	,controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)	, TODAY , s);
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO_CHECK_POINT	, s),controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
@@ -949,7 +955,8 @@ public class cloringDate {
 
 
 
-		String today = controllDay.getMAX_DD_INDEX(s);
+//		String today = controllDay.getMAX_DD_INDEX(s);
+		String today = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		fileNameL = today + "_" + "L.csv";
 		fileNameS = today + "_" + "S.csv";
 
@@ -1005,10 +1012,10 @@ public class cloringDate {
 
 		//TBL_Name.OUT_PUT_LASTORDERをCODE列を数字4桁にする。
 		//へそのゴマに移行したら消す
-		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
-				+ " set "
-				+ COLUMN.CODE + " = " + " left(" + COLUMN.CODE + ",4)";
-		s.freeUpdateQuery(SQL);
+//		SQL  = " update "+ TBL_Name.OUT_PUT_LASTORDER
+//				+ " set "
+//				+ COLUMN.CODE + " = " + " left(" + COLUMN.CODE + ",4)";
+//		s.freeUpdateQuery(SQL);
 
 		String TBL = TBL_Name.OUT_PUT_LASTORDER;
 		SQL  = " update "+ TBL

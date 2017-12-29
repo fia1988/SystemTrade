@@ -16,6 +16,7 @@ import java.util.List;
 import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
+import proparty.controllDay;
 import accesarrySQL.SQLChecker;
 import constant.COLUMN;
 import constant.ReCord;
@@ -163,7 +164,7 @@ public class commonAP {
 				fileName = "samaryResult_" + writeType + logWriting.logKakutyousi;
 				break;
 			case logWriting.CODE_SEPACON_ERR_LOG_FLG:
-				fileName = "sepaComERR_" + writeType + logWriting.logKakutyousi;
+				fileName = controllDay.getTODAY() + "sepaComERR_" + writeType + logWriting.logKakutyousi;
 				break;
 			case logWriting.CODE_DOLLCOST_RESULT_LOG_FLG:
 				fileName = "CODE_DOLLCOST_" + writeType + logWriting.logKakutyousi;
