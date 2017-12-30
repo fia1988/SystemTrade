@@ -182,7 +182,7 @@ public class editHesogomaFile {
 
 					if (file.isFile()){
 						//ファイルが存在する場合は削除する。
-						commonAP.writeInLog("左記のファイルが既に存在するのでスキップします。:" + file,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog("右記のファイルが既に存在するのでスキップします。:" + file,logWriting.DATEDATE_LOG_FLG);
 //						file.delete();
 					}else{
 						csvStringList = dCon.getData(downURL, urlID, urlPASS);
@@ -256,7 +256,7 @@ public class editHesogomaFile {
 					insertChecker = true;
 				}else{
 					//ローカルを参照するというのにファイルが存在しない場合はここ
-					commonAP.writeInLog("先をスキップ:" + file,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("右のファイルがないのでスキップ:" + file,logWriting.DATEDATE_LOG_FLG);
 				}
 
 			}
