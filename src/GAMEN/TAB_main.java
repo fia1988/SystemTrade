@@ -388,6 +388,8 @@ public class TAB_main extends JPanel {
 
 		checkBox_3.setBounds(42, 666, 278, 29);
 		add(checkBox_3);
+		checkBox_4.setSelected(true);
+		checkBox_4.setEnabled(false);
 
 
 		checkBox_4.setBounds(42, 631, 224, 29);

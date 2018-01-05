@@ -253,9 +253,9 @@ public class CreateSepaComFile {
 					+ COLUMN.SEPA_FLG + " is false "
 					+ " and "
 					+ COLUMN.EFFECT_STARTDAY + " < '2007-01-01'";
-
+//		System.out.println("aaaaaaa");
 		//取り込む前に削除する
-		deleteOldFalse(checkFLG,s);
+//		deleteOldFalse(checkFLG,s);
 
 		commonAP.writeInLog("createSepaComFileAndLoad:"+SQL1,logWriting.DATEDATE_LOG_FLG);
 
@@ -271,6 +271,13 @@ public class CreateSepaComFile {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 				s.closeConection();
+				commonAP.writeInLog("createSepaComFileAndLoadの「" + letter + "」でエラー",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("利用したSQLは以下",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("■SQL1：" + SQL1,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("■SQL2：" + SQL2,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("--------createSepaComFileAndLoadの「" + letter + "」でエラーメッセージここから--------",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInErrLog(e);
+				commonAP.writeInLog("--------createSepaComFileAndLoadの「" + letter + "」でエラーメッセージここまで--------",logWriting.DATEDATE_LOG_FLG);
 				return e.getErrorCode();
 			}
 		}

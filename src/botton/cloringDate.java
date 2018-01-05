@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import makekickfile.Digest;
 import proparty.PROPARTY;
@@ -784,15 +785,40 @@ public class cloringDate {
 	//時系列データの更新
 	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
 
+		//16時以前のお軌道は却下する。
+		Calendar now = Calendar.getInstance(); //インスタンス化
+
+		int h = now.get(now.HOUR_OF_DAY);//時を取得
+		int m = now.get(now.MINUTE);     //分を取得
+		int second = now.get(now.SECOND);      //秒を取得
+
+		int baseHour = 16;
+		int baseMinitu = 20;
+
+		if ( h < baseHour ){
+//			System.out.println(h+"時"+m+"分"+second+"秒");
+			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+		}else{
+			if ( h == baseHour ){
+				if ( m < baseMinitu ){
+					int sleepTime = 1000 * 60 * ( baseMinitu - m );
+					commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.DATEDATE_LOG_FLG);
+					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+					commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
+				}
+			}
+		}
+
+
 		S s = new S();
 		s.getCon();
 
 		if (mainDTO.isHesogomaFile()){
 			//へそのごま使う
 			editHesogomaFile editHeso = new editHesogomaFile();
-			
+
 			commonAP.writeInLog("チェック開始！",logWriting.DATEDATE_LOG_FLG);
-			
+
 			String TODAY = controllDay.getTODAY();
 
 			//株の更新ができたらリストの更新をやる
@@ -827,7 +853,7 @@ public class cloringDate {
 				s.closeConection();
 				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
 			}
-			
+
 			commonAP.writeInLog("株と投資情報の更新成功したので他のもチェックしま！",logWriting.DATEDATE_LOG_FLG);
 
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL_CHECK_POINT, s)	,controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)	, TODAY , s);
