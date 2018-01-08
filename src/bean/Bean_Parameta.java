@@ -1,10 +1,47 @@
 package bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import proparty.PROPARTY;
 import proparty.controllDay;
 import constant.ReCord;
 
 public class Bean_Parameta {
+
+	private List<Bean_FinancialStatement> B_FS_List = new ArrayList<>();
+	private List<Bean_Forrign_Ratio> B_FR_List = new ArrayList<>();
+	private List<Bean_Credit> B_Cr_List = new ArrayList<>();
+
+
+
+	public List<Bean_FinancialStatement> getB_FS_List() {
+		return B_FS_List;
+	}
+
+	public void setB_FS_List(List<Bean_FinancialStatement> b_FS_List) {
+		B_FS_List = b_FS_List;
+	}
+
+	public List<Bean_Forrign_Ratio> getB_FR_List() {
+		return B_FR_List;
+	}
+
+	public void setB_FR_List(List<Bean_Forrign_Ratio> b_FR_List) {
+		B_FR_List = b_FR_List;
+	}
+
+	public List<Bean_Credit> getB_Cr_List() {
+		return B_Cr_List;
+	}
+
+	public void setB_Cr_List(List<Bean_Credit> b_Cr_List) {
+		B_Cr_List = b_Cr_List;
+	}
+
+
+
+
 	//共通
 	//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
 	private boolean checkRenzokuSign = false;

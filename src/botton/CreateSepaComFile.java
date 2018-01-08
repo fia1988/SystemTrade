@@ -253,9 +253,9 @@ public class CreateSepaComFile {
 					+ COLUMN.SEPA_FLG + " is false "
 					+ " and "
 					+ COLUMN.EFFECT_STARTDAY + " < '2007-01-01'";
-//		System.out.println("aaaaaaa");
+//		System.out.println("createSepaComFileAndLoad:" + checkFLG + ":" + LS_TODAY);
 		//取り込む前に削除する
-//		deleteOldFalse(checkFLG,s);
+		deleteOldFalse(checkFLG,s);
 
 		commonAP.writeInLog("createSepaComFileAndLoad:"+SQL1,logWriting.DATEDATE_LOG_FLG);
 

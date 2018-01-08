@@ -35,7 +35,7 @@ public class CheckSign {
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO,true);
 		dealLastOrder(TODAY,paraDTO);
 
 		s = new S();
@@ -322,7 +322,7 @@ public class CheckSign {
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
 		nowDTOList = new ArrayList<>();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO,true);
 		paraDTO.setOnEliteFLG();
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
@@ -335,7 +335,7 @@ public class CheckSign {
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
 		nowDTOList = new ArrayList<>();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO,true);
 		paraDTO.setOnEliteFLG();
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
@@ -1440,7 +1440,7 @@ public class CheckSign {
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO,true);
 		//一回当たりエントリー金額（単位：万円）
 //		paraDTO.setEntryMoney(0.83);
 		checkVolume(paraDTO.getEntryMoney(),TODAY,s);

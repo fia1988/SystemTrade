@@ -88,7 +88,7 @@ public class cloringDate {
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
-		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO);
+		SagyoSpace.shokisettei(paraDTO, nowDTO, resultDTO,true);
 
 //		LSファイル作成
 		commonAP.writeInLog("日々ファイル作成します。",logWriting.DATEDATE_LOG_FLG);

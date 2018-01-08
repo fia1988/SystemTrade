@@ -4,6 +4,252 @@ import java.sql.ResultSet;
 
 public class Bean_nowRecord {
 
+	//-----ここからINVESTTBL
+	//市場
+	String MARKET;
+	//業種
+	String CATEGORY;
+	double MARKET_CAP_PPT		; //時価総額（百万円）
+	double STOCK_NUM				; //発行済株式数
+	double DIVIDEND_PER					; //配当利回り
+	double DIVIDEND  						; //1株配当
+	double PER_YOSO  						; //PER（予想）
+	double PBR_REAL  						; //PBR（実績）
+	double EPS_YOSO						; //EPS（予想）
+	double BPS_REAL						; //BPS（実績）
+	String YEAR_MAX_DAY_YYYYMMDD		; //高値日付
+	double YEAR_MAX						; //年初来高値
+	String YEAR_MIN_DAY_YYYYMMDD		; //安値日付
+	double YEAR_MIN						; //年初来安値
+	double MARKET_CAP_PPT_PRE		; //時価総額（百万円）_PRE
+	double STOCK_NUM_PRE				; //発行済株式数_PRE
+	double DIVIDEND_PER_PRE					; //配当利回り_PRE
+	double DIVIDEND_PRE				; //1株配当_PRE
+	double PER_YOSO_PRE				; //PER（予想）_PRE
+	double PBR_REAL_PRE				; //PBR（実績）_PRE
+	double EPS_YOSO_PRE						; //EPS（予想）_PRE
+	double BPS_REAL_PRE						; //BPS（実績）_PRE
+	String YEAR_MAX_DAY_YYYYMMDD_PRE		; //高値日付_PRE
+	double YEAR_MAX_PRE						; //年初来高値_PRE
+	String YEAR_MIN_DAY_YYYYMMDD_PRE		; //安値日付_PRE
+	double YEAR_MIN_PRE						; //年初来安値_PRE
+
+
+
+	public String getMARKET() {
+		return MARKET;
+	}
+
+	public void setMARKET(String mARKET) {
+		MARKET = mARKET;
+	}
+
+	public String getCATEGORY() {
+		return CATEGORY;
+	}
+
+	public void setCATEGORY(String cATEGORY) {
+		CATEGORY = cATEGORY;
+	}
+
+	public double getMARKET_CAP_PPT() {
+		return MARKET_CAP_PPT;
+	}
+
+	public void setMARKET_CAP_PPT(double mARKET_CAP_PPT) {
+		MARKET_CAP_PPT = mARKET_CAP_PPT;
+	}
+
+	public double getSTOCK_NUM() {
+		return STOCK_NUM;
+	}
+
+	public void setSTOCK_NUM(double sTOCK_NUM) {
+		STOCK_NUM = sTOCK_NUM;
+	}
+
+	public double getDIVIDEND_PER() {
+		return DIVIDEND_PER;
+	}
+
+	public void setDIVIDEND_PER(double dIVIDEND_PER) {
+		DIVIDEND_PER = dIVIDEND_PER;
+	}
+
+	public double getDIVIDEND() {
+		return DIVIDEND;
+	}
+
+	public void setDIVIDEND(double dIVIDEND) {
+		DIVIDEND = dIVIDEND;
+	}
+
+	public double getPER_YOSO() {
+		return PER_YOSO;
+	}
+
+	public void setPER_YOSO(double pER_YOSO) {
+		PER_YOSO = pER_YOSO;
+	}
+
+	public double getPBR_REAL() {
+		return PBR_REAL;
+	}
+
+	public void setPBR_REAL(double pBR_REAL) {
+		PBR_REAL = pBR_REAL;
+	}
+
+	public double getEPS_YOSO() {
+		return EPS_YOSO;
+	}
+
+	public void setEPS_YOSO(double ePS_YOSO) {
+		EPS_YOSO = ePS_YOSO;
+	}
+
+	public double getBPS_REAL() {
+		return BPS_REAL;
+	}
+
+	public void setBPS_REAL(double bPS_REAL) {
+		BPS_REAL = bPS_REAL;
+	}
+
+	public String getYEAR_MAX_DAY_YYYYMMDD() {
+		return YEAR_MAX_DAY_YYYYMMDD;
+	}
+
+	public void setYEAR_MAX_DAY_YYYYMMDD(String yEAR_MAX_DAY_YYYYMMDD) {
+		YEAR_MAX_DAY_YYYYMMDD = yEAR_MAX_DAY_YYYYMMDD;
+	}
+
+	public double getYEAR_MAX() {
+		return YEAR_MAX;
+	}
+
+	public void setYEAR_MAX(double yEAR_MAX) {
+		YEAR_MAX = yEAR_MAX;
+	}
+
+	public String getYEAR_MIN_DAY_YYYYMMDD() {
+		return YEAR_MIN_DAY_YYYYMMDD;
+	}
+
+	public void setYEAR_MIN_DAY_YYYYMMDD(String yEAR_MIN_DAY_YYYYMMDD) {
+		YEAR_MIN_DAY_YYYYMMDD = yEAR_MIN_DAY_YYYYMMDD;
+	}
+
+	public double getYEAR_MIN() {
+		return YEAR_MIN;
+	}
+
+	public void setYEAR_MIN(double yEAR_MIN) {
+		YEAR_MIN = yEAR_MIN;
+	}
+
+	public double getMARKET_CAP_PPT_PRE() {
+		return MARKET_CAP_PPT_PRE;
+	}
+
+	public void setMARKET_CAP_PPT_PRE(double mARKET_CAP_PPT_PRE) {
+		MARKET_CAP_PPT_PRE = mARKET_CAP_PPT_PRE;
+	}
+
+	public double getSTOCK_NUM_PRE() {
+		return STOCK_NUM_PRE;
+	}
+
+	public void setSTOCK_NUM_PRE(double sTOCK_NUM_PRE) {
+		STOCK_NUM_PRE = sTOCK_NUM_PRE;
+	}
+
+	public double getDIVIDEND_PER_PRE() {
+		return DIVIDEND_PER_PRE;
+	}
+
+	public void setDIVIDEND_PER_PRE(double dIVIDEND_PER_PRE) {
+		DIVIDEND_PER_PRE = dIVIDEND_PER_PRE;
+	}
+
+	public double getDIVIDEND_PRE() {
+		return DIVIDEND_PRE;
+	}
+
+	public void setDIVIDEND_PRE(double dIVIDEND_PRE) {
+		DIVIDEND_PRE = dIVIDEND_PRE;
+	}
+
+	public double getPER_YOSO_PRE() {
+		return PER_YOSO_PRE;
+	}
+
+	public void setPER_YOSO_PRE(double pER_YOSO_PRE) {
+		PER_YOSO_PRE = pER_YOSO_PRE;
+	}
+
+	public double getPBR_REAL_PRE() {
+		return PBR_REAL_PRE;
+	}
+
+	public void setPBR_REAL_PRE(double pBR_REAL_PRE) {
+		PBR_REAL_PRE = pBR_REAL_PRE;
+	}
+
+	public double getEPS_YOSO_PRE() {
+		return EPS_YOSO_PRE;
+	}
+
+	public void setEPS_YOSO_PRE(double ePS_YOSO_PRE) {
+		EPS_YOSO_PRE = ePS_YOSO_PRE;
+	}
+
+	public double getBPS_REAL_PRE() {
+		return BPS_REAL_PRE;
+	}
+
+	public void setBPS_REAL_PRE(double bPS_REAL_PRE) {
+		BPS_REAL_PRE = bPS_REAL_PRE;
+	}
+
+	public String getYEAR_MAX_DAY_YYYYMMDD_PRE() {
+		return YEAR_MAX_DAY_YYYYMMDD_PRE;
+	}
+
+	public void setYEAR_MAX_DAY_YYYYMMDD_PRE(String yEAR_MAX_DAY_YYYYMMDD_PRE) {
+		YEAR_MAX_DAY_YYYYMMDD_PRE = yEAR_MAX_DAY_YYYYMMDD_PRE;
+	}
+
+	public double getYEAR_MAX_PRE() {
+		return YEAR_MAX_PRE;
+	}
+
+	public void setYEAR_MAX_PRE(double yEAR_MAX_PRE) {
+		YEAR_MAX_PRE = yEAR_MAX_PRE;
+	}
+
+	public String getYEAR_MIN_DAY_YYYYMMDD_PRE() {
+		return YEAR_MIN_DAY_YYYYMMDD_PRE;
+	}
+
+	public void setYEAR_MIN_DAY_YYYYMMDD_PRE(String yEAR_MIN_DAY_YYYYMMDD_PRE) {
+		YEAR_MIN_DAY_YYYYMMDD_PRE = yEAR_MIN_DAY_YYYYMMDD_PRE;
+	}
+
+	public double getYEAR_MIN_PRE() {
+		return YEAR_MIN_PRE;
+	}
+
+	public void setYEAR_MIN_PRE(double yEAR_MIN_PRE) {
+		YEAR_MIN_PRE = yEAR_MIN_PRE;
+	}
+
+
+	//-----ここまでINVESTTBL
+
+
+
+
 	//決済金額
 	private double kessaiKingaku = 0;
 	//保有日数
