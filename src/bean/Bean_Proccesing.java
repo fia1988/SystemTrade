@@ -19,11 +19,11 @@ public class Bean_Proccesing {
 	public void proceccingParaDTO(Bean_Parameta paraDTO,Bean_Result resultDTO ,String code,S s){
 
 
-//		//本番環境だけここを通る
-//		if(paraDTO.getRealTimeMode()){
-//			//財務諸表データとか使う
-//			paraDTO.setMonthYearDateFLG(true);
-//		}
+		//本番環境だけここを通る
+		if(paraDTO.getRealTimeMode()){
+			//財務諸表データとか使う
+			paraDTO.setMonthYearDateFLG(true);
+		}
 		//年単位とか月単位のデータ(財務諸表データ)を使うかどうか
 		if (paraDTO.isMonthYearDateFLG()==false){
 			//財務諸表データとか使わない。
@@ -90,9 +90,9 @@ public class Bean_Proccesing {
 				System.out.println("proceccingParaDTO3484:"+a.getRoe());
 			}
 		}
-		if(code.equals("1301")){
+		if(code.equals("1400")){
 			for (Bean_FinancialStatement a:paraDTO.getB_FS_List()){
-				System.out.println("proceccingParaDTO1301:"+a.getRoe());
+				System.out.println("proceccingParaDTO1400:"+a.getRoe());
 			}
 		}
 
@@ -107,7 +107,7 @@ public class Bean_Proccesing {
 //		TBL_Name.FINANCIAL_MM_TBL
 
 		nowB_FS.setKessan_term_yyyy_mm_string(RS.getString(COLUMN.KESSAN_TERM_YYYY_MM_STRING));
-		nowB_FS.setYear_kessan_time_yyyymmdd(RS.getString(COLUMN.YEAR_KESSAN_TIME_YYYYMMDD));
+		try{nowB_FS.setYear_kessan_time_yyyymmdd(RS.getString(COLUMN.YEAR_KESSAN_TIME_YYYYMMDD));} catch (SQLException e) {}
 		if(!(RS.getInt(COLUMN.URIAGE_DAKA_PPT)== 0) && (RS.getString(COLUMN.URIAGE_DAKA_PPT) == null )){nowB_FS.setUriage_daka_ppt(RS.getInt(COLUMN.URIAGE_DAKA_PPT));}
 		if(!(RS.getInt(COLUMN.EIGYO_PROF_PPT)== 0) && (RS.getString(COLUMN.EIGYO_PROF_PPT) == null )){nowB_FS.setEigyo_prof_ppt(RS.getInt(COLUMN.EIGYO_PROF_PPT));}
 		if(!(RS.getInt(COLUMN.KEIJO_PROF_PPT)== 0) && (RS.getString(COLUMN.KEIJO_PROF_PPT) == null )){nowB_FS.setKeijo_prof_ppt(RS.getInt(COLUMN.KEIJO_PROF_PPT));}
@@ -144,6 +144,7 @@ public class Bean_Proccesing {
 		Bean_Forrign_Ratio nowB_FR = new Bean_Forrign_Ratio();
 //		TBL_Name.FORRIGN_RATIO_TBL
 
+		nowB_FR.setNowDay_01(RS.getString(COLUMN.DAYTIME));
 		if(!(RS.getInt(COLUMN.ANOTHER_STOCK_HOLDER_RATIO)== 0) && (RS.getString(COLUMN.ANOTHER_STOCK_HOLDER_RATIO) == null )){nowB_FR.setAnother_stock_holder_ratio(RS.getInt(COLUMN.ANOTHER_STOCK_HOLDER_RATIO));}
 		if(!(RS.getInt(COLUMN.MAJOR_STOCK_HOLDER_RATIO)== 0) && (RS.getString(COLUMN.MAJOR_STOCK_HOLDER_RATIO) == null )){nowB_FR.setMajor_stock_holder_ratio(RS.getInt(COLUMN.MAJOR_STOCK_HOLDER_RATIO));}
 		if(!(RS.getInt(COLUMN.ETF_STOCK_HOLDER_RATIO)== 0) && (RS.getString(COLUMN.ETF_STOCK_HOLDER_RATIO) == null )){nowB_FR.setEtf_stock_holder_ratio(RS.getInt(COLUMN.ETF_STOCK_HOLDER_RATIO));}

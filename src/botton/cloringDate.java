@@ -990,11 +990,24 @@ public class cloringDate {
 
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
+		String LSfilePath = filePath.replaceAll(ReturnCodeConst.SQL_SEPA, File.separator);
+		File file = new File(LSfilePath);
+        if(file.delete()){
+        	//成功
+        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+        };
 		s.exportFile(SQL);
+
+
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "false");
-
+		LSfilePath = filePath.replaceAll(ReturnCodeConst.SQL_SEPA, File.separator);
+		file = new File(LSfilePath);
+        if(file.delete()){
+        	//成功
+        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+        };
 		resultInt = s.exportFile(SQL);
 //		System.out.println(SQL);
 		s.closeConection();

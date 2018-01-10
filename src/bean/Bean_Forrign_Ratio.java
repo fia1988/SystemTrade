@@ -26,6 +26,18 @@ public class Bean_Forrign_Ratio {
 	//------PREここから
 	//浮動株数比率
 	double another_stock_holder_ratio_pre;
+	public String getCode_01() {
+		return code_01;
+	}
+	public void setCode_01(String code_01) {
+		this.code_01 = code_01;
+	}
+	public String getNowDay_01() {
+		return nowDay_01;
+	}
+	public void setNowDay_01(String nowDay_01) {
+		this.nowDay_01 = nowDay_01;
+	}
 	//少数特定者持株数比率
 	double major_stock_holder_ratio_pre;
 	//投資信託持株数比率
