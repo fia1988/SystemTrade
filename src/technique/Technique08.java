@@ -2,7 +2,6 @@ package technique;
 
 import java.util.List;
 
-import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
@@ -89,11 +88,7 @@ public class Technique08 {
 	public static int MACD_IDOHEIKIN_L(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
-		for (Bean_FinancialStatement a:paraDTO.getB_FS_List()){
-			System.out.println("----ここから-------:"+nowDTO.getCode_01());
-			System.out.println("public static int MACD_IDOHEIKIN_L(:"+a.getYear_kessan_time_yyyymmdd());
-			System.out.println("----ここまで-------:"+nowDTO.getCode_01());
-		}
+
 
 		if ( judge ) {
 			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}

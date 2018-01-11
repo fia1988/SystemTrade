@@ -95,6 +95,9 @@ public class SagyoSpace {
 	}
 
 	public static void testCase89(){
+		
+
+
 		String replaceRecord = "132+456";
 		System.out.println(replaceRecord);
 		replaceRecord = replaceRecord.replaceAll("\"-\"","");
@@ -137,25 +140,25 @@ public class SagyoSpace {
 				+ " ) "
 				;
 		SQL = " select * from " + TBL_Name.FINANCIAL_MM_TBL + " where code = '1773'";
-		SQL = " select * from 21_financialTBL_MM where code = '8685' ";
+//		SQL = " select * from 21_financialTBL_MM where code = '8685' ";
 		System.out.println(SQL);
 
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs2.next() ) {
-				
+
 				try{System.out.println(s.rs2.getString(COLUMN.YEAR_KESSAN_TIME_YYYYMMDD));} catch (SQLException e) {System.out.println("aaaaaaa");}
-				
-				
+
+
 ////				nowDTO.setCode_01(s.rs2.getString(	  COLUMN.TOTAL_ASSET_PPT		));
 //				System.out.println(nowDTO.getCode_01());
 //
 //				nowDTO.setTotal_asset_ppt(s.rs2.getInt(	  COLUMN.TOTAL_ASSET_PPT		));
-//				
+//
 //				if (! (s.rs2.getInt(COLUMN.TOTAL_ASSET_PPT)== 0) && (s.rs2.getString(COLUMN.TOTAL_ASSET_PPT) == null )){
 //					nowDTO.setTotal_asset_ppt(s.rs2.getInt(	  COLUMN.TOTAL_ASSET_PPT		));
 //				}
-//				
+//
 //				System.out.println(nowDTO.getTotal_asset_ppt());
 //
 //				if (nowDTO.getTotal_asset_ppt()==0){
