@@ -36,6 +36,11 @@ public class editHesogomaFile {
 	private final String CREDIT_FILE = "_creditFile.csv";
 	//保有比率ファイル
 	private final String RATIO_FILE = "_ratioFile.csv";
+	//東証REITファイル
+	private final String TOSHO_RAIT_FILE = "_toshoRait.csv";
+	//東証ETF
+	private final String TOSHO_ETF_FILE = "_toshoETF.csv";
+
 	public int editHesoGomaString(TAB_MainDTO mainDTO,String cate,String checkPointDay,String lastUpDateDay,String TODAY,S s){
 
 		String URL_parts = "";
@@ -100,6 +105,22 @@ public class editHesogomaFile {
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions_";
 				break;
+			case  ReCord.CODE_HESO_06_REIT:
+				TBL = TBL_Name.TOSHO_REIT_DD_TBL;
+				URL_parts = "https://hesonogoma.com/stocks/download/csv/tosho-reit-stock-prices/daily/tosho-reit-stock-prices_";
+				KOSHINMOZI = "東証REIT";
+				hesogomaFileName = hesogomaFileName + TOSHO_RAIT_FILE;
+				updateColumn = ReCord.KOSHINBI_TOSHO_REIT;
+				updateCheckPointColumn = ReCord.KOSHINBI_TOSHO_REIT;
+				break;
+			case  ReCord.CODE_HESO_07_ETF:
+				TBL = TBL_Name.TOSHO_ETF_DD_TBL;
+				hesogomaFileName = hesogomaFileName + TOSHO_ETF_FILE;
+				URL_parts = "https://hesonogoma.com/stocks/download/csv/tosho-etf-stock-prices/daily/tosho-etf-stock-prices_";
+				KOSHINMOZI = "東証ETF";
+				updateColumn = ReCord.KOSHINBI_TOSHO_ETF;
+				updateCheckPointColumn = ReCord.KOSHINBI_TOSHO_ETF;
+				break;
 			default:
 				commonAP.writeInLog("editHesoGomaString:変なcateがきた。処理を止めます。cate:" + cate,logWriting.DATEDATE_LOG_FLG);
 				return ReturnCodeConst.NAZO_ERR;
@@ -143,6 +164,11 @@ public class editHesogomaFile {
 			case  ReCord.CODE_HESO_05_CREDIT:
 				checkPointColumn = ReCord.KOSHINBI_CREDIT_CHECK_POINT;
 				break;
+			case  ReCord.CODE_HESO_06_REIT:
+				checkPointColumn = ReCord.KOSHINBI_TOSHO_REIT;
+				break;
+			case  ReCord.CODE_HESO_07_ETF:
+				checkPointColumn = ReCord.KOSHINBI_TOSHO_ETF;
 			default:
 				commonAP.writeInLog("editHesoGomaString:変なcateがきた。処理を止めます。cate:" + cate,logWriting.DATEDATE_LOG_FLG);
 				return ReturnCodeConst.NAZO_ERR;

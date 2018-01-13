@@ -36,6 +36,11 @@ public class TBL_Name {
 	//japan-all-stock-information/
 	final public static String FORRIGN_RATIO_TBL    = "24_FORRIGN_RATIO_TBL" + TAIL_MONTH;
 
+	//東証REIT
+	final public static String TOSHO_REIT_DD_TBL    = "25_TOSHO_REIT_TBL" + TAIL_DAY;
+	//東証ETF
+	final public static String TOSHO_ETF_DD_TBL    = "26_TOSHO_ETF_TBL" + TAIL_DAY;
+
 	final public static String CODELISTTBL     = "00_codeListTBL";
 
 	final public static String FORCE_S_TBL	= "86_ForceS_TBL";

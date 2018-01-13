@@ -91,6 +91,11 @@ public class insertHesoGomaFile {
 				insertKariFileToTBLandKariFileDelete	(mainDTO,filePath,TODAY,updateColumn,TBL,kariFilePath,cate,s);
 				updateZenzituhi(TBL,cate,TODAY,lastUpDateDay,s);
 				break;
+			case  ReCord.CODE_HESO_06_REIT:
+//				updateZenzituhi(TBL,cate,TODAY,lastUpDateDay,s);
+				break;
+			case  ReCord.CODE_HESO_07_ETF:
+//				updateZenzituhi(TBL,cate,TODAY,lastUpDateDay,s);
 			default:
 				commonAP.writeInLog("insertHesoGomaFileControllerのcateがおかしい:" + cate,logWriting.DATEDATE_LOG_FLG);
 				return false;

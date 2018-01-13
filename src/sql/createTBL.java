@@ -1261,6 +1261,27 @@ public class createTBL {
 
 
 
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_TOSHO_REIT + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_TOSHO_ETF + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+
+
 	}
 
 

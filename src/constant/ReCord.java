@@ -11,6 +11,9 @@ public class ReCord {
 	public static String KOSHINBI_INVEST								= "投資データ更新日";
 	public static String KOSHINBI_FORRIGN_RATIO							= "株主比率更新日";
 	public static String KOSHINBI_CREDIT								= "信用売買残更新日";
+	public static String KOSHINBI_TOSHO_REIT							= "東証REIT更新日";
+	public static String KOSHINBI_TOSHO_ETF								= "東証ETF更新日";
+
 	public static String KOSHINBI_FINANCIAL_CHECK_POINT					= "財務データ更新日のチェックポイント更新日";
 	public static String KOSHINBI_INVEST_CHECK_POINT					= "投資データ更新日のチェックポイント更新日";
 	public static String KOSHINBI_FORRIGN_RATIO_CHECK_POINT				= "株主比率更新日のチェックポイント更新日";
@@ -56,6 +59,10 @@ public class ReCord {
 	public static final String CODE_HESO_05_CREDIT = "5555";
 	//リスト
 	public static final String CODE_HESO_00_CODE_LIST = "555512";
+	//東証REIT
+	public static final String CODE_HESO_06_REIT = "66666";
+	//東証ETF
+	public static final String CODE_HESO_07_ETF = "77777";
 
 	 //01_stock_dd a
 	 //00_codelisttbl b
