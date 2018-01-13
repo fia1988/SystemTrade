@@ -117,7 +117,7 @@ public class BackUp {
 	}
 
 	//バックアップ出力
-	public String backUpOut(TAB_MainDTO mainDTO){
+	public String backUpOut(TAB_MainDTO mainDTO,String TODAY){
 
 
 
@@ -134,7 +134,7 @@ public class BackUp {
 		    int processComplete = runtimeProcess.waitFor();
 		    if (processComplete == 0) {
 		    	commonAP.writeInLog("バックアップ成功",logWriting.DATEDATE_LOG_FLG);
-		    	updateBackUpDay();
+		    	updateBackUpDay(TODAY);
 		    	return nyuryokuCheckResultConst.SUCCESS;
 		    } else {
 		    	commonAP.writeInLog("バックアップ失敗:エラータイプ：" + processComplete,logWriting.DATEDATE_LOG_FLG);
@@ -149,8 +149,8 @@ public class BackUp {
 
 	}
 
-	private void updateBackUpDay(){
-		String toDay = controllDay.getTODAY();
+	private void updateBackUpDay(String toDay){
+//		String toDay = controllDay.getTODAY();
 
 
 		S s = new S();

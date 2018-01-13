@@ -44,6 +44,8 @@ public class TAB_main extends JPanel {
 	JCheckBox checkBox_2 = new JCheckBox("自動バックアップ制御");
 	JCheckBox checkBox_3 = new JCheckBox("へそごまローカルフラグ");
 	JCheckBox checkBox_4 = new JCheckBox("へそごま利用チェック");
+	JCheckBox checkBox_5 = new JCheckBox("即座に日々ファイル取込");
+//	JCheckBox checkBox_5 = new JCheckBox("即座に日々ファイル取込");
 
 	JLabel timerCheck = new JLabel("false");
 	JLabel sepaComResult = new JLabel("成／否");
@@ -404,6 +406,10 @@ public class TAB_main extends JPanel {
 		label_22.setBounds(42, 572, 330, 19);
 		add(label_22);
 
+		
+		checkBox_5.setBounds(430, 672, 334, 29);
+		add(checkBox_5);
+
 
 
 	}
@@ -432,7 +438,8 @@ public class TAB_main extends JPanel {
 		mainDTO.setSepaComFileAutoCaptureFLG(checkBox.isSelected());
 		mainDTO.setOptimazeFLG(checkBox_1.isSelected());
 		mainDTO.setAutoBackUp(checkBox_2.isSelected());
-
+		mainDTO.setCloringSokuzaCheck(checkBox_5.isSelected());
+		
 		//へそのごまのファイルを毎日CSVに利用するかを判断するフラグ
 		//false:しない、true:する
 		mainDTO.setHesogomaFile(checkBox_4.isSelected());
@@ -838,7 +845,7 @@ public class TAB_main extends JPanel {
 				}
 			}
 
-			String resultBackUpOut = BU.backUpOut(mainDTO);
+			String resultBackUpOut = BU.backUpOut(mainDTO,controllDay.getTODAY());
 			switch (resultBackUpOut) {
 				case nyuryokuCheckResultConst.SUCCESS:
 					outBackupResult.setText(resultBackUpOut);

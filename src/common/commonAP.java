@@ -722,6 +722,7 @@ public class commonAP {
 
 
 		try {
+			System.out.println("setCodeList(String:" + SQL);
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				//keepCodeListと揃える

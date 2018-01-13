@@ -163,7 +163,7 @@ public class cloringDate {
 				}else{
 					//バックアップ成功時の処理
 					mainDTO.setOutBackUpFilePath(todayDump);
-					String resultBackOut = BU.backUpOut(mainDTO);
+					String resultBackOut = BU.backUpOut(mainDTO,TODAY);
 					//画面の入力値とDTOの値を一致させる。
 					mainDTO.setOutBackUpFilePath(todayFolder);
 					if (resultBackOut.equals(nyuryokuCheckResultConst.SUCCESS)){
@@ -785,29 +785,33 @@ public class cloringDate {
 	//時系列データの更新
 	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
 
-		//16時以前のお軌道は却下する。
-		Calendar now = Calendar.getInstance(); //インスタンス化
 
-		int h = now.get(now.HOUR_OF_DAY);//時を取得
-		int m = now.get(now.MINUTE);     //分を取得
-		int second = now.get(now.SECOND);      //秒を取得
+		if ( mainDTO.isCloringSokuzaCheck() == false ){
+			//16時以前のお軌道は却下する。
+			Calendar now = Calendar.getInstance(); //インスタンス化
 
-		int baseHour = 16;
-		int baseMinitu = 20;
+			int h = now.get(now.HOUR_OF_DAY);//時を取得
+			int m = now.get(now.MINUTE);     //分を取得
+			int second = now.get(now.SECOND);      //秒を取得
 
-		if ( h < baseHour ){
-//			System.out.println(h+"時"+m+"分"+second+"秒");
-			return ReturnCodeConst.EVERY_UPDATE_NOTHING;
-		}else{
-			if ( h == baseHour ){
-				if ( m < baseMinitu ){
-					int sleepTime = 1000 * 60 * ( baseMinitu - m );
-					commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.DATEDATE_LOG_FLG);
-					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-					commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
+			int baseHour = 16;
+			int baseMinitu = 20;
+
+			if ( h < baseHour ){
+//				System.out.println(h+"時"+m+"分"+second+"秒");
+				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+			}else{
+				if ( h == baseHour ){
+					if ( m < baseMinitu ){
+						int sleepTime = 1000 * 60 * ( baseMinitu - m );
+						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.DATEDATE_LOG_FLG);
+						try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
+					}
 				}
 			}
 		}
+
 
 
 		S s = new S();

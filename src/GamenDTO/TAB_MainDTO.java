@@ -30,6 +30,21 @@ public class TAB_MainDTO {
 	//自動バックアップファイル作成を判断するフラグ
 	private boolean autoBackUp = false;
 
+	//即座に日々ファイルの作成を行うか否かをチェックするフラグ
+	//基本はfalse
+	private boolean cloringSokuzaCheck = false;
+
+
+
+
+	public boolean isCloringSokuzaCheck() {
+		return cloringSokuzaCheck;
+	}
+
+	public void setCloringSokuzaCheck(boolean cloringSokuzaCheck) {
+		this.cloringSokuzaCheck = cloringSokuzaCheck;
+	}
+
 	//へそのごまのファイルを毎日CSVに利用するかを判断するフラグ
 	//false:しない、true:する
 	private boolean hesogomaFile = false;

@@ -13,7 +13,17 @@ public class Bean_Parameta {
 	private List<Bean_Forrign_Ratio> B_FR_List = new ArrayList<>();
 	private List<Bean_Credit> B_Cr_List = new ArrayList<>();
 
+	private boolean creditDateUseFlg = false;
+	
 
+
+	public boolean isCreditDateUseFlg() {
+		return creditDateUseFlg;
+	}
+
+	public void setCreditDateUseFlg(boolean creditDateUseFlg) {
+		this.creditDateUseFlg = creditDateUseFlg;
+	}
 
 	public List<Bean_FinancialStatement> getB_FS_List() {
 		return B_FS_List;
@@ -67,6 +77,7 @@ public class Bean_Parameta {
 	public void setMonthYearDateFLG(boolean monthYearDateFLG) {
 		this.monthYearDateFLG = monthYearDateFLG;
 	}
+
 
 
 

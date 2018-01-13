@@ -67,6 +67,7 @@ public class ReCord {
 	public static final String STATISTICS_NIKKE01_DD_CC = "cc";
 	public static final String INDEX_DD_D = "d";
 	public static final String ETF_DD_E = "e";
+	public static final String INVESTTBL_F = "ffffffff";
 	public static final String INDEX_TBK_DD_NIKKE_AVE		= "i";
 	public static final String INDEX_TBK_DD_TOPIX			= "ii";
 	public static final String INDEX_TBK_DD_JPX400			= "iii";

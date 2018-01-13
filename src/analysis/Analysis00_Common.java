@@ -463,6 +463,8 @@ public class Analysis00_Common {
 
 		String SQL = " select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'";
 
+
+
 		//ここをなおす
 //		 select * from 01_STOCK_DD b left outer join 21_financialTBL_MM a  on  a.daytime = b.daytime  where left(b.code,4) = '1518' and  ( a.codeName is not null and a.KESSAN_TERM_YYYY_MM_STRING is not null and a.YEAR_KESSAN_TIME_YYYYMMDD is not null and a.URIAGE_DAKA_PPT is not null and a.EIGYO_PROF_PPT is not null and a.KEIJO_PROF_PPT is not null and a.BOTTOM_LINE_PPT is not null and a.TOTAL_ASSET_PPT is not null and a.SELF_ASSET_PPT is not null and a.SHIHONKIN_ASSET_PPT is not null and a.LOAN_PPT is not null and a.SELF_ASSET_WARIAI is not null and a.ROE is not null and a.ROA is not null and a.STOCK_NUM )
 
@@ -470,57 +472,76 @@ public class Analysis00_Common {
 		switch(cate){
 			case ReCord.CODE_01_STOCK:
 
-
 				SQL = " select * from "
-						+	SQLChecker.getTBL(cate) + " " + ReCord.STOCK_TBK_DD_A + " "
-
-						+	" left outer join " + TBL_Name.CODELISTTBL + " " + ReCord.CODELIST_B + " "
-						+	" on " +  ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = " + ReCord.CODELIST_B + "." + COLUMN.CODE
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_02_SATISTICS) + " " + ReCord.STATISTICS_DD_C + " "
-						+	" on " + ReCord.CODELIST_B +  "." + COLUMN.CATEGORY  + "= " + ReCord.STATISTICS_DD_C + "." +  COLUMN.CODE + " and  " + ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " = " + ReCord.STATISTICS_DD_C +"." + COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_NIKKE_AVE + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_NIKKE_AVE + "." +  COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_TOPIX + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_TOPIX + "." +  COLUMN.DAYTIME
-
-//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_JPX400 + " "
-//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_JPX400 + "." +  COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_CORE30 + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_CORE30 + "." +  COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_TOPIX100 + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_TOPIX100 + "." +  COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_TOPIX_SMALL + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_TOPIX_SMALL + "." +  COLUMN.DAYTIME
-
-//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_ASIA + " "
-//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_ASIA + "." +  COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_JASDAC + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_JASDAC + "." +  COLUMN.DAYTIME
-
-						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_02_SATISTICS) + " " + ReCord.STATISTICS_NIKKE01_DD_CC + " "
-						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.STATISTICS_NIKKE01_DD_CC + "." +  COLUMN.DAYTIME
+						+	SQLChecker.getTBL(cate) + " "
+						+ " " + ReCord.STOCK_TBK_DD_A + " ";
 
 
-						+	" where "
-						+	ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' and "
-						+	ReCord.INDEX_TBK_DD_NIKKE_AVE + "." + COLUMN.CODE + " = '" + ReCord.indexName_I101 + "' and "
-						+	ReCord.INDEX_TBK_DD_TOPIX + "." + COLUMN.CODE + " = '" + ReCord.indexName_I102 + "' and "
-//						+	ReCord.INDEX_TBK_DD_JPX400 + "." + COLUMN.CODE + " = '" + ReCord.indexName_I103 + "' and "
-						+	ReCord.INDEX_TBK_DD_CORE30 + "." + COLUMN.CODE + " = '" + ReCord.indexName_I111 + "' and "
-						+	ReCord.INDEX_TBK_DD_TOPIX100 + "." + COLUMN.CODE + " = '" + ReCord.indexName_I113 + "' and "
-						+	ReCord.INDEX_TBK_DD_TOPIX_SMALL + "." + COLUMN.CODE + " = '" + ReCord.indexName_I116 + "' and "
-//						+	ReCord.INDEX_TBK_DD_ASIA + "." + COLUMN.CODE + " = '" + ReCord.indexName_I131 + "' and "
-						+	ReCord.INDEX_TBK_DD_JASDAC + "." + COLUMN.CODE + " = '" + ReCord.indexName_I306 + "' and "
-						+	ReCord.STATISTICS_NIKKE01_DD_CC + "." + COLUMN.CODE + " = '" + ReCord.TOSYO_01 + "'"
-						;
+					if (paraDTO.isCheckInvest()){
+						SQL = SQL
 
+							+	" left outer join " + TBL_Name.INVEST_SIHYO_DD_TBL + " " + ReCord.INVESTTBL_F + " "
+							+	" on " +  ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " = " + ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " "
+							+	" and "
+							+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = " + ReCord.INVESTTBL_F + "." + COLUMN.CODE + " "
+							+ " where "
+							+ ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " is not null and "
+							+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
+					}else{
+						SQL = SQL 
+							+ " where "
+							+	ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
+					}
+//				System.out.println("makekabuSQLabcccccc:"+SQL);
+//				SQL = " select * from "
+//						+	SQLChecker.getTBL(cate) + " " + ReCord.STOCK_TBK_DD_A + " "
+//
+//						+	" left outer join " + TBL_Name.CODELISTTBL + " " + ReCord.CODELIST_B + " "
+//						+	" on " +  ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = " + ReCord.CODELIST_B + "." + COLUMN.CODE
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_02_SATISTICS) + " " + ReCord.STATISTICS_DD_C + " "
+//						+	" on " + ReCord.CODELIST_B +  "." + COLUMN.CATEGORY  + "= " + ReCord.STATISTICS_DD_C + "." +  COLUMN.CODE + " and  " + ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " = " + ReCord.STATISTICS_DD_C +"." + COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_NIKKE_AVE + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_NIKKE_AVE + "." +  COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_TOPIX + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_TOPIX + "." +  COLUMN.DAYTIME
+//
+////						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_JPX400 + " "
+////						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_JPX400 + "." +  COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_CORE30 + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_CORE30 + "." +  COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_TOPIX100 + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_TOPIX100 + "." +  COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_TOPIX_SMALL + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_TOPIX_SMALL + "." +  COLUMN.DAYTIME
+//
+////						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_ASIA + " "
+////						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_ASIA + "." +  COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_03_INDEX) + " " + ReCord.INDEX_TBK_DD_JASDAC + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.INDEX_TBK_DD_JASDAC + "." +  COLUMN.DAYTIME
+//
+//						+	" left outer join " + SQLChecker.getTBL(ReCord.CODE_02_SATISTICS) + " " + ReCord.STATISTICS_NIKKE01_DD_CC + " "
+//						+	" on " + ReCord.STOCK_TBK_DD_A +  "." + COLUMN.DAYTIME  + "= " + ReCord.STATISTICS_NIKKE01_DD_CC + "." +  COLUMN.DAYTIME
+//
+//
+//						+	" where "
+//						+	ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' and "
+//						+	ReCord.INDEX_TBK_DD_NIKKE_AVE + "." + COLUMN.CODE + " = '" + ReCord.indexName_I101 + "' and "
+//						+	ReCord.INDEX_TBK_DD_TOPIX + "." + COLUMN.CODE + " = '" + ReCord.indexName_I102 + "' and "
+////						+	ReCord.INDEX_TBK_DD_JPX400 + "." + COLUMN.CODE + " = '" + ReCord.indexName_I103 + "' and "
+//						+	ReCord.INDEX_TBK_DD_CORE30 + "." + COLUMN.CODE + " = '" + ReCord.indexName_I111 + "' and "
+//						+	ReCord.INDEX_TBK_DD_TOPIX100 + "." + COLUMN.CODE + " = '" + ReCord.indexName_I113 + "' and "
+//						+	ReCord.INDEX_TBK_DD_TOPIX_SMALL + "." + COLUMN.CODE + " = '" + ReCord.indexName_I116 + "' and "
+////						+	ReCord.INDEX_TBK_DD_ASIA + "." + COLUMN.CODE + " = '" + ReCord.indexName_I131 + "' and "
+//						+	ReCord.INDEX_TBK_DD_JASDAC + "." + COLUMN.CODE + " = '" + ReCord.indexName_I306 + "' and "
+//						+	ReCord.STATISTICS_NIKKE01_DD_CC + "." + COLUMN.CODE + " = '" + ReCord.TOSYO_01 + "'"
+//						;
 
 				break;
 			case ReCord.CODE_02_SATISTICS:
@@ -835,6 +856,38 @@ public class Analysis00_Common {
 				nowDTO.setNowLONG_MACD_01(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.LONG_MACD		));
 				nowDTO.setNowLONG_MACD_SIGNAL_01(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.LONG_MACD_SIGNAL		));
 
+				if (paraDTO.isCheckInvest()){
+					
+					nowDTO.setMARKET(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.MARKET));
+					nowDTO.setCATEGORY(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.CATEGORY));
+					nowDTO.setMARKET_CAP_PPT(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.MARKET_CAP_PPT));
+					nowDTO.setSTOCK_NUM(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.STOCK_NUM));
+					nowDTO.setDIVIDEND_PER(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.DIVIDEND_PER));
+					nowDTO.setDIVIDEND(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.DIVIDEND));
+					nowDTO.setPER_YOSO(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.PER_YOSO));
+					nowDTO.setPBR_REAL(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.PBR_REAL));
+					nowDTO.setEPS_YOSO(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.EPS_YOSO));
+					nowDTO.setBPS_REAL(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.BPS_REAL));
+					nowDTO.setYEAR_MAX_DAY_YYYYMMDD(ReCord.INVESTTBL_F + "." + RS.getString(COLUMN.YEAR_MAX_DAY_YYYYMMDD));
+					nowDTO.setYEAR_MAX(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MAX));
+					nowDTO.setYEAR_MIN_DAY_YYYYMMDD(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MIN_DAY_YYYYMMDD));
+					nowDTO.setYEAR_MIN(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MIN));
+					nowDTO.setMARKET_CAP_PPT_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.MARKET_CAP_PPT_PRE));
+					nowDTO.setSTOCK_NUM_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.STOCK_NUM_PRE));
+					nowDTO.setDIVIDEND_PER_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.DIVIDEND_PER_PRE));
+					nowDTO.setDIVIDEND_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.DIVIDEND_PRE));
+					nowDTO.setPER_YOSO_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.PER_YOSO_PRE));
+					nowDTO.setPBR_REAL_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.PBR_REAL_PRE));
+					nowDTO.setEPS_YOSO_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.EPS_YOSO_PRE));
+					nowDTO.setBPS_REAL_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.BPS_REAL_PRE));
+					nowDTO.setYEAR_MAX_DAY_YYYYMMDD_PRE(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MAX_DAY_YYYYMMDD_PRE));
+					nowDTO.setYEAR_MAX_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MAX_PRE));
+					nowDTO.setYEAR_MIN_DAY_YYYYMMDD_PRE(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MIN_DAY_YYYYMMDD_PRE));
+					nowDTO.setYEAR_MIN_PRE(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.YEAR_MIN_PRE));
+//					System.out.println(" Bean_nowRecord setNowRecord(String code");
+//					System.out.println(nowDTO.getCode_01());
+//					System.out.println(nowDTO.getBPS_REAL());
+				}
 
 				//統計データを取得するかどうか
 				if (paraDTO.isFlg02_statics()==true){

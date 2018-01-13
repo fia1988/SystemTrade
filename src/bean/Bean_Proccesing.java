@@ -19,11 +19,7 @@ public class Bean_Proccesing {
 	public void proceccingParaDTO(Bean_Parameta paraDTO,Bean_Result resultDTO ,String code,S s){
 
 
-		//本番環境だけここを通る
-		if(paraDTO.getRealTimeMode()){
-			//財務諸表データとか使う
-			paraDTO.setMonthYearDateFLG(true);
-		}
+
 		//年単位とか月単位のデータ(財務諸表データ)を使うかどうか
 		if (paraDTO.isMonthYearDateFLG()==false){
 			//財務諸表データとか使わない。
@@ -64,38 +60,29 @@ public class Bean_Proccesing {
 
 		}
 
+		if ( paraDTO.isCreditDateUseFlg() ) {
+			List<Bean_Credit> B_Cr_List = new ArrayList<>();
+			s.resetConnection();
+			SQL = " select * from " + TBL_Name.CREDIT_WW_TBL + " where " + COLUMN.CODE + " = '" + code + "'" ;;
 
-		List<Bean_Credit> B_Cr_List = new ArrayList<>();
-		s.resetConnection();
-		SQL = " select * from " + TBL_Name.CREDIT_WW_TBL + " where " + COLUMN.CODE + " = '" + code + "'" ;;
-
-		try {
-			s.rs2 = s.sqlGetter().executeQuery(SQL);
-			while ( s.rs2.next() ) {
-				B_Cr_List.add(	setB_Cr(s.rs2)	);
+			try {
+				s.rs2 = s.sqlGetter().executeQuery(SQL);
+				while ( s.rs2.next() ) {
+					B_Cr_List.add(	setB_Cr(s.rs2)	);
+				}
+			} catch (SQLException e) {
+				commonAP.writeInLog("【proceccingParaDTO:なんかえらーだって3】" + SQL ,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInErrLog(e);
 			}
-		} catch (SQLException e) {
-			commonAP.writeInLog("【proceccingParaDTO:なんかえらーだって3】" + SQL ,logWriting.DATEDATE_LOG_FLG);
-			commonAP.writeInErrLog(e);
-		}
-		s.resetConnection();
-
-
-
-		List<Bean_nowRecord> B_Inv_List = new ArrayList<>();
-		s.resetConnection();
-		SQL = " select * from " + TBL_Name.INVEST_SIHYO_DD_TBL + " where " + COLUMN.CODE + " = '" + code + "'" ;;
-		try {
-			s.rs2 = s.sqlGetter().executeQuery(SQL);
-			while ( s.rs2.next() ) {
-				B_Inv_List.add(	setB_Inv(s.rs2)	);
-			}
-		} catch (SQLException e) {
-			commonAP.writeInLog("【proceccingParaDTO:なんかえらーだって4】" + SQL ,logWriting.DATEDATE_LOG_FLG);
-			commonAP.writeInErrLog(e);
+			s.resetConnection();
+			paraDTO.setB_Cr_List(B_Cr_List);
 		}
 
-		paraDTO.setB_Cr_List(B_Cr_List);
+
+
+
+
+
 		paraDTO.setB_FR_List(B_FR_List);
 		paraDTO.setB_FS_List(B_FS_List);
 

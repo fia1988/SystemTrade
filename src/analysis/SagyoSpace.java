@@ -34,6 +34,13 @@ public class SagyoSpace {
 		if (realcheckFLG){
 			//このなか本番
 			paraDTO.setRealTimeMode(true);
+			paraDTO.setCheckInvest(true);
+			//本番環境だけここを通る
+
+			//財務諸表データとか使う
+			paraDTO.setMonthYearDateFLG(true);
+			
+
 		}else{
 			//この中試験
 			paraDTO.setRealTimeMode(false);
@@ -95,7 +102,7 @@ public class SagyoSpace {
 	}
 
 	public static void testCase89(){
-		
+
 
 
 		String replaceRecord = "132+456";
