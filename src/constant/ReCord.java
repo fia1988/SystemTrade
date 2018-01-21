@@ -1,5 +1,7 @@
 package constant;
 
+import proparty.TBL_Name;
+
 public class ReCord {
 	//コードリストテーブルを作成した際にcode列に入れられる作成列
 	public static String KOSHINBI_STOCK_ETF								= "株とETF更新日";
@@ -104,6 +106,22 @@ public class ReCord {
 
 	//東証一部
 	public static final String TOSYO_01 = "東証1部";
+
+	//基準となる銘柄（日経平均など）→NTTを基準とする
+	public static String BASIC_CODE_01 = "9432";
+	//基準となる銘柄（日経平均など）→トヨタを基準とする
+	public static String BASIC_CODE_02 = "7203";
+	//基準となる銘柄（日経平均など）→JTを基準とする
+	public static String BASIC_CODE_03 = "2914";
+	//基準となる銘柄（日経平均など）→日立を基準とする
+	public static String BASIC_CODE_04 = "6501";
+	//基準となる銘柄（日経平均など）→信越化学工業を基準とする
+	public static String BASIC_CODE_05 = "4063";
+	//基準となる銘柄（日経平均など）→三菱商事を基準とする
+	public static String BASIC_CODE_06 = "8058";
+	//基準となる銘柄が存在するテーブル
+	public static final String BASIC_TBL = TBL_Name.STOCK_DD;
+
 
 	//初期値
 	public static final String KOSHINBI_SHOKI									= "2007-01-03";

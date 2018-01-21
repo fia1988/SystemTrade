@@ -42,9 +42,9 @@ public class commonAP {
 	//例：2017/01/11,2→2017/01/10
 	//例：2017/01/11,1→2017/01/11
 	public static String getStartDay(String end,int count,S s){
-		String SQL = " select " + COLUMN.DAYTIME + " from " + TBL_Name.INDEX_DD
+		String SQL = " select " + COLUMN.DAYTIME + " from " + ReCord.BASIC_TBL
 				+" where "
-				+ COLUMN.CODE + " = 'I101'"
+				+ COLUMN.CODE + " = '" + ReCord.BASIC_CODE_01 + "'"
 				+ " and "
 				+ COLUMN.DAYTIME + " <= '" + end + "'"
 				+ " order by " + COLUMN.DAYTIME + " desc limit " + count;
@@ -63,6 +63,37 @@ public class commonAP {
 		return startDay;
 	}
 
+	//引数で指定したコードのTODAYが存在すればtrue、存在しなければfalse
+	public static boolean checkStandardCode(String code,String TBL){
+		boolean resultBoolean = false;
+
+		S s = new S();
+		s.getCon();
+
+		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+
+		String SQL = " select " + COLUMN.CODE + " from " + TBL
+					+ " where "
+					+ COLUMN.CODE + " = '" + code + "'"
+					+ " and "
+					+ COLUMN.DAYTIME + " = '" + checkDay + "'";
+
+		try {
+			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			if ( s.rs2.next() ) {
+				//trueのとき、存在する。
+				resultBoolean = true;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+
+
+		s.closeConection();
+		return resultBoolean;
+	}
 
 	//startが0の場合、1を返す。
 	public static int countDay(String start,String end,S s){
@@ -72,9 +103,9 @@ public class commonAP {
 		}
 
 		String SQL = " select count(" + COLUMN.DAYTIME + ")"
-					+" from " + TBL_Name.INDEX_DD
+					+" from " + ReCord.BASIC_TBL
 					+" where "
-					+ COLUMN.CODE + " = 'I101'"
+					+ COLUMN.CODE + " = '" + ReCord.BASIC_CODE_01 + "'"
 					+ " and "
 					+ COLUMN.DAYTIME + " <= '" + end + "'"
 					+ " and "

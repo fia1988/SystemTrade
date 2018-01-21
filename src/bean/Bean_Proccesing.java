@@ -23,9 +23,11 @@ public class Bean_Proccesing {
 		//年単位とか月単位のデータ(財務諸表データ)を使うかどうか
 		if (paraDTO.isMonthYearDateFLG()==false){
 			//財務諸表データとか使わない。
+//			System.out.println("proceccingParaDTO:::::");
 			return;
 		}else{
 			//財務諸表データとか使う
+//			System.out.println("proceccingParaDTO::::aaaaaaaaaaaaaaaaaaaa:");
 		}
 
 		List<Bean_FinancialStatement> B_FS_List = new ArrayList<>();
@@ -109,7 +111,8 @@ public class Bean_Proccesing {
 		Bean_FinancialStatement nowB_FS = new Bean_FinancialStatement();
 //
 //		TBL_Name.FINANCIAL_MM_TBL
-
+		nowB_FS.setNowDay_01(RS.getString(COLUMN.DAYTIME));
+		nowB_FS.setCode_01(RS.getString(COLUMN.CODE));
 		nowB_FS.setKessan_term_yyyy_mm_string(RS.getString(COLUMN.KESSAN_TERM_YYYY_MM_STRING));
 		try{nowB_FS.setYear_kessan_time_yyyymmdd(RS.getString(COLUMN.YEAR_KESSAN_TIME_YYYYMMDD));} catch (SQLException e) {}
 		nowB_FS.setUriage_daka_ppt(RS.getDouble(COLUMN.URIAGE_DAKA_PPT));

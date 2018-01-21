@@ -59,6 +59,7 @@ public class cloringDate {
 				break;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				stop = System.currentTimeMillis();
+				PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
@@ -78,6 +79,12 @@ public class cloringDate {
 			stop = System.currentTimeMillis();
 			commonAP.writeInLog("一部分のみが更新されている。" + "。実行にかかった時間は " + (stop - start)/1000 + " 秒です。" ,logWriting.DATEDATE_LOG_FLG);
 			return TimerShoriConst.UPDATE_BARABARA;
+		}
+
+		if ( checkBasicCode() == false){
+			return TimerShoriConst.NO_BASIC_CODE;
+		}else{
+
 		}
 
 
@@ -137,6 +144,53 @@ public class cloringDate {
 
 		return TimerShoriConst.SUCCESS;
 
+	}
+
+	private boolean checkBasicCode(){
+
+		if ( commonAP.checkStandardCode(ReCord.BASIC_CODE_01,ReCord.BASIC_TBL) == false){
+
+			//候補1を候補２とする。
+			commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_02 + "で再トライします。" ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+			commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_02 + "で再トライします。" ,logWriting.DATEDATE_LOG_FLG);
+			ReCord.BASIC_CODE_01 = ReCord.BASIC_CODE_02;
+
+			if ( commonAP.checkStandardCode(ReCord.BASIC_CODE_01,ReCord.BASIC_TBL) == false){
+				commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_03 + "で再トライします。" ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+				commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_03 + "で再トライします。" ,logWriting.DATEDATE_LOG_FLG);
+				ReCord.BASIC_CODE_01 = ReCord.BASIC_CODE_03;
+
+				if ( commonAP.checkStandardCode(ReCord.BASIC_CODE_01,ReCord.BASIC_TBL) == false){
+					commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_04 + "で再トライします。" ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+					commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_04 + "で再トライします。" ,logWriting.DATEDATE_LOG_FLG);
+					ReCord.BASIC_CODE_01 = ReCord.BASIC_CODE_04;
+
+					if ( commonAP.checkStandardCode(ReCord.BASIC_CODE_01,ReCord.BASIC_TBL) == false){
+						commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_05 + "で再トライします。" ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+						commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_05 + "で再トライします。" ,logWriting.DATEDATE_LOG_FLG);
+						ReCord.BASIC_CODE_01 = ReCord.BASIC_CODE_05;
+
+						if ( commonAP.checkStandardCode(ReCord.BASIC_CODE_01,ReCord.BASIC_TBL) == false){
+							commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_06 + "で再トライします。" ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+							commonAP.writeInLog(ReCord.BASIC_CODE_01 + "が存在しません。" + ReCord.BASIC_CODE_06 + "で再トライします。" ,logWriting.DATEDATE_LOG_FLG);
+							ReCord.BASIC_CODE_01 = ReCord.BASIC_CODE_06;
+
+							if ( commonAP.checkStandardCode(ReCord.BASIC_CODE_01,ReCord.BASIC_TBL) == false){
+								commonAP.writeInLog("getDayDate：基準コードが存在しません。処理を停止します。" ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+								commonAP.writeInLog("getDayDate：基準コードが存在しません。処理を停止します。" ,logWriting.DATEDATE_LOG_FLG);
+								return false;
+							}
+						}
+					}
+				}
+			}
+			commonAP.writeInLog("基準コードが存在しないものがありました。今回はうまくいっているけれど近日中に、ReCord.BASIC_CODE_01を修正してください。今回利用した基準コード：" + ReCord.BASIC_CODE_01 ,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+			commonAP.writeInLog("基準コードが存在しないものがありました。今回はうまくいっているけれど近日中に、ReCord.BASIC_CODE_01を修正してください。今回利用した基準コード：" + ReCord.BASIC_CODE_01 ,logWriting.DATEDATE_LOG_FLG);
+		}else{
+
+		}
+
+		return true;
 	}
 
 	//DBのbackUp開始
@@ -308,6 +362,8 @@ public class cloringDate {
 		int sleepTime = PROPARTY.CLOALING_TIME * 2;
 		commonAP.writeInLog(sleepTime + "ミリ秒停止します。",logWriting.DATEDATE_LOG_FLG);
 		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+		//タイムスパンを固定値に挿入する。即座に取込モードを行っている場合対策・
+		PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 
 		//有料会員、たっぷり時間をかける
 		commonAP.writeInLog("お客様にファイルをばらまきます",logWriting.DATEDATE_LOG_FLG);
@@ -787,6 +843,7 @@ public class cloringDate {
 
 
 		if ( mainDTO.isCloringSokuzaCheck() == false ){
+			PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 			//16時以前のお軌道は却下する。
 			Calendar now = Calendar.getInstance(); //インスタンス化
 
@@ -810,6 +867,9 @@ public class cloringDate {
 					}
 				}
 			}
+		}else{
+			commonAP.writeInLog("即座モードで動かします。ただし一回だけ。ばらまきも即座にやる。",logWriting.DATEDATE_LOG_FLG);
+			PROPARTY.CLOALING_TIME = 1;
 		}
 
 
@@ -867,6 +927,8 @@ public class cloringDate {
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_03_FINANCE	,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL_CHECK_POINT, s)	,controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FINANCIAL, s)	, TODAY , s);
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_04_RATIO		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO_CHECK_POINT	, s),controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_FORRIGN_RATIO	, s), TODAY , s);
 			editHeso.editHesoGomaString(mainDTO, ReCord.CODE_HESO_05_CREDIT		,	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT_CHECK_POINT, s),	controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_CREDIT, s)			, TODAY , s);
+
+
 
 			//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
 			OneRecord_Update.OneRecord(s);

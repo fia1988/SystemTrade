@@ -39,7 +39,7 @@ public class SagyoSpace {
 
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
-			
+
 
 		}else{
 			//この中試験

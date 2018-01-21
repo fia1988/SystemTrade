@@ -37,7 +37,7 @@ public class editHesogomaFile {
 	//保有比率ファイル
 	private final String RATIO_FILE = "_ratioFile.csv";
 	//東証REITファイル
-	private final String TOSHO_RAIT_FILE = "_toshoRait.csv";
+	private final String TOSHO_RAIT_FILE = "_toshoReit.csv";
 	//東証ETF
 	private final String TOSHO_ETF_FILE = "_toshoETF.csv";
 
@@ -169,8 +169,9 @@ public class editHesogomaFile {
 				break;
 			case  ReCord.CODE_HESO_07_ETF:
 				checkPointColumn = ReCord.KOSHINBI_TOSHO_ETF;
+				break;
 			default:
-				commonAP.writeInLog("editHesoGomaString:変なcateがきた。処理を止めます。cate:" + cate,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("hesoGomaFileInsertFIAString:変なcateがきた。処理を止めます。cate:" + cate,logWriting.DATEDATE_LOG_FLG);
 				return ReturnCodeConst.NAZO_ERR;
 		}
 

@@ -96,6 +96,7 @@ public class insertHesoGomaFile {
 				break;
 			case  ReCord.CODE_HESO_07_ETF:
 //				updateZenzituhi(TBL,cate,TODAY,lastUpDateDay,s);
+				break;
 			default:
 				commonAP.writeInLog("insertHesoGomaFileControllerのcateがおかしい:" + cate,logWriting.DATEDATE_LOG_FLG);
 				return false;

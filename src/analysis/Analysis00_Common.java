@@ -488,7 +488,7 @@ public class Analysis00_Common {
 							+ ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " is not null and "
 							+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
 					}else{
-						SQL = SQL 
+						SQL = SQL
 							+ " where "
 							+	ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
 					}
@@ -601,7 +601,7 @@ public class Analysis00_Common {
 				break;
 		}
 //		SQL = " select * " + " from " + SQLChecker.getTBL(cate) + " where " + COLUMN.CODE + "='" + code +  "'";
-
+//		System.out.println("makekabuSQL:"+SQL);
 		return SQL;
 	}
 
@@ -857,7 +857,7 @@ public class Analysis00_Common {
 				nowDTO.setNowLONG_MACD_SIGNAL_01(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.LONG_MACD_SIGNAL		));
 
 				if (paraDTO.isCheckInvest()){
-					
+
 					nowDTO.setMARKET(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.MARKET));
 					nowDTO.setCATEGORY(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.CATEGORY));
 					nowDTO.setMARKET_CAP_PPT(RS.getDouble(ReCord.INVESTTBL_F + "." + COLUMN.MARKET_CAP_PPT));

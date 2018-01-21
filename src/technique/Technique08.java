@@ -2,8 +2,6 @@ package technique;
 
 import java.util.List;
 
-import bean.Bean_FinancialStatement;
-import bean.Bean_Forrign_Ratio;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
@@ -99,8 +97,6 @@ public class Technique08 {
 		}
 
 
-
-
 		if ( Technique04.MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 
 			if ( Technique06.idoHeikinTest_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
@@ -121,27 +117,6 @@ public class Technique08 {
 			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
 		}
 
-		System.out.println("---------ここから：MACD_IDOHEIKIN_S-----------");
-
-		for (Bean_Forrign_Ratio b:paraDTO.getB_FR_List()){
-			System.out.println("b:" + b.getNowDay_01());
-			System.out.println("b:" +  nowDTO.getCode_01());
-			System.out.println("b:" + b.getForeigner_stock_holder_ratio());
-		}
-		for (Bean_FinancialStatement c:paraDTO.getB_FS_List()){
-			System.out.println("c:" + c.getNowDay_01());
-			System.out.println("c:" +  nowDTO.getCode_01());
-			System.out.println("c:" +  c.getCode_01());
-			System.out.println("c:" + c.getLoan_ppt());
-		}
-		
-		for (Bean_nowRecord d:nowDTOList){
-			System.out.println(d.getBps_real());
-		}
-		
-		System.out.println("---------ここまで：MACD_IDOHEIKIN_S-----------");
-		
-		
 		if ( Technique04.MACD_M_S_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 
 			if ( Technique06.idoHeikinTest_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){

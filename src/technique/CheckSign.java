@@ -478,6 +478,7 @@ public class CheckSign {
 //						int keepTime = commonAP.countDay(entryDay,signDay, s) ;
 						int keepTime = commonAP.countDay(entryDay,TODAY, s) -1;
 
+
 						SQL ="insert into " + TBL_Name.RESULTHISTROYTBL
 								+ " ( "
 								+ COLUMN.CODE										 + " , " //
@@ -1181,6 +1182,7 @@ public class CheckSign {
 
 
 			if (s.rs2.next()){
+				System.out.println("checkWsign:" + SQL);
 				//存在する場合はここを通る。
 				SQL = " delete from " + TBL_Name.LASTORDER
 						+ " where "
@@ -1196,7 +1198,7 @@ public class CheckSign {
 						+ " as sub "
 						+ " ) ";
 
-				System.out.println(SQL);
+				System.out.println("checkWsign:" + SQL);
 				s.freeUpdateQuery(SQL);
 //				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.DATEDATE_LOG_FLG);
 			};

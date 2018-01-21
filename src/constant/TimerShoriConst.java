@@ -11,5 +11,7 @@ public class TimerShoriConst {
 	final public static String ERR_2 = "なんかエラー２";
 	//更新日不一致
 	final public static String UPDATE_BARABARA = "更新日不一致";
-	
+	//基準銘柄が存在しないエラー
+	final public static String NO_BASIC_CODE = "基準日行方不明";
+
 }
