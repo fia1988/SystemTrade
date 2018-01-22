@@ -134,7 +134,7 @@ public class cloringDate {
 //		sepaComCheck.checkSepaComFile(mainDTO,LS_TODAY);
 
 		//LSファイルばら撒き、FBS用ファイル(保有銘柄一覧、キックファイル、分割併合ファイル確認用ファイル)のばら撒きとか
-		fileCOPY(mainDTO,TODAY,LS_TODAY);
+		fileCOPY(mainDTO,TODAY,LS_TODAY,folderPath);
 
 		//backUp開始
 		backUpLogic(mainDTO,LS_TODAY,checkDay);
@@ -348,7 +348,7 @@ public class cloringDate {
 		commonAP.writeInLog(fileName + "を各フォルダにばらまきました。",logWriting.DATEDATE_LOG_FLG);
 	}
 	//LSファイルばら撒き、FBS用ファイルのばら撒きとか
-	private void fileCOPY(TAB_MainDTO mainDTO,String TODAY,String LS_TODAY){
+	private void fileCOPY(TAB_MainDTO mainDTO,String TODAY,String LS_TODAY,String folderPath){
 
 		//ファイルを作る
 		boolean resultSepaCombineCreateFile = createFiasFiles(mainDTO,TODAY,LS_TODAY);
@@ -358,10 +358,12 @@ public class cloringDate {
 		distributeFile_SUPER_USER(mainDTO,TODAY,LS_TODAY,true,resultSepaCombineCreateFile);
 		commonAP.writeInLog("管理者のファイルをばらまきおえました",logWriting.DATEDATE_LOG_FLG);
 
-		//有料会員は管理者よりあとに動かす
+		//無料会員は管理者よりあとに動かす
 		int sleepTime = PROPARTY.CLOALING_TIME * 2;
 		commonAP.writeInLog(sleepTime + "ミリ秒停止します。",logWriting.DATEDATE_LOG_FLG);
 		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+		//時間がばれないように再作成する。
+		outPutLSfile(folderPath);
 		//タイムスパンを固定値に挿入する。即座に取込モードを行っている場合対策・
 		PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 
@@ -1015,17 +1017,26 @@ public class cloringDate {
 
 	//今日の注文をログファイルとして出力
 	private int outPutKeepTable(double oneShotMoney,String folderPath){
-		String SQL = "";
+
 		S s = new S();
 		s.getCon();
 
-
-
 		copyOutPutTBL(oneShotMoney,s);
 
-		s.resetConnection();
+		s.closeConection();;
+
+		int resultInt = outPutLSfile(folderPath);
+
+		return resultInt;
+	}
+
+	private int outPutLSfile(String folderPath){
 		int resultInt = 0;
 
+		S s = new S();
+		s.getCon();
+
+		String SQL = "";
 
 		String fileNameL;
 		String fileNameS;
@@ -1050,8 +1061,6 @@ public class cloringDate {
 
 
 
-
-//		String today = controllDay.getMAX_DD_INDEX(s);
 		String today = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		fileNameL = today + "_" + "L.csv";
 		fileNameS = today + "_" + "S.csv";
@@ -1060,27 +1069,28 @@ public class cloringDate {
 
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
 		//戻り値1086の時はファイルが存在する
-//		String LSfilePath = filePath.replaceAll(ReturnCodeConst.SQL_SEPA, File.separator);
-//		File file = new File(LSfilePath);
-//        if(file.delete()){
-//        	//成功
-//        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
-//        };
+		String LSfilePath = filePath.replace(ReturnCodeConst.SQL_SEPA, File.separator);
+		File file = new File(LSfilePath);
+        if(file.delete()){
+        	//成功
+        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+        };
 		s.exportFile(SQL);
 
 
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
 		SQL = getOutFileSQL(heddaColumn, column, filePath, "false");
-//		LSfilePath = filePath.replaceAll(ReturnCodeConst.SQL_SEPA, File.separator);
-//		file = new File(LSfilePath);
-//        if(file.delete()){
-//        	//成功
-//        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
-//        };
+		LSfilePath = filePath.replace(ReturnCodeConst.SQL_SEPA, File.separator);
+		file = new File(LSfilePath);
+        if(file.delete()){
+        	//成功
+        	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+        };
 		resultInt = s.exportFile(SQL);
 //		System.out.println(SQL);
 		s.closeConection();
+
 		return resultInt;
 	}
 

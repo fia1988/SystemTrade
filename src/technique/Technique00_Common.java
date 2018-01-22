@@ -5,6 +5,7 @@ import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
+import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
@@ -297,9 +298,166 @@ public class Technique00_Common {
 		}
 
 
+		//--------ここから財務データ------------
+
+//		if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
+//			return Technique98_CONST.NO_GAME;
+//		}
+
+		if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
+			return Technique98_CONST.NO_GAME;
+		}
+
+		//--------ここまで財務データ------------
+
 		return Technique98_CONST.TRADE_FLG;
 
 	}
+
+	//財務データチェッカー_過去データも含めたチェック
+	private static int checkFinanchaiData_HISTRY_DATA (Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+		if ( paraDTO.getB_FS_List().size() <= 3 ){
+			return Technique98_CONST.NO_GAME;
+		}
+
+		int b_fsNewAdress = paraDTO.getB_FS_List().size() - 1;
+		double nowTOTALASSET = paraDTO.getB_FS_List().get(b_fsNewAdress).getTotal_asset_ppt();
+		double targetUriageTOTALASSET = 0;
+		double targetROE = 0;
+		double targetKeijoReturn = 0;
+		try {
+			if ( nowTOTALASSET > 5000000 ){
+				//総資産５兆円超
+				//３期連続経常利益減なら買い控え
+				if ( paraDTO.getB_FS_List().get(b_fsNewAdress).getKeijo_prof_ppt() < paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getKeijo_prof_ppt() ){
+					if ( paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getKeijo_prof_ppt() < paraDTO.getB_FS_List().get(b_fsNewAdress - 2).getKeijo_prof_ppt() ){
+						return Technique98_CONST.NO_GAME;
+					}
+				}
+			}else if (5000000 >= nowTOTALASSET && nowTOTALASSET >= 1000000){
+				//総資産１兆円超５兆円未満
+
+
+			}else{
+				//総資産１兆円未満
+				//売上高回転率が連続で３期連続で成長していないとアウト
+				double uriageKaiten1 = paraDTO.getB_FS_List().get(b_fsNewAdress).getUriage_daka_ppt() / paraDTO.getB_FS_List().get(b_fsNewAdress).getTotal_asset_ppt();
+				double uriageKaiten2 = paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getUriage_daka_ppt() / paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getTotal_asset_ppt();
+				double uriageKaiten3 = paraDTO.getB_FS_List().get(b_fsNewAdress - 2).getUriage_daka_ppt() / paraDTO.getB_FS_List().get(b_fsNewAdress - 2).getTotal_asset_ppt();
+				if ( uriageKaiten1 < uriageKaiten2 ){
+					if ( uriageKaiten2 < uriageKaiten3 ){
+						return Technique98_CONST.NO_GAME;
+					}
+				}
+			}
+		} catch (Exception e) {
+			//nullpoERRはここ
+			return Technique98_CONST.NO_GAME;
+		}
+
+		for(Bean_FinancialStatement a : paraDTO.getB_FS_List()){
+
+		}
+
+		return Technique98_CONST.TRADE_FLG;
+	}
+
+	//財務データチェッカー_最新データのみ
+	private static int checkFinanchaiData_SAISHIN_DATA (Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+
+		int i = 0;
+		int setAdress = i;
+		String nowDay = nowDTOList.get(nowDTOadress).getNowDay_01();
+
+		if (paraDTO.getB_FS_List().size()==0){
+			return Technique98_CONST.NO_GAME;
+		}
+
+//		System.out.println(nowDTOList.get(nowDTOadress).getCode_01());
+//		System.out.println("i:" + i);
+//		System.out.println("aaaa:"+paraDTO.getB_FS_List().get(i).getNowDay_01());
+		try {
+			while (nowDay.compareTo(paraDTO.getB_FS_List().get(i).getNowDay_01()) >= 0) {
+				setAdress = i;
+				i++;
+			}
+		} catch (Exception e) {	}
+
+
+//		int b_fsSize = paraDTO.getB_FS_List().size();
+
+		double nowTOTALASSET = paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt();
+		double targetROE = 0;
+		double targetUriageKaitenRitsu = 0;
+		double taegetKeijoUriageRitsu = 0;
+
+		try {
+			if ( nowTOTALASSET >= 5000000 ){
+				//総資産５兆円以上
+
+				//ROEが4.5％未満はだめ
+				targetROE = 4.5;
+				//売上高回転率をみる0.5未満はだめ
+				targetUriageKaitenRitsu = 0.5;
+				//売上高経常利益率を見る0.1(10%)未満はだめ
+				taegetKeijoUriageRitsu = 0.1;
+			}else if (5000000 > nowTOTALASSET && nowTOTALASSET >= 1000000){
+				//総資産１兆円超５兆円未満
+
+				//ROEが5％未満はだめ
+				targetROE = 5;
+				//売上高回転率をみる0.9未満はだめ
+				targetUriageKaitenRitsu = 0.9;
+				//売上高経常利益率を見る0.1(10%)未満はだめ
+				taegetKeijoUriageRitsu = 0.1;
+			}else if (1000000 > nowTOTALASSET && nowTOTALASSET >= 500000){
+				//総資産１兆円未満、5000億以上
+
+				//ROEが9％未満はだめ
+				targetROE = 9;
+				//売上高回転率をみる1.5未満はだめ
+				targetUriageKaitenRitsu = 1.5;
+				//売上高経常利益率を見る0.15(15%)未満はだめ
+				taegetKeijoUriageRitsu = 0.15;
+			}else if (500000 > nowTOTALASSET && nowTOTALASSET >= 100000){
+				//総資産5000億円未満、1000億以上
+			}else if (100000 > nowTOTALASSET && nowTOTALASSET >= 10000){
+				//総資産1000億円未満、100億以上
+			}else{
+				//総資産100億円未満
+			}
+		} catch (Exception e) {
+			//nullpoERRはここ
+			return Technique98_CONST.NO_GAME;
+		}
+
+		System.out.println("------------------------------");
+		System.out.println("code:"+nowDTOList.get(nowDTOadress).getCode_01());
+		System.out.println("nowDay:"+nowDay);
+		System.out.println("paraDTO.getB_FS_List().get(setAdress).getNowDay_01():"+paraDTO.getB_FS_List().get(setAdress).getNowDay_01());
+		System.out.println("paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt():"+paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt());
+		System.out.println("paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt():"+paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt());
+		System.out.println("paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt():"+paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt());
+		System.out.println("■------------------------------");
+
+		if ( paraDTO.getB_FS_List().get(setAdress).getRoe() < targetROE){
+			return Technique98_CONST.NO_GAME;
+		};
+		if ( ( paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt() / paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt() ) < targetUriageKaitenRitsu ){
+			return Technique98_CONST.NO_GAME;
+		};
+		if ( ( paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt() / paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt() ) < taegetKeijoUriageRitsu ){
+			return Technique98_CONST.NO_GAME;
+		};
+
+
+
+		return Technique98_CONST.TRADE_FLG;
+	}
+
+
 
 	//売メソッドの場合だけ動作する。
 	//NOGAMEの時、処理しない

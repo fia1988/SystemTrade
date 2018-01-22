@@ -151,7 +151,7 @@ public class insertHesoGomaFile {
 				replaceRecord = replaceRecord.replaceAll("\"-\"","");
 				break;
 			case ReCord.CODE_HESO_02_INVEST:
-				//"-"を"\N"にする
+				//"-"を"\N"にする。つまりnullにする
 				replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
 				replaceRecord = replaceRecord.replaceAll("/","-");
 				break;

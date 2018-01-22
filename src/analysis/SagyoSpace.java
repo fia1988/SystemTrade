@@ -44,6 +44,8 @@ public class SagyoSpace {
 		}else{
 			//この中試験
 			paraDTO.setRealTimeMode(false);
+			//財務諸表データとか使う
+			paraDTO.setMonthYearDateFLG(true);
 		}
 
 		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
@@ -61,11 +63,11 @@ public class SagyoSpace {
 //		resultDTO.setShoritu(0.05);
 		resultDTO.setTotalGames(10);
 //		resultDTO.setTotalGames(1);
-		resultDTO.setTotalRatio(0.75);
+		resultDTO.setTotalRatio(0.7);
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
-		paraDTO.setTesuRYO(0.022);
-		paraDTO.setTesuRYO(0.03);
+		paraDTO.setTesuRYO(0.020);
+//		paraDTO.setTesuRYO(0.03);
 //		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
@@ -74,7 +76,7 @@ public class SagyoSpace {
 //		paraDTO.setEntryMoney(100.000);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-		paraDTO.setOnEliteFLG();
+//		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
@@ -647,7 +649,55 @@ public class SagyoSpace {
 
 	}
 
+	public static void testCase999(){
+		List<String> dayList = new ArrayList<String>();
+		dayList.add("2016-10-03");
+		dayList.add("2016-10-04");
+		dayList.add("2016-10-05");
+		dayList.add("2016-10-06");
+		dayList.add("2016-10-07");
+		dayList.add("2016-10-11");
+		dayList.add("2016-10-12");
+		dayList.add("2016-10-13");
+		dayList.add("2016-10-14");
+		dayList.add("2016-10-17");
+		dayList.add("2016-10-18");
+		dayList.add("2016-10-19");
+		dayList.add("2016-10-20");
+		dayList.add("2016-10-21");
+		dayList.add("2016-10-24");
+		dayList.add("2016-10-25");
+		dayList.add("2016-10-26");
+		dayList.add("2016-10-27");
 
+
+//		1
+//		1
+//		1
+//		2
+//		1
+//		0
+//		-1
+//		-2
+		System.out.println("2016-10-27".compareTo("2015-10-28"));
+		System.out.println("2016-10-27".compareTo("2015-10-27"));
+		System.out.println("2016-10-27".compareTo("2016-09-25"));
+		System.out.println("2016-10-27".compareTo("2016-10-25"));
+		System.out.println("2016-10-27".compareTo("2016-10-26"));
+		System.out.println("2016-10-27".compareTo("2016-10-27"));
+		System.out.println("2016-10-27".compareTo("2016-10-28"));
+		System.out.println("2016-10-27".compareTo("2016-10-29"));
+
+		int i = 0;
+		int setAdress = i;
+		String nowDay = "2016-10-11";
+		while (nowDay.compareTo(dayList.get(i)) >= 0) {
+			System.out.println(dayList.get(i));
+			setAdress = i;
+			i++;
+		}
+		System.out.println("a:"+dayList.get(setAdress));
+	}
 
 	public static void testCase98(){
 
@@ -1031,36 +1081,36 @@ public class SagyoSpace {
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
-		String startDD	=	"2007-01-01";
-		String endDD		=	"2016-12-31";
+		String startDD	=	"2015-01-01";
+		String endDD		=	"2017-12-31";
 
 		paraDTO = new Bean_Parameta();
 		resultDTO = new Bean_Result();
 		nowDTO = new Bean_nowRecord();
 		shokisettei(paraDTO, nowDTO, resultDTO,false);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
-		resultDTO.setOnResultTotal();
-		resultDTO.setShoritu(0.01);
-		resultDTO.setTotalGames(1);
+//		paraDTO.setTesuRYO(0.012);
+//		paraDTO.setOnEliteFLG();
+//		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultCode();
+//		resultDTO.setOnResultTotal();
+//		resultDTO.setShoritu(0.71);
+//		resultDTO.setTotalGames(10);
 		System.out.println("");
 		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
 
-		paraDTO = new Bean_Parameta();
-		resultDTO = new Bean_Result();
-		nowDTO = new Bean_nowRecord();
-		shokisettei(paraDTO, nowDTO, resultDTO,false);
-		paraDTO.setTesuRYO(0.012);
-		paraDTO.setOnEliteFLG();
-		resultDTO.setOnResultDay();
-		resultDTO.setOnResultCode();
-		resultDTO.setOnResultTotal();
-		resultDTO.setShoritu(0.01);
-		resultDTO.setTotalGames(1);
-		System.out.println("");
-		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
+//		paraDTO = new Bean_Parameta();
+//		resultDTO = new Bean_Result();
+//		nowDTO = new Bean_nowRecord();
+//		shokisettei(paraDTO, nowDTO, resultDTO,false);
+//		paraDTO.setTesuRYO(0.012);
+//		paraDTO.setOnEliteFLG();
+//		resultDTO.setOnResultDay();
+//		resultDTO.setOnResultCode();
+//		resultDTO.setOnResultTotal();
+//		resultDTO.setShoritu(0.01);
+//		resultDTO.setTotalGames(1);
+//		System.out.println("");
+//		Analysis00_Common.Analysis_COMMON(TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 
 	}
