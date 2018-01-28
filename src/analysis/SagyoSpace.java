@@ -34,16 +34,21 @@ public class SagyoSpace {
 		if (realcheckFLG){
 			//このなか本番
 			paraDTO.setRealTimeMode(true);
+			
+			//インヴェストテーブル使う
 			paraDTO.setCheckInvest(true);
-			//本番環境だけここを通る
+			
 
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
 
 
 		}else{
-			//この中試験
+			//この中試験用
 			paraDTO.setRealTimeMode(false);
+			
+//			//インヴェストテーブル使う
+//			paraDTO.setCheckInvest(true);
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
 		}
@@ -59,24 +64,23 @@ public class SagyoSpace {
 		resultDTO.setOnResultTotal();
 		int i = 1000;
 		paraDTO.setMinDeki(i);
-		resultDTO.setShoritu(0.75);
+		resultDTO.setShoritu(0.65);
 //		resultDTO.setShoritu(0.05);
-		resultDTO.setTotalGames(10);
+		resultDTO.setTotalGames(8);
 //		resultDTO.setTotalGames(1);
 		resultDTO.setTotalRatio(0.7);
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
-		paraDTO.setTesuRYO(0.020);
+		paraDTO.setTesuRYO(0.015);
 //		paraDTO.setTesuRYO(0.03);
 //		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
 		paraDTO.setStaticsFLG(false);
 		//一回当たりエントリー金額（単位：万円）
 		paraDTO.setEntryMoney(1.100);
-//		paraDTO.setEntryMoney(100.000);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
@@ -86,6 +90,7 @@ public class SagyoSpace {
 		paraDTO.setRealEntryVolumeFLG(true);
 
 		paraDTO.setMaxEntryClose(15000);
+		paraDTO.setMaxEntryClose(15000000);
 		//株のみ取り引きする
 		paraDTO.setJustSTOCK(true);
 
@@ -206,16 +211,16 @@ public class SagyoSpace {
 
 
 
-	public static void testCase95(){
+	public static void testCase9999(){
 		//連続取引するエリートの全メソッドの一覧を作る
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
 		String startDD	=	"2007-01-03";
-		String endDD		=	"2007-12-31";
-		startDD	=	"2017-08-29";
-		endDD		=	"2017-10-13";
+		String endDD		=	"2017-12-31";
+//		startDD	=	"2017-08-29";
+//		endDD		=	"2017-10-13";
 //		startDD	=	"2007-01-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート

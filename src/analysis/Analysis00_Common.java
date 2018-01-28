@@ -159,6 +159,7 @@ public class Analysis00_Common {
 				paraDTO.setMaxLoss			(	Double.parseDouble(codeListwithiCate.get(i)[5])	);
 			}
 			String SQL = makekabuSQL(code,startDay,endDay,s,paraDTO,resultDTO);
+//			System.out.println(" Analysis_COMMON:"+SQL);
 			Analysis_COMMON_main(L_packageName, L_className, L_methodName, S_packageName, S_className, S_methodName, paraDTO, nowDTO, resultDTO, code, SQL, s);
 
 		}

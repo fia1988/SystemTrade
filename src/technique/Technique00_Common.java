@@ -297,17 +297,22 @@ public class Technique00_Common {
 
 		}
 
-
+		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		//--------ここから財務データ------------
+		if ( paraDTO.getRealTimeMode() ){
+			//本番
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		}else{
+			//バックテスト
+//			if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
+//				return Technique98_CONST.NO_GAME;
+//			}
 
-//		if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
-//			return Technique98_CONST.NO_GAME;
-//		}
+			if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
+				return Technique98_CONST.NO_GAME;
+			}
 
-		if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
-			return Technique98_CONST.NO_GAME;
 		}
-
 		//--------ここまで財務データ------------
 
 		return Technique98_CONST.TRADE_FLG;
@@ -327,20 +332,27 @@ public class Technique00_Common {
 		double targetROE = 0;
 		double targetKeijoReturn = 0;
 		try {
-			if ( nowTOTALASSET > 5000000 ){
-				//総資産５兆円超
+
+			if ( nowTOTALASSET >= 5000000 ){
+				//総資産５兆円以上
 				//３期連続経常利益減なら買い控え
 				if ( paraDTO.getB_FS_List().get(b_fsNewAdress).getKeijo_prof_ppt() < paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getKeijo_prof_ppt() ){
 					if ( paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getKeijo_prof_ppt() < paraDTO.getB_FS_List().get(b_fsNewAdress - 2).getKeijo_prof_ppt() ){
 						return Technique98_CONST.NO_GAME;
 					}
 				}
-			}else if (5000000 >= nowTOTALASSET && nowTOTALASSET >= 1000000){
+			}else if (5000000 > nowTOTALASSET && nowTOTALASSET >= 1000000){
 				//総資産１兆円超５兆円未満
-
-
+			}else if (1000000 > nowTOTALASSET && nowTOTALASSET >= 500000){
+				//総資産１兆円未満、5000億以上
+			}else if (500000 > nowTOTALASSET && nowTOTALASSET >= 100000){
+				//総資産5000億円未満、1000億以上
+			}else if (100000 > nowTOTALASSET && nowTOTALASSET >= 10000){
+				//総資産1000億円未満、100億以上
+			}else if (10000 > nowTOTALASSET && nowTOTALASSET >= 5000){
+				//総資産100億円未満、50円億以上
 			}else{
-				//総資産１兆円未満
+				//総資産50億円未満
 				//売上高回転率が連続で３期連続で成長していないとアウト
 				double uriageKaiten1 = paraDTO.getB_FS_List().get(b_fsNewAdress).getUriage_daka_ppt() / paraDTO.getB_FS_List().get(b_fsNewAdress).getTotal_asset_ppt();
 				double uriageKaiten2 = paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getUriage_daka_ppt() / paraDTO.getB_FS_List().get(b_fsNewAdress - 1).getTotal_asset_ppt();
@@ -351,6 +363,7 @@ public class Technique00_Common {
 					}
 				}
 			}
+
 		} catch (Exception e) {
 			//nullpoERRはここ
 			return Technique98_CONST.NO_GAME;
@@ -397,50 +410,64 @@ public class Technique00_Common {
 			if ( nowTOTALASSET >= 5000000 ){
 				//総資産５兆円以上
 
+				//ROEが4.0％未満はだめ
+				targetROE = 4.0;
+				//売上高回転率をみる0.4未満はだめ
+				targetUriageKaitenRitsu = 0.4;
+				//売上高経常利益率を見る0.05(5%)未満はだめ
+				taegetKeijoUriageRitsu = 0.05;
+			}else if (5000000 > nowTOTALASSET && nowTOTALASSET >= 1000000){
+				//総資産１兆円超５兆円未満
+
 				//ROEが4.5％未満はだめ
 				targetROE = 4.5;
 				//売上高回転率をみる0.5未満はだめ
 				targetUriageKaitenRitsu = 0.5;
-				//売上高経常利益率を見る0.1(10%)未満はだめ
-				taegetKeijoUriageRitsu = 0.1;
-			}else if (5000000 > nowTOTALASSET && nowTOTALASSET >= 1000000){
-				//総資産１兆円超５兆円未満
-
-				//ROEが5％未満はだめ
-				targetROE = 5;
-				//売上高回転率をみる0.9未満はだめ
-				targetUriageKaitenRitsu = 0.9;
-				//売上高経常利益率を見る0.1(10%)未満はだめ
-				taegetKeijoUriageRitsu = 0.1;
+				//売上高経常利益率を見る0.07(7%)未満はだめ
+				taegetKeijoUriageRitsu = 0.07;
 			}else if (1000000 > nowTOTALASSET && nowTOTALASSET >= 500000){
 				//総資産１兆円未満、5000億以上
-
-				//ROEが9％未満はだめ
-				targetROE = 9;
-				//売上高回転率をみる1.5未満はだめ
-				targetUriageKaitenRitsu = 1.5;
-				//売上高経常利益率を見る0.15(15%)未満はだめ
-				taegetKeijoUriageRitsu = 0.15;
+				targetROE = 5;
+				//売上高回転率をみる0.7未満はだめ
+				targetUriageKaitenRitsu = 0.7;
+				//売上高経常利益率を見る0.09(9%)未満はだめ
+				taegetKeijoUriageRitsu = 0.09;
 			}else if (500000 > nowTOTALASSET && nowTOTALASSET >= 100000){
 				//総資産5000億円未満、1000億以上
+
+				targetROE = 5.5;
+				targetUriageKaitenRitsu = 1.0;
+				taegetKeijoUriageRitsu = 0.11;
 			}else if (100000 > nowTOTALASSET && nowTOTALASSET >= 10000){
 				//総資産1000億円未満、100億以上
+
+				targetROE = 6.0;
+				targetUriageKaitenRitsu = 1.1;
+				taegetKeijoUriageRitsu = 0.13;
+			}else if (10000 > nowTOTALASSET && nowTOTALASSET >= 5000){
+				//総資産100億円未満、50円億以上
+				targetROE = 6.5;
+				targetUriageKaitenRitsu = 1.2;
+				taegetKeijoUriageRitsu = 0.15;
 			}else{
-				//総資産100億円未満
+				//総資産50億円未満
+				targetROE = 7;
+				targetUriageKaitenRitsu = 1.3;
+				taegetKeijoUriageRitsu = 0.20;
 			}
 		} catch (Exception e) {
 			//nullpoERRはここ
 			return Technique98_CONST.NO_GAME;
 		}
 
-		System.out.println("------------------------------");
-		System.out.println("code:"+nowDTOList.get(nowDTOadress).getCode_01());
-		System.out.println("nowDay:"+nowDay);
-		System.out.println("paraDTO.getB_FS_List().get(setAdress).getNowDay_01():"+paraDTO.getB_FS_List().get(setAdress).getNowDay_01());
-		System.out.println("paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt():"+paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt());
-		System.out.println("paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt():"+paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt());
-		System.out.println("paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt():"+paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt());
-		System.out.println("■------------------------------");
+//		System.out.println("------------------------------");
+//		System.out.println("code:"+nowDTOList.get(nowDTOadress).getCode_01());
+//		System.out.println("nowDay:"+nowDay);
+//		System.out.println("paraDTO.getB_FS_List().get(setAdress).getNowDay_01():"+paraDTO.getB_FS_List().get(setAdress).getNowDay_01());
+//		System.out.println("paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt():"+paraDTO.getB_FS_List().get(setAdress).getTotal_asset_ppt());
+//		System.out.println("paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt():"+paraDTO.getB_FS_List().get(setAdress).getUriage_daka_ppt());
+//		System.out.println("paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt():"+paraDTO.getB_FS_List().get(setAdress).getKeijo_prof_ppt());
+//		System.out.println("■------------------------------");
 
 		if ( paraDTO.getB_FS_List().get(setAdress).getRoe() < targetROE){
 			return Technique98_CONST.NO_GAME;
