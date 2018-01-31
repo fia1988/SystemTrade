@@ -14,8 +14,17 @@ public class Bean_Parameta {
 	private List<Bean_Credit> B_Cr_List = new ArrayList<>();
 
 	private boolean creditDateUseFlg = false;
-	
 
+	//これがtrueだと財務諸表データなど、paraDTOに入ってるテーブル情報を参照するか否かを選べる
+	private boolean checkParaDTOOption = false;
+
+	public boolean isCheckParaDTOOption() {
+		return checkParaDTOOption;
+	}
+
+	public void setCheckParaDTOOption(boolean checkParaDTOOption) {
+		this.checkParaDTOOption = checkParaDTOOption;
+	}
 
 	public boolean isCreditDateUseFlg() {
 		return creditDateUseFlg;

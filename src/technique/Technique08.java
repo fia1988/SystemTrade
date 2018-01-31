@@ -97,6 +97,18 @@ public class Technique08 {
 		}
 
 
+		System.out.println("■MACD_IDOHEIKIN_L-");
+		System.out.println("nowDTO.getCode_01():" + nowDTO.getCode_01());
+//		System.out.println("nowDTO.getDividend():" + nowDTO.getDividend());
+		System.out.println("nowDTO.getDIVIDEND():" + nowDTO.getDIVIDEND());
+//		System.out.println("nowDTO.getPbr_real():" + nowDTO.getPbr_real());
+//		System.out.println("nowDTO.getPer_yoso():" + nowDTO.getPer_yoso());
+		System.out.println("nowDTO.getPER_YOSO():" + nowDTO.getPER_YOSO());
+		System.out.println("nowDTO.getBPS_REAL():" + nowDTO.getBPS_REAL());
+//		System.out.println("nowDTO.getBps_real():" + nowDTO.getBps_real());
+		System.out.println("■MACD_IDOHEIKIN_L-");
+
+
 		if ( Technique04.MACD_M_L_OVER0(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){
 
 			if ( Technique06.idoHeikinTest_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.TRADE_FLG){

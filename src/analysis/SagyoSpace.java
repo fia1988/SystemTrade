@@ -34,10 +34,10 @@ public class SagyoSpace {
 		if (realcheckFLG){
 			//このなか本番
 			paraDTO.setRealTimeMode(true);
-			
+
 			//インヴェストテーブル使う
 			paraDTO.setCheckInvest(true);
-			
+
 
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
@@ -46,11 +46,12 @@ public class SagyoSpace {
 		}else{
 			//この中試験用
 			paraDTO.setRealTimeMode(false);
-			
+
 //			//インヴェストテーブル使う
 //			paraDTO.setCheckInvest(true);
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
+			paraDTO.setCheckParaDTOOption(true);
 		}
 
 		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
@@ -80,7 +81,7 @@ public class SagyoSpace {
 		paraDTO.setEntryMoney(1.100);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-		paraDTO.setOnEliteFLG();
+//		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
@@ -206,6 +207,21 @@ public class SagyoSpace {
 		String fileName = "FBSsepaCombine.csv";
 //		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
 		CD.createTODAYSepaComBine("2017-09-25",folderPath,fileName);
+
+	}
+
+	public static void testCase9998(){
+		//連続取引するエリートの全メソッドの一覧を作る
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		String startDD	=	"2017-01-03";
+		String endDD		=	"2017-12-31";
+		shokisettei(paraDTO, nowDTO, resultDTO,false);
+		paraDTO.setCheckInvest(true);
+		String tec = "technique";
+		Analysis00_Common.Analysis_COMMON(tec,"Technique12","diviteCheck_1_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 	}
 

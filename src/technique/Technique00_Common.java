@@ -297,19 +297,21 @@ public class Technique00_Common {
 
 		}
 
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
 		//--------ここから財務データ------------
 		if ( paraDTO.getRealTimeMode() ){
 			//本番
-			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		}else{
-			//バックテスト
-//			if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
-//				return Technique98_CONST.NO_GAME;
-//			}
+			
+			if ( paraDTO.isCheckParaDTOOption() ){
+				//バックテスト
+//				if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
+//					return Technique98_CONST.NO_GAME;
+//				}
 
-			if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
-				return Technique98_CONST.NO_GAME;
+				if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
+					return Technique98_CONST.NO_GAME;
+				}				
 			}
 
 		}

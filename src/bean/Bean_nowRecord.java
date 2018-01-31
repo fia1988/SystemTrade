@@ -10270,259 +10270,259 @@ public class Bean_nowRecord {
 
 
 
-	//業種
-	String category;
-	//発行済株式数
-	double stock_num;
-	//時価総額（百万円）
-	double market_cap_ppt;
-	//配当利回り
-	double dividend_per;
-	//1株配当
-	double dividend;
-	//per（予想）
-	double per_yoso;
-	//pbr（実績）
-	double pbr_real;
-	//eps（予想）
-	double eps_yoso;
-	//bps（実績）
-	double bps_real;
-	//高値日付
-	String year_max_day_yyyymmdd;
-	//年初来高値
-	double year_max;
-	//安値日付
-	String year_min_day_yyyymmdd;
-	//年初来安値
-	double year_min;
+//	//業種
+//	String category;
+//	//発行済株式数
+//	double stock_num;
+//	//時価総額（百万円）
+//	double market_cap_ppt;
+//	//配当利回り
+//	double dividend_per;
+//	//1株配当
+//	double dividend;
+//	//per（予想）
+//	double per_yoso;
+//	//pbr（実績）
+//	double pbr_real;
+//	//eps（予想）
+//	double eps_yoso;
+//	//bps（実績）
+//	double bps_real;
+//	//高値日付
+//	String year_max_day_yyyymmdd;
+//	//年初来高値
+//	double year_max;
+//	//安値日付
+//	String year_min_day_yyyymmdd;
+//	//年初来安値
+//	double year_min;
+//
+//	//発行済株式数_pre
+//	double stock_num_pre;
+//	//時価総額（百万円）_pre
+//	double market_cap_ppt_pre;
+//	//配当利回り_pre
+//	double dividend_per_pre;
+//	//1株配当_pre
+//	double dividend_pre;
+//	//per（予想）_pre
+//	double per_yoso_pre;
+//	//pbr（実績）_pre
+//	double pbr_real_pre;
+//	//eps（予想）_pre
+//	double eps_yoso_pre;
+//	//bps（実績）_pre
+//	double bps_real_pre;
+//	//高値日付_pre
+//	String year_max_day_yyyymmdd_pre;
+//	//年初来高値_pre
+//	double year_max_pre;
+//	//安値日付_pre
+//	String year_min_day_yyyymmdd_pre;
+//	//年初来安値_pre
+//	double year_min_pre;
 
-	//発行済株式数_pre
-	double stock_num_pre;
-	//時価総額（百万円）_pre
-	double market_cap_ppt_pre;
-	//配当利回り_pre
-	double dividend_per_pre;
-	//1株配当_pre
-	double dividend_pre;
-	//per（予想）_pre
-	double per_yoso_pre;
-	//pbr（実績）_pre
-	double pbr_real_pre;
-	//eps（予想）_pre
-	double eps_yoso_pre;
-	//bps（実績）_pre
-	double bps_real_pre;
-	//高値日付_pre
-	String year_max_day_yyyymmdd_pre;
-	//年初来高値_pre
-	double year_max_pre;
-	//安値日付_pre
-	String year_min_day_yyyymmdd_pre;
-	//年初来安値_pre
-	double year_min_pre;
 
 
-
-	public double getStock_num_pre() {
-		return stock_num_pre;
-	}
-
-	public void setStock_num_pre(double stock_num_pre) {
-		this.stock_num_pre = stock_num_pre;
-	}
-
-	public double getMarket_cap_ppt_pre() {
-		return market_cap_ppt_pre;
-	}
-
-	public void setMarket_cap_ppt_pre(double market_cap_ppt_pre) {
-		this.market_cap_ppt_pre = market_cap_ppt_pre;
-	}
-
-	public double getDividend_per_pre() {
-		return dividend_per_pre;
-	}
-
-	public void setDividend_per_pre(double dividend_per_pre) {
-		this.dividend_per_pre = dividend_per_pre;
-	}
-
-	public double getDividend_pre() {
-		return dividend_pre;
-	}
-
-	public void setDividend_pre(double dividend_pre) {
-		this.dividend_pre = dividend_pre;
-	}
-
-	public double getPer_yoso_pre() {
-		return per_yoso_pre;
-	}
-
-	public void setPer_yoso_pre(double per_yoso_pre) {
-		this.per_yoso_pre = per_yoso_pre;
-	}
-
-	public double getPbr_real_pre() {
-		return pbr_real_pre;
-	}
-
-	public void setPbr_real_pre(double pbr_real_pre) {
-		this.pbr_real_pre = pbr_real_pre;
-	}
-
-	public double getEps_yoso_pre() {
-		return eps_yoso_pre;
-	}
-
-	public void setEps_yoso_pre(double eps_yoso_pre) {
-		this.eps_yoso_pre = eps_yoso_pre;
-	}
-
-	public double getBps_real_pre() {
-		return bps_real_pre;
-	}
-
-	public void setBps_real_pre(double bps_real_pre) {
-		this.bps_real_pre = bps_real_pre;
-	}
-
-	public String getYear_max_day_yyyymmdd_pre() {
-		return year_max_day_yyyymmdd_pre;
-	}
-
-	public void setYear_max_day_yyyymmdd_pre(String year_max_day_yyyymmdd_pre) {
-		this.year_max_day_yyyymmdd_pre = year_max_day_yyyymmdd_pre;
-	}
-
-	public double getYear_max_pre() {
-		return year_max_pre;
-	}
-
-	public void setYear_max_pre(double year_max_pre) {
-		this.year_max_pre = year_max_pre;
-	}
-
-	public String getYear_min_day_yyyymmdd_pre() {
-		return year_min_day_yyyymmdd_pre;
-	}
-
-	public void setYear_min_day_yyyymmdd_pre(String year_min_day_yyyymmdd_pre) {
-		this.year_min_day_yyyymmdd_pre = year_min_day_yyyymmdd_pre;
-	}
-
-	public double getYear_min_pre() {
-		return year_min_pre;
-	}
-
-	public void setYear_min_pre(double year_min_pre) {
-		this.year_min_pre = year_min_pre;
-	}
-
-	public double getStock_num() {
-		return stock_num;
-	}
-
-	public void setStock_num(double stock_num) {
-		this.stock_num = stock_num;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public double getMarket_cap_ppt() {
-		return market_cap_ppt;
-	}
-
-	public void setMarket_cap_ppt(double market_cap_ppt) {
-		this.market_cap_ppt = market_cap_ppt;
-	}
-
-	public double getDividend_per() {
-		return dividend_per;
-	}
-
-	public void setDividend_per(double dividend_per) {
-		this.dividend_per = dividend_per;
-	}
-
-	public double getDividend() {
-		return dividend;
-	}
-
-	public void setDividend(double dividend) {
-		this.dividend = dividend;
-	}
-
-	public double getPer_yoso() {
-		return per_yoso;
-	}
-
-	public void setPer_yoso(double per_yoso) {
-		this.per_yoso = per_yoso;
-	}
-
-	public double getPbr_real() {
-		return pbr_real;
-	}
-
-	public void setPbr_real(double pbr_real) {
-		this.pbr_real = pbr_real;
-	}
-
-	public double getEps_yoso() {
-		return eps_yoso;
-	}
-
-	public void setEps_yoso(double eps_yoso) {
-		this.eps_yoso = eps_yoso;
-	}
-
-	public double getBps_real() {
-		return bps_real;
-	}
-
-	public void setBps_real(double bps_real) {
-		this.bps_real = bps_real;
-	}
-
-	public String getYear_max_day_yyyymmdd() {
-		return year_max_day_yyyymmdd;
-	}
-
-	public void setYear_max_day_yyyymmdd(String year_max_day_yyyymmdd) {
-		this.year_max_day_yyyymmdd = year_max_day_yyyymmdd;
-	}
-
-	public double getYear_max() {
-		return year_max;
-	}
-
-	public void setYear_max(double year_max) {
-		this.year_max = year_max;
-	}
-
-	public String getYear_min_day_yyyymmdd() {
-		return year_min_day_yyyymmdd;
-	}
-
-	public void setYear_min_day_yyyymmdd(String year_min_day_yyyymmdd) {
-		this.year_min_day_yyyymmdd = year_min_day_yyyymmdd;
-	}
-
-	public double getYear_min() {
-		return year_min;
-	}
-
-	public void setYear_min(double year_min) {
-		this.year_min = year_min;
-	}
+//	public double getStock_num_pre() {
+//		return stock_num_pre;
+//	}
+//
+//	public void setStock_num_pre(double stock_num_pre) {
+//		this.stock_num_pre = stock_num_pre;
+//	}
+//
+//	public double getMarket_cap_ppt_pre() {
+//		return market_cap_ppt_pre;
+//	}
+//
+//	public void setMarket_cap_ppt_pre(double market_cap_ppt_pre) {
+//		this.market_cap_ppt_pre = market_cap_ppt_pre;
+//	}
+//
+//	public double getDividend_per_pre() {
+//		return dividend_per_pre;
+//	}
+//
+//	public void setDividend_per_pre(double dividend_per_pre) {
+//		this.dividend_per_pre = dividend_per_pre;
+//	}
+//
+//	public double getDividend_pre() {
+//		return dividend_pre;
+//	}
+//
+//	public void setDividend_pre(double dividend_pre) {
+//		this.dividend_pre = dividend_pre;
+//	}
+//
+//	public double getPer_yoso_pre() {
+//		return per_yoso_pre;
+//	}
+//
+//	public void setPer_yoso_pre(double per_yoso_pre) {
+//		this.per_yoso_pre = per_yoso_pre;
+//	}
+//
+//	public double getPbr_real_pre() {
+//		return pbr_real_pre;
+//	}
+//
+//	public void setPbr_real_pre(double pbr_real_pre) {
+//		this.pbr_real_pre = pbr_real_pre;
+//	}
+//
+//	public double getEps_yoso_pre() {
+//		return eps_yoso_pre;
+//	}
+//
+//	public void setEps_yoso_pre(double eps_yoso_pre) {
+//		this.eps_yoso_pre = eps_yoso_pre;
+//	}
+//
+//	public double getBps_real_pre() {
+//		return bps_real_pre;
+//	}
+//
+//	public void setBps_real_pre(double bps_real_pre) {
+//		this.bps_real_pre = bps_real_pre;
+//	}
+//
+//	public String getYear_max_day_yyyymmdd_pre() {
+//		return year_max_day_yyyymmdd_pre;
+//	}
+//
+//	public void setYear_max_day_yyyymmdd_pre(String year_max_day_yyyymmdd_pre) {
+//		this.year_max_day_yyyymmdd_pre = year_max_day_yyyymmdd_pre;
+//	}
+//
+//	public double getYear_max_pre() {
+//		return year_max_pre;
+//	}
+//
+//	public void setYear_max_pre(double year_max_pre) {
+//		this.year_max_pre = year_max_pre;
+//	}
+//
+//	public String getYear_min_day_yyyymmdd_pre() {
+//		return year_min_day_yyyymmdd_pre;
+//	}
+//
+//	public void setYear_min_day_yyyymmdd_pre(String year_min_day_yyyymmdd_pre) {
+//		this.year_min_day_yyyymmdd_pre = year_min_day_yyyymmdd_pre;
+//	}
+//
+//	public double getYear_min_pre() {
+//		return year_min_pre;
+//	}
+//
+//	public void setYear_min_pre(double year_min_pre) {
+//		this.year_min_pre = year_min_pre;
+//	}
+//
+//	public double getStock_num() {
+//		return stock_num;
+//	}
+//
+//	public void setStock_num(double stock_num) {
+//		this.stock_num = stock_num;
+//	}
+//
+//	public String getCategory() {
+//		return category;
+//	}
+//
+//	public void setCategory(String category) {
+//		this.category = category;
+//	}
+//
+//	public double getMarket_cap_ppt() {
+//		return market_cap_ppt;
+//	}
+//
+//	public void setMarket_cap_ppt(double market_cap_ppt) {
+//		this.market_cap_ppt = market_cap_ppt;
+//	}
+//
+//	public double getDividend_per() {
+//		return dividend_per;
+//	}
+//
+//	public void setDividend_per(double dividend_per) {
+//		this.dividend_per = dividend_per;
+//	}
+//
+//	public double getDividend() {
+//		return dividend;
+//	}
+//
+//	public void setDividend(double dividend) {
+//		this.dividend = dividend;
+//	}
+//
+//	public double getPer_yoso() {
+//		return per_yoso;
+//	}
+//
+//	public void setPer_yoso(double per_yoso) {
+//		this.per_yoso = per_yoso;
+//	}
+//
+//	public double getPbr_real() {
+//		return pbr_real;
+//	}
+//
+//	public void setPbr_real(double pbr_real) {
+//		this.pbr_real = pbr_real;
+//	}
+//
+//	public double getEps_yoso() {
+//		return eps_yoso;
+//	}
+//
+//	public void setEps_yoso(double eps_yoso) {
+//		this.eps_yoso = eps_yoso;
+//	}
+//
+//	public double getBps_real() {
+//		return bps_real;
+//	}
+//
+//	public void setBps_real(double bps_real) {
+//		this.bps_real = bps_real;
+//	}
+//
+//	public String getYear_max_day_yyyymmdd() {
+//		return year_max_day_yyyymmdd;
+//	}
+//
+//	public void setYear_max_day_yyyymmdd(String year_max_day_yyyymmdd) {
+//		this.year_max_day_yyyymmdd = year_max_day_yyyymmdd;
+//	}
+//
+//	public double getYear_max() {
+//		return year_max;
+//	}
+//
+//	public void setYear_max(double year_max) {
+//		this.year_max = year_max;
+//	}
+//
+//	public String getYear_min_day_yyyymmdd() {
+//		return year_min_day_yyyymmdd;
+//	}
+//
+//	public void setYear_min_day_yyyymmdd(String year_min_day_yyyymmdd) {
+//		this.year_min_day_yyyymmdd = year_min_day_yyyymmdd;
+//	}
+//
+//	public double getYear_min() {
+//		return year_min;
+//	}
+//
+//	public void setYear_min(double year_min) {
+//		this.year_min = year_min;
+//	}
 
 
 }
