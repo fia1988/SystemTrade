@@ -240,6 +240,13 @@ public class Analysis00_Common {
 		paraDTO.setLMETHOD(L_packageName + "." + L_className + "." + L_methodName);
 		paraDTO.setSMETHOD(S_packageName + "." + S_className + "." + S_methodName);
 
+		//株をもっているとtrue、もっていないとfalse
+		boolean keepCheckFLG = false;
+
+		double nowPrice = 0;
+		double nowAveragePrice = 0;
+		String nowKeepCodeDay = "";
+
 		try {
 
 
@@ -276,6 +283,9 @@ public class Analysis00_Common {
 
 					switch( Analysis00_Common.Analysis_intMethod(L_packageName,L_className,L_methodName,paraDTO,nowDTOList,i,resultDTO,true) ){
 						case Technique98_CONST.TRADE_FLG:
+
+						//株を持っているフラグをたてる
+						keepCheckFLG = true;
 
 						//決済が発生した日、決済金額を入れる。
 						resultDTO.setEntryDay(nowDTOList.get(i).getKessaiDay());
@@ -374,7 +384,8 @@ public class Analysis00_Common {
 
 									}
 
-
+									//株をうったという証を立てる
+									keepCheckFLG = false;
 									//ループが終わった証を立てる
 									loopCheck=true;
 									//その日の結論を出す。
@@ -385,7 +396,6 @@ public class Analysis00_Common {
 									}else{
 										resultDTO.setMaxLossFLG(false);
 									}
-
 
 									//売買フラグチェックを外す。
 									paraDTO.setCheckFLG(false);
@@ -413,8 +423,24 @@ public class Analysis00_Common {
 							return Technique98_CONST.NO_METHOD;
 					}
 
+					if (keepCheckFLG){
+						
+						
+						nowKeepCodeDay= nowDTOList.get(i - 1).getNowDay_01();
+						nowPrice = nowDTOList.get(i - 1).getNowCLOSE_01();
+						nowAveragePrice = resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+					}
+
 				}
 
+				//売却できない株を持っている場合の平均取得価格-時価で評価損益を計算する
+				if ( keepCheckFLG ){
+					double keepStockResult = ( nowAveragePrice - nowPrice ) * resultDTO.getEntryTime() ;
+
+					resultDTO.setCodeKeepStockResult(keepStockResult);
+					resultDTO.setTotalKeepStockResult(keepStockResult);
+					resultDTO.setKeepCodeCout();
+				};
 
 				//銘柄の結果を出す
 				resultDTO.getResultCodeResult(code,paraDTO);

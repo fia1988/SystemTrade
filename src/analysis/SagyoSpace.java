@@ -81,7 +81,7 @@ public class SagyoSpace {
 		paraDTO.setEntryMoney(1.100);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
@@ -216,12 +216,83 @@ public class SagyoSpace {
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
-		String startDD	=	"2017-01-03";
+		String startDD	=	"2015-01-03";
 		String endDD		=	"2017-12-31";
 		shokisettei(paraDTO, nowDTO, resultDTO,false);
 		paraDTO.setCheckInvest(true);
 		String tec = "technique";
-		Analysis00_Common.Analysis_COMMON(tec,"Technique12","diviteCheck_1_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//		Analysis00_Common.Analysis_COMMON(tec,"Technique12","diviteCheck_1_L",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		List<String[]> methodList_L = new ArrayList<String[]>();
+		String methodName[] = new String[2];
+		methodName[0] = "Technique12";
+		methodName[1] = "diviteCheck_1_L";
+		methodList_L.add(methodName.clone());
+		
+		methodName[0] = "Technique12";
+		methodName[1] = "diviteCheck_2_L";
+		methodList_L.add(methodName.clone());
+
+		methodName[0] = "Technique12";
+		methodName[1] = "PBRCheck_1_L";
+		methodList_L.add(methodName.clone());
+		
+		methodName[0] = "Technique12";
+		methodName[1] = "PBRCheck_2_L";
+		methodList_L.add(methodName.clone());
+		 
+		methodName[0] = "Technique12";
+		methodName[1] = "PBRandDiviteCheck_1_L";
+		methodList_L.add(methodName.clone());
+		
+		methodName[0] = "Technique12";
+		methodName[1] = "PBRandDiviteCheck_2_L";
+		methodList_L.add(methodName.clone());
+		
+		methodName[0] = "Technique12";
+		methodName[1] = "PBRandDiviteCheck_3_L";
+		methodList_L.add(methodName.clone());
+		 
+		
+		List<String[]> methodList_S = new ArrayList<String[]>();
+		String methodNameS[] = new String[2];
+		methodNameS[0] = "Technique12";
+		methodNameS[1] = "averageCheck_1_S";
+		methodList_S.add(methodNameS.clone());
+		
+		methodNameS[0] = "Technique12";
+		methodNameS[1] = "averageCheck_2_S";
+		methodList_S.add(methodNameS.clone());
+		
+		methodNameS[0] = "Technique12";
+		methodNameS[1] = "averageCheck_3_S";
+		methodList_S.add(methodNameS.clone());
+
+
+
+		for (int b = 0 ;b < methodList_L.size() ; b++){
+			String L_CLASS = methodList_L.get(b)[0];
+			String L_METHOD = methodList_L.get(b)[1];
+			for (int c = 0 ;c < methodList_S.size() ; c++){
+				String S_CLASS = methodList_S.get(c)[0];
+				String S_METHOD = methodList_S.get(c)[1];
+				System.out.println("");
+
+				paraDTO = new Bean_Parameta();
+				resultDTO = new Bean_Result();
+				nowDTO = new Bean_nowRecord();
+				shokisettei(paraDTO, nowDTO, resultDTO,false);
+				paraDTO.setCheckInvest(true);
+				paraDTO.setMaxEntryTimes(30);
+				paraDTO.setCheckParaDTOOption(false);
+				resultDTO.setTotalGames(6);
+//				paraDTO.setOnEliteFLG();
+//				paraDTO.setOffEliteFLG();
+				if (!(L_METHOD.equals(S_METHOD))){
+					Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
+				}
+			}
+		}
 
 	}
 

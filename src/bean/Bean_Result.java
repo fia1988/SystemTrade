@@ -26,7 +26,47 @@ public class Bean_Result {
 	private String lastEntryDay = "";
 	private String lastExitDay = "";
 
+	//全銘柄の評価損益合計
+	double codeKeepStockResult = 0;
 
+	//個別銘柄毎の評価損益合計
+	double totalKeepStockResult = 0;
+
+	int keepCodeCout = 0;
+
+
+
+	public int getKeepCodeCout() {
+		return keepCodeCout;
+	}
+
+	public void setKeepCodeCout() {
+		this.keepCodeCout++;
+	}
+
+	public double getCodeKeepStockResult() {
+		return codeKeepStockResult;
+	}
+
+	public void reSetCodeKeepStockResult() {
+		this.codeKeepStockResult = 0;
+	}
+
+	public void setCodeKeepStockResult(double codeKeepStockResult) {
+		this.codeKeepStockResult = this.codeKeepStockResult + codeKeepStockResult;
+	}
+
+	public double getTotalKeepStockResult() {
+		return totalKeepStockResult;
+	}
+
+	public void resetTotalKeepStockResult() {
+		totalKeepStockResult = 0;
+	}
+
+	public void setTotalKeepStockResult(double totalKeepStockResult) {
+		this.totalKeepStockResult = this.totalKeepStockResult + totalKeepStockResult;
+	}
 
 	public String getLastEntryDay() {
 		return lastEntryDay;
@@ -713,6 +753,7 @@ public class Bean_Result {
 
 	public void getResultCodeResult(String resultCode,Bean_Parameta paraDTO){
 
+//		commonAP.writeInLog(paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + getCodeKeepStockResult() + " %", logWriting.CODE_SEPACON_ERR_LOG_FLG);
 		if( getResultCode() ){
 
 
@@ -771,6 +812,7 @@ public class Bean_Result {
 								commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("勝エントリー回数一覧：" + "・" + resultCode +"," + winList,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("負エントリー回数一覧：" + "・" + resultCode +"," + loseList,logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("保有できずの評価：" + resultCode +"," + getCodeKeepStockResult() + " %",logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeLog( elete ,logWriting.CODE_RESULT_LOG_FLG);
 								commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 								System.out.println("ここは通っている。レイシオ");
@@ -787,6 +829,7 @@ public class Bean_Result {
 							commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("勝エントリー回数一覧：" + "・" + resultCode +"," + winList,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("負エントリー回数一覧：" + "・" + resultCode +"," + loseList,logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("保有できずの評価：" + resultCode +"," + getCodeKeepStockResult(),logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 							//時刻,メソッド名,code
 							commonAP.writeLog( elete ,logWriting.CODE_RESULT_LOG_FLG);
@@ -868,6 +911,7 @@ public class Bean_Result {
 		reSetWinCount();
 		reSetLoseCount();
 		resetInterval();
+		reSetCodeKeepStockResult();
 		setMaxLossFLG(false);
 
 		if ( paraDTO.isDollCostFLG() ){
@@ -1240,6 +1284,7 @@ public class Bean_Result {
 				commonAP.writeInLog("トータル計：" + getTradeCount(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝％：" + getTotalWinParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() * 100 +  " %" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("売却できずの評価：" +  getTotalKeepStockResult() + " %",logWriting.BACKTEST_LOG_FLG);
 				double totalReturn = getTotalWinParcent() + getTotalLoseParcent();
 				commonAP.writeInLog("トータルリターン：" + ( ( totalReturn ) * 100 ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("リターンレイシオ：" + ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
@@ -1350,8 +1395,30 @@ public class Bean_Result {
 					commonAP.writeInLog("終了時期：" + paraDTO.getObEndDay() ,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("調査期間：" + paraDTO.getObTerm() + " 営業日",logWriting.BACKTEST_LOG_FLG);
 
-					String resultLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getTOTAL_WIN() + "," + getTOTAL_LOSE() + "," + ( getTotalWinParcent() * 100 ) + "," +  ( getTotalLoseParcent() * 100 ) + "," + (totalReturn*100) + "," + ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + "," + ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + "," + (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + "," + ( getWinKeepTimeAverage() ) + "," + getLoseKeepTimeAverage() + "," + getEntryTimeAverage() + "," + getWinEntryTimeAverage() + "," + getLoseEntryTimeAverage() + "," +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + ( (100) * (yearEarnMoney/needMoney) ) + "%";
-					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,一回辺りリターン,保有期間,勝ち保有期間,負け保有期間,平均E数,勝ちE数,負けE数,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利
+
+
+					String resultLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + ","
+										+ getTOTAL_WIN() + ","
+										+ getTOTAL_LOSE() + ","
+										+ ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) + ","
+										+ ( getTotalWinParcent() * 100 ) + ","
+										+ ( getTotalLoseParcent() * 100 ) + ","
+										+ (totalReturn*100) + ","
+										+ getTotalKeepStockResult() + ","
+										+ ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + ","
+										+ ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + ","
+										+ (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + ","
+										+ ( getWinKeepTimeAverage() ) + ","
+										+ getLoseKeepTimeAverage() + ","
+										+ getEntryTimeAverage() + ","
+										+ getWinEntryTimeAverage() + ","
+										+ getLoseEntryTimeAverage() + ","
+										+  (paraDTO.getTesuRYO()*100) + "%" + ","
+										+ dayRightUpTimes + ","
+										+ paraDTO.getMinDeki() + ","
+										+ needMoney + " 万円" + ","
+										+ ( (100) * (yearEarnMoney/needMoney) ) + "%";
+					//時刻,メソッド名,勝,負,売却できず,勝％,負％,トータルリターン,売却できずの評価,レイシオ,一回辺りリターン,保有期間,勝ち保有期間,負け保有期間,平均E数,勝ちE数,負けE数,手数料,一日辺りサイン点灯数,出来高中期移動平均線,必要資金,金利
 					commonAP.writeInLog(resultLetter,logWriting.CODE_RESULT_LIST_LOG_FLG);
 
 				}
@@ -1443,8 +1510,22 @@ public class Bean_Result {
 					commonAP.writeInLog("カット金利％　　　："  + cutKinriPer + " %"						,logWriting.BACKTEST_LOG_FLG);
 					commonAP.writeInLog("----------------ここまでドルコスト法--------------------"  ,logWriting.BACKTEST_LOG_FLG);
 
-					String resultDOLLCOSTLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + "," + getDollCostTotalWinCount() + "," + getDollCostTotalLoseCount() + "," + ( totalWinPer  ) + "," +  ( totalLosePer ) + "," + (totalResult) + "," + ( ( ( totalResult ) / ( ( totalWinPer ) ) ) ) + ","  +  (paraDTO.getTesuRYO()*100) + "%"  + "," + dayRightUpTimes + "," + paraDTO.getMinDeki() + "," + needMoney + " 万円" + "," + kinriPer + "%" + "," + (cutKinriPer ) + "%";
-					//時刻,メソッド名,勝,負,勝％,負％,トータルリターン,レイシオ,手数料,出来高中期移動平均線,必要資金,一日辺りサイン点灯数,金利,カット金利
+					String resultDOLLCOSTLetter =paraDTO.getObStartDay() + "_" + paraDTO.getObEndDay() + "_" + paraDTO.getLMETHOD() + "_" + paraDTO.getSMETHOD() + ","
+							+ getDollCostTotalWinCount() + ","
+							+ getDollCostTotalLoseCount()  + ","
+							+ ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() )  + ","
+							+ ( totalWinPer  ) + ","
+							+ ( totalLosePer ) + ","
+							+ (totalResult) + ","
+							+ getTotalKeepStockResult() + ","
+							+ ( ( ( totalResult ) / ( ( totalWinPer ) ) ) ) + ","
+							+  (paraDTO.getTesuRYO()*100) + "%"  + ","
+							+ dayRightUpTimes + ","
+							+ paraDTO.getMinDeki() + ","
+							+ needMoney + " 万円" + ","
+							+ kinriPer + "%" + ","
+							+ (cutKinriPer ) + "%";
+					//時刻,メソッド名,勝,負,売却できず,勝％,負％,トータルリターン,売却できずの評価,レイシオ,手数料,一日辺りサイン点灯数,出来高中期移動平均線,必要資金,金利,カット金利
 					commonAP.writeInLog(resultDOLLCOSTLetter,logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
 
 					commonAP.writeLog("-------" + paraDTO.getLMETHOD() +  "_" + paraDTO.getSMETHOD() + "-------" + "\r\n",logWriting.DOLLCOST_BACKTEST_LOG_FLG);
@@ -1463,7 +1544,7 @@ public class Bean_Result {
 
 
 		}
-
+		resetTotalKeepStockResult();
 		resetList();
 		reSetKeepCount();
 		reSetEntryTime();
