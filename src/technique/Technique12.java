@@ -172,27 +172,27 @@ public class Technique12 {
 
 
 		if (nowDTO.getPBR_REAL() > 5){
-			if (nowDTO.getPBR_REAL() > 2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 5 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 4.5 ){
-			if (nowDTO.getPBR_REAL() > 2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 4.5 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 4.0 ){
-			if (nowDTO.getPBR_REAL() > 2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 4.0 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 3.5 ){
-			if (nowDTO.getPBR_REAL() > 2.1){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2.1){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 3.5 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 3.0 ){
-			if (nowDTO.getPBR_REAL() > 2.2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2.2){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 3.0 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 2.5 ){
-			if (nowDTO.getPBR_REAL() > 2.5){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2.5){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 2.5 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 2.0 ){
-			if (nowDTO.getPBR_REAL() > 2.8){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 2.8){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 2.0 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 1.5 ){
-			if (nowDTO.getPBR_REAL() > 3.1){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 3.1){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 1.5 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 1.0 ){
-			if (nowDTO.getPBR_REAL() > 3.4){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 3.4){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 1.0 >= nowDTO.getPBR_REAL() && nowDTO.getPBR_REAL() > 0.5 ){
-			if (nowDTO.getPBR_REAL() > 3.7){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 3.7){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		} else if ( 0.5 >= nowDTO.getPBR_REAL() ){
-			if (nowDTO.getPBR_REAL() > 4){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
+			if (nowDTO.getDIVIDEND() > 4){return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);}
 		}
 
 

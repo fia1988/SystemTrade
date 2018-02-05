@@ -14,10 +14,15 @@ public class logWriting {
 	public static final int CODE_DOLLCOST_L_PRICE_LISTRESULT_LOG_FLG			= 5555;
 	public static final int CODE_RESULT_LIST_LOG_FLG	= 6;
 	public static final int CODE_DOLLCOTST_RESULT_LIST_LOG_FLG	= 66;
+
 	//分割併合ファイルのエラーログ
 	public static final int CODE_SEPACON_ERR_LOG_FLG	= 7;
 //	public static final int STOCK_RESULT_LOG_FLG_L		= 5;
 //	public static final int STOCK_RESULT_LOG_FLG_S		= 6;
+
+
+	//売却できず保有していた銘柄の評価益を表示する
+	public static final int KEEP_CODE_RESULT_LOG	= 8;
 
 	public static final String logKakutyousi = ".csv";
 }

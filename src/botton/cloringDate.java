@@ -853,7 +853,7 @@ public class cloringDate {
 			int m = now.get(now.MINUTE);     //分を取得
 			int second = now.get(now.SECOND);      //秒を取得
 
-			int baseHour = 16;
+			int baseHour = 17;
 			int baseMinitu = 20;
 
 			if ( h < baseHour ){

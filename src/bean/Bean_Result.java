@@ -34,7 +34,18 @@ public class Bean_Result {
 
 	int keepCodeCout = 0;
 
+	double newDivide = 0;
 
+
+
+
+	public double getNewDivide() {
+		return newDivide;
+	}
+
+	public void setNewDivide(double newDivide) {
+		this.newDivide = newDivide;
+	}
 
 	public int getKeepCodeCout() {
 		return keepCodeCout;
@@ -753,7 +764,28 @@ public class Bean_Result {
 
 	public void getResultCodeResult(String resultCode,Bean_Parameta paraDTO){
 
-//		commonAP.writeInLog(paraDTO.getLMETHOD() + "," + paraDTO.getSMETHOD() + "," + getCodeKeepStockResult() + " %", logWriting.CODE_SEPACON_ERR_LOG_FLG);
+		//売れずに保有していた場合にこれを出力する。
+		if (getCodeKeepStockResult()!=0){
+			String keepWord;
+			keepWord = paraDTO.getLMETHOD() + ","
+					+ paraDTO.getSMETHOD() + ","
+					+ resultCode + "," //code
+					+ paraDTO.getMaxEntryTimes() + "," //MAXエントリー
+					+ paraDTO.getMaxKeepDays() + "," //MAXキープデイ
+					+ getMaxInterValTime() + ","  //インターバルタイム
+					+ paraDTO.getMaxLoss() + ","  //損切ライン
+					+ getDollStockTotalPrice()  + "," //合計投資金額（単位：円）
+					+ getDollStockAveragePrice() + "," //平均取得価格（単位：円）
+					+ getDollTotalStockVolume()  + "," //合計購入株数
+					+ getKeepCount() +  ","  //保有期間
+					+ getNewDivide() + "," //1株あたり配当(最新履歴)
+					+ getCodeKeepStockResult() + " %"
+					+ "\r\n";
+			commonAP.writeLog(keepWord, logWriting.KEEP_CODE_RESULT_LOG);
+
+		}
+
+
 		if( getResultCode() ){
 
 

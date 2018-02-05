@@ -212,6 +212,9 @@ public class commonAP {
 			case logWriting.DOLLCOST_BACKTEST_LOG_FLG:
 				fileName = "CODE_DOLLCOST_backtestLog" + logWriting.logKakutyousi;
 				break;
+			case logWriting.KEEP_CODE_RESULT_LOG:
+				fileName = "KEEP_CODE_RESULT_LOG_" + writeType + logWriting.logKakutyousi;
+				break;
 			default:
 			break;
 		}

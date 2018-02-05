@@ -85,18 +85,20 @@ public class Technique00_Common {
 			try{
 				nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress + 1).getNowDay_01());
 				nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress + 1).getNowOpen_01() );
-
+				resultDTO.setNewDivide(nowDTOList.get(nowDTOadress + 1).getDIVIDEND());
 				return Technique98_CONST.TRADE_FLG;
 			}catch(ArrayIndexOutOfBoundsException e){
 				if ( paraDTO.getRealTimeMode() ){
 					nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
 					nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowOpen_01() );
+					resultDTO.setNewDivide(nowDTOList.get(nowDTOadress).getDIVIDEND());
 					return Technique98_CONST.TRADE_FLG;
 				}
 			}catch(IndexOutOfBoundsException a){
 				if ( paraDTO.getRealTimeMode() ){
 					nowDTO.setKessaiDay(nowDTOList.get(nowDTOadress).getNowDay_01());
 					nowDTO.setKessaiKingaku( nowDTOList.get(nowDTOadress).getNowOpen_01() );
+					resultDTO.setNewDivide(nowDTOList.get(nowDTOadress).getDIVIDEND());
 					return Technique98_CONST.TRADE_FLG;
 				}
 			}
@@ -302,7 +304,7 @@ public class Technique00_Common {
 		if ( paraDTO.getRealTimeMode() ){
 			//本番
 		}else{
-			
+
 			if ( paraDTO.isCheckParaDTOOption() ){
 				//バックテスト
 //				if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
@@ -311,7 +313,7 @@ public class Technique00_Common {
 
 				if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
 					return Technique98_CONST.NO_GAME;
-				}				
+				}
 			}
 
 		}
