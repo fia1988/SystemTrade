@@ -436,8 +436,8 @@ public class Analysis00_Common {
 
 				//売却できない株を持っている場合の平均取得価格-時価で評価損益を計算する
 				if ( keepCheckFLG ){
-					double keepStockResult = ( nowAveragePrice - nowPrice ) * resultDTO.getEntryTime() ;
-
+//					double keepStockResult = ( nowAveragePrice - nowPrice ) * resultDTO.getEntryTime() ;
+					double keepStockResult = ( resultDTO.getDollTotalStockVolume() * (resultDTO.getNewClose() - resultDTO.getDollStockAveragePrice() ) ) / ( paraDTO.getEntryMoney() * 10000);
 					resultDTO.setCodeKeepStockResult(keepStockResult);
 					resultDTO.setTotalKeepStockResult(keepStockResult);
 					resultDTO.setKeepCodeCout();
