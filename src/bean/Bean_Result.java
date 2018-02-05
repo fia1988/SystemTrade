@@ -35,9 +35,18 @@ public class Bean_Result {
 	int keepCodeCout = 0;
 
 	double newDivide = 0;
+	double newClose = 0;
 
 
 
+
+	public double getNewClose() {
+		return newClose;
+	}
+
+	public void setNewClose(double newClose) {
+		this.newClose = newClose;
+	}
 
 	public double getNewDivide() {
 		return newDivide;
@@ -776,10 +785,12 @@ public class Bean_Result {
 					+ paraDTO.getMaxLoss() + ","  //損切ライン
 					+ getDollStockTotalPrice()  + "," //合計投資金額（単位：円）
 					+ getDollStockAveragePrice() + "," //平均取得価格（単位：円）
+					+ getNewClose() + "," //現在価格（単位：円）
 					+ getDollTotalStockVolume()  + "," //合計購入株数
 					+ getKeepCount() +  ","  //保有期間
 					+ getNewDivide() + "," //1株あたり配当(最新履歴)
-					+ getCodeKeepStockResult() + " %"
+					+ ( getDollTotalStockVolume() * (getNewClose() - getDollStockAveragePrice() ) ) / ( paraDTO.getEntryMoney() * 10000) + " %"
+//					+ getCodeKeepStockResult() + " %"
 					+ "\r\n";
 			commonAP.writeLog(keepWord, logWriting.KEEP_CODE_RESULT_LOG);
 

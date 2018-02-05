@@ -424,8 +424,9 @@ public class Analysis00_Common {
 					}
 
 					if (keepCheckFLG){
-						
-						
+
+						resultDTO.setNewDivide(nowDTOList.get(i - 1).getDIVIDEND());
+						resultDTO.setNewClose(nowDTOList.get(i - 1).getNowCLOSE_01());
 						nowKeepCodeDay= nowDTOList.get(i - 1).getNowDay_01();
 						nowPrice = nowDTOList.get(i - 1).getNowCLOSE_01();
 						nowAveragePrice = resultDTO.getNowAveragePrice(paraDTO, nowDTO);
