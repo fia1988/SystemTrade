@@ -251,7 +251,7 @@ public class Technique12 {
 			}
 		}
 		//昨日までの平均取得価格
-		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+		double nowAvePrice=resultDTO.getDollStockAveragePrice();
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
 
 		if (nowResult >= 1.1 ){
@@ -290,7 +290,7 @@ public class Technique12 {
 			}
 		}
 		//昨日までの平均取得価格
-		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+		double nowAvePrice=resultDTO.getDollStockAveragePrice();
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
 
 		if (nowResult >= 1.2 ){
@@ -329,7 +329,7 @@ public class Technique12 {
 			}
 		}
 		//昨日までの平均取得価格
-		double nowAvePrice=resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+		double nowAvePrice=resultDTO.getDollStockAveragePrice();
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
 
 		if (nowResult >= 1.3 ){

@@ -89,7 +89,8 @@ public class Technique08 {
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
 
-
+		
+		
 		if ( judge ) {
 			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
 		}else{
@@ -117,6 +118,7 @@ public class Technique08 {
 			}
 
 		};
+
 		return Technique98_CONST.NO_GAME;
 	}
 

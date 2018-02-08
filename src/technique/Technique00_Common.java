@@ -205,7 +205,6 @@ public class Technique00_Common {
 //	        }
 //		}
 
-
 		if ( paraDTO.getRealTimeMode() ){
 			//本番
 
@@ -226,8 +225,6 @@ public class Technique00_Common {
 		if (resultDTO.getEntryTime() >= paraDTO.getMaxEntryTimes()){
 			return Technique98_CONST.NO_GAME;
 		}
-
-
 
 		//取引量の少ない銘柄は計算しない
 		if (nowDTOList.get(nowDTOadress).getNowMIDDLEIDO_DEKI_01() < paraDTO.getMinDeki()	){
@@ -307,7 +304,13 @@ public class Technique00_Common {
 //				if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
 //					return Technique98_CONST.NO_GAME;
 //				}
+				if (nowDTO.getCode_01().equals("4578")){
 
+					System.out.println("");
+					System.out.println("C:" + nowDTO.getNowDay_01() + ":" + nowDTO.getCode_01() );
+					System.out.println("");	
+				}
+				
 				if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
 					return Technique98_CONST.NO_GAME;
 				}

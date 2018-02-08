@@ -52,6 +52,7 @@ public class SagyoSpace {
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
 			paraDTO.setCheckParaDTOOption(true);
+			paraDTO.setCheckParaDTOOption(false);
 		}
 
 		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
@@ -81,7 +82,7 @@ public class SagyoSpace {
 		paraDTO.setEntryMoney(1.100);
 		//エリートフラグ
 		paraDTO.setOffEliteFLG();
-//		paraDTO.setOnEliteFLG();
+		paraDTO.setOnEliteFLG();
 //		paraDTO.setCheckCate(ReCord.CODE_01_STOCK);
 		paraDTO.setMaxEntryTimes(30);
 //		paraDTO.setMaxKeepDays(5);
@@ -285,7 +286,7 @@ public class SagyoSpace {
 				paraDTO.setCheckInvest(true);
 				paraDTO.setMaxEntryTimes(30);
 				paraDTO.setCheckParaDTOOption(true);
-				paraDTO.setCheckParaDTOOption(false);
+//				paraDTO.setCheckParaDTOOption(false);
 				resultDTO.setTotalGames(1);
 //				paraDTO.setOnEliteFLG();
 				paraDTO.setOffEliteFLG();
@@ -298,7 +299,6 @@ public class SagyoSpace {
 	}
 
 
-
 	public static void testCase9999(){
 		//連続取引するエリートの全メソッドの一覧を作る
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -307,8 +307,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2017-12-31";
-//		startDD	=	"2017-08-29";
-//		endDD		=	"2017-10-13";
+		startDD	=	"2018-02-07";
+		endDD		=	"2018-02-09";
 //		startDD	=	"2007-01-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート

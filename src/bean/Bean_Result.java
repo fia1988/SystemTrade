@@ -1323,7 +1323,8 @@ public class Bean_Result {
 				commonAP.writeInLog("Sメソッド：" + paraDTO.getSMETHOD() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝：" + getTOTAL_WIN(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負：" + getTOTAL_LOSE(),logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("売却できず：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("売却できず1：" + ( getTradeCount() - getTOTAL_WIN() - getTOTAL_LOSE() ) ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("売却できず2：" + getKeepCodeCout() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル計：" + getTradeCount(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝％：" + getTotalWinParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() * 100 +  " %" ,logWriting.BACKTEST_LOG_FLG);
@@ -1673,7 +1674,7 @@ public class Bean_Result {
 		return realAveregePrice;
 	}
 
-	//一応nowDTOも入れているが必要なさそう
+//	//一応nowDTOも入れているが必要なさそう
 	public double getNowAveragePrice(Bean_Parameta paraDTO,Bean_nowRecord nowDTO){
 
 		double nowAvePrice;
