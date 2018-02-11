@@ -35,24 +35,27 @@ public class SagyoSpace {
 			//このなか本番
 			paraDTO.setRealTimeMode(true);
 
-			//インヴェストテーブル使う
+			//インヴェストテーブル使う(配当とかそういうこと)
 			paraDTO.setCheckInvest(true);
 
 
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
-
+			paraDTO.setCheckParaDTOOption(true);
+			//ここをfalseにすると財務諸表データ使わなくなる
+			paraDTO.setCheckParaDTOOption(false);
 
 		}else{
 			//この中試験用
 			paraDTO.setRealTimeMode(false);
 
-//			//インヴェストテーブル使う
+			//インヴェストテーブル使う(配当とかそういうこと)
 //			paraDTO.setCheckInvest(true);
 			//財務諸表データとか使う
 			paraDTO.setMonthYearDateFLG(true);
 			paraDTO.setCheckParaDTOOption(true);
-			paraDTO.setCheckParaDTOOption(false);
+			//ここをfalseにすると財務諸表データ使わなくなる
+//			paraDTO.setCheckParaDTOOption(false);
 		}
 
 		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
@@ -286,10 +289,10 @@ public class SagyoSpace {
 				paraDTO.setCheckInvest(true);
 				paraDTO.setMaxEntryTimes(30);
 				paraDTO.setCheckParaDTOOption(true);
-//				paraDTO.setCheckParaDTOOption(false);
+				paraDTO.setCheckParaDTOOption(false);
 				resultDTO.setTotalGames(1);
-//				paraDTO.setOnEliteFLG();
-				paraDTO.setOffEliteFLG();
+				paraDTO.setOnEliteFLG();
+//				paraDTO.setOffEliteFLG();
 				if (!(L_METHOD.equals(S_METHOD))){
 					Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
 				}
@@ -306,7 +309,7 @@ public class SagyoSpace {
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
 		String startDD	=	"2007-01-03";
-		String endDD		=	"2017-12-31";
+		String endDD		=	"2008-12-31";
 		startDD	=	"2018-02-07";
 		endDD		=	"2018-02-09";
 //		startDD	=	"2007-01-04";

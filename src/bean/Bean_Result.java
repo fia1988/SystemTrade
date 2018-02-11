@@ -778,6 +778,7 @@ public class Bean_Result {
 			String keepWord;
 			keepWord = paraDTO.getLMETHOD() + ","
 					+ paraDTO.getSMETHOD() + ","
+					+ paraDTO.getTermType() + ","
 					+ resultCode + "," //code
 					+ paraDTO.getMaxEntryTimes() + "," //MAXエントリー
 					+ paraDTO.getMaxKeepDays() + "," //MAXキープデイ
@@ -789,7 +790,7 @@ public class Bean_Result {
 					+ getDollTotalStockVolume()  + "," //合計購入株数
 					+ getKeepCount() +  ","  //保有期間
 					+ getNewDivide() + "," //1株あたり配当(最新履歴)
-					+ ( getDollTotalStockVolume() * (getNewClose() - getDollStockAveragePrice() ) ) / ( paraDTO.getEntryMoney() * 10000) + " %"
+					+ ( ( getDollTotalStockVolume() * (getNewClose() - getDollStockAveragePrice() ) ) / ( paraDTO.getEntryMoney() * 10000) ) * 100  + " %" //*100するかも
 //					+ getCodeKeepStockResult() + " %"
 					+ "\r\n";
 			commonAP.writeLog(keepWord, logWriting.KEEP_CODE_RESULT_LOG);
@@ -1319,6 +1320,9 @@ public class Bean_Result {
 				double getCutAveRisk = commonAP.getDev(getReturnList(),		true,	half,half);
 
 				commonAP.writeInLog("" ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("エリートの有無：" + paraDTO.getEliteFLG(true) ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("配当とかの情報(investFLG)：" + paraDTO.isCheckInvest() ,logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("財務情報データの利用有無(truetrueなら使ってる)：" + paraDTO.isMonthYearDateFLG() + "," + paraDTO.isCheckParaDTOOption() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("Lメソッド：" + paraDTO.getLMETHOD() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("Sメソッド：" + paraDTO.getSMETHOD() ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝：" + getTOTAL_WIN(),logWriting.BACKTEST_LOG_FLG);

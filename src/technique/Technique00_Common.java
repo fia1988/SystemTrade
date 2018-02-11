@@ -304,12 +304,6 @@ public class Technique00_Common {
 //				if ( checkFinanchaiData_HISTRY_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
 //					return Technique98_CONST.NO_GAME;
 //				}
-				if (nowDTO.getCode_01().equals("4578")){
-
-					System.out.println("");
-					System.out.println("C:" + nowDTO.getNowDay_01() + ":" + nowDTO.getCode_01() );
-					System.out.println("");	
-				}
 				
 				if ( checkFinanchaiData_SAISHIN_DATA(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) == Technique98_CONST.NO_GAME){
 					return Technique98_CONST.NO_GAME;

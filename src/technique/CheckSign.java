@@ -79,6 +79,20 @@ public class CheckSign {
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC13, TechCon.CODE9468_L,	TechCon.PAC01,TechCon.TEC13,TechCon.CODE9468_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+
+
+
 
 		s.resetConnection();
 		TODAY = controllDay.getMAX_DD_STOCK_ETF(s);
@@ -109,16 +123,21 @@ public class CheckSign {
 //		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0	,7.5,s);
 //		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L	,8.5,s);
 
-//
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L_OVER0,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC04, TechCon.METH_MACD_M_L,			TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_1_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC06, TechCon.METH_IDO_HEKIN_3_S,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC08, TechCon.METH_MACD_IDOHEIKIN_L,	TechCon.PAC01,TechCon.TEC06,TechCon.METH_IDO_HEKIN_2_L,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-//
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC13, TechCon.CODE9468_L,	TechCon.PAC01,TechCon.TEC13,TechCon.CODE9468_S	,11.8,s);
+
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S	,11.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S	,12.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S	,13.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S	,14.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S	,15.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S	,16.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S	,17.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S	,18.8,s);
+		setEleteMethodUpdate("DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S	,19.8,s);
+
+
+
+
 
 
 	}
