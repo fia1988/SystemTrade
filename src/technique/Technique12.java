@@ -251,7 +251,14 @@ public class Technique12 {
 			}
 		}
 		//昨日までの平均取得価格
-		double nowAvePrice=resultDTO.getDollStockAveragePrice();
+		double nowAvePrice;
+		if ( paraDTO.getRealTimeMode()==false ){
+			//この中はバックテストモード
+			nowAvePrice = resultDTO.getDollStockAveragePrice();
+		}else{
+			nowAvePrice = resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+//			System.out.println(nowAvePrice);
+		}
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
 
 		if (nowResult >= 1.1 ){
@@ -290,7 +297,14 @@ public class Technique12 {
 			}
 		}
 		//昨日までの平均取得価格
-		double nowAvePrice=resultDTO.getDollStockAveragePrice();
+		double nowAvePrice;
+		if ( paraDTO.getRealTimeMode()==false ){
+			//この中はバックテストモード
+			nowAvePrice = resultDTO.getDollStockAveragePrice();
+		}else{
+			nowAvePrice = resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+		}
+
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
 
 		if (nowResult >= 1.2 ){
@@ -329,7 +343,13 @@ public class Technique12 {
 			}
 		}
 		//昨日までの平均取得価格
-		double nowAvePrice=resultDTO.getDollStockAveragePrice();
+		double nowAvePrice;
+		if ( paraDTO.getRealTimeMode()==false ){
+			//この中はバックテストモード
+			nowAvePrice = resultDTO.getDollStockAveragePrice();
+		}else{
+			nowAvePrice = resultDTO.getNowAveragePrice(paraDTO, nowDTO);
+		}
 		double nowResult = ( nowPrice - nowAvePrice ) / nowAvePrice;
 
 		if (nowResult >= 1.3 ){

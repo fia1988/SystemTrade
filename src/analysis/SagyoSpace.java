@@ -55,7 +55,7 @@ public class SagyoSpace {
 			paraDTO.setMonthYearDateFLG(true);
 			paraDTO.setCheckParaDTOOption(true);
 			//ここをfalseにすると財務諸表データ使わなくなる
-//			paraDTO.setCheckParaDTOOption(false);
+			paraDTO.setCheckParaDTOOption(false);
 		}
 
 		//買いサインが連続して出た時、連続して買うかどうかを判断。true:連続、false連続しない。
@@ -222,6 +222,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2015-01-03";
 		String endDD		=	"2017-12-31";
+		startDD	=	"2018-02-14";
+		endDD		=	"2018-02-28";
 		shokisettei(paraDTO, nowDTO, resultDTO,false);
 		paraDTO.setCheckInvest(true);
 		String tec = "technique";
@@ -311,7 +313,7 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2008-12-31";
 		startDD	=	"2018-02-07";
-		endDD		=	"2018-02-09";
+		endDD		=	"2018-02-16";
 //		startDD	=	"2007-01-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート

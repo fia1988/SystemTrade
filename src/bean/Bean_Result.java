@@ -278,7 +278,8 @@ public class Bean_Result {
 
 	//ドルコストにおける平均取得価格
 	public double getDollStockAveragePrice(){
-		double getResult = getDollStockTotalPrice() / getDollTotalStockVolume();
+		double getResult = 0;
+		getResult = getDollStockTotalPrice() / getDollTotalStockVolume();
 		return getResult;
 	}
 
@@ -353,7 +354,15 @@ public class Bean_Result {
 //		};
 
 		if (getLastEntryDay().equals(getLastExitDay())){
-			dollerStockVolume.remove(dollerStockVolume.size()-1);
+
+			try{
+				dollerStockVolume.remove(dollerStockVolume.size()-1);
+			}catch (Exception e){
+				System.out.println(dollerStockVolume.size());
+				System.out.println(code);
+				System.out.println(getLastExitDay());
+				System.out.println(getLastEntryDay());
+			}
 		}
 		//一度LastExitDayを参照すると、後には使用しないためここで塗りつぶす。
 		setLastExitDay("");
