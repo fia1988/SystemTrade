@@ -215,6 +215,7 @@ public class SagyoSpace {
 	}
 
 	public static void testCase9998(){
+		//v5.0で作った割安株とか配当とかを考慮したやつ
 		//連続取引するエリートの全メソッドの一覧を作る
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
@@ -305,6 +306,7 @@ public class SagyoSpace {
 
 
 	public static void testCase9999(){
+		//基本８手法
 		//連続取引するエリートの全メソッドの一覧を作る
 		Bean_Parameta paraDTO = new Bean_Parameta();
 		Bean_Result resultDTO = new Bean_Result();
@@ -313,7 +315,7 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2008-12-31";
 		startDD	=	"2018-02-07";
-		endDD		=	"2018-02-16";
+		endDD		=	"2018-02-28";
 //		startDD	=	"2007-01-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート
