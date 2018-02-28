@@ -1122,14 +1122,17 @@ public class cloringDate {
 					+ COLUMN.LONG_MACD_SIGNAL						 + " , " //長期MACDシグナル線
 					+ " from "
 					+ TBL_Name.ETF_DD
-					+ " where " + COLUMN.CODE + "'" + ReCord.MARKET_CODE_1306 + "'";
+					+ " where " + COLUMN.CODE + " = " + "'" + ReCord.MARKET_CODE_1306 + "'";
 
 //		deleteRecord = s.sqlGetter().executeUpdate(SQL);
 //		インサート
 		try {
 			int addRecord = s.sqlGetter().executeUpdate(SQL);
-			System.out.println("calculateCAPM():" + SQL);
-		} catch (SQLException e) {		}
+//			System.out.println("calculateCAPM():" + SQL);
+		} catch (SQLException e) {
+			commonAP.writeInLog("insertMarketTBL：" + SQL,logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInErrLog(e);
+		}
 
 		s.closeConection();
 

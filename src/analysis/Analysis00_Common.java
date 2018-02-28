@@ -524,18 +524,22 @@ public class Analysis00_Common {
 
 
 						WHERE = " where "
-								+ ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " is not null and "
-								+ ReCord.MARKET_LETTER + "." + COLUMN.CODE + " = '" + ReCord.MARKET_CODE_1306 + "' "
+								+ ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " is not null  "
+								+ " and "
+								+ ReCord.MARKET_LETTER + "." + COLUMN.CODE + " = '" + ReCord.MARKET_CODE_1306 + "'"
+								+ " and "
 								+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
 
 					}else{
 						WHERE = " where "
-							+	ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
+								+ ReCord.MARKET_LETTER + "." + COLUMN.CODE + " = '" + ReCord.MARKET_CODE_1306 + "'"
+								+ " and "
+								+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
 					}
 
 					SQL = SQL + LEFT_JOIN + WHERE;
-					
-				System.out.println("makekabuSQLabcccccc:"+SQL);
+
+//				System.out.println("makekabuSQLabcccccc:"+SQL);
 //				SQL = " select * from "
 //						+	SQLChecker.getTBL(cate) + " " + ReCord.STOCK_TBK_DD_A + " "
 //
