@@ -72,7 +72,6 @@ public class insertHesoGomaFile {
 				insertCodeList	(B_B.getList_CSVtoDTO(),mainDTO,filePath,TODAY,updateColumn,TBL,s);
 				break;
 			case ReCord.CODE_HESO_01_STOCK:
-//				insertKariFileToTBLandKariFileDelete	(mainDTO,filePath,TODAY,updateColumn,TBL,kariFilePath,cate,s);
 				insertStock(B_B.getList_CSVtoDTO(), mainDTO, kariFilePath, TODAY, updateColumn, TBL, s);
 				break;
 			case ReCord.CODE_HESO_02_INVEST:
@@ -95,7 +94,7 @@ public class insertHesoGomaFile {
 //				updateZenzituhi(TBL,cate,TODAY,lastUpDateDay,s);
 				break;
 			case  ReCord.CODE_HESO_07_ETF:
-//				updateZenzituhi(TBL,cate,TODAY,lastUpDateDay,s);
+				insertETF(B_B.getList_CSVtoDTO(), mainDTO, kariFilePath, TODAY, updateColumn, TBL, s);
 				break;
 			default:
 				commonAP.writeInLog("insertHesoGomaFileControllerのcateがおかしい:" + cate,logWriting.DATEDATE_LOG_FLG);
@@ -167,6 +166,10 @@ public class insertHesoGomaFile {
 				replaceRecord = replaceRecord.replaceAll("\"-\"","\\\\N");
 				replaceRecord = replaceRecord.replaceAll("\\+","");
 				break;
+			case  ReCord.CODE_HESO_07_ETF:
+				//DTOにするときに"-"は"0"になって"0"の時は前日比が入る
+				replaceRecord = replaceRecord.replaceAll("\"-\"","");
+				break;
 			default:
 				break;
 		}
@@ -197,6 +200,11 @@ public class insertHesoGomaFile {
 	private void insertCodeList(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
 		InsertList BBB = new InsertList();
 		BBB.hesoGomaInsertList_Day(DTO, s);
+	}
+
+	private void insertETF(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){
+		InsertDay i_d = new InsertDay();
+		i_d.hesoGomaInsertDD(DTO, s);
 	}
 
 	private void insertStock(List<Bean_CodeList> DTO,TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,S s){

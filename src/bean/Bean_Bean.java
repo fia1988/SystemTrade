@@ -101,6 +101,9 @@ public class Bean_Bean {
 			case  ReCord.CODE_HESO_05_CREDIT:
 				makingKariFile		(listCSV, DAY, 1, cate,kariFilePath);
 				break;
+			case  ReCord.CODE_HESO_07_ETF:
+				hesoGomaETF		(listCSV, DAY, 1, cate);
+				break;
 			default:
 				break;
 		}
@@ -208,6 +211,32 @@ public class Bean_Bean {
 		for(int i = skipLine;i<listCSV.size();i++){
 			B_C = new Bean_CodeList();
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+		}
+		B_C = new Bean_CodeList();
+	}
+
+	private void hesoGomaETF(List<String> listCSV,String DAY,int skipLine,String cate){
+		Bean_CodeList B_C = new Bean_CodeList();
+		for(int i = skipLine;i<listCSV.size();i++){
+			B_C = new Bean_CodeList();
+			String[] listCSV_SPRIT = listCSV.get(i).split(",");
+
+			B_C.setDay					(DAY);
+			B_C.setCode			(listCSV_SPRIT[0]);
+			B_C.setCodeName		(listCSV_SPRIT[1]);
+			B_C.setMarket		(listCSV_SPRIT[2]);
+			B_C.setCategory		(listCSV_SPRIT[3]);
+			B_C.setOpen			(listCSV_SPRIT[9]);
+			B_C.setMax			(listCSV_SPRIT[10]);
+			B_C.setMin			(listCSV_SPRIT[11]);
+			B_C.setClose		(listCSV_SPRIT[5]);
+			B_C.setDeki			(listCSV_SPRIT[12]);
+			B_C.setBaybay		(listCSV_SPRIT[13] + "000");
+			B_C.setCatelfg(cate);
+
+			B_Cs.add(B_C);
+
+
 		}
 		B_C = new Bean_CodeList();
 	}

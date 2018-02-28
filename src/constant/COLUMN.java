@@ -950,4 +950,70 @@ public class COLUMN {
 
 
 
+	//ここからは資本コストを計算する
+	//(個別銘柄リターンとTOPIXリターンの共分散)/(TOPIXの分散)
+	public static String BETA					= "BETA";
+	public static String BETA_KATA				= BETA + " double  ";
+	//ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)
+	public static String Certainty_FOR_BETA					= "Certainty_FOR_beta";
+	public static String Certainty_FOR_BETA_KATA				= Certainty_FOR_BETA + " double  ";
+	//直近の信頼度の平均
+	public static String Certainty_FOR_BETA_AVE					= "Certainty_FOR_beta_ave";
+	public static String Certainty_FOR_BETA_AVE_KATA				= Certainty_FOR_BETA_AVE + " double  ";
+	//過去データの基づく理論上リターン
+	public static String RETURN_FOR_BETA					= "RETURN_FOR_BETA";
+	public static String RETURN_FOR_BETA_KATA				= RETURN_FOR_BETA + " double  ";
+	//過去データの基づく理論上リターンの平均
+	public static String RETURN_FOR_BETA_AVE					= "RETURN_FOR_BETA_AVE";
+	public static String RETURN_FOR_BETA_AVE_KATA				= RETURN_FOR_BETA_AVE + " double  ";
+	//標準偏差
+	public static String RISK_FOR_BETA					= "risk_FOR_beta";
+	public static String RISK_FOR_BETA_KATA				= RISK_FOR_BETA + " double  ";
+	//標準偏差の平均
+	public static String RISK_FOR_BETA_AVE					= "risk_FOR_beta_AVE";
+	public static String RISK_FOR_BETA_AVE_KATA				= RISK_FOR_BETA_AVE + " double  ";
+	//分散
+	public static String RISK_Squaring_FOR_BETA					= "risk_Squaring_FOR_beta";
+	public static String RISK_Squaring_FOR_BETA_KATA				= RISK_Squaring_FOR_BETA + " double  ";
+
+	//過去データの基づく理論上リターン
+	public static String MARKET_RETURN_FOR_BETA					= "MARKET_RETURN_FOR_BETA";
+	public static String MARKET_RETURN_FOR_BETA_KATA				= MARKET_RETURN_FOR_BETA + " double  ";
+	//過去データの基づく理論上リターンの平均
+	public static String MARKET_RETURN_FOR_BETA_AVE					= "MARKET_RETURN_FOR_BETA_AVE";
+	public static String MARKET_RETURN_FOR_BETA_AVE_KATA				= MARKET_RETURN_FOR_BETA_AVE + " double  ";
+	//標準偏差
+	public static String MARKET_RISK_FOR_BETA					= "MARKET_risk_FOR_beta";
+	public static String MARKET_RISK_FOR_BETA_KATA				= MARKET_RISK_FOR_BETA + " double  ";
+	//標準偏差の平均
+	public static String MARKET_RISK_FOR_BETA_AVE					= "MARKET_risk_FOR_beta_AVE";
+	public static String MARKET_RISK_FOR_BETA_AVE_KATA				= MARKET_RISK_FOR_BETA_AVE + " double  ";
+	//分散
+	public static String MARKET_RISK_Squaring_FOR_BETA					= "MARKET_risk_Squaring_FOR_beta";
+	public static String MARKET_RISK_Squaring_FOR_BETA_KATA				= MARKET_RISK_Squaring_FOR_BETA + " double  ";
+	//リスクフリーレート
+	public static String RISK_FREE_RATE					= "RISK_FREE_RATE";
+	public static String RISK_FREE_RATE_KATA				= RISK_FREE_RATE + " double  ";
+	//マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）
+	public static String MARKET_RISK_PREMIUM					= "MARKET_RISK_PREMIUM";
+	public static String MARKET_RISK_PREMIUM_KATA				= MARKET_RISK_PREMIUM + " double  ";
+	//マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）_平均
+	public static String MARKET_RISK_PREMIUM_AVE					= "MARKET_RISK_PREMIUM_AVE";
+	public static String MARKET_RISK_PREMIUM_AVE_KATA				= MARKET_RISK_PREMIUM_AVE + " double  ";
+	//CAPM
+	public static String CAPM					= "CAPM";
+	public static String CAPM_KATA				= CAPM + " double  ";
+	//CAPM_平均
+	public static String CAPM_AVE					= "CAPM_AVE";
+	public static String CAPM_AVE_KATA				= CAPM_AVE + " double  ";
+	//WACC
+	public static String WACC					= "WACC";
+	public static String WACC_KATA				= WACC + " double  ";
+	//WACC_平均
+	public static String WACC_AVE					= "WACC_AVE";
+	public static String WACC_AVE_KATA				= WACC_AVE + " double  ";
+
+//	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
+//	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
+
 }

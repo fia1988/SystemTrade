@@ -44,10 +44,145 @@ public class createTBL {
 		createINVEST_SIHYO_TBL(s);
 //		createVolumeUnitListTBL(s);
 		createFORRIGN_RATIO_TBL(s);
+		createMARKET_DD_TBL(s);
 		createCREDIT_WW_TBL(s);
 		return createLastOrderTable(s);
 	}
 
+
+	private void createMARKET_DD_TBL(S s){
+		//SQL全文
+				String SQL;
+				//列名の取得
+				String colum;
+
+				//SQL文の取得
+				String create = "create table ";
+
+				colum = "("
+//						+ "id MEDIUMINT AUTO_INCREMENT," //ID
+						+ COLUMN.CODE_KATA									 + " , " //銘柄名
+						+ COLUMN.DAYTIME_KATA								 + " , " //日付
+						+ COLUMN.OPEN_KATA									 + " , " //始値
+						+ COLUMN.MAX_KATA									 + " , " //最高値
+						+ COLUMN.MIN_KATA									 + " , " //最安値
+						+ COLUMN.CLOSE_KATA									 + " , " //終値
+						+ COLUMN.DEKI_KATA									 + " , " //出来高
+						+ COLUMN.BAYBAY_KATA								 + " , " //売買代金
+						//+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
+						//+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
+						//+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
+//						+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
+//						+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
+//						+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
+//						+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
+						+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
+						+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
+						+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
+						+ COLUMN.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
+						+ COLUMN.LONGIDO_KATA								 + " , " //株価長期間移動平均線
+						+ COLUMN.SHORTIDO_CHANGERATE_KATA					 + " , " //株価短期間移動平均線前日比
+						+ COLUMN.MIDDLEIDO_CHANGERATE_KATA					 + " , " //株価中期間移動平均線前日比
+						+ COLUMN.LONGIDO_CHANGERATE_KATA					 + " , " //株価長期間移動平均線前日比
+						+ COLUMN.SHORTIDO_RATIO_KATA						 + " , " //株価短期間移動平均線前日比率
+						+ COLUMN.MIDDLEIDO_RATIO_KATA						 + " , " //株価中期間移動平均線前日比率
+						+ COLUMN.LONGIDO_RATIO_KATA							 + " , " //株価長期間移動平均線前日比率
+						+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
+						+ COLUMN.MAXMINRATIO_KATA							 + " , " //（1-最安値)/最高値
+						+ COLUMN.CANDLE_AREA_KATA							 + " , " //ローソク足の面積
+						+ COLUMN.CANDLE_AREA_SCALE_KATA						 + " , " //ひげの長さと比較したローソク足面積の比率
+						+ COLUMN.WINDOW_KATA								 + " , " //前日の終値-今日の始値
+						+ COLUMN.DEKI_CHANGERATE_KATA						 + " , " //出来高前日比
+						+ COLUMN.DEKI_RATIO_KATA							 + " , " //出来高前日比率
+						+ COLUMN.BAYBAY_CHANGERATE_KATA						 + " , " //売買代金前日比
+						+ COLUMN.BAYBAY_RATIO_KATA							 + " , " //売買代金前日比率
+						+ COLUMN.SHORTIDO_DEKI_KATA							 + " , " //出来高短期移動平均線
+						+ COLUMN.MIDDLEIDO_DEKI_KATA						 + " , " //出来高中期移動平均線
+						+ COLUMN.LONGIDO_DEKI_KATA							 + " , " //出来高長期移動平均線
+						+ COLUMN.SHORTIDO_DEKI_CHANGERATE_KATA				 + " , " //出来高短期移動平均線前日比
+						+ COLUMN.MIDDLEIDO_DEKI_CHANGERATE_KATA				 + " , " //出来高中期移動平均線前日比
+						+ COLUMN.LONGIDO_DEKI_CHANGERATE_KATA				 + " , " //出来高長期移動平均線前日比
+						+ COLUMN.SHORTIDO_DEKI_RATIO_KATA					 + " , " //出来高短期間移動平均線前日比率
+						+ COLUMN.MIDDLEIDO_DEKI_RATIO_KATA					 + " , " //出来高中期移動平均線前日比率
+						+ COLUMN.LONGIDO_DEKI_RATIO_KATA					 + " , " //出来高長期移動平均線前日比率
+						+ COLUMN.SHORTIDO_BAYBAY_KATA						 + " , " //売買代金短期移動平均線
+						+ COLUMN.MIDDLEIDO_BAYBAY_KATA						 + " , " //売買代金中期移動平均線
+						+ COLUMN.LONGIDO_BAYBAY_KATA						 + " , " //売買代金長期移動平均線
+						+ COLUMN.SHORTIDO_BAYBAY_CHANGERATE_KATA			 + " , " //売買代金短期間移動平均線前日比
+						+ COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE_KATA			 + " , " //売買代金中期間移動平均線前日比
+						+ COLUMN.LONGIDO_BAYBAY_CHANGERATE_KATA				 + " , " //売買代金長期移動平均線前日比
+						+ COLUMN.SHORTIDO_BAYBAY_RATIO_KATA					 + " , " //売買代金短期間移動平均線前日比率
+						+ COLUMN.MIDDLEIDO_BAYBAY_RATIO_KATA				 + " , " //売買代金中期間移動平均線前日比率
+						+ COLUMN.LONGIDO_BAYBAY_RATIO_KATA					 + " , " //売買代金長期移動平均線前日比率
+						+ COLUMN.CREDIT_LONG_KATA							 + " , " //信用買い残
+						+ COLUMN.CREDIT_SHORT_KATA							 + " , " //信用売り残
+						+ COLUMN.CREDIT_RATIO_KATA							 + " , " //信用倍率＝信用買い残÷信用売り残
+						+ COLUMN.CREDIT_LONG_CHANGERATE_KATA				 + " , " //信用買い残前日比
+						+ COLUMN.CREDIT_SHORT_CHANGERATE_KATA				 + " , " //信用売り残前日比
+						+ COLUMN.CREDIT_RATIO_CHANGERATE_KATA				 + " , " //信用倍率前日比
+						+ COLUMN.SHORT_DEV_KATA								 + " , " //短期間の標準偏差（シグマ）
+						+ COLUMN.SHORT_NOW_SIGMA_KATA						 + " , " //短期間内で今日の終値がシグマと比較して何パーセント上か。
+						+ COLUMN.SHORT_1_H_SIGMA_KATA						 + " , " //短期間でのシグマ１
+						+ COLUMN.SHORT_1_L_SIGMA_KATA						 + " , " //短期間でのマイナスシグマ１
+						+ COLUMN.SHORT_2_H_SIGMA_KATA						 + " , " //短期間でのシグマ２
+						+ COLUMN.SHORT_2_L_SIGMA_KATA						 + " , " //短期間でのマイナスシグマ２
+						+ COLUMN.SHORT_3_H_SIGMA_KATA						 + " , " //短期間でのシグマ３
+						+ COLUMN.SHORT_3_L_SIGMA_KATA						 + " , " //短期間でのマイナスシグマ３
+						+ COLUMN.MIDDLE_DEV_KATA							 + " , " //中期間の標準偏差（シグマ）
+						+ COLUMN.MIDDLE_NOW_SIGMA_KATA						 + " , " //中期間で今日の終値がシグマと比較して何パーセント上か。
+						+ COLUMN.MIDDLE_1_H_SIGMA_KATA						 + " , " //中期間のシグマ１
+						+ COLUMN.MIDDLE_1_L_SIGMA_KATA						 + " , " //中期間のマイナスシグマ１
+						+ COLUMN.MIDDLE_2_H_SIGMA_KATA						 + " , " //中期間のシグマ２
+						+ COLUMN.MIDDLE_2_L_SIGMA_KATA						 + " , " //中期間のマイナスシグマ２
+						+ COLUMN.MIDDLE_3_H_SIGMA_KATA						 + " , " //中期間のシグマ３
+						+ COLUMN.MIDDLE_3_L_SIGMA_KATA						 + " , " //中期間のマイナスシグマ３
+						+ COLUMN.LONG_DEV_KATA								 + " , " //長期間の標準偏差（シグマ）
+						+ COLUMN.LONG_NOW_SIGMA_KATA						 + " , " //長期間で今日の終値がシグマと比較して何パーセント上か。
+						+ COLUMN.LONG_1_H_SIGMA_KATA						 + " , " //長期間のシグマ１
+						+ COLUMN.LONG_1_L_SIGMA_KATA						 + " , " //長期間のマイナスシグマ１
+						+ COLUMN.LONG_2_H_SIGMA_KATA						 + " , " //長期間のシグマ２
+						+ COLUMN.LONG_2_L_SIGMA_KATA						 + " , " //長期間のマイナスシグマ２
+						+ COLUMN.LONG_3_H_SIGMA_KATA						 + " , " //長期間のシグマ３
+						+ COLUMN.LONG_3_L_SIGMA_KATA						 + " , " //長期間のマイナスシグマ３
+						+ COLUMN.SHORTIDO_HEKATU_KATA						 + " , " //指数平滑移動平均短期
+						+ COLUMN.MIDDLEIDO_HEKATU_KATA						 + " , " //指数平滑移動平均中期
+						+ COLUMN.LONGIDO_HEKATU_KATA				 	 	 + " , " //指数平滑移動平均長期
+						+ COLUMN.SHORTIDO_HEKATU_CHANGERATE_KATA			 + " , " //指数平滑移動平均短期前日比
+						+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE_KATA			 + " , " //指数平滑移動平均中期前日比
+						+ COLUMN.LONGIDO_HEKATU_CHANGERATE_KATA		 	 	 + " , " //指数平滑移動平均長期前日比
+						+ COLUMN.SHORTIDO_HEKATU_RATIO_KATA					 + " , " //指数平滑移動平均短期前日比率
+						+ COLUMN.MIDDLEIDO_HEKATU_RATIO_KATA				 + " , " //指数平滑移動平均中期前日比率
+						+ COLUMN.LONGIDO_HEKATU_RATIO_KATA		 	 		 + " , " //指数平滑移動平均長期前日比率
+						+ COLUMN.SHORT_MACD_KATA							 + " , " //短期MACD
+						+ COLUMN.SHORT_MACD_SIGNAL_KATA						 + " , " //短期MACDシグナル線
+						+ COLUMN.MIDDLE_MACD_KATA							 + " , " //中期MACD
+						+ COLUMN.MIDDLE_MACD_SIGNAL_KATA					 + " , " //中期MACDシグナル線
+						+ COLUMN.LONG_MACD_KATA								 + " , " //長期MACD
+						+ COLUMN.LONG_MACD_SIGNAL_KATA						 + " , " //長期MACDシグナル線
+
+
+						+ COLUMN.MARKET_RETURN_FOR_BETA_KATA				 + " , " //過去データの基づく理論上リターン
+						+ COLUMN.MARKET_RETURN_FOR_BETA_AVE_KATA			 + " , " //過去データの基づく理論上リターンの平均
+						+ COLUMN.MARKET_RISK_FOR_BETA_KATA					 + " , " //標準偏差
+						+ COLUMN.MARKET_RISK_FOR_BETA_AVE_KATA				 + " , " //標準偏差平均
+						+ COLUMN.MARKET_RISK_Squaring_FOR_BETA_KATA			 + " , " //分散
+						+ COLUMN.RISK_FREE_RATE_KATA						 + " , " //リスクフリーレート
+						+ COLUMN.MARKET_RISK_PREMIUM_KATA					 + " , " //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）
+						+ COLUMN.MARKET_RISK_PREMIUM_AVE_KATA				 + " , " //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）_平均
+
+						+ "primary key ("
+						+ COLUMN.CODE  + " , " +  COLUMN.DAYTIME + ")) ";
+//						+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
+//						+ "unique (" + COLUMN.CODE + COLUMN.DAYTIME + "),primary key(id)) ";
+
+				//残り、インデックス
+				//ぱらぼりっく、信用、標準偏差、MACD、抵抗線、外人比率
+				//週足、月足、週足、５分足、財務諸表
+
+				SQL = create + TBL_Name.MARKET_DD_TBL + colum;
+
+				s.createTBL(SQL);
+	}
 
 	//全上場企業 決算・財務・業績データ
 	//財務諸表データ
@@ -717,6 +852,20 @@ public class createTBL {
 				+ COLUMN.MIDDLE_MACD_SIGNAL_KATA					 + " , " //中期MACDシグナル線
 				+ COLUMN.LONG_MACD_KATA								 + " , " //長期MACD
 				+ COLUMN.LONG_MACD_SIGNAL_KATA						 + " , " //長期MACDシグナル線
+				+ COLUMN.DIVIDEND_PER_KATA							 + " , " //配当利回り
+
+				+ COLUMN.BETA_KATA									 + " , " //(個別銘柄リターンとTOPIXリターンの共分散)/(TOPIXの分散)
+				+ COLUMN.Certainty_FOR_BETA_KATA					 + " , " //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)
+				+ COLUMN.Certainty_FOR_BETA_AVE_KATA				 + " , " //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)_平均
+				+ COLUMN.RETURN_FOR_BETA_KATA						 + " , " //過去データの基づく理論上リターン
+				+ COLUMN.RETURN_FOR_BETA_AVE_KATA					 + " , " //過去データの基づく理論上リターンの平均
+				+ COLUMN.RISK_FOR_BETA_KATA							 + " , " //標準偏差
+				+ COLUMN.RISK_FOR_BETA_AVE_KATA						 + " , " //標準偏差の平均
+				+ COLUMN.RISK_Squaring_FOR_BETA_KATA				 + " , " //分散
+				+ COLUMN.CAPM_KATA							 + " , " //CAPM				//CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
+				+ COLUMN.WACC_KATA							 + " , " //WACC
+				+ COLUMN.CAPM_AVE_KATA							 + " , " //CAPM_AVE
+				+ COLUMN.WACC_AVE_KATA							 + " , " //WACC_AVE
 //				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
 				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME + ")) ";
@@ -728,7 +877,6 @@ public class createTBL {
 		//週足、月足、週足、５分足、財務諸表
 
 		SQL = create + TBL_Name.STOCK_DD + colum;
-
 		s.createTBL(SQL);
 	}
 

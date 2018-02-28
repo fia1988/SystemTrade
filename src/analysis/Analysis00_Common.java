@@ -482,7 +482,7 @@ public class Analysis00_Common {
 	}
 
 
-
+	//大本
 	//引数1:コード名。リストテーブルより取得
 	//引数2:指定期間;開始(yyyy-mm-dd)
 	//引数3:指定期間;終了(yyyy-mm-dd)
@@ -506,6 +506,10 @@ public class Analysis00_Common {
 		//株の時だけ挙動が違う
 		switch(cate){
 			case ReCord.CODE_01_STOCK:
+				String WHERE = "";
+				String LEFT_JOIN = "  ";
+				LEFT_JOIN = " left outer join " + TBL_Name.MARKET_DD_TBL + " " + ReCord.MARKET_LETTER + " "
+						+	" on " +  ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " = " + ReCord.MARKET_LETTER + "." + COLUMN.DAYTIME + " ";
 
 				SQL = " select * from "
 						+	SQLChecker.getTBL(cate) + " "
@@ -513,21 +517,25 @@ public class Analysis00_Common {
 
 
 					if (paraDTO.isCheckInvest()){
-						SQL = SQL
-
-							+	" left outer join " + TBL_Name.INVEST_SIHYO_DD_TBL + " " + ReCord.INVESTTBL_F + " "
+						LEFT_JOIN = LEFT_JOIN + " left outer join " + TBL_Name.INVEST_SIHYO_DD_TBL + " " + ReCord.INVESTTBL_F + " "
 							+	" on " +  ReCord.STOCK_TBK_DD_A + "." + COLUMN.DAYTIME + " = " + ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " "
 							+	" and "
-							+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = " + ReCord.INVESTTBL_F + "." + COLUMN.CODE + " "
-							+ " where "
-							+ ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " is not null and "
-							+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
+							+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = " + ReCord.INVESTTBL_F + "." + COLUMN.CODE + " ";
+
+
+						WHERE = " where "
+								+ ReCord.INVESTTBL_F + "." + COLUMN.DAYTIME + " is not null and "
+								+ ReCord.MARKET_LETTER + "." + COLUMN.CODE + " = '" + ReCord.MARKET_CODE_1306 + "' "
+								+ ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
+
 					}else{
-						SQL = SQL
-							+ " where "
+						WHERE = " where "
 							+	ReCord.STOCK_TBK_DD_A + "." + COLUMN.CODE + " = '" + code + "' ";
 					}
-//				System.out.println("makekabuSQLabcccccc:"+SQL);
+
+					SQL = SQL + LEFT_JOIN + WHERE;
+					
+				System.out.println("makekabuSQLabcccccc:"+SQL);
 //				SQL = " select * from "
 //						+	SQLChecker.getTBL(cate) + " " + ReCord.STOCK_TBK_DD_A + " "
 //

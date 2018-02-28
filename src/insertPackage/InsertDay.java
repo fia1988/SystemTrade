@@ -122,6 +122,29 @@ public class InsertDay {
 			case ReCord.CODE_06_CURRENCY:
 
 				break;
+			case ReCord.CODE_HESO_07_ETF:
+				//ここでReCord.CODE_04_ETFとしてcateを扱う。
+				//値が存在しない場合、前日の価格を挿入する。
+				if(DTO.get(i).getMax().equals("0")){
+
+					String price = ZenzituEnd.getZenzituClose(DTO.get(i).getCode(),ReCord.CODE_04_ETF,s);
+					if (!price.equals("0")){
+						//0ではないとき、前日のpriceを全ての値にsetする。
+						DTO.get(i).setOpen (price);
+						DTO.get(i).setMax  (price);
+						DTO.get(i).setMin  (price);
+						DTO.get(i).setClose(price);
+						InsertDD_case4(DTO.get(i),s);
+						ConAccessary.setConAccessary(DTO.get(i).getCode(), ReCord.CODE_04_ETF, DTO.get(i).getDay(), s);
+						//0のとき＝前日の価格が存在しない。レコードが存在しない。
+						//0の時は何もしない。
+					}
+				}else{
+					InsertDD_case4(DTO.get(i),s);
+					ConAccessary.setConAccessary(DTO.get(i).getCode(), ReCord.CODE_04_ETF, DTO.get(i).getDay(), s);
+				}
+
+				break;
 			default:
 				System.out.println("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName());
 				break;

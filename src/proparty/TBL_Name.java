@@ -18,6 +18,9 @@ public class TBL_Name {
 	final public static String TAIL_5Minite    = "_5M";
 	final public static String TAIL_Accessories   = "_AC";
 
+	//TOPIXとかマーケットの記録が入ってる
+	final public static String MARKET_DD_TBL    = "07_marketTBL" + TAIL_DAY;
+
 	//全上場企業 決算・財務・業績データ
 	//財務諸表データ
 	//japan-all-stock-financial-results_20170107.csv

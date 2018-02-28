@@ -1010,9 +1010,134 @@ public class cloringDate {
 
 		s.closeConection();
 
+		//マーケットテーブル作成
+		insertMarketTBL();
+		//株主資本コストの計算
+		calculateCAPM();
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
+	private void insertMarketTBL(){
+		S s = new S();
+		s.getCon();
+		String SQL = " insert into " + TBL_Name.MARKET_DD_TBL
+					+ " select "
+					+ COLUMN.CODE									 + " , " //銘柄名
+					+ COLUMN.DAYTIME								 + " , " //日付
+					+ COLUMN.OPEN									 + " , " //始値
+					+ COLUMN.MAX									 + " , " //最高値
+					+ COLUMN.MIN									 + " , " //最安値
+					+ COLUMN.CLOSE									 + " , " //終値
+					+ COLUMN.DEKI									 + " , " //出来高
+					+ COLUMN.BAYBAY								 + " , " //売買代金
+					//+ COLUMN.STOCK_NUM								 + " , " //発行済み株式数
+					//+ COLUMN.MARKET_CAP							 + " , " //時価総額
+					//+ COLUMN.M_AND_A_FLG							 + " , " //合併フラグ
+//					+ COLUMN.LONG_FLG								 + " , " //買いフラグ
+//					+ COLUMN.SHORT_FLG								 + " , " //売りフラグ
+//					+ COLUMN.L_TOTAL_FLG							 + " , " //買いフラグ合計
+//					+ COLUMN.S_TOTAL_A_FLG							 + " , " //売りフラグ合計
+					+ COLUMN.CHANGE_PRICE							 + " , " //前日比
+					+ COLUMN.CHANGERATE							 + " , " //前日比率
+					+ COLUMN.SHORTIDO								 + " , " //株価短期間移動平均線
+					+ COLUMN.MIDDLEIDO								 + " , " //株価中期間移動平均線
+					+ COLUMN.LONGIDO								 + " , " //株価長期間移動平均線
+					+ COLUMN.SHORTIDO_CHANGERATE					 + " , " //株価短期間移動平均線前日比
+					+ COLUMN.MIDDLEIDO_CHANGERATE					 + " , " //株価中期間移動平均線前日比
+					+ COLUMN.LONGIDO_CHANGERATE					 + " , " //株価長期間移動平均線前日比
+					+ COLUMN.SHORTIDO_RATIO						 + " , " //株価短期間移動平均線前日比率
+					+ COLUMN.MIDDLEIDO_RATIO						 + " , " //株価中期間移動平均線前日比率
+					+ COLUMN.LONGIDO_RATIO							 + " , " //株価長期間移動平均線前日比率
+					+ COLUMN.MAXMIN								 + " , " //当日の最高値-最安値
+					+ COLUMN.MAXMINRATIO							 + " , " //（1-最安値)/最高値
+					+ COLUMN.CANDLE_AREA							 + " , " //ローソク足の面積
+					+ COLUMN.CANDLE_AREA_SCALE						 + " , " //ひげの長さと比較したローソク足面積の比率
+					+ COLUMN.WINDOW								 + " , " //前日の終値-今日の始値
+					+ COLUMN.DEKI_CHANGERATE						 + " , " //出来高前日比
+					+ COLUMN.DEKI_RATIO							 + " , " //出来高前日比率
+					+ COLUMN.BAYBAY_CHANGERATE						 + " , " //売買代金前日比
+					+ COLUMN.BAYBAY_RATIO							 + " , " //売買代金前日比率
+					+ COLUMN.SHORTIDO_DEKI							 + " , " //出来高短期移動平均線
+					+ COLUMN.MIDDLEIDO_DEKI						 + " , " //出来高中期移動平均線
+					+ COLUMN.LONGIDO_DEKI							 + " , " //出来高長期移動平均線
+					+ COLUMN.SHORTIDO_DEKI_CHANGERATE				 + " , " //出来高短期移動平均線前日比
+					+ COLUMN.MIDDLEIDO_DEKI_CHANGERATE				 + " , " //出来高中期移動平均線前日比
+					+ COLUMN.LONGIDO_DEKI_CHANGERATE				 + " , " //出来高長期移動平均線前日比
+					+ COLUMN.SHORTIDO_DEKI_RATIO					 + " , " //出来高短期間移動平均線前日比率
+					+ COLUMN.MIDDLEIDO_DEKI_RATIO					 + " , " //出来高中期移動平均線前日比率
+					+ COLUMN.LONGIDO_DEKI_RATIO					 + " , " //出来高長期移動平均線前日比率
+					+ COLUMN.SHORTIDO_BAYBAY						 + " , " //売買代金短期移動平均線
+					+ COLUMN.MIDDLEIDO_BAYBAY						 + " , " //売買代金中期移動平均線
+					+ COLUMN.LONGIDO_BAYBAY						 + " , " //売買代金長期移動平均線
+					+ COLUMN.SHORTIDO_BAYBAY_CHANGERATE			 + " , " //売買代金短期間移動平均線前日比
+					+ COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE			 + " , " //売買代金中期間移動平均線前日比
+					+ COLUMN.LONGIDO_BAYBAY_CHANGERATE				 + " , " //売買代金長期移動平均線前日比
+					+ COLUMN.SHORTIDO_BAYBAY_RATIO					 + " , " //売買代金短期間移動平均線前日比率
+					+ COLUMN.MIDDLEIDO_BAYBAY_RATIO				 + " , " //売買代金中期間移動平均線前日比率
+					+ COLUMN.LONGIDO_BAYBAY_RATIO					 + " , " //売買代金長期移動平均線前日比率
+					+ COLUMN.CREDIT_LONG							 + " , " //信用買い残
+					+ COLUMN.CREDIT_SHORT							 + " , " //信用売り残
+					+ COLUMN.CREDIT_RATIO							 + " , " //信用倍率＝信用買い残÷信用売り残
+					+ COLUMN.CREDIT_LONG_CHANGERATE				 + " , " //信用買い残前日比
+					+ COLUMN.CREDIT_SHORT_CHANGERATE				 + " , " //信用売り残前日比
+					+ COLUMN.CREDIT_RATIO_CHANGERATE				 + " , " //信用倍率前日比
+					+ COLUMN.SHORT_DEV								 + " , " //短期間の標準偏差（シグマ）
+					+ COLUMN.SHORT_NOW_SIGMA						 + " , " //短期間内で今日の終値がシグマと比較して何パーセント上か。
+					+ COLUMN.SHORT_1_H_SIGMA						 + " , " //短期間でのシグマ１
+					+ COLUMN.SHORT_1_L_SIGMA						 + " , " //短期間でのマイナスシグマ１
+					+ COLUMN.SHORT_2_H_SIGMA						 + " , " //短期間でのシグマ２
+					+ COLUMN.SHORT_2_L_SIGMA						 + " , " //短期間でのマイナスシグマ２
+					+ COLUMN.SHORT_3_H_SIGMA						 + " , " //短期間でのシグマ３
+					+ COLUMN.SHORT_3_L_SIGMA						 + " , " //短期間でのマイナスシグマ３
+					+ COLUMN.MIDDLE_DEV							 + " , " //中期間の標準偏差（シグマ）
+					+ COLUMN.MIDDLE_NOW_SIGMA						 + " , " //中期間で今日の終値がシグマと比較して何パーセント上か。
+					+ COLUMN.MIDDLE_1_H_SIGMA						 + " , " //中期間のシグマ１
+					+ COLUMN.MIDDLE_1_L_SIGMA						 + " , " //中期間のマイナスシグマ１
+					+ COLUMN.MIDDLE_2_H_SIGMA						 + " , " //中期間のシグマ２
+					+ COLUMN.MIDDLE_2_L_SIGMA						 + " , " //中期間のマイナスシグマ２
+					+ COLUMN.MIDDLE_3_H_SIGMA						 + " , " //中期間のシグマ３
+					+ COLUMN.MIDDLE_3_L_SIGMA						 + " , " //中期間のマイナスシグマ３
+					+ COLUMN.LONG_DEV								 + " , " //長期間の標準偏差（シグマ）
+					+ COLUMN.LONG_NOW_SIGMA						 + " , " //長期間で今日の終値がシグマと比較して何パーセント上か。
+					+ COLUMN.LONG_1_H_SIGMA						 + " , " //長期間のシグマ１
+					+ COLUMN.LONG_1_L_SIGMA						 + " , " //長期間のマイナスシグマ１
+					+ COLUMN.LONG_2_H_SIGMA						 + " , " //長期間のシグマ２
+					+ COLUMN.LONG_2_L_SIGMA						 + " , " //長期間のマイナスシグマ２
+					+ COLUMN.LONG_3_H_SIGMA						 + " , " //長期間のシグマ３
+					+ COLUMN.LONG_3_L_SIGMA						 + " , " //長期間のマイナスシグマ３
+					+ COLUMN.SHORTIDO_HEKATU						 + " , " //指数平滑移動平均短期
+					+ COLUMN.MIDDLEIDO_HEKATU						 + " , " //指数平滑移動平均中期
+					+ COLUMN.LONGIDO_HEKATU				 	 	 + " , " //指数平滑移動平均長期
+					+ COLUMN.SHORTIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均短期前日比
+					+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均中期前日比
+					+ COLUMN.LONGIDO_HEKATU_CHANGERATE		 	 	 + " , " //指数平滑移動平均長期前日比
+					+ COLUMN.SHORTIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均短期前日比率
+					+ COLUMN.MIDDLEIDO_HEKATU_RATIO				 + " , " //指数平滑移動平均中期前日比率
+					+ COLUMN.LONGIDO_HEKATU_RATIO		 	 		 + " , " //指数平滑移動平均長期前日比率
+					+ COLUMN.SHORT_MACD							 + " , " //短期MACD
+					+ COLUMN.SHORT_MACD_SIGNAL						 + " , " //短期MACDシグナル線
+					+ COLUMN.MIDDLE_MACD							 + " , " //中期MACD
+					+ COLUMN.MIDDLE_MACD_SIGNAL					 + " , " //中期MACDシグナル線
+					+ COLUMN.LONG_MACD								 + " , " //長期MACD
+					+ COLUMN.LONG_MACD_SIGNAL						 + " , " //長期MACDシグナル線
+					+ " from "
+					+ TBL_Name.ETF_DD
+					+ " where " + COLUMN.CODE + "'" + ReCord.MARKET_CODE_1306 + "'";
+
+//		deleteRecord = s.sqlGetter().executeUpdate(SQL);
+//		インサート
+		try {
+			int addRecord = s.sqlGetter().executeUpdate(SQL);
+			System.out.println("calculateCAPM():" + SQL);
+		} catch (SQLException e) {		}
+
+		s.closeConection();
+
+	}
+
+	private void calculateCAPM(){
+
+	}
 
 
 	//今日の注文をログファイルとして出力

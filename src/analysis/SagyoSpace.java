@@ -200,6 +200,24 @@ public class SagyoSpace {
 		s.closeConection();
 	}
 
+	public static void testCase991(){
+		S s = new S();
+		s.getCon();
+		String SQL = " CREATE TEMPORARY TABLE test SELECT * from  " + TBL_Name.FINANCIAL_MM_TBL;
+		s.createTBL(SQL);
+
+		System.out.println("aaaaaaaaa");
+		s.createTBL(SQL);
+		System.out.println("bbbbbbbbb");
+		s.reCon();
+		s.createTBL(SQL);
+		System.out.println("ccccccccc");
+		s.createTBL(SQL);
+		s.resetConnection();
+		System.out.println("ddddddddd");
+		s.createTBL(SQL);
+	}
+
 	public static void testCase77(){
 		cloringDate CD = new cloringDate();
 //		String fileName = "2017-10-30_fias_keep.csv";

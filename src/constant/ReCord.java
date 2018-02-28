@@ -85,6 +85,7 @@ public class ReCord {
 	public static final String INDEX_TBK_DD_TOPIX_SMALL		= "iiiiii";
 	public static final String INDEX_TBK_DD_ASIA			= "iiiiiii";
 	public static final String INDEX_TBK_DD_JASDAC			= "iiiiiiii";
+	public static final String MARKET_LETTER			= "mmmmmmmmmmm";
 
 	//銘柄名など
 //	I101 日経平均
@@ -121,6 +122,9 @@ public class ReCord {
 	public static String BASIC_CODE_06 = "8058";
 	//基準となる銘柄が存在するテーブル
 	public static final String BASIC_TBL = TBL_Name.STOCK_DD;
+
+	//マーケットコード
+	public static final String MARKET_CODE_1306 = "1306";
 
 
 	//初期値
