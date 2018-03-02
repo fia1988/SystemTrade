@@ -59,6 +59,12 @@ public class TBL_Name {
 	final public static String KEEPLISTTBL     = "96_keepListTBL";
 	final public static String RESULTHISTROYTBL     = "97_resultHistryTBL";
 
+	//相関係数を計算するためのテンポラリテーブル
+	//TEMPORARY TBL
+	final public static String TMP_01_AVE	     = "tmp_01_ave";
+	final public static String TMP_02_SD	     = "tmp_02_SD";
+	final public static String TMP_03_marketstock = "tmp_03_marketstock";
+
 	//個別銘柄・・・1
 	//統計・・・2
 	//指数・・・3

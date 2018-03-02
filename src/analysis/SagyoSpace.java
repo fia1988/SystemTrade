@@ -242,7 +242,7 @@ public class SagyoSpace {
 		String startDD	=	"2015-01-03";
 		String endDD		=	"2017-12-31";
 		startDD	=	"2018-02-14";
-		endDD		=	"2018-02-28";
+		endDD		=	"2018-03-02";
 		shokisettei(paraDTO, nowDTO, resultDTO,false);
 		paraDTO.setCheckInvest(true);
 		String tec = "technique";
@@ -333,7 +333,7 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2008-12-31";
 		startDD	=	"2018-02-07";
-		endDD		=	"2018-02-28";
+		endDD		=	"2018-03-02";
 //		startDD	=	"2007-01-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート

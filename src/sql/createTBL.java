@@ -77,7 +77,7 @@ public class createTBL {
 //						+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
 //						+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 						+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
-						+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
+						+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
 						+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 						+ COLUMN.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 						+ COLUMN.LONGIDO_KATA								 + " , " //株価長期間移動平均線
@@ -770,7 +770,7 @@ public class createTBL {
 //				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
 //				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 				+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
-				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
+				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
 				+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 				+ COLUMN.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 				+ COLUMN.LONGIDO_KATA								 + " , " //株価長期間移動平均線
@@ -877,6 +877,7 @@ public class createTBL {
 		//週足、月足、週足、５分足、財務諸表
 
 		SQL = create + TBL_Name.STOCK_DD + colum;
+//		System.out.println(SQL);
 		s.createTBL(SQL);
 	}
 
@@ -1425,6 +1426,15 @@ public class createTBL {
 				+ " , "
 				+ COLUMN.KOSIN_DAY
 				+ ") values ('" + ReCord.KOSHINBI_TOSHO_ETF + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.createTBL(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_MARKET_TBL + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
 		s.createTBL(SQL);
 

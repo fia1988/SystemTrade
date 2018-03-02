@@ -4,6 +4,7 @@ import proparty.TBL_Name;
 
 public class ReCord {
 	//コードリストテーブルを作成した際にcode列に入れられる作成列
+	public static String KOSHINBI_MARKET_TBL							= "マーケットテーブル更新日";
 	public static String KOSHINBI_STOCK_ETF								= "株とETF更新日";
 	public static String KOSHINBI_STOCK_ETF_CHECK_POINT					= "株とETF更新日のチェックポイント更新日";
 	public static String KOSHINBI_INDEX									= "指数更新日";

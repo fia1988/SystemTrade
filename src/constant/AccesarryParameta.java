@@ -1,6 +1,13 @@
 package constant;
 
 public class AccesarryParameta {
+
+	//ベータ計算するのに使うような平均観測期間
+	public final static int MARKET_OBSERVATION_TERM = 245;
+
+	//リスクフリーレート。とりあえず0.8%で設定
+	public final static double RISK_FREE_RATE = 0.008;
+
 	//移動平均線長中短
 	public static int IDOSHORT = 9;
 	public static int IDOMIDDLE = 13;
@@ -10,7 +17,7 @@ public class AccesarryParameta {
 	public static int HEKATUSHORT = 9;
 	public static int HEKATUMIDDLE = 13;
 	public static int HEKATULONG = 26;
-	
+
 	//MACDシグナル
 	public static int MACD_SIGNAL = 9;
 
