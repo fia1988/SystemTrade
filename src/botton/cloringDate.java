@@ -1162,7 +1162,7 @@ public class cloringDate {
 		//今日の日付からX日前。
 		//例：2018-05-05が今日なら2018-05-03が２日前
 		//上記ケースは引数が３のとき
-		//とりあえず246を引数にする＝245日前
+		//とりあえず245を引数にする＝244日前
 		String beforeDay = commonAP.getStartDay(TODAY, AccesarryParameta.MARKET_OBSERVATION_TERM, s);
 
 
@@ -1199,8 +1199,8 @@ public class cloringDate {
 				+ updateLetter + "." + COLUMN.DAYTIME + " = " + "'" +  TODAY + "'";
 
 		if (marketFLG){
-			SQL = SQL+ " and "
-					+ updateLetter + "." + COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
+//			SQL = SQL+ " and "
+//					+ updateLetter + "." + COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
 		}
 		return SQL;
 	}
@@ -1209,21 +1209,20 @@ public class cloringDate {
 		String TBL = TBL_Name.MARKET_DD_TBL;
 		S s = new S();
 		s.getCon();
-		String dummyCOLUMN_A = "dummyCOLUMN_A";
-		String dummyCOLUMN_B = "dummyCOLUMN_B";
-		String dummyCOLUMN_C = "dummyCOLUMN_C";
-		String selectLetter = "selectLetter";
-		String updateLetter = "updateLetter";
+
 		String SQL="";
 
 
 		//標準偏差の計算、リターンの計算
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CLOSE,"STDDEV_SAMP",true);
-		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
 		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",true);
 		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
+		persentUpdate(TBL,COLUMN.MARKET_RETURN_FOR_BETA,TODAY,s);
+
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
+		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+		persentUpdate(TBL,COLUMN.MARKET_RISK_FOR_BETA,TODAY,s);
 
 //		+ COLUMN.MARKET_RISK_PREMIUM_KATA					 + " , "
 //		//分散、リスクフリーレート計算
@@ -1253,10 +1252,10 @@ public class cloringDate {
 
 		//標準偏差平均、リターンの平均、マーケットリスクプレミアムの平均
 		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA_AVE,COLUMN.MARKET_RETURN_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA_AVE,COLUMN.MARKET_RISK_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_PREMIUM_AVE,COLUMN.MARKET_RISK_PREMIUM,"avg",true);
 		commonAP.writeInLog(TBL + "マーケットリスクプレミアムの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
@@ -1265,6 +1264,20 @@ public class cloringDate {
 
 
 		s.closeConection();
+	}
+
+	//0.008⇒0.8％にする。
+	//100倍にする。
+	private void persentUpdate(String TBL,String column,String dayTime, S s){
+		String SQL="";
+
+		SQL = " update " + TBL
+				+ " set "
+				+ column + " = " + column + " * 100 "
+				+ " where "
+				+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+
+		s.freeUpdateQuery(SQL);
 	}
 
 	//個別銘柄リターンとTOPIXリターンの相関係数を求める
@@ -1305,7 +1318,7 @@ public class cloringDate {
 					+ " left outer join " +  TBL_Name.STOCK_DD + " "
 					+	" on " +  TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = " + TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " "
 					+ " where "
-					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " =< '" + TODAY + "'"
+					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " <= '" + TODAY + "'"
 					+ " and "
 					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
 					+ " and "
@@ -1370,19 +1383,15 @@ public class cloringDate {
 		S s = new S();
 		s.getCon();
 		String SQL="";
-		calculateCAPM_STOCK_TBL_createTMP_TBL(TODAY,beforeDay,s);
+
 //		+ COLUMN.DIVIDEND_PER_KATA							 + " , " //配当利回り
 //		+ COLUMN.BETA_KATA									 + " , " //(個別銘柄リターンとTOPIXリターンの共分散)/(TOPIXの分散)
 //		+ COLUMN.Certainty_FOR_BETA_KATA					 + " , " //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)
-//		+ COLUMN.Certainty_FOR_BETA_AVE_KATA				 + " , " //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)_平均
 
-//		+ COLUMN.RETURN_FOR_BETA_AVE_KATA					 + " , " //過去データの基づく理論上リターンの平均
 
-//		+ COLUMN.RISK_FOR_BETA_AVE_KATA						 + " , " //標準偏差の平均
-//		+ COLUMN.RISK_Squaring_FOR_BETA_KATA				 + " , " //分散
+
 //		+ COLUMN.CAPM_KATA							 + " , " //CAPM				//CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
 //		+ COLUMN.WACC_KATA							 + " , " //WACC
-//		+ COLUMN.CAPM_AVE_KATA							 + " , " //CAPM_AVE
 //		+ COLUMN.WACC_AVE_KATA							 + " , " //WACC_AVE
 
 
@@ -1392,11 +1401,38 @@ public class cloringDate {
 
 
 		//標準偏差の計算、リターンの計算
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA,COLUMN.CLOSE,"STDDEV_SAMP",false);
-		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
 		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",false);
 		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+		persentUpdate(TBL,COLUMN.RETURN_FOR_BETA,TODAY,s);
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
+		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+		persentUpdate(TBL,COLUMN.RISK_FOR_BETA,TODAY,s);
+
+		//分散の計算
+		SQL = " update " + TBL
+			+ " set "
+			+ COLUMN.RISK_Squaring_FOR_BETA + " = " + COLUMN.RISK_FOR_BETA + " * " + COLUMN.RISK_FOR_BETA + "  "
+			+ " where "
+			+ COLUMN.DAYTIME + " = "+ "'" +  TODAY + "'";
+		commonAP.writeInLog(TBL + "の分散：" + SQL,logWriting.DATEDATE_LOG_FLG);
+
+		//個別銘柄リターンとTOPIXリターンの、共分散相関係数を求める
+		calculateCAPM_STOCK_TBL_createTMP_TBL(TODAY,beforeDay,s);
+
+		//標準偏差平均、過去データの基づく理論上リターンの平均、CAPMの平均、ベータの平均
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",true);
+		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",true);
+		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",true);
+		commonAP.writeInLog(TBL + "CAPMの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",true);
+		commonAP.writeInLog(TBL + "確実性の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
 

@@ -6,7 +6,7 @@ public class AccesarryParameta {
 	public final static int MARKET_OBSERVATION_TERM = 245;
 
 	//リスクフリーレート。とりあえず0.8%で設定
-	public final static double RISK_FREE_RATE = 0.008;
+	public final static double RISK_FREE_RATE = 0.8;
 
 	//移動平均線長中短
 	public static int IDOSHORT = 9;

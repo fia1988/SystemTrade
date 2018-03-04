@@ -169,7 +169,8 @@ public class createTBL {
 						+ COLUMN.RISK_FREE_RATE_KATA						 + " , " //リスクフリーレート
 						+ COLUMN.MARKET_RISK_PREMIUM_KATA					 + " , " //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）
 						+ COLUMN.MARKET_RISK_PREMIUM_AVE_KATA				 + " , " //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）_平均
-
+						+ COLUMN.NT_RATIO_KATA								 + " , " //NT倍率
+						+ COLUMN.NT_RATIO_AVE_KATA							 + " , " //NT倍率の平均
 						+ "primary key ("
 						+ COLUMN.CODE  + " , " +  COLUMN.DAYTIME + ")) ";
 //						+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
@@ -180,7 +181,7 @@ public class createTBL {
 				//週足、月足、週足、５分足、財務諸表
 
 				SQL = create + TBL_Name.MARKET_DD_TBL + colum;
-
+				System.out.println(SQL);
 				s.createTBL(SQL);
 	}
 
@@ -866,6 +867,8 @@ public class createTBL {
 				+ COLUMN.WACC_KATA							 + " , " //WACC
 				+ COLUMN.CAPM_AVE_KATA							 + " , " //CAPM_AVE
 				+ COLUMN.WACC_AVE_KATA							 + " , " //WACC_AVE
+				+ COLUMN.COVAR_with_TOPIX_KATA						 + " , " //共分散
+
 //				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
 				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME + ")) ";
@@ -877,7 +880,7 @@ public class createTBL {
 		//週足、月足、週足、５分足、財務諸表
 
 		SQL = create + TBL_Name.STOCK_DD + colum;
-//		System.out.println(SQL);
+		System.out.println(SQL);
 		s.createTBL(SQL);
 	}
 

@@ -191,119 +191,120 @@ public class editHesogomaFile {
 		int upCounter = 0;
 		String downURL;
 		while(cAP.checkDay(TODAY, checkPointDay)){
+			if(resultInsertExit == false){
+				insertChecker = false;
 
-			insertChecker = false;
+				String filePath = folderPath + File.separator + checkPointDay + fileName ;
+				File file =  new File(filePath);
 
-			String filePath = folderPath + File.separator + checkPointDay + fileName ;
-			File file =  new File(filePath);
+				if ( mainDTO.isHesoGomaOnlineCheck() == false ){
 
-			if ( mainDTO.isHesoGomaOnlineCheck() == false ){
+					//ファイルをへそのゴマからダウンロード
+					String downDay = checkPointDay.replaceAll("-", "");
+					downURL = URL_parts + downDay + ".csv";
 
-				//ファイルをへそのゴマからダウンロード
-				String downDay = checkPointDay.replaceAll("-", "");
-				downURL = URL_parts + downDay + ".csv";
-
-				try {
-					List<String> csvStringList = new ArrayList<String>();
+					try {
+						List<String> csvStringList = new ArrayList<String>();
 
 
-					if (file.isFile()){
-						//ファイルが存在する場合は削除する。
-						commonAP.writeInLog("右記のファイルが既に存在するのでスキップします。:" + file,logWriting.DATEDATE_LOG_FLG);
-//						file.delete();
-					}else{
-						csvStringList = dCon.getData(downURL, urlID, urlPASS);
-						writtingString(csvStringList,filePath,cate);
-					}
-					insertChecker = true;
+						if (file.isFile()){
+							//ファイルが存在する場合は削除する。
+							commonAP.writeInLog("右記のファイルが既に存在するのでスキップします。:" + file,logWriting.DATEDATE_LOG_FLG);
+//							file.delete();
+						}else{
+							csvStringList = dCon.getData(downURL, urlID, urlPASS);
+							writtingString(csvStringList,filePath,cate);
+						}
+						insertChecker = true;
 
-				} catch (UnknownHostException e) {
-					// TODO 自動生成された catch ブロック
-					commonAP.writeInLog("以下のURLは存在しません",logWriting.DATEDATE_LOG_FLG);
-					commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
-					commonAP.writeInErrLog(e);
-					return ReturnCodeConst.EVERY_UPDATE_ERR;
-
-				} catch (MalformedURLException e) {
-					// TODO 自動生成された catch ブロック
-					commonAP.writeInLog("以下のURLは正規のURLがありません。いい加減な文字を打つな",logWriting.DATEDATE_LOG_FLG);
-					commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
-					commonAP.writeInErrLog(e);
-					return ReturnCodeConst.EVERY_UPDATE_ERR;
-				} catch (IOException e) {
-					// TODO 自動生成された catch ブロック
-					commonAP.writeInLog("以下のURLで文字列のエラー発生！もしくは接続失敗。",logWriting.DATEDATE_LOG_FLG);
-					commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
-					commonAP.writeInErrLog(e);
-					return ReturnCodeConst.EVERY_UPDATE_ERR;
-
-				} catch (WebAccessException e) {
-					// TODO 自動生成された catch ブロック
-
-					if ( e.getCode() != 404) {
-						commonAP.writeInLog("以下のURLで「" + e.getCode() + "」発生！",logWriting.DATEDATE_LOG_FLG);
+					} catch (UnknownHostException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のURLは存在しません",logWriting.DATEDATE_LOG_FLG);
 						commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
+
+					} catch (MalformedURLException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のURLは正規のURLがありません。いい加減な文字を打つな",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
+					} catch (IOException e) {
+						// TODO 自動生成された catch ブロック
+						commonAP.writeInLog("以下のURLで文字列のエラー発生！もしくは接続失敗。",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
+
+					} catch (WebAccessException e) {
+						// TODO 自動生成された catch ブロック
+
+						if ( e.getCode() != 404) {
+							commonAP.writeInLog("以下のURLで「" + e.getCode() + "」発生！",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInLog(downURL,logWriting.DATEDATE_LOG_FLG);
+						}
+
+						switch (e.getCode()) {
+						case 401:
+							commonAP.writeInLog("認証失敗。ID：" + urlID + "とパスワード：" + urlPASS + "が違います。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 403:
+							//禁止されてるパターン
+							//へそのごまでは出てこない。
+							commonAP.writeInLog("403が出ています。上記のURLへのアクセスが拒否されています。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 404:
+							//ファイルがないパターン
+							break;
+						case 502:
+							commonAP.writeInLog("上記のURLのプロキシとかゲートウェイ辺りに問題あり。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 503:
+							commonAP.writeInLog("上記のURLのサーバーが死んでいます。しばらくたってからアクセスしてください。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						case 504:
+							commonAP.writeInLog("タイムアウトしました。処理を止めます。",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						default:
+							commonAP.writeInLog("理由がさっぱりわからんエラー",logWriting.DATEDATE_LOG_FLG);
+							commonAP.writeInErrLog(e);
+							return ReturnCodeConst.EVERY_UPDATE_ERR;
+						}
 					}
 
-					switch (e.getCode()) {
-					case 401:
-						commonAP.writeInLog("認証失敗。ID：" + urlID + "とパスワード：" + urlPASS + "が違います。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInErrLog(e);
-						return ReturnCodeConst.EVERY_UPDATE_ERR;
-					case 403:
-						//禁止されてるパターン
-						//へそのごまでは出てこない。
-						commonAP.writeInLog("403が出ています。上記のURLへのアクセスが拒否されています。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInErrLog(e);
-						return ReturnCodeConst.EVERY_UPDATE_ERR;
-					case 404:
-						//ファイルがないパターン
-						break;
-					case 502:
-						commonAP.writeInLog("上記のURLのプロキシとかゲートウェイ辺りに問題あり。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInErrLog(e);
-						return ReturnCodeConst.EVERY_UPDATE_ERR;
-					case 503:
-						commonAP.writeInLog("上記のURLのサーバーが死んでいます。しばらくたってからアクセスしてください。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInErrLog(e);
-						return ReturnCodeConst.EVERY_UPDATE_ERR;
-					case 504:
-						commonAP.writeInLog("タイムアウトしました。処理を止めます。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInErrLog(e);
-						return ReturnCodeConst.EVERY_UPDATE_ERR;
-					default:
-						commonAP.writeInLog("理由がさっぱりわからんエラー",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInErrLog(e);
-						return ReturnCodeConst.EVERY_UPDATE_ERR;
-					}
-				}
-
-			}else{
-				if (file.isFile()){
-					insertChecker = true;
 				}else{
-					//ローカルを参照するというのにファイルが存在しない場合はここ
-					commonAP.writeInLog("右のファイルがないのでスキップ:" + file,logWriting.DATEDATE_LOG_FLG);
+					if (file.isFile()){
+						insertChecker = true;
+					}else{
+						//ローカルを参照するというのにファイルが存在しない場合はここ
+						commonAP.writeInLog("右のファイルがないのでスキップ:" + file,logWriting.DATEDATE_LOG_FLG);
+					}
+
 				}
 
+				if (insertChecker == true){
+					//ここからインサート
+					insertHesoGomaFile insHego = new insertHesoGomaFile();
+					insHego.insertHesoGomaFileController(mainDTO, filePath, checkPointDay,lastUpDateDay, cate,TBL,updateColumn,updateCheckPointColumn,s);
+					s.resetConnection();
+					resultInsertExit = true;
+					upCounter = 0;
+				}else{
+					upCounter++;
+				}
+
+
+
 			}
-
-			if (insertChecker == true){
-				//ここからインサート
-				insertHesoGomaFile insHego = new insertHesoGomaFile();
-				insHego.insertHesoGomaFileController(mainDTO, filePath, checkPointDay,lastUpDateDay, cate,TBL,updateColumn,updateCheckPointColumn,s);
-				s.resetConnection();
-				resultInsertExit = true;
-				upCounter = 0;
-			}else{
-				upCounter++;
-			}
-
-
 			calendar.add(Calendar.DAY_OF_MONTH, +1);
 			checkPointDay = sdf1.format(calendar.getTime());
 			lastUpDateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(checkPointColumn, s);
-
 		}
 
 //		System.out.println("a:" + upCounter);

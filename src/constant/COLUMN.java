@@ -1013,6 +1013,18 @@ public class COLUMN {
 	public static String WACC_AVE					= "WACC_AVE";
 	public static String WACC_AVE_KATA				= WACC_AVE + " double  ";
 
+	//NT倍率＝日経平均/TOPIX
+	public static String NT_RATIO					= "NT_RATIO";
+	public static String NT_RATIO_KATA				= NT_RATIO + " double  ";
+
+	//NT倍率の平均
+	public static String NT_RATIO_AVE					= "NT_RATIO_AVE";
+	public static String NT_RATIO_AVE_KATA				= NT_RATIO_AVE + " double  ";
+
+	//共分散
+	public static String COVAR_with_TOPIX					= "COVAR_with_TOPIX";
+	public static String COVAR_with_TOPIX_KATA				= COVAR_with_TOPIX + " double  ";
+
 //	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
 //	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
 
