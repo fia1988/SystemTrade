@@ -21,6 +21,7 @@ import common.commonAP;
 
 import constant.COLUMN;
 import constant.ReCord;
+import constant.logWriting;
 
 public class Analysis00_Common {
 
@@ -902,6 +903,21 @@ public class Analysis00_Common {
 				nowDTO.setNowMIDDLE_MACD_SIGNAL_01(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.MIDDLE_MACD_SIGNAL		));
 				nowDTO.setNowLONG_MACD_01(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.LONG_MACD		));
 				nowDTO.setNowLONG_MACD_SIGNAL_01(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.LONG_MACD_SIGNAL		));
+
+				nowDTO.setMARKET_RISK_PREMIUM(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.MARKET_RISK_PREMIUM		));
+				nowDTO.setMARKET_RISK_PREMIUM_AVE(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.MARKET_RISK_PREMIUM_AVE		));
+				nowDTO.setNT_RATIO(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.NT_RATIO		));
+				nowDTO.setNT_RATIO_AVE(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.NT_RATIO_AVE		));
+
+				nowDTO.setBETA(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.BETA		));
+				nowDTO.setCertainty_FOR_BETA(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.Certainty_FOR_BETA		));
+				nowDTO.setCertainty_FOR_BETA_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.Certainty_FOR_BETA_AVE		));
+				nowDTO.setRETURN_FOR_BETA(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RETURN_FOR_BETA		));
+				nowDTO.setRETURN_FOR_BETA_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RETURN_FOR_BETA_AVE		));
+				nowDTO.setRISK_FOR_BETA(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RISK_FOR_BETA		));
+				nowDTO.setRISK_FOR_BETA_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RISK_FOR_BETA_AVE		));
+
+				System.out.println(ReCord.MARKET_LETTER + ".");
 
 				if (paraDTO.isCheckInvest()){
 
@@ -2368,8 +2384,10 @@ public class Analysis00_Common {
 
 		} catch (SQLException e) {
 			//
-			System.out.println("setNowRecord01でなんかミスった"+code);
-			e.printStackTrace();
+//			System.out.println("setNowRecord01でなんかミスった"+code);
+//			e.printStackTrace();
+			commonAP.writeInLog("setNowRecord01でなんかミスった"+code + ":" + cate,logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInErrLog(e);
 		}
 		return nowDTO;
 	}

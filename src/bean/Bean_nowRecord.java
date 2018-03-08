@@ -4,6 +4,110 @@ import java.sql.ResultSet;
 
 public class Bean_nowRecord {
 
+	//ここからCAPMのBEAN
+	double MARKET_RISK_PREMIUM;					 //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）
+	double MARKET_RISK_PREMIUM_AVE;				 //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）_平均
+	double NT_RATIO;							 //NT倍率
+	double NT_RATIO_AVE;						 //NT倍率平均
+	double BETA;									 //(個別銘柄リターンとTOPIXリターンの共分散)/(TOPIXの分散)
+	double Certainty_FOR_BETA;					  //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)
+	double Certainty_FOR_BETA_AVE;				  //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)_平均
+	double RETURN_FOR_BETA;						  //過去データの基づく理論上リターン
+	double RETURN_FOR_BETA_AVE;					  //過去データの基づく理論上リターンの平均
+	double RISK_FOR_BETA;						 //標準偏差
+	double RISK_FOR_BETA_AVE;					 //標準偏差の平均							 + " , " //NT倍率の平均
+
+
+
+	public double getMARKET_RISK_PREMIUM() {
+		return MARKET_RISK_PREMIUM;
+	}
+
+	public void setMARKET_RISK_PREMIUM(double mARKET_RISK_PREMIUM) {
+		MARKET_RISK_PREMIUM = mARKET_RISK_PREMIUM;
+	}
+
+	public double getMARKET_RISK_PREMIUM_AVE() {
+		return MARKET_RISK_PREMIUM_AVE;
+	}
+
+	public void setMARKET_RISK_PREMIUM_AVE(double mARKET_RISK_PREMIUM_AVE) {
+		MARKET_RISK_PREMIUM_AVE = mARKET_RISK_PREMIUM_AVE;
+	}
+
+	public double getNT_RATIO() {
+		return NT_RATIO;
+	}
+
+	public void setNT_RATIO(double nT_RATIO) {
+		NT_RATIO = nT_RATIO;
+	}
+
+	public double getNT_RATIO_AVE() {
+		return NT_RATIO_AVE;
+	}
+
+	public void setNT_RATIO_AVE(double nT_RATIO_AVE) {
+		NT_RATIO_AVE = nT_RATIO_AVE;
+	}
+
+	public double getBETA() {
+		return BETA;
+	}
+
+	public void setBETA(double bETA) {
+		BETA = bETA;
+	}
+
+	public double getCertainty_FOR_BETA() {
+		return Certainty_FOR_BETA;
+	}
+
+	public void setCertainty_FOR_BETA(double certainty_FOR_BETA) {
+		Certainty_FOR_BETA = certainty_FOR_BETA;
+	}
+
+	public double getCertainty_FOR_BETA_AVE() {
+		return Certainty_FOR_BETA_AVE;
+	}
+
+	public void setCertainty_FOR_BETA_AVE(double certainty_FOR_BETA_AVE) {
+		Certainty_FOR_BETA_AVE = certainty_FOR_BETA_AVE;
+	}
+
+	public double getRETURN_FOR_BETA() {
+		return RETURN_FOR_BETA;
+	}
+
+	public void setRETURN_FOR_BETA(double rETURN_FOR_BETA) {
+		RETURN_FOR_BETA = rETURN_FOR_BETA;
+	}
+
+	public double getRETURN_FOR_BETA_AVE() {
+		return RETURN_FOR_BETA_AVE;
+	}
+
+	public void setRETURN_FOR_BETA_AVE(double rETURN_FOR_BETA_AVE) {
+		RETURN_FOR_BETA_AVE = rETURN_FOR_BETA_AVE;
+	}
+
+	public double getRISK_FOR_BETA() {
+		return RISK_FOR_BETA;
+	}
+
+	public void setRISK_FOR_BETA(double rISK_FOR_BETA) {
+		RISK_FOR_BETA = rISK_FOR_BETA;
+	}
+
+	public double getRISK_FOR_BETA_AVE() {
+		return RISK_FOR_BETA_AVE;
+	}
+
+	public void setRISK_FOR_BETA_AVE(double rISK_FOR_BETA_AVE) {
+		RISK_FOR_BETA_AVE = rISK_FOR_BETA_AVE;
+	}
+
+
 	//-----ここからINVESTTBL
 	//市場
 	String MARKET;

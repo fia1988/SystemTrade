@@ -181,7 +181,7 @@ public class createTBL {
 				//週足、月足、週足、５分足、財務諸表
 
 				SQL = create + TBL_Name.MARKET_DD_TBL + colum;
-				System.out.println(SQL);
+//				System.out.println(SQL);
 				s.createTBL(SQL);
 	}
 
@@ -880,7 +880,7 @@ public class createTBL {
 		//週足、月足、週足、５分足、財務諸表
 
 		SQL = create + TBL_Name.STOCK_DD + colum;
-		System.out.println(SQL);
+//		System.out.println(SQL);
 		s.createTBL(SQL);
 	}
 

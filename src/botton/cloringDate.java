@@ -1261,11 +1261,12 @@ public class cloringDate {
 		commonAP.writeInLog(TBL + "マーケットリスクプレミアムの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
-
+		
 
 		s.closeConection();
 	}
 
+	
 	//0.008⇒0.8％にする。
 	//100倍にする。
 	private void persentUpdate(String TBL,String column,String dayTime, S s){
