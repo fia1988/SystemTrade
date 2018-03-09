@@ -917,7 +917,6 @@ public class Analysis00_Common {
 				nowDTO.setRISK_FOR_BETA(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RISK_FOR_BETA		));
 				nowDTO.setRISK_FOR_BETA_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RISK_FOR_BETA_AVE		));
 
-				System.out.println(ReCord.MARKET_LETTER + ".");
 
 				if (paraDTO.isCheckInvest()){
 

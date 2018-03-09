@@ -1108,19 +1108,21 @@ public class cloringDate {
 				+ COLUMN.LONG_3_L_SIGMA						 + " , " //長期間のマイナスシグマ３
 				+ COLUMN.SHORTIDO_HEKATU						 + " , " //指数平滑移動平均短期
 				+ COLUMN.MIDDLEIDO_HEKATU						 + " , " //指数平滑移動平均中期
-				+ COLUMN.LONGIDO_HEKATU				 	 	 + " , " //指数平滑移動平均長期
-				+ COLUMN.SHORTIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均短期前日比
+				+ COLUMN.LONGIDO_HEKATU				 		 	 + " , " //指数平滑移動平均長期
+				+ COLUMN.SHORTIDO_HEKATU_CHANGERATE				 + " , " //指数平滑移動平均短期前日比
 				+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均中期前日比
 				+ COLUMN.LONGIDO_HEKATU_CHANGERATE		 	 	 + " , " //指数平滑移動平均長期前日比
 				+ COLUMN.SHORTIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均短期前日比率
-				+ COLUMN.MIDDLEIDO_HEKATU_RATIO				 + " , " //指数平滑移動平均中期前日比率
+				+ COLUMN.MIDDLEIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均中期前日比率
 				+ COLUMN.LONGIDO_HEKATU_RATIO		 	 		 + " , " //指数平滑移動平均長期前日比率
-				+ COLUMN.SHORT_MACD							 + " , " //短期MACD
+				+ COLUMN.SHORT_MACD								 + " , " //短期MACD
 				+ COLUMN.SHORT_MACD_SIGNAL						 + " , " //短期MACDシグナル線
 				+ COLUMN.MIDDLE_MACD							 + " , " //中期MACD
-				+ COLUMN.MIDDLE_MACD_SIGNAL					 + " , " //中期MACDシグナル線
+				+ COLUMN.MIDDLE_MACD_SIGNAL						 + " , " //中期MACDシグナル線
 				+ COLUMN.LONG_MACD								 + " , " //長期MACD
-				+ COLUMN.LONG_MACD_SIGNAL						 + "  "; //長期MACDシグナル線;
+				+ COLUMN.LONG_MACD_SIGNAL						 + " , "
+				+ COLUMN.NT_RATIO								 + " , " //NT倍率
+				+ COLUMN.NT_RATIO_AVE							 + "   "; //NT倍率の平均; //長期MACDシグナル線;
 
 		String SQL = " insert into " + TBL_Name.MARKET_DD_TBL
 					+ " ( " + column + " ) "
@@ -1213,6 +1215,29 @@ public class cloringDate {
 		String SQL="";
 
 
+		//NT倍率の計算
+		SQL = " update "
+				+ TBL_Name.ETF_DD				 + " as A ,"
+				+ TBL							 + " as B "
+			+ " set "
+				+ " B." + COLUMN.NT_RATIO
+				+ " = "
+				+ " A." + COLUMN.CLOSE + " / " + " B." + COLUMN.CLOSE
+			+ " where "
+					+ " B." + COLUMN.CODE + " = " + "'" + ReCord.MARKET_CODE_1306 + "'"
+				+ " and "
+					+ " A." + COLUMN.CODE + " = " + "'" + ReCord.NIKKEI225_CODE_1321 + "'"
+				+ " and "
+					+ " B." + COLUMN.DAYTIME
+					+ " = "
+					+ " A." + COLUMN.DAYTIME
+				+ " and "
+					+ " A." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+//		ReCord.MARKET_CODE_1306;
+//		ReCord.NIKKEI225_CODE_1321;
+		commonAP.writeInLog(TBL + "NT倍率の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+
 		//標準偏差の計算、リターンの計算
 		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",true);
 		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
@@ -1261,12 +1286,14 @@ public class cloringDate {
 		commonAP.writeInLog(TBL + "マーケットリスクプレミアムの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
-		
+		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.NT_RATIO_AVE,COLUMN.NT_RATIO,"avg",true);
+		commonAP.writeInLog(TBL + "NT倍率の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
 
 		s.closeConection();
 	}
 
-	
+
 	//0.008⇒0.8％にする。
 	//100倍にする。
 	private void persentUpdate(String TBL,String column,String dayTime, S s){
@@ -1385,7 +1412,6 @@ public class cloringDate {
 		s.getCon();
 		String SQL="";
 
-//		+ COLUMN.DIVIDEND_PER_KATA							 + " , " //配当利回り
 //		+ COLUMN.BETA_KATA									 + " , " //(個別銘柄リターンとTOPIXリターンの共分散)/(TOPIXの分散)
 //		+ COLUMN.Certainty_FOR_BETA_KATA					 + " , " //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)
 
@@ -1398,7 +1424,27 @@ public class cloringDate {
 
 
 
-
+		//配当のセット。単位はパーセント。
+		SQL = " update "
+				+ TBL_Name.INVEST_SIHYO_DD_TBL	 + " as A ,"
+				+ TBL							 + " as B "
+			+ " set "
+				+ " B." + COLUMN.DIVIDEND_PER
+				+ " = "
+				+ " (A." + COLUMN.DIVIDEND_PER + "/245) "
+			+ " where "
+					+ " B." + COLUMN.CODE
+					+ " = "
+					+ " A." + COLUMN.CODE
+				+ " and "
+					+ " B." + COLUMN.DAYTIME
+					+ " = "
+					+ " A." + COLUMN.DAYTIME
+				+ " and "
+					+ " A." + COLUMN.DAYTIME
+					+ " = " + "'" + TODAY + "'";
+		commonAP.writeInLog(TBL + "配当のセット。ただしこれは日単位にアジャストする（245で割る）：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
 
 
 		//標準偏差の計算、リターンの計算

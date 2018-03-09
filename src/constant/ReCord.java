@@ -126,7 +126,8 @@ public class ReCord {
 
 	//マーケットコード
 	public static final String MARKET_CODE_1306 = "1306";
-
+	//日経平均に等しい銘柄：ETFの
+	public static final String NIKKEI225_CODE_1321 = "1321";
 
 	//初期値
 	public static final String KOSHINBI_SHOKI									= "2007-01-03";

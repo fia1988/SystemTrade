@@ -5,8 +5,9 @@ public class AccesarryParameta {
 	//ベータ計算するのに使うような平均観測期間
 	public final static int MARKET_OBSERVATION_TERM = 245;
 
-	//リスクフリーレート。とりあえず0.8%で設定
-	public final static double RISK_FREE_RATE = 0.8;
+	//リスクフリーレート。とりあえずン年間1.0%で設定
+	//日々で割って1.0/245（245営業日は一年間：1.0/245≒0.0041％）
+	public final static double RISK_FREE_RATE = 0.0041;
 
 	//移動平均線長中短
 	public static int IDOSHORT = 9;
