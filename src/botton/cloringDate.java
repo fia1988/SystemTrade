@@ -1175,7 +1175,7 @@ public class cloringDate {
 	}
 
 	//マーケットフラグ：true(マーケットテーブル)
-	private String calculateSQL(String TBL,String TODAY,String beforeDay,String updateColumn,String calculateColumn,String calculateLetter,boolean marketFLG){
+	private String calculateSQL_1(String TBL,String TODAY,String beforeDay,String updateColumn,String calculateColumn,String calculateLetter,boolean marketFLG){
 		String SQL = "";
 		String selectLetter = "selectLetter";
 		String updateLetter = "updateLetter";
@@ -1195,6 +1195,91 @@ public class cloringDate {
 				+ " )  " + selectLetter
 		+ " set "
 				+ updateLetter + "." + updateColumn	 + " = " + selectLetter + "." + dummyCOLUMN + "   "
+		+ " where "
+				+ updateLetter + "." + COLUMN.CODE + " = "+ selectLetter + "." + COLUMN.CODE
+				+ " and "
+				+ updateLetter + "." + COLUMN.DAYTIME + " = " + "'" +  TODAY + "'";
+
+		if (marketFLG){
+//			SQL = SQL+ " and "
+//					+ updateLetter + "." + COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
+		}
+		return SQL;
+	}
+
+	//マーケットフラグ：true(マーケットテーブル)
+	private String calculateSQL_2(String TBL,String TODAY,String beforeDay
+			,String updateColumn1,String calculateColumn1,String calculateLetter1
+			,String updateColumn2,String calculateColumn2,String calculateLetter2,boolean marketFLG){
+		String SQL = "";
+		String selectLetter = "selectLetter";
+		String updateLetter = "updateLetter";
+		String dummyCOLUMN_1 = "dummyCOLUMNA";
+		String dummyCOLUMN_2 = "dummyCOLUMNB";
+
+		SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
+				+ " ( "
+				+ " select "
+				+ COLUMN.CODE + " , "
+				+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
+				+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + "   "
+				+ " from " + TBL
+				+ " where "
+				+ COLUMN.DAYTIME + " <= " + "'" + TODAY + "'"
+				+ " and "
+				+ COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
+				+ " group by "+ COLUMN.CODE
+				+ " )  " + selectLetter
+				+ " set "
+				+ updateLetter + "." + updateColumn1	 + " = " + selectLetter + "." + dummyCOLUMN_1 + " ,  "
+				+ updateLetter + "." + updateColumn2	 + " = " + selectLetter + "." + dummyCOLUMN_2 + "    "
+				+ " where "
+				+ updateLetter + "." + COLUMN.CODE + " = "+ selectLetter + "." + COLUMN.CODE
+				+ " and "
+				+ updateLetter + "." + COLUMN.DAYTIME + " = " + "'" +  TODAY + "'";
+
+		if (marketFLG){
+			//				SQL = SQL+ " and "
+			//						+ updateLetter + "." + COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
+		}
+		return SQL;
+	}
+
+
+	//マーケットフラグ：true(マーケットテーブル)
+	private String calculateSQL_4(String TBL,String TODAY,String beforeDay
+			,String updateColumn1,String calculateColumn1,String calculateLetter1
+			,String updateColumn2,String calculateColumn2,String calculateLetter2
+			,String updateColumn3,String calculateColumn3,String calculateLetter3
+			,String updateColumn4,String calculateColumn4,String calculateLetter4,boolean marketFLG){
+		String SQL = "";
+		String selectLetter = "selectLetter";
+		String updateLetter = "updateLetter";
+		String dummyCOLUMN_1 = "dummyCOLUMNA";
+		String dummyCOLUMN_2 = "dummyCOLUMNB";
+		String dummyCOLUMN_3 = "dummyCOLUMNC";
+		String dummyCOLUMN_4 = "dummyCOLUMND";
+
+		SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
+				+ " ( "
+				+ " select "
+				+ COLUMN.CODE + " , "
+				+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
+				+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + " , "
+				+ " " + calculateLetter3 +  "(" + calculateColumn3 + ") as " + dummyCOLUMN_3 + " , "
+				+ " " + calculateLetter4 +  "(" + calculateColumn4 + ") as " + dummyCOLUMN_4 + "  "
+				+ " from " + TBL
+				+ " where "
+				+ COLUMN.DAYTIME + " <= " + "'" + TODAY + "'"
+				+ " and "
+				+ COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
+				+ " group by "+ COLUMN.CODE
+				+ " )  " + selectLetter
+		+ " set "
+				+ updateLetter + "." + updateColumn1	 + " = " + selectLetter + "." + dummyCOLUMN_1 + " ,  "
+				+ updateLetter + "." + updateColumn2	 + " = " + selectLetter + "." + dummyCOLUMN_2 + " ,  "
+				+ updateLetter + "." + updateColumn3	 + " = " + selectLetter + "." + dummyCOLUMN_3 + " ,  "
+				+ updateLetter + "." + updateColumn4	 + " = " + selectLetter + "." + dummyCOLUMN_4 + "   "
 		+ " where "
 				+ updateLetter + "." + COLUMN.CODE + " = "+ selectLetter + "." + COLUMN.CODE
 				+ " and "
@@ -1233,21 +1318,22 @@ public class cloringDate {
 					+ " A." + COLUMN.DAYTIME
 				+ " and "
 					+ " A." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
-//		ReCord.MARKET_CODE_1306;
-//		ReCord.NIKKEI225_CODE_1321;
 		commonAP.writeInLog(TBL + "NT倍率の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
 		//標準偏差の計算、リターンの計算
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",true);
-		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",true);
+//		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
+//		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+		SQL = calculateSQL_2(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
+		commonAP.writeInLog(TBL + "のリターン、標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 		persentUpdate(TBL,COLUMN.MARKET_RETURN_FOR_BETA,TODAY,s);
-
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
-		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
 		persentUpdate(TBL,COLUMN.MARKET_RISK_FOR_BETA,TODAY,s);
+
 
 //		+ COLUMN.MARKET_RISK_PREMIUM_KATA					 + " , "
 //		//分散、リスクフリーレート計算
@@ -1276,18 +1362,25 @@ public class cloringDate {
 
 
 		//標準偏差平均、リターンの平均、マーケットリスクプレミアムの平均
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA_AVE,COLUMN.MARKET_RETURN_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA_AVE,COLUMN.MARKET_RISK_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_PREMIUM_AVE,COLUMN.MARKET_RISK_PREMIUM,"avg",true);
-		commonAP.writeInLog(TBL + "マーケットリスクプレミアムの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.NT_RATIO_AVE,COLUMN.NT_RATIO,"avg",true);
-		commonAP.writeInLog(TBL + "NT倍率の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA_AVE,COLUMN.MARKET_RETURN_FOR_BETA,"avg",true);
+//		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA_AVE,COLUMN.MARKET_RISK_FOR_BETA,"avg",true);
+//		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_PREMIUM_AVE,COLUMN.MARKET_RISK_PREMIUM,"avg",true);
+//		commonAP.writeInLog(TBL + "マーケットリスクプレミアムの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.NT_RATIO_AVE,COLUMN.NT_RATIO,"avg",true);
+//		commonAP.writeInLog(TBL + "NT倍率の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+		SQL = calculateSQL_4(TBL,TODAY,beforeDay,
+				COLUMN.MARKET_RETURN_FOR_BETA_AVE,COLUMN.MARKET_RETURN_FOR_BETA,"avg",
+				COLUMN.MARKET_RISK_FOR_BETA_AVE,COLUMN.MARKET_RISK_FOR_BETA,"avg",
+				COLUMN.MARKET_RISK_PREMIUM_AVE,COLUMN.MARKET_RISK_PREMIUM,"avg",
+				COLUMN.NT_RATIO_AVE,COLUMN.NT_RATIO,"avg",
+				true);
+		commonAP.writeInLog(TBL + "リターンの平均、標準偏差平均、マーケットリスクプレミアムの更新、NT倍率の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
 		s.closeConection();
@@ -1406,13 +1499,17 @@ public class cloringDate {
 
 
 		//標準偏差の計算、リターンの計算
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",false);
-		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",false);
+//		commonAP.writeInLog(TBL + "リターンの計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
+//		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+
+		calculateSQL_2(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
+		commonAP.writeInLog(TBL + "リターン、標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		persentUpdate(TBL,COLUMN.RETURN_FOR_BETA,TODAY,s);
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
-		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
 		persentUpdate(TBL,COLUMN.RISK_FOR_BETA,TODAY,s);
 
 		//分散の計算
@@ -1426,20 +1523,28 @@ public class cloringDate {
 		//個別銘柄リターンとTOPIXリターンの、共分散相関係数を求める
 		calculateCAPM_STOCK_TBL_createTMP_TBL(TODAY,beforeDay,s);
 
-		//標準偏差平均、過去データの基づく理論上リターンの平均、CAPMの平均、ベータの平均
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",true);
-		commonAP.writeInLog(TBL + "CAPMの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-		SQL = calculateSQL(TBL,TODAY,beforeDay,COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",true);
-		commonAP.writeInLog(TBL + "確実性の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
+//		//標準偏差平均、過去データの基づく理論上リターンの平均、CAPMの平均、ベータの平均
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",false);
+//		commonAP.writeInLog(TBL + "リターンの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",false);
+//		commonAP.writeInLog(TBL + "標準偏差平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",false);
+//		commonAP.writeInLog(TBL + "CAPMの平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
+//		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",false);
+//		commonAP.writeInLog(TBL + "確実性の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		s.freeUpdateQuery(SQL);
 
+		SQL = calculateSQL_4(TBL,TODAY,beforeDay,
+				COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",
+				COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",
+				COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",
+				COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",
+				true);
+		commonAP.writeInLog(TBL + "リターン、標準偏差、CAPM、確実性の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
 
 		s.closeConection();
 	}
