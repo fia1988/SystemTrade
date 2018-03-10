@@ -1310,94 +1310,52 @@ public class cloringDate {
 
 	//個別銘柄リターンとTOPIXリターンの相関係数を求める
 	private void calculateCAPM_STOCK_TBL_createTMP_TBL(String TODAY,String beforeDay,S s){
-		//参考
-		//http://txqz.net/memo/2005-0619-2152.html
-		String avg = TBL_Name.TMP_01_AVE;
-		String sd  = TBL_Name.TMP_02_SD;
-		String marketstock  = TBL_Name.TMP_03_marketstock;
-		String DAYTIME = "dayterm";
+		//共分散の計算
 		String stockTBL = TBL_Name.STOCK_DD;
 		String marketTBL = TBL_Name.MARKET_DD_TBL;
-		String stockTBL_RETURN = COLUMN.RETURN_FOR_BETA_AVE;
-		String marketTBL_RETURN = COLUMN.MARKET_RETURN_FOR_BETA_AVE;
 
-
-
-		String stockTBL_COLUMN = "A_COLUMN";
-		String stockTBL_marketstock_COLUMN = "A_marketstock_COLUMN";
-		String stockTBL_avg_COLUMN = "A_avg_COLUMN";
-
-		String marketTBL_COLUMN = "B_COLUMN";
-		String marketTBL_marketstock_COLUMN = "B_marketstock_COLUMN";
-		String marketTBL_avg_COLUMN = "B_avg_COLUMN";
-
-		String stockTBL_sd_COLUMN = "stockTBL_sd_COLUMN";
-		String marketTBL_sd_COLUMN = "marketTBL_marketstock_COLUMN";
-
-
-		String SQL = "";
-		SQL = " CREATE TEMPORARY TABLE " + marketstock
-				+ " select "
-					+ TBL_Name.STOCK_DD + "." + stockTBL_RETURN + " as " + stockTBL_marketstock_COLUMN + " , "
-					+ TBL_Name.MARKET_DD_TBL + "." + marketTBL_RETURN + " as " + marketTBL_marketstock_COLUMN + " , "
-					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " as " + DAYTIME + "  "
-					+ " from "
-					+ TBL_Name.MARKET_DD_TBL
-					+ " left outer join " +  TBL_Name.STOCK_DD + " "
-					+	" on " +  TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = " + TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " "
+//		update 01_stock_dd a , 07_marketTBL_DD b ,  ( select 01_stock_dd.code, ( avg(01_stock_dd.RETURN_FOR_BETA * 07_marketTBL_DD.MARKET_RETURN_FOR_BETA) - avg(01_stock_dd.RETURN_FOR_BETA) * avg(07_marketTBL_DD.MARKET_RETURN_FOR_BETA) )  as dummycolumn  from  07_marketTBL_DD left outer join  01_stock_dd on  07_marketTBL_DD.daytime = 01_stock_dd.daytime where  07_marketTBL_DD.daytime <= '2007-12-28' and 07_marketTBL_DD.daytime >= '2007-01-04' group by 01_stock_dd.code ) c set a.COVAR_with_TOPIX =  c.dummycolumn where a.daytime = '2007-12-28' and a.code = c.code ;
+//       where a.daytime = '2007-12-28' and a.code = c.code ;
+		String SQL = " ";
+		SQL = " update " + stockTBL + " a , " + marketTBL + " b , "
+				+ " ( "
+					+ " select " + stockTBL + "." + COLUMN.CODE + " , "
+						+ " ( "
+							+ " avg(" + stockTBL + "." + COLUMN.RETURN_FOR_BETA + " * " + marketTBL + "." + COLUMN.MARKET_RETURN_FOR_BETA + ")"
+								+ " - "
+							+ " avg(" + stockTBL + "." + COLUMN.RETURN_FOR_BETA + ") * avg(" + marketTBL + "." + COLUMN.MARKET_RETURN_FOR_BETA + ")"
+						+ " )  as dummycolumn "
+					+ " from " + marketTBL + " left outer join " + stockTBL + " on " + stockTBL + "." + COLUMN.DAYTIME + " = " + marketTBL + "." + COLUMN.DAYTIME
 					+ " where "
-					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " <= '" + TODAY + "'"
-					+ " and "
-					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
-					+ " and "
-					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
-		commonAP.writeInLog("一時保管テーブル作成「" + marketstock + "」：" + SQL,logWriting.DATEDATE_LOG_FLG);
+						+ marketTBL + "." + COLUMN.DAYTIME + " <= '" + TODAY + "'"
+						+ " and "
+						+ marketTBL + "." + COLUMN.DAYTIME + " >= '" + beforeDay + "'"
+					+ " group by " + stockTBL + "." + COLUMN.CODE
+				+ " ) c "
+			+ " set "
+				+ " a." + COLUMN.COVAR_with_TOPIX + " = "
+				+ " c.dummycolumn "
+			+ " where "
+				+ " a." + COLUMN.CODE + " = "+ " c." + COLUMN.CODE
+				+ " and "
+				+ " a." + COLUMN.DAYTIME + " = '" + TODAY + "'";
+
+		commonAP.writeInLog("共分散の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
 
-		SQL = " CREATE TEMPORARY TABLE " + avg
-				+ " select "
-					+ TBL_Name.STOCK_DD + "." + stockTBL_RETURN + " as " + stockTBL_avg_COLUMN + " , "
-					+ TBL_Name.MARKET_DD_TBL + "." + marketTBL_RETURN + " as " + marketTBL_avg_COLUMN + "  "
-					+ " from "
-					+ TBL_Name.MARKET_DD_TBL
-					+ " left outer join " + TBL_Name.STOCK_DD
-					+	" on " +  TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = " + TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " "
-					+ " where "
-					+  TBL_Name.MARKET_DD_TBL + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
-					+ " and "
-					+ TBL_Name.MARKET_DD_TBL + "." + COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";;
-		commonAP.writeInLog("一時保管テーブル作成「" + avg + "」：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-
-
-
-//		CREATE TEMPORARY TABLE sd SELECT POW(x - xavg, 2) AS xsd, POW(y - yavg, 2) AS ysd, (x - xavg) * (y - yavg) AS covariance FROM correl CROSS JOIN avg;
-		SQL = " CREATE TEMPORARY TABLE " + sd
-				+ " select "
-					+ " pow(" + stockTBL_marketstock_COLUMN + " - " + stockTBL_avg_COLUMN + ",2) as " + stockTBL_sd_COLUMN + " , "
-					+ " pow(" + marketTBL_marketstock_COLUMN + " - " + marketTBL_avg_COLUMN + ",2) as " + marketTBL_sd_COLUMN + " , "
-					+ " (" + stockTBL_marketstock_COLUMN + " - " + stockTBL_avg_COLUMN + ")"
-					+ " * "
-					+ " (" + marketTBL_marketstock_COLUMN + " - " + marketTBL_avg_COLUMN + ") as covariance  "
-					+ " from "
-					+ marketstock
-					+ " CROSS JOIN " + avg;
-		commonAP.writeInLog("一時保管テーブル作成「" + sd + "」：" + SQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(SQL);
-
-		//SELECT SUM(covariance) / (POW(SUM(xsd), 0.5) * POW(SUM(ysd), 0.5)) AS correlation FROM sd
-		SQL = " select "
-					+ " sum(covariance) "
-					+ " / "
-					+ " ( "
-						+ "POW(SUM(" + marketTBL_sd_COLUMN + "),0.5)"
-						+ " * "
-						+ "POW(SUM(" + stockTBL_sd_COLUMN + "),0.5)"
-					+ " ) "
-					+ " AS correlation FROM "
-				+ sd;
-		commonAP.writeInLog("一時保管テーブル表示"+"：" + SQL,logWriting.DATEDATE_LOG_FLG);
+//		//SELECT SUM(covariance) / (POW(SUM(xsd), 0.5) * POW(SUM(ysd), 0.5)) AS correlation FROM sd
+//		SQL = " select "
+//					+ " sum(covariance) "
+//					+ " / "
+//					+ " ( "
+//						+ "POW(SUM(" + marketTBL_sd_COLUMN + "),0.5)"
+//						+ " * "
+//						+ "POW(SUM(" + stockTBL_sd_COLUMN + "),0.5)"
+//					+ " ) "
+//					+ " AS correlation FROM "
+//				+ sd;
+//		commonAP.writeInLog("一時保管テーブル表示"+"：" + SQL,logWriting.DATEDATE_LOG_FLG);
 
 	}
 
