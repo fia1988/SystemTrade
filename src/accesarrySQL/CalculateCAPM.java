@@ -242,6 +242,45 @@ public class CalculateCAPM {
 		commonAP.writeInLog("共分散の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
+
+		//ベータ、ベータの確実度
+		SQL = " update "
+				+ stockTBL	 + " as A ,"
+				+ marketTBL	 + " as B "
+			+ " set "
+				+ " A." + COLUMN.BETA
+				+ " = "
+				+ " (A." + COLUMN.COVAR_with_TOPIX + " / " + " B." + COLUMN.MARKET_RISK_Squaring_FOR_BETA + " ) , "
+				+ " A." + COLUMN.Certainty_FOR_BETA
+				+ " = "
+				+ " (A." + COLUMN.COVAR_with_TOPIX + " / ( " + " B." + COLUMN.MARKET_RISK_FOR_BETA + " * A." + COLUMN.RISK_FOR_BETA + " ) ) , "
+			+ " where "
+					+ " B." + COLUMN.DAYTIME
+					+ " = "
+					+ " A." + COLUMN.DAYTIME
+				+ " and "
+					+ " A." + COLUMN.DAYTIME
+					+ " = " + "'" + TODAY + "'";
+		commonAP.writeInLog(stockTBL + "のベータとベータの確実度セット：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+
+		//CAPM
+		SQL = " update "
+				+ stockTBL	 + " as A ,"
+				+ marketTBL	 + " as B "
+			+ " set "
+				+ " A." + COLUMN.CAPM
+				+ " = "
+				+ " (B." + COLUMN.RISK_FREE_RATE + " + ( A." + COLUMN.BETA + " * B." + COLUMN.MARKET_RISK_PREMIUM + "  ) ) "
+			+ " where "
+					+ " B." + COLUMN.DAYTIME
+					+ " = "
+					+ " A." + COLUMN.DAYTIME
+				+ " and "
+					+ " A." + COLUMN.DAYTIME
+					+ " = " + "'" + TODAY + "'";
+		commonAP.writeInLog(stockTBL + "CAPMセット：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
 //		+ COLUMN.BETA_KATA									 + " , " //(個別銘柄リターンとTOPIXリターンの共分散)/(TOPIXの分散)
 		//		+ COLUMN.CAPM_KATA							 + " , " //CAPM				//CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
 //		+ COLUMN.Certainty_FOR_BETA_KATA					 + " , " //ベータの確実度=相関係数=(個別銘柄リターンとTOPIXリターンの共分散)/(個別銘柄標準偏差*TOPIX標準偏差)
