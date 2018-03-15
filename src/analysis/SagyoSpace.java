@@ -323,6 +323,58 @@ public class SagyoSpace {
 	}
 
 
+	public static void a(){
+		//共分散の計算
+		String stockTBL = TBL_Name.STOCK_DD;
+		String marketTBL = TBL_Name.MARKET_DD_TBL;
+		String TODAY = "2018-03-01";
+		String beforeDay = "";
+//		update 01_stock_dd a , 07_marketTBL_DD b ,  ( select 01_stock_dd.code, ( avg(01_stock_dd.RETURN_FOR_BETA * 07_marketTBL_DD.MARKET_RETURN_FOR_BETA) - avg(01_stock_dd.RETURN_FOR_BETA) * avg(07_marketTBL_DD.MARKET_RETURN_FOR_BETA) )  as dummycolumn  from  07_marketTBL_DD left outer join  01_stock_dd on  07_marketTBL_DD.daytime = 01_stock_dd.daytime where  07_marketTBL_DD.daytime <= '2007-12-28' and 07_marketTBL_DD.daytime >= '2007-01-04' group by 01_stock_dd.code ) c set a.COVAR_with_TOPIX =  c.dummycolumn where a.daytime = '2007-12-28' and a.code = c.code ;
+//       where a.daytime = '2007-12-28' and a.code = c.code ;
+		String SQL = " ";
+
+
+
+		//ベータ、ベータの確実度
+		SQL = " update "
+				+ stockTBL	 + " as A ,"
+				+ marketTBL	 + " as B "
+			+ " set "
+				+ " A." + COLUMN.BETA
+				+ " = "
+				+ " (A." + COLUMN.COVAR_with_TOPIX + " / " + " B." + COLUMN.MARKET_RISK_Squaring_FOR_BETA + " ) , "
+				+ " A." + COLUMN.Certainty_FOR_BETA
+				+ " = "
+				+ " (A." + COLUMN.COVAR_with_TOPIX + " / ( " + " B." + COLUMN.MARKET_RISK_FOR_BETA + " * A." + COLUMN.RISK_FOR_BETA + " ) ) , "
+			+ " where "
+					+ " B." + COLUMN.DAYTIME
+					+ " = "
+					+ " A." + COLUMN.DAYTIME
+				+ " and "
+					+ " A." + COLUMN.DAYTIME
+					+ " = " + "'" + TODAY + "'";
+
+		System.out.println(stockTBL + "のベータとベータの確実度セット：" + SQL);
+
+		//CAPM
+		SQL = " update "
+				+ stockTBL	 + " as A ,"
+				+ marketTBL	 + " as B "
+			+ " set "
+				+ " A." + COLUMN.CAPM
+				+ " = "
+				+ " (B." + COLUMN.RISK_FREE_RATE + " + ( A." + COLUMN.BETA + " * B." + COLUMN.MARKET_RISK_PREMIUM + "  ) ) "
+			+ " where "
+					+ " B." + COLUMN.DAYTIME
+					+ " = "
+					+ " A." + COLUMN.DAYTIME
+				+ " and "
+					+ " A." + COLUMN.DAYTIME
+					+ " = " + "'" + TODAY + "'";
+
+		System.out.println(stockTBL + "CAPMセット：" + SQL);
+	}
+
 	public static void testCase9999(){
 		//基本８手法
 		//連続取引するエリートの全メソッドの一覧を作る

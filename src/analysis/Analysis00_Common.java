@@ -918,6 +918,16 @@ public class Analysis00_Common {
 				nowDTO.setRISK_FOR_BETA_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.RISK_FOR_BETA_AVE		));
 
 
+				
+				nowDTO.setMARKET_RETURN_FOR_BETA(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.MARKET_RETURN_FOR_BETA )); //過去データの基づく理論上リターン
+				nowDTO.setMARKET_RETURN_FOR_BETA_AVE(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.MARKET_RETURN_FOR_BETA_AVE )); //過去データの基づく理論上リターンの平均
+				nowDTO.setMARKET_RISK_FOR_BETA(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.MARKET_RISK_FOR_BETA )); //標準偏差
+				nowDTO.setMARKET_RISK_FOR_BETA_AVE(RS.getDouble(	 ReCord.MARKET_LETTER + "." + COLUMN.MARKET_RISK_FOR_BETA_AVE ));//標準偏差平均
+				nowDTO.setCAPM(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.CAPM	 ));//CAPM				//CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
+				nowDTO.setWACC(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.WACC	 )); //WACC
+				nowDTO.setCAPM_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.CAPM_AVE	 ));//CAPM_AVE
+				nowDTO.setWACC_AVE(RS.getDouble(	 ReCord.STOCK_TBK_DD_A + "." + COLUMN.WACC_AVE	 )); //WACC_AVE
+				
 				if (paraDTO.isCheckInvest()){
 
 					nowDTO.setMARKET(RS.getString(ReCord.INVESTTBL_F + "." + COLUMN.MARKET));

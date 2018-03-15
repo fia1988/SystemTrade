@@ -15,9 +15,84 @@ public class Bean_nowRecord {
 	double RETURN_FOR_BETA;						  //過去データの基づく理論上リターン
 	double RETURN_FOR_BETA_AVE;					  //過去データの基づく理論上リターンの平均
 	double RISK_FOR_BETA;						 //標準偏差
-	double RISK_FOR_BETA_AVE;					 //標準偏差の平均							 + " , " //NT倍率の平均
+	double RISK_FOR_BETA_AVE;					 //標準偏差の平均
+
+	double MARKET_RETURN_FOR_BETA; //過去データの基づく理論上リターン
+	double MARKET_RETURN_FOR_BETA_AVE; //過去データの基づく理論上リターンの平均
+	double MARKET_RISK_FOR_BETA; //標準偏差
+	double MARKET_RISK_FOR_BETA_AVE;//標準偏差平均
+	double CAPM;//CAPM				//CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
+	double WACC; //WACC
+	double CAPM_AVE;//CAPM_AVE
+	double WACC_AVE; //WACC_AVE
 
 
+
+
+
+	public double getMARKET_RETURN_FOR_BETA() {
+		return MARKET_RETURN_FOR_BETA;
+	}
+
+	public void setMARKET_RETURN_FOR_BETA(double mARKET_RETURN_FOR_BETA) {
+		MARKET_RETURN_FOR_BETA = mARKET_RETURN_FOR_BETA;
+	}
+
+	public double getMARKET_RETURN_FOR_BETA_AVE() {
+		return MARKET_RETURN_FOR_BETA_AVE;
+	}
+
+	public void setMARKET_RETURN_FOR_BETA_AVE(double mARKET_RETURN_FOR_BETA_AVE) {
+		MARKET_RETURN_FOR_BETA_AVE = mARKET_RETURN_FOR_BETA_AVE;
+	}
+
+	public double getMARKET_RISK_FOR_BETA() {
+		return MARKET_RISK_FOR_BETA;
+	}
+
+	public void setMARKET_RISK_FOR_BETA(double mARKET_RISK_FOR_BETA) {
+		MARKET_RISK_FOR_BETA = mARKET_RISK_FOR_BETA;
+	}
+
+	public double getMARKET_RISK_FOR_BETA_AVE() {
+		return MARKET_RISK_FOR_BETA_AVE;
+	}
+
+	public void setMARKET_RISK_FOR_BETA_AVE(double mARKET_RISK_FOR_BETA_AVE) {
+		MARKET_RISK_FOR_BETA_AVE = mARKET_RISK_FOR_BETA_AVE;
+	}
+
+	public double getCAPM() {
+		return CAPM;
+	}
+
+	public void setCAPM(double cAPM) {
+		CAPM = cAPM;
+	}
+
+	public double getWACC() {
+		return WACC;
+	}
+
+	public void setWACC(double wACC) {
+		WACC = wACC;
+	}
+
+	public double getCAPM_AVE() {
+		return CAPM_AVE;
+	}
+
+	public void setCAPM_AVE(double cAPM_AVE) {
+		CAPM_AVE = cAPM_AVE;
+	}
+
+	public double getWACC_AVE() {
+		return WACC_AVE;
+	}
+
+	public void setWACC_AVE(double wACC_AVE) {
+		WACC_AVE = wACC_AVE;
+	}
 
 	public double getMARKET_RISK_PREMIUM() {
 		return MARKET_RISK_PREMIUM;

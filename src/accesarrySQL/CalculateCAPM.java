@@ -59,7 +59,7 @@ public class CalculateCAPM {
 
 //		+ COLUMN.MARKET_RISK_PREMIUM_KATA					 + " , "
 //		//分散、リスクフリーレート計算
-		//リスクフリーレートは0.8%とする。
+		//リスクフリーレートは0.8/245%とする。
 		SQL = " update " + TBL
 			+ " set "
 			+ COLUMN.MARKET_RISK_Squaring_FOR_BETA + " = " + COLUMN.MARKET_RISK_FOR_BETA + " * " + COLUMN.MARKET_RISK_FOR_BETA + " , "
@@ -253,7 +253,7 @@ public class CalculateCAPM {
 				+ " (A." + COLUMN.COVAR_with_TOPIX + " / " + " B." + COLUMN.MARKET_RISK_Squaring_FOR_BETA + " ) , "
 				+ " A." + COLUMN.Certainty_FOR_BETA
 				+ " = "
-				+ " (A." + COLUMN.COVAR_with_TOPIX + " / ( " + " B." + COLUMN.MARKET_RISK_FOR_BETA + " * A." + COLUMN.RISK_FOR_BETA + " ) ) , "
+				+ " (A." + COLUMN.COVAR_with_TOPIX + " / ( " + " B." + COLUMN.MARKET_RISK_FOR_BETA + " * A." + COLUMN.RISK_FOR_BETA + " ) )  "
 			+ " where "
 					+ " B." + COLUMN.DAYTIME
 					+ " = "
