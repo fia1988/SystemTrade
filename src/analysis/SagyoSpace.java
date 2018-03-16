@@ -10,6 +10,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
+import accesarrySQL.CalculateCAPM;
 import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
@@ -332,47 +333,21 @@ public class SagyoSpace {
 //		update 01_stock_dd a , 07_marketTBL_DD b ,  ( select 01_stock_dd.code, ( avg(01_stock_dd.RETURN_FOR_BETA * 07_marketTBL_DD.MARKET_RETURN_FOR_BETA) - avg(01_stock_dd.RETURN_FOR_BETA) * avg(07_marketTBL_DD.MARKET_RETURN_FOR_BETA) )  as dummycolumn  from  07_marketTBL_DD left outer join  01_stock_dd on  07_marketTBL_DD.daytime = 01_stock_dd.daytime where  07_marketTBL_DD.daytime <= '2007-12-28' and 07_marketTBL_DD.daytime >= '2007-01-04' group by 01_stock_dd.code ) c set a.COVAR_with_TOPIX =  c.dummycolumn where a.daytime = '2007-12-28' and a.code = c.code ;
 //       where a.daytime = '2007-12-28' and a.code = c.code ;
 		String SQL = " ";
+		CalculateCAPM a = new 		CalculateCAPM();
 
-
-
-		//ベータ、ベータの確実度
-		SQL = " update "
-				+ stockTBL	 + " as A ,"
-				+ marketTBL	 + " as B "
-			+ " set "
-				+ " A." + COLUMN.BETA
-				+ " = "
-				+ " (A." + COLUMN.COVAR_with_TOPIX + " / " + " B." + COLUMN.MARKET_RISK_Squaring_FOR_BETA + " ) , "
-				+ " A." + COLUMN.Certainty_FOR_BETA
-				+ " = "
-				+ " (A." + COLUMN.COVAR_with_TOPIX + " / ( " + " B." + COLUMN.MARKET_RISK_FOR_BETA + " * A." + COLUMN.RISK_FOR_BETA + " ) ) , "
-			+ " where "
-					+ " B." + COLUMN.DAYTIME
-					+ " = "
-					+ " A." + COLUMN.DAYTIME
-				+ " and "
-					+ " A." + COLUMN.DAYTIME
-					+ " = " + "'" + TODAY + "'";
-
-		System.out.println(stockTBL + "のベータとベータの確実度セット：" + SQL);
-
-		//CAPM
-		SQL = " update "
-				+ stockTBL	 + " as A ,"
-				+ marketTBL	 + " as B "
-			+ " set "
-				+ " A." + COLUMN.CAPM
-				+ " = "
-				+ " (B." + COLUMN.RISK_FREE_RATE + " + ( A." + COLUMN.BETA + " * B." + COLUMN.MARKET_RISK_PREMIUM + "  ) ) "
-			+ " where "
-					+ " B." + COLUMN.DAYTIME
-					+ " = "
-					+ " A." + COLUMN.DAYTIME
-				+ " and "
-					+ " A." + COLUMN.DAYTIME
-					+ " = " + "'" + TODAY + "'";
-
-		System.out.println(stockTBL + "CAPMセット：" + SQL);
+//		SQL = a.calculateSQL_4(marketTBL,TODAY,beforeDay,
+//				COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",
+//				COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",
+//				COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",
+//				COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",
+//				true);
+//		System.out.println("2：" + SQL);
+//
+//		SQL=a.calculateSQL_2(stockTBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
+//		System.out.println("4：" + SQL);
+//
+//		SQL = a.calculateSQL_1(stockTBL,TODAY,beforeDay,COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",false);
+//		System.out.println("1：" + SQL);
 	}
 
 	public static void testCase9999(){

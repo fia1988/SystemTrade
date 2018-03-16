@@ -314,6 +314,14 @@ public class Technique00_Common {
 		//--------ここまで財務データ------------
 
 		System.out.println("-----------------------------" + nowDTO.getCode_01() + "-----------------------------");
+		System.out.println("マーケットリスクプレミアム：" + nowDTO.getMARKET_RISK_PREMIUM());
+		System.out.println("マーケットリスクプレミアム平均：" + nowDTO.getMARKET_RISK_PREMIUM_AVE());
+		System.out.println("NT：" + nowDTO.getNT_RATIO());
+		System.out.println("NT平均：" + nowDTO.getNT_RATIO_AVE());
+		System.out.println("マーケットリターン:"+ nowDTO.getMARKET_RETURN_FOR_BETA());
+		System.out.println("マーケットリターン平均:" +nowDTO.getMARKET_RETURN_FOR_BETA_AVE());
+		System.out.println("マーケットリスク:" +nowDTO.getMARKET_RISK_FOR_BETA());
+		System.out.println("マーケットリスク平均:" +nowDTO.getMARKET_RISK_FOR_BETA_AVE());
 		System.out.println("ベータ：" + nowDTO.getBETA());
 		System.out.println("確実度：" + nowDTO.getCertainty_FOR_BETA());
 		System.out.println("確実度平均：" + nowDTO.getCertainty_FOR_BETA_AVE());
@@ -321,15 +329,6 @@ public class Technique00_Common {
 		System.out.println("リターン平均：" + nowDTO.getRETURN_FOR_BETA_AVE());
 		System.out.println("リスク：" + nowDTO.getRISK_FOR_BETA());
 		System.out.println("リスク平均：" + nowDTO.getRISK_FOR_BETA_AVE());
-		System.out.println("マーケットリスクプレミアム：" + nowDTO.getMARKET_RISK_PREMIUM());
-		System.out.println("マーケットリスクプレミアム平均：" + nowDTO.getMARKET_RISK_PREMIUM_AVE());
-		System.out.println("NT：" + nowDTO.getNT_RATIO());
-		System.out.println("NT平均：" + nowDTO.getNT_RATIO_AVE());
-
-		System.out.println("マーケットリターン:"+ nowDTO.getMARKET_RETURN_FOR_BETA());
-		System.out.println("マーケットリターン平均:" +nowDTO.getMARKET_RETURN_FOR_BETA_AVE());
-		System.out.println("マーケットリスク:" +nowDTO.getMARKET_RISK_FOR_BETA());
-		System.out.println("マーケットリスク平均:" +nowDTO.getMARKET_RISK_FOR_BETA_AVE());
 		System.out.println("CAPM:" +nowDTO.getCAPM());
 		System.out.println("CAPM平均:" +nowDTO.getCAPM_AVE());
 		System.out.println("WACC:" +nowDTO.getWACC());
