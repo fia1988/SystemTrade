@@ -58,6 +58,7 @@ public class editHesogomaFile {
 				updateCheckPointColumn = ReCord.KOSHINBI_STOCK_LIST;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-prices/daily/japan-all-stock-prices_";
 				break;
 			case ReCord.CODE_HESO_01_STOCK:
 				hesogomaFileName = hesogomaFileName + STOCK_DATA_FILE;
@@ -67,6 +68,7 @@ public class editHesogomaFile {
 				KOSHINMOZI = "株";
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-prices/daily/japan-all-stock-prices_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-prices/daily/japan-all-stock-prices_";
 				break;
 			case ReCord.CODE_HESO_02_INVEST:
 				hesogomaFileName = hesogomaFileName + INVEST_FILE;
@@ -75,6 +77,7 @@ public class editHesogomaFile {
 				updateCheckPointColumn = ReCord.KOSHINBI_INVEST_CHECK_POINT;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-data/daily/japan-all-stock-data_";
 				KOSHINMOZI = "投資データ";
 
 				break;
@@ -86,6 +89,7 @@ public class editHesogomaFile {
 				updateCheckPointColumn = ReCord.KOSHINBI_FINANCIAL_CHECK_POINT;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results_";
 				break;
 			case  ReCord.CODE_HESO_04_RATIO:
 				TBL = TBL_Name.FORRIGN_RATIO_TBL;
@@ -95,6 +99,7 @@ public class editHesogomaFile {
 				KOSHINMOZI = "株主比率";
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-information/monthly/shareholding-ratio_";
 				break;
 			case  ReCord.CODE_HESO_05_CREDIT:
 				TBL = TBL_Name.CREDIT_WW_TBL;
@@ -104,10 +109,12 @@ public class editHesogomaFile {
 				updateCheckPointColumn = ReCord.KOSHINBI_CREDIT_CHECK_POINT;
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-margin-transactions/weekly/japan-all-stock-margin-transactions_";
 				break;
 			case  ReCord.CODE_HESO_06_REIT:
 				TBL = TBL_Name.TOSHO_REIT_DD_TBL;
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/tosho-reit-stock-prices/daily/tosho-reit-stock-prices_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/tosho-reit-stock-prices/daily/tosho-reit-stock-prices_";
 				KOSHINMOZI = "東証REIT";
 				hesogomaFileName = hesogomaFileName + TOSHO_RAIT_FILE;
 				updateColumn = ReCord.KOSHINBI_TOSHO_REIT;
@@ -117,6 +124,7 @@ public class editHesogomaFile {
 				TBL = TBL_Name.TOSHO_ETF_DD_TBL;
 				hesogomaFileName = hesogomaFileName + TOSHO_ETF_FILE;
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/tosho-etf-stock-prices/daily/tosho-etf-stock-prices_";
+				URL_parts =            "https://csvex.com/kabu.plus/csv/tosho-etf-stock-prices/daily/tosho-etf-stock-prices_";
 				KOSHINMOZI = "東証ETF";
 				updateColumn = ReCord.KOSHINBI_TOSHO_ETF;
 				updateCheckPointColumn = ReCord.KOSHINBI_TOSHO_ETF;

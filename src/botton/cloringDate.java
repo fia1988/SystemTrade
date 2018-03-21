@@ -1122,9 +1122,9 @@ public class cloringDate {
 				+ COLUMN.MIDDLE_MACD							 + " , " //中期MACD
 				+ COLUMN.MIDDLE_MACD_SIGNAL						 + " , " //中期MACDシグナル線
 				+ COLUMN.LONG_MACD								 + " , " //長期MACD
-				+ COLUMN.LONG_MACD_SIGNAL						 + " , "
-				+ COLUMN.NT_RATIO								 + " , " //NT倍率
-				+ COLUMN.NT_RATIO_AVE							 + "   "; //NT倍率の平均; //長期MACDシグナル線;
+				+ COLUMN.LONG_MACD_SIGNAL						 + "  ";
+//				+ COLUMN.NT_RATIO								 + " , " //NT倍率
+//				+ COLUMN.NT_RATIO_AVE							 + "   "; //NT倍率の平均; //長期MACDシグナル線;
 
 		String SQL = " insert into " + TBL_Name.MARKET_DD_TBL
 					+ " ( " + column + " ) "
