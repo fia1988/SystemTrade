@@ -7,8 +7,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -42,10 +53,32 @@ public class DownloadController {
 
 
 	public List<String> getData(String strUrl, String id, String pass)
-			throws IOException, UnknownHostException, WebAccessException, MalformedURLException {
+			throws IOException, UnknownHostException, WebAccessException, MalformedURLException,
+			KeyManagementException, NoSuchAlgorithmException {
 
 		URL url = new URL(strUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		//===========新へそのごま対応のために追加==============
+		HttpsURLConnection sConn = (HttpsURLConnection)conn;
+
+        // 証明書の検証をしない
+        // sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+		SSLContext sslContext = SSLContext.getInstance("SSL");
+        sslContext.init(null,
+                        new X509TrustManager[] { new LooseTrustManager() },
+                        new SecureRandom());
+
+        sConn.setSSLSocketFactory(sslContext.getSocketFactory());
+
+        // ホスト名の検証をしない
+        // java.security.cert.CertificateException: No name matching [ホスト名] found
+        // HttpsURLConnection.setDefaultHostnameVerifier(new LooseHostnameVerifier());
+        sConn.setHostnameVerifier(new LooseHostnameVerifier());
+
+        //========================================================
+		
+		
 		String strKey = id + ":" + pass;
 
 		String encodedBytes = new String(Base64.encodeBase64(strKey.getBytes()));
@@ -76,4 +109,26 @@ public class DownloadController {
 	    return builder.toString();
 	}
 }
+
+class LooseTrustManager implements X509TrustManager {
+    @Override
+    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    }
+
+    @Override
+    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    }
+
+    @Override
+    public X509Certificate[] getAcceptedIssuers() {
+            return null;
+    }
+}
+
+class LooseHostnameVerifier implements HostnameVerifier {
+    public boolean verify(String hostname, SSLSession session) {
+            return true;
+    }
+}
+
 

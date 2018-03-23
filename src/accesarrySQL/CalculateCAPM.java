@@ -162,8 +162,9 @@ public class CalculateCAPM {
 //		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 //		s.freeUpdateQuery(SQL);
 
-		calculateSQL_2(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
+		SQL = calculateSQL_2(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
 		commonAP.writeInLog(TBL + "リターン、標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
 		persentUpdate(TBL,COLUMN.RETURN_FOR_BETA,TODAY,s);
 		persentUpdate(TBL,COLUMN.RISK_FOR_BETA,TODAY,s);
 
@@ -174,7 +175,8 @@ public class CalculateCAPM {
 			+ " where "
 			+ COLUMN.DAYTIME + " = "+ "'" +  TODAY + "'";
 		commonAP.writeInLog(TBL + "の分散：" + SQL,logWriting.DATEDATE_LOG_FLG);
-
+		s.freeUpdateQuery(SQL);
+		
 		//個別銘柄リターンとTOPIXリターンの共分散相関係数、ベータ、CAPM、ベータの確実性を求める
 		calculateCAPM_STOCK_TBL_createTMP_TBL(TODAY,beforeDay,s);
 

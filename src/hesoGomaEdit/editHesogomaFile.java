@@ -78,6 +78,7 @@ public class editHesogomaFile {
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-data/daily/japan-all-stock-data_";
 				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-data/daily/japan-all-stock-data_";
+
 				KOSHINMOZI = "投資データ";
 
 				break;
@@ -90,6 +91,7 @@ public class editHesogomaFile {
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results_";
 				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-financial-results/monthly/japan-all-stock-financial-results_";
+
 				break;
 			case  ReCord.CODE_HESO_04_RATIO:
 				TBL = TBL_Name.FORRIGN_RATIO_TBL;
@@ -100,6 +102,7 @@ public class editHesogomaFile {
 	//			URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio.csv";
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/japan-all-stock-information/monthly/shareholding-ratio_";
 				URL_parts =            "https://csvex.com/kabu.plus/csv/japan-all-stock-information/monthly/shareholding-ratio_";
+
 				break;
 			case  ReCord.CODE_HESO_05_CREDIT:
 				TBL = TBL_Name.CREDIT_WW_TBL;
@@ -115,6 +118,7 @@ public class editHesogomaFile {
 				TBL = TBL_Name.TOSHO_REIT_DD_TBL;
 				URL_parts = "https://hesonogoma.com/stocks/download/csv/tosho-reit-stock-prices/daily/tosho-reit-stock-prices_";
 				URL_parts =            "https://csvex.com/kabu.plus/csv/tosho-reit-stock-prices/daily/tosho-reit-stock-prices_";
+
 				KOSHINMOZI = "東証REIT";
 				hesogomaFileName = hesogomaFileName + TOSHO_RAIT_FILE;
 				updateColumn = ReCord.KOSHINBI_TOSHO_REIT;
@@ -284,6 +288,10 @@ public class editHesogomaFile {
 							commonAP.writeInErrLog(e);
 							return ReturnCodeConst.EVERY_UPDATE_ERR;
 						}
+					} catch (Exception e) {
+						commonAP.writeInLog("本当に本当の理由がさっぱりわからんエラー",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInErrLog(e);
+						return ReturnCodeConst.EVERY_UPDATE_ERR;
 					}
 
 				}else{
