@@ -208,7 +208,6 @@ public class cloringDate {
 //			if (commonAP.checkSabunDay(TODAY,checkDay,PROPARTY.BACK_UP_KANkAKU)==false){
 				//同名ファイルのチェック
 				//バックアップファイルの出力先にバックアップファイルが存在するかどうかのチェック
-				System.out.println("dddddddddddddd");
 				String todayDump = mainDTO.getOutBackUpFolderPath() + File.separator + TODAY + ".dump";
 				String todayFolder = mainDTO.getOutBackUpFolderPath();
 				File file =  new File(todayDump);

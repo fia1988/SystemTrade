@@ -1,8 +1,10 @@
 package common;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
@@ -233,10 +235,13 @@ public class commonAP {
 		}
 		try{
 		//				File file = new File(newFile);
-
-			FileWriter filewriter = new FileWriter(file,true);
-			filewriter.write(writing );
-			filewriter.close();
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+			        new FileOutputStream(logFileFolderPath + File.separator + fileName, true),PROPARTY.MOJI_TYPE)));
+			pw.write(writing);
+			pw.close();
+//			FileWriter filewriter = new FileWriter(file,true);
+//			filewriter.write(writing );
+//			filewriter.close();
 		}catch(IOException e){
 			System.out.println(e);
 		}

@@ -1,10 +1,16 @@
 package bean;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import proparty.PROPARTY;
 
 import common.commonAP;
 
@@ -129,13 +135,19 @@ public class Bean_Bean {
 
 		try {
 			file.createNewFile();
-			FileWriter filewriter = new FileWriter(file,true);
-
+//			FileWriter filewriter = new FileWriter(file,true);
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+			        new FileOutputStream(kariFilePath, true),PROPARTY.MOJI_TYPE)));
 
 			for(int i = skipLine;i<listCSV.size();i++){
-				filewriter.write( DAY + "," + listCSV.get(i)  + "\r\n");
+				
+				pw.write( DAY + "," + listCSV.get(i)  + "\r\n");
+				
+				
+//				filewriter.write( DAY + "," + listCSV.get(i)  + "\r\n");
 			}
-			filewriter.close();
+			pw.close();
+//			filewriter.close();
 		} catch (IOException e1) {
 			// TODO 自動生成された catch ブロック
 			commonAP.writeInErrLog(e1);

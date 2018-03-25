@@ -36,6 +36,9 @@ public class PROPARTY {
 	//株データを監視するスパン単位(固定値)：ﾐﾘ秒
 	public final static int CLOALING_TIME_CONST			=	900000;
 
+	//文字コード
+	public final static String MOJI_TYPE			=	"utf-8";
+
 	//0:毎日
 	//1:月水金
 	//2:月木、火金
@@ -62,9 +65,9 @@ public class PROPARTY {
 	public static String DBPASS = "";
 
 	//へそのごまのID
-	public static final String hesoGomaID = "trial";
+	public static final String hesoGomaID = "";
 	//へそのごまのパスワード
-	public static final String hesoGomePASS = "PW@20170129";
+	public static final String hesoGomePASS = "";
 
 
 }

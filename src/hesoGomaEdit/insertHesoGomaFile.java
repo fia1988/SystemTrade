@@ -5,8 +5,9 @@ import insertPackage.InsertList;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,10 @@ public class insertHesoGomaFile {
 
 		String str;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
+            FileInputStream input = new FileInputStream(file);
+            InputStreamReader stream = new InputStreamReader(input,"UTF-8");
+            BufferedReader br = new BufferedReader(stream);
+//			BufferedReader br = new BufferedReader(new FileReader(file));
 			str = br.readLine();
 			while(str != null){
 				csvStringList.add(str);
