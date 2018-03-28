@@ -10,7 +10,6 @@ import proparty.S;
 import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
-import accesarrySQL.CalculateCAPM;
 import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
@@ -242,8 +241,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2015-01-03";
 		String endDD		=	"2017-12-31";
-		startDD	=	"2018-02-14";
-		endDD		=	"2018-03-02";
+		startDD	=	"2018-03-26";
+		endDD		=	"2018-04-30";
 		shokisettei(paraDTO, nowDTO, resultDTO,false);
 		paraDTO.setCheckInvest(true);
 		String tec = "technique";
@@ -324,31 +323,6 @@ public class SagyoSpace {
 	}
 
 
-	public static void a(){
-		//共分散の計算
-		String stockTBL = TBL_Name.STOCK_DD;
-		String marketTBL = TBL_Name.MARKET_DD_TBL;
-		String TODAY = "2018-03-01";
-		String beforeDay = "";
-//		update 01_stock_dd a , 07_marketTBL_DD b ,  ( select 01_stock_dd.code, ( avg(01_stock_dd.RETURN_FOR_BETA * 07_marketTBL_DD.MARKET_RETURN_FOR_BETA) - avg(01_stock_dd.RETURN_FOR_BETA) * avg(07_marketTBL_DD.MARKET_RETURN_FOR_BETA) )  as dummycolumn  from  07_marketTBL_DD left outer join  01_stock_dd on  07_marketTBL_DD.daytime = 01_stock_dd.daytime where  07_marketTBL_DD.daytime <= '2007-12-28' and 07_marketTBL_DD.daytime >= '2007-01-04' group by 01_stock_dd.code ) c set a.COVAR_with_TOPIX =  c.dummycolumn where a.daytime = '2007-12-28' and a.code = c.code ;
-//       where a.daytime = '2007-12-28' and a.code = c.code ;
-		String SQL = " ";
-		CalculateCAPM a = new 		CalculateCAPM();
-
-//		SQL = a.calculateSQL_4(marketTBL,TODAY,beforeDay,
-//				COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",
-//				COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",
-//				COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",
-//				COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",
-//				true);
-//		System.out.println("2：" + SQL);
-//
-//		SQL=a.calculateSQL_2(stockTBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
-//		System.out.println("4：" + SQL);
-//
-//		SQL = a.calculateSQL_1(stockTBL,TODAY,beforeDay,COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",false);
-//		System.out.println("1：" + SQL);
-	}
 
 	public static void testCase9999(){
 		//基本８手法
@@ -359,8 +333,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2008-12-31";
-		startDD	=	"2018-02-07";
-		endDD		=	"2018-03-02";
+		startDD	=	"2018-03-26";
+		endDD		=	"2018-04-30";
 //		startDD	=	"2007-01-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート

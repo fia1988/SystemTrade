@@ -141,7 +141,7 @@ public class IDO_HEKIN_Price extends Super_IDO_HEKIN{
 
 
 
-//aa
+
 
 	public static void setIDO_Heikin(String code,String cate,String dayTime,S s,ResultSet EDIT){
 		//個別銘柄・・・1
