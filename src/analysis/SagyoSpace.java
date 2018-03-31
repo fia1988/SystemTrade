@@ -335,7 +335,7 @@ public class SagyoSpace {
 		String endDD		=	"2008-12-31";
 		startDD	=	"2018-03-26";
 		endDD		=	"2018-04-30";
-//		startDD	=	"2007-01-04";
+//		startDD	=	"2017-12-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート
 //		startDD	=	"2017-07-18";

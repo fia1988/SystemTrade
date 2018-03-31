@@ -64,7 +64,7 @@ public class Bean_Result {
 		this.keepCodeCout++;
 	}
 
-	public double getCodeKeepStockResult() {
+	private double getCodeKeepStockResult() {
 		return codeKeepStockResult;
 	}
 
@@ -76,7 +76,7 @@ public class Bean_Result {
 		this.codeKeepStockResult = this.codeKeepStockResult + codeKeepStockResult;
 	}
 
-	public double getTotalKeepStockResult() {
+	private double getTotalKeepStockResult() {
 		return totalKeepStockResult;
 	}
 
@@ -865,7 +865,7 @@ public class Bean_Result {
 								commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("勝エントリー回数一覧：" + "・" + resultCode +"," + winList,logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeInLog("負エントリー回数一覧：" + "・" + resultCode +"," + loseList,logWriting.BACKTEST_LOG_FLG);
-								commonAP.writeInLog("保有できずの評価：" + resultCode +"," + getCodeKeepStockResult() + " %",logWriting.BACKTEST_LOG_FLG);
+								commonAP.writeInLog("保有できずの評価：" + resultCode +"," + getCodeKeepStockResult() * 100 + " %",logWriting.BACKTEST_LOG_FLG);
 								commonAP.writeLog( elete ,logWriting.CODE_RESULT_LOG_FLG);
 								commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 								System.out.println("ここは通っている。レイシオ");
@@ -882,7 +882,7 @@ public class Bean_Result {
 							commonAP.writeInLog("負エントリー平均回数：" + aveLoseEntry,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("勝エントリー回数一覧：" + "・" + resultCode +"," + winList,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("負エントリー回数一覧：" + "・" + resultCode +"," + loseList,logWriting.BACKTEST_LOG_FLG);
-							commonAP.writeInLog("保有できずの評価：" + resultCode +"," + getCodeKeepStockResult(),logWriting.BACKTEST_LOG_FLG);
+							commonAP.writeInLog("保有できずの評価：" + resultCode +"," + getCodeKeepStockResult() * 100,logWriting.BACKTEST_LOG_FLG);
 							commonAP.writeInLog("トータル％ ／ トータル勝ち％：" + (totalWARIAI),logWriting.BACKTEST_LOG_FLG);
 							//時刻,メソッド名,code
 							commonAP.writeLog( elete ,logWriting.CODE_RESULT_LOG_FLG);
@@ -1341,7 +1341,7 @@ public class Bean_Result {
 				commonAP.writeInLog("トータル計：" + getTradeCount(),logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル勝％：" + getTotalWinParcent() * 100 +  " %",logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("トータル負％：" + getTotalLoseParcent() * 100 +  " %" ,logWriting.BACKTEST_LOG_FLG);
-				commonAP.writeInLog("売却できずの評価：" +  getTotalKeepStockResult() + " %",logWriting.BACKTEST_LOG_FLG);
+				commonAP.writeInLog("売却できずの評価：" +  (100*getTotalKeepStockResult()) + " %",logWriting.BACKTEST_LOG_FLG);
 				double totalReturn = getTotalWinParcent() + getTotalLoseParcent();
 				commonAP.writeInLog("トータルリターン：" + ( ( totalReturn ) * 100 ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
 				commonAP.writeInLog("リターンレイシオ：" + ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) +  " %" ,logWriting.BACKTEST_LOG_FLG);
@@ -1461,7 +1461,7 @@ public class Bean_Result {
 										+ ( getTotalWinParcent() * 100 ) + ","
 										+ ( getTotalLoseParcent() * 100 ) + ","
 										+ (totalReturn*100) + ","
-										+ getTotalKeepStockResult() + ","
+										+ (100*getTotalKeepStockResult()) + ","
 										+ ( ( ( 100 * totalReturn ) / ( ( getTotalWinParcent() ) ) ) ) + ","
 										+ ((( ( getTotalWinParcent() + getTotalLoseParcent() ) * 100 )/ ( (getTOTAL_WIN()+getTOTAL_LOSE()) * getEntryTimeAverage()) ) ) + ","
 										+ (getTotalDays() / ( getTOTAL_WIN() + getTOTAL_LOSE() ) ) + ","
@@ -1574,7 +1574,7 @@ public class Bean_Result {
 							+ ( totalWinPer  ) + ","
 							+ ( totalLosePer ) + ","
 							+ (totalResult) + ","
-							+ getTotalKeepStockResult() + ","
+							+ (100*getTotalKeepStockResult()) + ","
 							+ ( ( ( totalResult ) / ( ( totalWinPer ) ) ) ) + ","
 							+  (paraDTO.getTesuRYO()*100) + "%"  + ","
 							+ dayRightUpTimes + ","
