@@ -77,6 +77,7 @@ public class SagyoSpace {
 //		resultDTO.setTotalRatio(0.05);
 		//手数料
 		paraDTO.setTesuRYO(0.015);
+//		paraDTO.setTesuRYO(0.011);
 //		paraDTO.setTesuRYO(0.03);
 //		paraDTO.setTesuRYO(0);
 		//統計データを使わない場合
@@ -308,6 +309,7 @@ public class SagyoSpace {
 				nowDTO = new Bean_nowRecord();
 				shokisettei(paraDTO, nowDTO, resultDTO,false);
 				paraDTO.setCheckInvest(true);
+				paraDTO.setTesuRYO(0.0);
 				paraDTO.setMaxEntryTimes(30);
 				paraDTO.setCheckParaDTOOption(true);
 				paraDTO.setCheckParaDTOOption(false);
@@ -494,6 +496,59 @@ public class SagyoSpace {
 
 	}
 
+
+	public static void testCase10000(){
+		//基本８手法
+		//連続取引するエリートの全メソッドの一覧を作る
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+
+		String startDD	=	"2018-04-04";
+		String endDD		=	"2018-04-27";
+		startDD	=	"2008-01-01";
+		endDD		=	"2009-12-31";
+
+		//一部はここからスタート
+//		startDD	=	"2017-07-18";
+
+		List<String[]> dayLists = new ArrayList<String[]>();
+		String dayList[] = new String[2];
+//		dayList[0] =	"2016-10-01";
+//		dayList[1] =	"2016-12-31";
+//		dayLists.add(dayList.clone());
+		dayList[0] =	startDD;
+		dayList[1] =	endDD;
+		dayLists.add(dayList.clone());
+
+
+		String tec = "technique";
+
+
+		for (String[] a: dayLists){
+			startDD		=	a[0];
+			endDD		=	a[1];
+
+			paraDTO = new Bean_Parameta();
+			resultDTO = new Bean_Result();
+			nowDTO = new Bean_nowRecord();
+			shokisettei(paraDTO, nowDTO, resultDTO,false);
+			paraDTO.setOffEliteFLG();
+			paraDTO.setTesuRYO(0.00);
+			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
+			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_RESULT_LIST_LOG_FLG);
+//			resultDTO.setTotalRatio(0.05);
+//			resultDTO.setTotalGames(1);
+//			resultDTO.setShoritu(0.05);
+//////			paraDTO.setMaxLoss(3);
+//////			resultDTO.setMaxInterValTime(	30	);
+//////			resultDTO.setOnResultDay();
+			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_S_OVER0_testbefore",tec,"Technique04","MACD_M_S_OVER0",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L",tec,"Technique14","CAPM_S",paraDTO,nowDTO,resultDTO,startDD,endDD);
+
+		}
+
+	}
 
 	public static void testCase96(){
 		//連続取引するエリートの全メソッドの一覧を作る

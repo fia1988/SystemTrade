@@ -91,6 +91,9 @@ public class CheckSign {
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
+		//これはテスト
+		CHECKTODAY(3,"DD", TechCon.PAC01 ,TechCon.TEC04, "MACD_M_S_OVER0_testbefore",	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+
 
 
 
