@@ -504,10 +504,10 @@ public class SagyoSpace {
 		Bean_Result resultDTO = new Bean_Result();
 		Bean_nowRecord nowDTO = new Bean_nowRecord();
 
-		String startDD	=	"2018-04-04";
+		String startDD	=	"2018-04-02";
 		String endDD		=	"2018-04-27";
-		startDD	=	"2008-01-01";
-		endDD		=	"2009-12-31";
+//		startDD	=	"2008-01-01";
+//		endDD		=	"2009-12-31";
 
 		//一部はここからスタート
 //		startDD	=	"2017-07-18";
@@ -534,6 +534,7 @@ public class SagyoSpace {
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOffEliteFLG();
+			paraDTO.setOnEliteFLG();
 			paraDTO.setTesuRYO(0.00);
 			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
 			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_RESULT_LIST_LOG_FLG);
