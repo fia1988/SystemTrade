@@ -1225,7 +1225,8 @@ public class CheckSign {
 
 
 			if (s.rs2.next()){
-				System.out.println("checkWsign:" + SQL);
+				commonAP.writeInLog("checkWsign:同一手法で売りと買いが同時発生:" + SQL ,logWriting.DATEDATE_LOG_FLG);
+
 				//存在する場合はここを通る。
 				SQL = " delete from " + TBL_Name.LASTORDER
 						+ " where "
@@ -1241,7 +1242,7 @@ public class CheckSign {
 						+ " as sub "
 						+ " ) ";
 
-				System.out.println("checkWsign:" + SQL);
+				commonAP.writeInLog("checkWsign:同一手法で売りと買いが同時発生:" + SQL ,logWriting.DATEDATE_LOG_FLG);
 				s.freeUpdateQuery(SQL);
 //				commonAP.writeInLog("【重要！】,が買いと売りで重複。購入しないまたは注文取消ししてください。",logWriting.DATEDATE_LOG_FLG);
 			};
