@@ -8,7 +8,7 @@ import bean.Bean_nowRecord;
 import constant.ReCord;
 
 public class Technique14 {
-	public static int CAPM_L(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+	public static int CAPM_L_1(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
@@ -21,7 +21,7 @@ public class Technique14 {
 		}
 
 
-		if(nowDTO.getCAPM() >= nowDTO.getRETURN_FOR_BETA() *2 ){
+		if(nowDTO.getCAPM() >= nowDTO.getRETURN_FOR_BETA() * 1 ){
 			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 
@@ -39,11 +39,10 @@ public class Technique14 {
 //		if(nowDTO.getNowDay_01().equals("") ){
 //
 //		}
-
-
 	}
 
-	public static int CAPM_S(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+	public static int CAPM_L_2(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
 
 		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
 
@@ -56,7 +55,91 @@ public class Technique14 {
 		}
 
 
-		if(nowDTO.getCAPM() <= nowDTO.getRETURN_FOR_BETA() *2 ){
+		if(nowDTO.getCAPM() >= nowDTO.getRETURN_FOR_BETA() * 2 ){
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+		}
+
+		return Technique98_CONST.NO_GAME;
+
+	}
+
+	public static int CAPM_L_3(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+
+		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
+
+		if ( judge ) {
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+
+
+		if(nowDTO.getCAPM() >= nowDTO.getRETURN_FOR_BETA() * 3 ){
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+		}
+
+		return Technique98_CONST.NO_GAME;
+
+	}
+
+	public static int CAPM_S_1(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+
+		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
+
+		if ( judge ) {
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+
+
+		if(nowDTO.getCAPM() <= nowDTO.getRETURN_FOR_BETA() * 1 ){
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+		}
+
+		return Technique98_CONST.NO_GAME;
+	}
+
+
+	public static int CAPM_S_2(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+
+		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
+
+		if ( judge ) {
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+
+
+		if(nowDTO.getCAPM() <= nowDTO.getRETURN_FOR_BETA() * 2 ){
+			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
+		}
+
+		return Technique98_CONST.NO_GAME;
+	}
+
+
+	public static int CAPM_S_3(Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,boolean judge){
+
+		Bean_nowRecord nowDTO = nowDTOList.get(nowDTOadress);
+
+		if (nowDTO.getCateflg_01().equals(ReCord.CODE_02_SATISTICS)){return Technique98_CONST.NO_GAME;}
+
+		if ( judge ) {
+			if (Technique00_Common.common_Stopper_L(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.NO_GAME){return Technique98_CONST.NO_GAME;}
+		}else{
+			if (Technique00_Common.common_Stopper_S(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge) ==  Technique98_CONST.TRADE_FLG){return Technique98_CONST.TRADE_FLG;}
+		}
+
+
+		if(nowDTO.getCAPM() <= nowDTO.getRETURN_FOR_BETA() * 3 ){
 			return Technique00_Common.setKessaiClose(paraDTO, nowDTOList, nowDTOadress, resultDTO, judge);
 		}
 

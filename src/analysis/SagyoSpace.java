@@ -14,7 +14,6 @@ import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
-import botton.cloringDate;
 
 import common.commonAP;
 
@@ -51,8 +50,9 @@ public class SagyoSpace {
 
 			//インヴェストテーブル使う(配当とかそういうこと)
 //			paraDTO.setCheckInvest(true);
-			//財務諸表データとか使う
+			//財務諸表データとかBeanにいれるかどうかをきめる
 			paraDTO.setMonthYearDateFLG(true);
+			//財務諸表データとかBeanにいれるか使うかどうかを決める
 			paraDTO.setCheckParaDTOOption(true);
 			//ここをfalseにすると財務諸表データ使わなくなる
 			paraDTO.setCheckParaDTOOption(false);
@@ -201,35 +201,75 @@ public class SagyoSpace {
 		s.closeConection();
 	}
 
-	public static void testCase991(){
-		S s = new S();
-		s.getCon();
-		String SQL = " CREATE TEMPORARY TABLE test SELECT * from  " + TBL_Name.FINANCIAL_MM_TBL;
-		s.createTBL(SQL);
 
-		System.out.println("aaaaaaaaa");
-		s.createTBL(SQL);
-		System.out.println("bbbbbbbbb");
-		s.reCon();
-		s.createTBL(SQL);
-		System.out.println("ccccccccc");
-		s.createTBL(SQL);
-		s.resetConnection();
-		System.out.println("ddddddddd");
-		s.createTBL(SQL);
-	}
+	public static void testCase9997(){
+		//v6.0で作ったCAPMを考慮したやつ
+		//連続取引するエリートの全メソッドの一覧を作る
+		Bean_Parameta paraDTO = new Bean_Parameta();
+		Bean_Result resultDTO = new Bean_Result();
+		Bean_nowRecord nowDTO = new Bean_nowRecord();
+		shokisettei(paraDTO, nowDTO, resultDTO,false);
 
-	public static void testCase77(){
-		cloringDate CD = new cloringDate();
-//		String fileName = "2017-10-30_fias_keep.csv";
-		String folderPath = "C:/Users/NOBORU1988/Dropbox/01.kabu/02.everyDayFile";
+		String startDD	=	"2008-01-03";
+		String endDD		=	"2009-12-31";
+		startDD	=	"2010-01-04";
+		endDD		=	"2018-04-30";
 
-//		CD.createKeepListFile(folderPath,fileName);
+		String tec = "technique";
 
-		//今日のセパコンバインレコードの作成
-		String fileName = "FBSsepaCombine.csv";
-//		createTODAYSepaComBine(LS_TODAY,mainDTO.getEntryFolderPath(),fileName);
-		CD.createTODAYSepaComBine("2017-09-25",folderPath,fileName);
+		List<String[]> methodList = new ArrayList<String[]>();
+		String methodName[] = new String[2];
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_S_1";
+		methodList.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_S_2";
+		methodList.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_S_3";
+		methodList.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_L_1";
+		methodList.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_L_2";
+		methodList.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_L_3";
+		methodList.add(methodName.clone());
+
+
+
+		for (int b = 0 ;b < methodList.size() ; b++){
+			String L_CLASS = methodList.get(b)[0];
+			String L_METHOD = methodList.get(b)[1];
+			for (int c = 0 ;c < methodList.size() ; c++){
+				String S_CLASS = methodList.get(c)[0];
+				String S_METHOD = methodList.get(c)[1];
+				System.out.println("");
+
+				paraDTO = new Bean_Parameta();
+				resultDTO = new Bean_Result();
+				nowDTO = new Bean_nowRecord();
+				shokisettei(paraDTO, nowDTO, resultDTO,false);
+				paraDTO.setCheckInvest(true);
+				paraDTO.setTesuRYO(1.5);
+				paraDTO.setMaxEntryTimes(30);
+				paraDTO.setCheckParaDTOOption(true);
+				paraDTO.setCheckParaDTOOption(false);
+				resultDTO.setTotalGames(6);
+				paraDTO.setOnEliteFLG();
+				paraDTO.setOffEliteFLG();
+				if (!(L_METHOD.equals(S_METHOD))){
+					Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
+				}
+			}
+		}
 
 	}
 
