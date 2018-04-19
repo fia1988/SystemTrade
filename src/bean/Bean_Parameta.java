@@ -59,6 +59,18 @@ public class Bean_Parameta {
 	}
 
 
+	//キープ銘柄を表示するか否かを選択できる。
+	private boolean keepVisualFlg = false;
+
+
+
+	public boolean isKeepVisualFlg() {
+		return keepVisualFlg;
+	}
+
+	public void setKeepVisualFlg(boolean keepVisualFlg) {
+		this.keepVisualFlg = keepVisualFlg;
+	}
 
 
 	//共通

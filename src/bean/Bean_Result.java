@@ -782,27 +782,31 @@ public class Bean_Result {
 
 	public void getResultCodeResult(String resultCode,Bean_Parameta paraDTO){
 
-		//売れずに保有していた場合にこれを出力する。
-		if (getCodeKeepStockResult()!=0){
-			String keepWord;
-			keepWord = paraDTO.getLMETHOD() + ","
-					+ paraDTO.getSMETHOD() + ","
-					+ paraDTO.getTermType() + ","
-					+ resultCode + "," //code
-					+ paraDTO.getMaxEntryTimes() + "," //MAXエントリー
-					+ paraDTO.getMaxKeepDays() + "," //MAXキープデイ
-					+ getMaxInterValTime() + ","  //インターバルタイム
-					+ paraDTO.getMaxLoss() + ","  //損切ライン
-					+ getDollStockTotalPrice()  + "," //合計投資金額（単位：円）
-					+ getDollStockAveragePrice() + "," //平均取得価格（単位：円）
-					+ getNewClose() + "," //現在価格（単位：円）
-					+ getDollTotalStockVolume()  + "," //合計購入株数
-					+ getKeepCount() +  ","  //保有期間
-					+ getNewDivide() + "," //1株あたり配当(最新履歴)
-					+ ( ( getDollTotalStockVolume() * (getNewClose() - getDollStockAveragePrice() ) ) / ( paraDTO.getEntryMoney() * 10000) ) * 100  + " %" //*100するかも
-//					+ getCodeKeepStockResult() + " %"
-					+ "\r\n";
-			commonAP.writeLog(keepWord, logWriting.KEEP_CODE_RESULT_LOG);
+		if (paraDTO.isKeepVisualFlg()){
+
+			//売れずに保有していた場合にこれを出力する。
+			if (getCodeKeepStockResult()!=0){
+				String keepWord;
+				keepWord = paraDTO.getLMETHOD() + ","
+						+ paraDTO.getSMETHOD() + ","
+						+ paraDTO.getTermType() + ","
+						+ resultCode + "," //code
+						+ paraDTO.getMaxEntryTimes() + "," //MAXエントリー
+						+ paraDTO.getMaxKeepDays() + "," //MAXキープデイ
+						+ getMaxInterValTime() + ","  //インターバルタイム
+						+ paraDTO.getMaxLoss() + ","  //損切ライン
+						+ getDollStockTotalPrice()  + "," //合計投資金額（単位：円）
+						+ getDollStockAveragePrice() + "," //平均取得価格（単位：円）
+						+ getNewClose() + "," //現在価格（単位：円）
+						+ getDollTotalStockVolume()  + "," //合計購入株数
+						+ getKeepCount() +  ","  //保有期間
+						+ getNewDivide() + "," //1株あたり配当(最新履歴)
+						+ ( ( getDollTotalStockVolume() * (getNewClose() - getDollStockAveragePrice() ) ) / ( paraDTO.getEntryMoney() * 10000) ) * 100  + " %" //*100するかも
+//						+ getCodeKeepStockResult() + " %"
+						+ "\r\n";
+				commonAP.writeLog(keepWord, logWriting.KEEP_CODE_RESULT_LOG);
+
+			}
 
 		}
 
