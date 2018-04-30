@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import proparty.PROPARTY;
 import proparty.S;
 import proparty.TBL_Name;
 import technique.CheckSign;
@@ -129,12 +128,31 @@ public class SagyoSpace {
 		int h = now.get(now.HOUR_OF_DAY);//時を取得
 		int m = now.get(now.MINUTE);     //分を取得
 		int second = now.get(now.SECOND);      //秒を取得
-
+		String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
+                "木曜日", "金曜日", "土曜日"};
 		int baseHour = 17;
 		int baseMinitu = 20;
 		int sleepTime = 10;
-		if ( h < baseHour ){
+		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
+
+
+		switch (week_name[week]) {
+			case "日曜日":
+				System.out.println("今日は" + week_name[week]);
+				return;
+			case "土曜日":
+				System.out.println("今日は" + week_name[week]);
+				return;
+
+			default:
+				break;
+		}
+
+
+		if ( h <= baseHour ){
+			System.out.println("ちょいと止まります。");
 			sleepTime = 1000 * 60 * 60 *  ( baseHour - h );
+			System.out.println(sleepTime + "ﾐﾘ秒と止まります。");
 			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 			if ( h == baseHour ){
 				if ( m < baseMinitu ){
@@ -145,16 +163,23 @@ public class SagyoSpace {
 				}
 			}
 		}
-		PROPARTY.CLOALING_TIME = 1;
+
 		longTermTestSupporter_main();
 	}
 
 	private static void longTermTestSupporter_main(){
 		TAB_MainDTO mainDTO = new TAB_MainDTO();
-
-
+		//へそごま
+		mainDTO.setHesogomaFile(true);
+		//セパフラグ
+		mainDTO.setSepaComFileAutoCaptureFLG(true);
+		//バックアップとる
+		mainDTO.setAutoBackUp(true);
+		//即座にばらまく
+		mainDTO.setCloringSokuzaCheck(true);
 		cloringDate C_D = new cloringDate();
 		C_D.getDayDate(mainDTO);
+		C_D = new cloringDate();
 	}
 
 	public static void testCase89(){
@@ -269,14 +294,14 @@ public class SagyoSpace {
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_S_2";
 //		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_S_3";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_L_1";
-		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_S_3";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_L_1";
+//		methodListL.add(methodName.clone());
 //
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_L_2";
@@ -286,30 +311,29 @@ public class SagyoSpace {
 //		methodName[1] = "CAPM_L_3";
 //		methodListL.add(methodName.clone());
 //
-//
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_L_1";
 //		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_L_2";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_L_3";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_S_1";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_S_2";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_S_3";
-//		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_L_2";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_L_3";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_S_1";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_S_2";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_S_3";
+		methodListL.add(methodName.clone());
 //
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_Right_L_1";
@@ -803,12 +827,13 @@ public class SagyoSpace {
 				resultDTO = new Bean_Result();
 				nowDTO = new Bean_nowRecord();
 				shokisettei(paraDTO, nowDTO, resultDTO,false);
-				paraDTO.setCheckInvest(true);
+//				paraDTO.setCheckInvest(true);
 				paraDTO.setTesuRYO(0.015);
 				paraDTO.setMaxEntryTimes(30);
 				paraDTO.setCheckParaDTOOption(true);
 				paraDTO.setCheckParaDTOOption(false);
 				resultDTO.setTotalGames(6);
+				resultDTO.setTotalGames(10);
 				paraDTO.setKeepVisualFlg(false);
 				paraDTO.setOnEliteFLG();
 				paraDTO.setOffEliteFLG();
@@ -820,7 +845,7 @@ public class SagyoSpace {
 			longTermTestSupporter();
 		}
 
-
+//		longTermTestSupporter();
 
 
 	}
