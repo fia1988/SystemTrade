@@ -406,7 +406,7 @@ public class TAB_main extends JPanel {
 		label_22.setBounds(42, 572, 330, 19);
 		add(label_22);
 
-		
+
 		checkBox_5.setBounds(430, 672, 334, 29);
 		add(checkBox_5);
 
@@ -439,7 +439,7 @@ public class TAB_main extends JPanel {
 		mainDTO.setOptimazeFLG(checkBox_1.isSelected());
 		mainDTO.setAutoBackUp(checkBox_2.isSelected());
 		mainDTO.setCloringSokuzaCheck(checkBox_5.isSelected());
-		
+
 		//へそのごまのファイルを毎日CSVに利用するかを判断するフラグ
 		//false:しない、true:する
 		mainDTO.setHesogomaFile(checkBox_4.isSelected());

@@ -314,47 +314,47 @@ public class SagyoSpace {
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_L_1";
 //		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_L_2";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_L_3";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_S_1";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_S_2";
-		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_L_2";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_L_3";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_S_1";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_S_2";
+//		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
 		methodName[1] = "CAPM_AVE_S_3";
 		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Right_L_1";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Right_L_2";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Right_L_3";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Right_S_1";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Right_S_2";
-//		methodListL.add(methodName.clone());
-//
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Right_L_1";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Right_L_2";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Right_L_3";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Right_S_1";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Right_S_2";
+		methodListL.add(methodName.clone());
+
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_Right_S_3";
 //		methodListL.add(methodName.clone());
@@ -964,53 +964,61 @@ public class SagyoSpace {
 //		dayList[0] =	"2016-10-01";
 //		dayList[1] =	"2016-12-31";
 //		dayLists.add(dayList.clone());
-		dayList[0] =	startDD;
-		dayList[1] =	endDD;
+//		dayList[0] =	startDD;
+//		dayList[1] =	endDD;
+//		dayLists.add(dayList.clone());
+
+		dayList[0] = "2007-01-01";
+		dayList[1] = "2007-12-31";
 		dayLists.add(dayList.clone());
 
-//		dayList[0] = "2007-01-01";
-//		dayList[1] = "2007-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2008-01-01";
-//		dayList[1] = "2008-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2009-01-01";
-//		dayList[1] = "2009-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2010-01-01";
-//		dayList[1] = "2010-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2011-01-01";
-//		dayList[1] = "2011-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2012-01-01";
-//		dayList[1] = "2012-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2013-01-01";
-//		dayList[1] = "2013-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2014-01-01";
-//		dayList[1] = "2014-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2015-01-01";
-//		dayList[1] = "2015-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2016-01-01";
-//		dayList[1] = "2016-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2017-01-01";
-//		dayList[1] = "2017-06-30";
-//		dayLists.add(dayList.clone());
+		dayList[0] = "2008-01-01";
+		dayList[1] = "2008-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2009-01-01";
+		dayList[1] = "2009-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2010-01-01";
+		dayList[1] = "2010-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2011-01-01";
+		dayList[1] = "2011-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2012-01-01";
+		dayList[1] = "2012-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2013-01-01";
+		dayList[1] = "2013-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2014-01-01";
+		dayList[1] = "2014-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2015-01-01";
+		dayList[1] = "2015-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2016-01-01";
+		dayList[1] = "2016-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2017-01-01";
+		dayList[1] = "2017-12-30";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2018-01-01";
+		dayList[1] = "2018-04-30";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2007-01-01";
+		dayList[1] = "2018-04-30";
+		dayLists.add(dayList.clone());
 
 
 
