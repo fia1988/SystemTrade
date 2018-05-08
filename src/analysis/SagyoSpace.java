@@ -4,19 +4,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
-import GamenDTO.TAB_MainDTO;
 import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
-import botton.cloringDate;
 
 import common.commonAP;
 
@@ -120,67 +117,8 @@ public class SagyoSpace {
 
 	}
 
-	private static void longTermTestSupporter(){
 
 
-		Calendar now = Calendar.getInstance(); //インスタンス化
-
-		int h = now.get(now.HOUR_OF_DAY);//時を取得
-		int m = now.get(now.MINUTE);     //分を取得
-		int second = now.get(now.SECOND);      //秒を取得
-		String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
-                "木曜日", "金曜日", "土曜日"};
-		int baseHour = 17;
-		int baseMinitu = 20;
-		int sleepTime = 10;
-		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
-
-
-		switch (week_name[week]) {
-			case "日曜日":
-				System.out.println("今日は" + week_name[week]);
-				return;
-			case "土曜日":
-				System.out.println("今日は" + week_name[week]);
-				return;
-
-			default:
-				break;
-		}
-
-
-		if ( h <= baseHour ){
-			System.out.println("ちょいと止まります。");
-			sleepTime = 1000 * 60 * 60 *  ( baseHour - h );
-			System.out.println(sleepTime + "ﾐﾘ秒と止まります。");
-			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-			if ( h == baseHour ){
-				if ( m < baseMinitu ){
-					sleepTime = 1000 * 60 * ( baseMinitu - m );
-
-					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-
-				}
-			}
-		}
-
-		longTermTestSupporter_main();
-	}
-
-	private static void longTermTestSupporter_main(){
-		TAB_MainDTO mainDTO = new TAB_MainDTO();
-		//へそごま
-		mainDTO.setHesogomaFile(true);
-		//セパフラグ
-		mainDTO.setSepaComFileAutoCaptureFLG(true);
-		//バックアップとる
-		mainDTO.setAutoBackUp(true);
-		//即座にばらまく
-		mainDTO.setCloringSokuzaCheck(true);
-		cloringDate C_D = new cloringDate();
-		C_D.getDayDate(mainDTO);
-		C_D = new cloringDate();
-	}
 
 	public static void testCase89(){
 
@@ -271,6 +209,8 @@ public class SagyoSpace {
 
 
 	public static void testCase9997(){
+		Testsupport TS = new Testsupport();
+
 		//v6.0で作ったCAPMを考慮したやつ
 		//連続取引するエリートの全メソッドの一覧を作る
 		Bean_Parameta paraDTO = new Bean_Parameta();
@@ -282,6 +222,12 @@ public class SagyoSpace {
 		String endDD		=	"2009-12-31";
 		startDD	=	"2010-01-04";
 		endDD		=	"2018-04-30";
+
+		List<String[]> dayLists = new ArrayList<String[]>();
+		String dayList[] = new String[2];
+		dayList[0] =	"2010-01-04";
+		dayList[1] =	"2018-04-30";
+		dayLists.add(dayList.clone());
 
 		String tec = "technique";
 
@@ -330,18 +276,18 @@ public class SagyoSpace {
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_S_2";
 //		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_S_3";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Right_L_1";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Right_L_2";
-		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_S_3";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Right_L_1";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Right_L_2";
+//		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
 		methodName[1] = "CAPM_AVE_Right_L_3";
@@ -355,9 +301,9 @@ public class SagyoSpace {
 		methodName[1] = "CAPM_AVE_Right_S_2";
 		methodListL.add(methodName.clone());
 
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Right_S_3";
-//		methodListL.add(methodName.clone());
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Right_S_3";
+		methodListL.add(methodName.clone());
 //
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_Left_L_1";
@@ -814,37 +760,40 @@ public class SagyoSpace {
 		methodName[1] = "IDO_HEKIN_4_S";
 		methodListS.add(methodName.clone());
 
+		for (String[] a: dayLists){
+			startDD		=	a[0];
+			endDD		=	a[1];
+			for (int b = 0 ;b < methodListL.size() ; b++){
+				String L_CLASS = methodListL.get(b)[0];
+				String L_METHOD = methodListL.get(b)[1];
+				for (int c = 0 ;c < methodListS.size() ; c++){
+					String S_CLASS = methodListS.get(c)[0];
+					String S_METHOD = methodListS.get(c)[1];
+					//				System.out.println("");
 
-		for (int b = 0 ;b < methodListL.size() ; b++){
-			String L_CLASS = methodListL.get(b)[0];
-			String L_METHOD = methodListL.get(b)[1];
-			for (int c = 0 ;c < methodListS.size() ; c++){
-				String S_CLASS = methodListS.get(c)[0];
-				String S_METHOD = methodListS.get(c)[1];
-//				System.out.println("");
-
-				paraDTO = new Bean_Parameta();
-				resultDTO = new Bean_Result();
-				nowDTO = new Bean_nowRecord();
-				shokisettei(paraDTO, nowDTO, resultDTO,false);
-//				paraDTO.setCheckInvest(true);
-				paraDTO.setTesuRYO(0.015);
-				paraDTO.setMaxEntryTimes(30);
-				paraDTO.setCheckParaDTOOption(true);
-				paraDTO.setCheckParaDTOOption(false);
-				resultDTO.setTotalGames(6);
-				resultDTO.setTotalGames(10);
-				paraDTO.setKeepVisualFlg(false);
-				paraDTO.setOnEliteFLG();
-				paraDTO.setOffEliteFLG();
-				if (!(L_METHOD.equals(S_METHOD))){
-//					System.out.println(L_METHOD + ":" + S_METHOD );
-					Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
+					paraDTO = new Bean_Parameta();
+					resultDTO = new Bean_Result();
+					nowDTO = new Bean_nowRecord();
+					shokisettei(paraDTO, nowDTO, resultDTO,false);
+					//				paraDTO.setCheckInvest(true);
+					paraDTO.setTesuRYO(0.015);
+					paraDTO.setMaxEntryTimes(30);
+					paraDTO.setCheckParaDTOOption(true);
+					paraDTO.setCheckParaDTOOption(false);
+					resultDTO.setTotalGames(6);
+					resultDTO.setTotalGames(10);
+					paraDTO.setKeepVisualFlg(false);
+					paraDTO.setOnEliteFLG();
+					paraDTO.setOffEliteFLG();
+					if (!(L_METHOD.equals(S_METHOD))){
+						//					System.out.println(L_METHOD + ":" + S_METHOD );
+						Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
+					}
+					TS.longTermTestSupporter();
 				}
-			}
-			longTermTestSupporter();
-		}
 
+			}
+		}
 //		longTermTestSupporter();
 
 
@@ -860,7 +809,7 @@ public class SagyoSpace {
 		String startDD	=	"2015-01-03";
 		String endDD		=	"2017-12-31";
 		startDD	=	"2018-03-26";
-		endDD		=	"2018-04-30";
+		endDD		=	"2018-05-30";
 		shokisettei(paraDTO, nowDTO, resultDTO,false);
 		paraDTO.setCheckInvest(true);
 		String tec = "technique";
@@ -930,6 +879,7 @@ public class SagyoSpace {
 				paraDTO.setMaxEntryTimes(30);
 				paraDTO.setCheckParaDTOOption(true);
 				paraDTO.setCheckParaDTOOption(false);
+				paraDTO.setKeepVisualFlg(true);
 				resultDTO.setTotalGames(1);
 				paraDTO.setOnEliteFLG();
 //				paraDTO.setOffEliteFLG();
@@ -953,7 +903,7 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2008-12-31";
 		startDD	=	"2018-03-26";
-		endDD		=	"2018-04-30";
+		endDD		=	"2018-05-11";
 //		startDD	=	"2017-12-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート
@@ -968,57 +918,59 @@ public class SagyoSpace {
 //		dayList[1] =	endDD;
 //		dayLists.add(dayList.clone());
 
-		dayList[0] = "2007-01-01";
-		dayList[1] = "2007-12-31";
+		dayList[0] = "2018-03-26";
+		dayList[1] = "2018-05-11";
 		dayLists.add(dayList.clone());
 
-		dayList[0] = "2008-01-01";
-		dayList[1] = "2008-12-31";
-		dayLists.add(dayList.clone());
 
-		dayList[0] = "2009-01-01";
-		dayList[1] = "2009-12-31";
-		dayLists.add(dayList.clone());
+//		dayList[0] = "2007-01-01";
+//		dayList[1] = "2007-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2008-01-01";
+//		dayList[1] = "2008-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2009-01-01";
+//		dayList[1] = "2009-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2010-01-01";
+//		dayList[1] = "2010-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2011-01-01";
+//		dayList[1] = "2011-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2012-01-01";
+//		dayList[1] = "2012-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2013-01-01";
+//		dayList[1] = "2013-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2014-01-01";
+//		dayList[1] = "2014-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2015-01-01";
+//		dayList[1] = "2015-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2016-01-01";
+//		dayList[1] = "2016-12-31";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2017-01-01";
+//		dayList[1] = "2017-12-30";
+//		dayLists.add(dayList.clone());
+//
+//		dayList[0] = "2018-01-01";
+//		dayList[1] = "2018-04-30";
+//		dayLists.add(dayList.clone());
 
-		dayList[0] = "2010-01-01";
-		dayList[1] = "2010-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2011-01-01";
-		dayList[1] = "2011-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2012-01-01";
-		dayList[1] = "2012-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2013-01-01";
-		dayList[1] = "2013-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2014-01-01";
-		dayList[1] = "2014-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2015-01-01";
-		dayList[1] = "2015-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2016-01-01";
-		dayList[1] = "2016-12-31";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2017-01-01";
-		dayList[1] = "2017-12-30";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2018-01-01";
-		dayList[1] = "2018-04-30";
-		dayLists.add(dayList.clone());
-
-		dayList[0] = "2007-01-01";
-		dayList[1] = "2018-04-30";
-		dayLists.add(dayList.clone());
 
 
 
