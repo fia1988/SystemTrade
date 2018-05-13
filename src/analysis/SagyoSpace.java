@@ -58,6 +58,7 @@ public class SagyoSpace {
 			paraDTO.setCheckParaDTOOption(false);
 
 			//保有できず銘柄を表示するか否か。falseなら表示しない
+			paraDTO.setKeepVisualFlg(true);
 			paraDTO.setKeepVisualFlg(false);
 		}
 
@@ -288,42 +289,42 @@ public class SagyoSpace {
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_Right_L_2";
 //		methodListL.add(methodName.clone());
-
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Right_L_3";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Right_S_1";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Right_S_2";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Right_S_3";
+//		methodListL.add(methodName.clone());
+//
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Right_L_3";
+		methodName[1] = "CAPM_AVE_Left_L_1";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Right_S_1";
+		methodName[1] = "CAPM_AVE_Left_L_2";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Right_S_2";
+		methodName[1] = "CAPM_AVE_Left_L_3";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Right_S_3";
+		methodName[1] = "CAPM_AVE_Left_S_1";
 		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Left_L_1";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Left_L_2";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Left_L_3";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Left_S_1";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Left_S_2";
-//		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_AVE_Left_S_2";
+		methodListL.add(methodName.clone());
 //
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_Left_S_3";
@@ -1083,6 +1084,8 @@ public class SagyoSpace {
 
 		String startDD	=	"2018-04-02";
 		String endDD		=	"2018-04-27";
+		startDD = "2018-03-22";
+		endDD = "2018-05-11";
 //		startDD	=	"2008-01-01";
 //		endDD		=	"2009-12-31";
 //		startDD	=	"2010-01-01";
@@ -1113,8 +1116,9 @@ public class SagyoSpace {
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOffEliteFLG();
-//			paraDTO.setOnEliteFLG();
+			paraDTO.setOnEliteFLG();
 			paraDTO.setTesuRYO(0.00);
+			paraDTO.setCheckParaDTOOption(true);
 			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
 			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_RESULT_LIST_LOG_FLG);
 //			resultDTO.setTotalRatio(0.05);

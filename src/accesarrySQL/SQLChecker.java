@@ -54,10 +54,10 @@ public class SQLChecker {
 			System.out.println("SQLChecker.getCateTodayなんかよくわからないの来た：" + cate);
 			break;
 		}
-		
+
 		return TODAY;
 	}
-	
+
 	public static String getCate(String code,S s){
 
 		String SQL = " select "
@@ -66,17 +66,22 @@ public class SQLChecker {
 					+ TBL_Name.CODELISTTBL
 					+ " where "
 					+ COLUMN.CODE + " = '"+ code + "'";
-		
+
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
-			s.rs.next();
-			return s.rs.getString(	COLUMN.CATE_FLG	);
+			if (s.rs.next()){
+				return s.rs.getString(	COLUMN.CATE_FLG	);
+			}else{
+				//コードリストにない場合の処理。とりあえず1を返す
+				return ReCord.CODE_01_STOCK;
+			}
+//			s.rs.next();
+//			return s.rs.getString(	COLUMN.CATE_FLG	);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
 		return "";
 	}
 
