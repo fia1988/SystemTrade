@@ -306,66 +306,66 @@ public class SagyoSpace {
 //		methodName[1] = "CAPM_AVE_Right_S_3";
 //		methodListL.add(methodName.clone());
 //
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Left_L_1";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Left_L_2";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Left_L_3";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Left_S_1";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Left_S_2";
+//		methodListL.add(methodName.clone());
+
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Left_L_1";
+		methodName[1] = "CAPM_AVE_Left_S_3";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Left_L_2";
+		methodName[1] = "CAPM_aveCheck_1_S";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Left_L_3";
+		methodName[1] = "CAPM_aveCheck_2_S";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Left_S_1";
+		methodName[1] = "CAPM_aveCheck_3_S";
 		methodListL.add(methodName.clone());
 
 		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Left_S_2";
+		methodName[1] = "CAPM_aveCheck_1_L";
 		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_AVE_Left_S_3";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_aveCheck_1_S";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_aveCheck_2_S";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_aveCheck_3_S";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_aveCheck_1_L";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_aveCheck_2_L";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_aveCheck_3_L";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_1";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_2";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_3";
-//		methodListL.add(methodName.clone());
-//
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_aveCheck_2_L";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_aveCheck_3_L";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_1";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_2";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_3";
+		methodListL.add(methodName.clone());
+
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_MULTI_4";
 //		methodListL.add(methodName.clone());
@@ -904,7 +904,7 @@ public class SagyoSpace {
 		String startDD	=	"2007-01-03";
 		String endDD		=	"2008-12-31";
 		startDD	=	"2018-03-26";
-		endDD		=	"2018-05-11";
+		endDD		=	"2018-05-31";
 //		startDD	=	"2017-12-04";
 //		endDD		=	"2016-12-31";
 		//一部はここからスタート
@@ -920,7 +920,7 @@ public class SagyoSpace {
 //		dayLists.add(dayList.clone());
 
 		dayList[0] = "2018-03-26";
-		dayList[1] = "2018-05-11";
+		dayList[1] =	"2018-05-31";
 		dayLists.add(dayList.clone());
 
 
