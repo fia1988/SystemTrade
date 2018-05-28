@@ -225,15 +225,16 @@ public class SagyoSpace {
 		endDD		=	"2018-04-30";
 
 		List<String[]> dayLists = new ArrayList<String[]>();
+		List<String[]> methodListL = new ArrayList<String[]>();
+		List<String[]> methodListS = new ArrayList<String[]>();
 		String dayList[] = new String[2];
+		String methodName[] = new String[2];
+		String tec = "technique";
+
 		dayList[0] =	"2010-01-04";
 		dayList[1] =	"2018-04-30";
 		dayLists.add(dayList.clone());
 
-		String tec = "technique";
-
-		List<String[]> methodListL = new ArrayList<String[]>();
-		String methodName[] = new String[2];
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_S_1";
 //		methodListL.add(methodName.clone());
@@ -497,9 +498,6 @@ public class SagyoSpace {
 //
 
 
-
-
-		List<String[]> methodListS = new ArrayList<String[]>();
 		methodName[0] = "Technique14";
 		methodName[1] = "CAPM_S_1";
 		methodListS.add(methodName.clone());
@@ -789,15 +787,14 @@ public class SagyoSpace {
 					if (!(L_METHOD.equals(S_METHOD))){
 						//					System.out.println(L_METHOD + ":" + S_METHOD );
 						Analysis00_Common.Analysis_COMMON(tec,L_CLASS,L_METHOD,tec,S_CLASS,S_METHOD,paraDTO,nowDTO,resultDTO,startDD,endDD);
+						TS.longTermTestSupporter();
 					}
-					TS.longTermTestSupporter();
 				}
 
 			}
 		}
+//		TS.renzokuAnalysis(methodListL, methodListS, dayLists);
 //		longTermTestSupporter();
-
-
 	}
 
 	public static void testCase9998(){
