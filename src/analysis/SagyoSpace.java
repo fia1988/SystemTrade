@@ -326,47 +326,47 @@ public class SagyoSpace {
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_AVE_Left_S_2";
 //		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_AVE_Left_S_3";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_aveCheck_1_S";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_aveCheck_2_S";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_aveCheck_3_S";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_aveCheck_1_L";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_aveCheck_2_L";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_aveCheck_3_L";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_MULTI_1";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_MULTI_2";
-		methodListL.add(methodName.clone());
-
-		methodName[0] = "Technique14";
-		methodName[1] = "CAPM_MULTI_3";
-		methodListL.add(methodName.clone());
-
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_AVE_Left_S_3";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_aveCheck_1_S";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_aveCheck_2_S";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_aveCheck_3_S";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_aveCheck_1_L";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_aveCheck_2_L";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_aveCheck_3_L";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_MULTI_1";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_MULTI_2";
+//		methodListL.add(methodName.clone());
+//
+//		methodName[0] = "Technique14";
+//		methodName[1] = "CAPM_MULTI_3";
+//		methodListL.add(methodName.clone());
+//
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_MULTI_4";
 //		methodListL.add(methodName.clone());
@@ -378,35 +378,35 @@ public class SagyoSpace {
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_MULTI_6";
 //		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_7";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_8";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_9";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_10";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_11";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_12";
-//		methodListL.add(methodName.clone());
-//
-//		methodName[0] = "Technique14";
-//		methodName[1] = "CAPM_MULTI_13";
-//		methodListL.add(methodName.clone());
-//
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_7";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_8";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_9";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_10";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_11";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_12";
+		methodListL.add(methodName.clone());
+
+		methodName[0] = "Technique14";
+		methodName[1] = "CAPM_MULTI_13";
+		methodListL.add(methodName.clone());
+
 //		methodName[0] = "Technique14";
 //		methodName[1] = "CAPM_MULTI_14";
 //		methodListL.add(methodName.clone());
