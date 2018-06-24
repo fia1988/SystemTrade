@@ -60,6 +60,7 @@ public class cloringDate {
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
 				break;
 			case ReturnCodeConst.NO_UPDATE_TIME:
+				PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
@@ -70,10 +71,12 @@ public class cloringDate {
 				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
 				stop = System.currentTimeMillis();
+				PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 				commonAP.writeInLog("なんかエラー1" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_1;
 			default:
 				stop = System.currentTimeMillis();
+				PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
 				commonAP.writeInLog("なんかエラー2" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
 				return TimerShoriConst.ERR_2;
 		}
@@ -877,7 +880,7 @@ public class cloringDate {
 			}else{
 				//この外が通常運用
 			}
-			
+
 
 			commonAP.writeInLog("即座モードで動かします。ただし一回だけ。ばらまきも即座にやる。",logWriting.DATEDATE_LOG_FLG);
 			PROPARTY.CLOALING_TIME = 1;
@@ -900,7 +903,7 @@ public class cloringDate {
 		int baseMinitu = 20;
 		int sleepTime = 10;
 		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
-		
+
 		switch (week_name[week]) {
 			case "日曜日":
 //				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
@@ -908,10 +911,10 @@ public class cloringDate {
 			case "土曜日":
 //				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
 				return ReturnCodeConst.NO_UPDATE_TIME;
-	
+
 			default:
 				break;
-		}	
+		}
 
 		//今の時間チェック
 		PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
@@ -947,12 +950,12 @@ public class cloringDate {
 				return ReturnCodeConst.NO_UPDATE_TIME;
 			}
 		}
-		
-		
-		
+
+
+
 		return ReturnCodeConst.CHECK_START;
 	}
-	
+
 	//時系列データの更新
 	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
 
