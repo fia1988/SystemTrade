@@ -35,6 +35,19 @@ public class TAB_MainDTO {
 	private boolean cloringSokuzaCheck = false;
 
 
+	//バックテストか否かを判断する
+	//画面からは触れない
+	private boolean backTestFLG = false;
+
+
+	public boolean isBackTestFLG() {
+		return backTestFLG;
+	}
+
+	public void setBackTestFLG(boolean backTestFLG) {
+		this.backTestFLG = backTestFLG;
+	}
+
 
 
 	public boolean isCloringSokuzaCheck() {

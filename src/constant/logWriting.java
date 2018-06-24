@@ -14,6 +14,7 @@ public class logWriting {
 	public static final int CODE_DOLLCOST_L_PRICE_LISTRESULT_LOG_FLG			= 5555;
 	public static final int CODE_RESULT_LIST_LOG_FLG	= 6;
 	public static final int CODE_DOLLCOTST_RESULT_LIST_LOG_FLG	= 66;
+	public static final int MOVING_LOG_FLG			= 123123;
 
 	//分割併合ファイルのエラーログ
 	public static final int CODE_SEPACON_ERR_LOG_FLG	= 7;

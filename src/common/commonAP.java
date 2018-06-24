@@ -217,6 +217,9 @@ public class commonAP {
 			case logWriting.KEEP_CODE_RESULT_LOG:
 				fileName = "KEEP_CODE_RESULT_LOG_" + writeType + logWriting.logKakutyousi;
 				break;
+			case logWriting.MOVING_LOG_FLG:
+				fileName = "MOVING_CHECK_LOG_" + writeType + logWriting.logKakutyousi;
+				break;
 			default:
 			break;
 		}

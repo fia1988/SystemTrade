@@ -23,6 +23,8 @@ public class ReturnCodeConst {
 	//ファイルが既に存在する
 	final public static int SQL_ERR_1086 = 1086;
 
+	//時系列更新ありそう。チェック開始
+	final public static int CHECK_START	=10002;
 	//時系列更新があった。
 	final public static int EVERY_UPDATE_SUCSESS	=10000;
 	//一部分だけ更新があった。
@@ -31,6 +33,8 @@ public class ReturnCodeConst {
 	final public static int EVERY_UPDATE_NOTHING	=20000;
 	//時系列更新に異常があった
 	final public static int EVERY_UPDATE_ERR		=30000;
+	//時系列更新にふさわしくない時間に起動した
+	final public static int NO_UPDATE_TIME	=40000;
 	//意図しないよくわからんエラー
 	final public static int NAZO_ERR		=99999;
 }

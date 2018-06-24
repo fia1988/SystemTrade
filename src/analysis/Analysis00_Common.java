@@ -126,7 +126,7 @@ public class Analysis00_Common {
 		s.closeConection();
 		s = new S();
 		s.getCon();
-
+		
 
 
 		//全銘柄をリストに入れる

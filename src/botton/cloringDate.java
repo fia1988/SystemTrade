@@ -59,10 +59,14 @@ public class cloringDate {
 		switch (zikeiretuDataUpdate(mainDTO)){
 			case ReturnCodeConst.EVERY_UPDATE_SUCSESS:
 				break;
+			case ReturnCodeConst.NO_UPDATE_TIME:
+				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
+				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				stop = System.currentTimeMillis();
 				PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
-				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("アップデートなし" + "。多分今日は祝日かも実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("アップデートなし" + "。多分今日は祝日かも実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_ERR:
 				stop = System.currentTimeMillis();
@@ -841,41 +845,152 @@ public class cloringDate {
 
 	}
 
-	//時系列データの更新
-	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
+	//時系列データアップデーターを動かすかをチェックする
+	private int checkZikeiretuDataUpdate(TAB_MainDTO mainDTO){
 
+		//曜日チェック、土日は動かさない。
+		Calendar now = Calendar.getInstance(); //インスタンス化
 
+//		int h = now.get(now.HOUR_OF_DAY);//時を取得
+//		int m = now.get(now.MINUTE);     //分を取得
+//		int second = now.get(now.SECOND);      //秒を取得
+//		String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
+//                "木曜日", "金曜日", "土曜日"};
+//		int baseHour = 17;
+//		int baseMinitu = 20;
+//		int sleepTime = 10;
+//		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
+
+		int checkIntResult = checkZikeiretuDataUpdate_sub(mainDTO);
 		if ( mainDTO.isCloringSokuzaCheck() == false ){
-			PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
-			//16時以前のお軌道は却下する。
-			Calendar now = Calendar.getInstance(); //インスタンス化
-
-			int h = now.get(now.HOUR_OF_DAY);//時を取得
-			int m = now.get(now.MINUTE);     //分を取得
-			int second = now.get(now.SECOND);      //秒を取得
-
-			int baseHour = 17;
-			int baseMinitu = 20;
-
-			if ( h < baseHour ){
-//				System.out.println(h+"時"+m+"分"+second+"秒");
-				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
-			}else{
-				if ( h == baseHour ){
-					if ( m < baseMinitu ){
-						int sleepTime = 1000 * 60 * ( baseMinitu - m );
-						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.DATEDATE_LOG_FLG);
-						try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
-					}
-				}
+			if (checkIntResult!=ReturnCodeConst.CHECK_START){
+				return checkIntResult;
 			}
 		}else{
+
+			//バックテストか否かを判断する
+			if (mainDTO.isBackTestFLG()){
+				//このなかがバックテスト
+				if (checkIntResult!=ReturnCodeConst.CHECK_START){
+					return checkIntResult;
+				}
+			}else{
+				//この外が通常運用
+			}
+			
+
 			commonAP.writeInLog("即座モードで動かします。ただし一回だけ。ばらまきも即座にやる。",logWriting.DATEDATE_LOG_FLG);
 			PROPARTY.CLOALING_TIME = 1;
 		}
 
 
+		return ReturnCodeConst.CHECK_START;
+	}
+
+	private int checkZikeiretuDataUpdate_sub(TAB_MainDTO mainDTO){
+		//曜日チェック、土日は動かさない。
+		Calendar now = Calendar.getInstance(); //インスタンス化
+
+		int h = now.get(now.HOUR_OF_DAY);//時を取得
+		int m = now.get(now.MINUTE);     //分を取得
+		int second = now.get(now.SECOND);      //秒を取得
+		String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
+                "木曜日", "金曜日", "土曜日"};
+		int baseHour = 17;
+		int baseMinitu = 20;
+		int sleepTime = 10;
+		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
+		
+		switch (week_name[week]) {
+			case "日曜日":
+//				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
+				return ReturnCodeConst.NO_UPDATE_TIME;
+			case "土曜日":
+//				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
+				return ReturnCodeConst.NO_UPDATE_TIME;
+	
+			default:
+				break;
+		}	
+
+		//今の時間チェック
+		PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
+		//16時以前のお軌道は却下する。
+		if ( h < baseHour ){
+//			System.out.println(h+"時"+m+"分"+second+"秒");
+			return ReturnCodeConst.NO_UPDATE_TIME;
+		}else{
+			if ( h == baseHour ){
+				if ( m < baseMinitu ){
+					sleepTime = 1000 * 60 * ( baseMinitu - m );
+					commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.MOVING_LOG_FLG);
+					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+					commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.MOVING_LOG_FLG);
+				}
+			}
+		}
+
+
+
+		//更新日と今日が同じかチェック
+		S s = new S();
+		s.getCon();
+		String TODAY = controllDay.getTODAY();
+		String etfUpdateDay		= controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+		String stockUpdateDay	= controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_LIST, s);
+		s.closeConection();
+		if (etfUpdateDay.equals(stockUpdateDay)){
+			if (TODAY.equals(stockUpdateDay)){
+//				commonAP.writeInLog("同日更新",logWriting.MOVING_LOG_FLG);
+				return ReturnCodeConst.NO_UPDATE_TIME;
+			}
+		}
+		
+		
+		
+		return ReturnCodeConst.CHECK_START;
+	}
+	
+	//時系列データの更新
+	private int zikeiretuDataUpdate(TAB_MainDTO mainDTO){
+
+
+//		if ( mainDTO.isCloringSokuzaCheck() == false ){
+//			PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
+//			//16時以前のお軌道は却下する。
+//			Calendar now = Calendar.getInstance(); //インスタンス化
+//
+//			int h = now.get(now.HOUR_OF_DAY);//時を取得
+//			int m = now.get(now.MINUTE);     //分を取得
+//			int second = now.get(now.SECOND);      //秒を取得
+//
+//			int baseHour = 17;
+//			int baseMinitu = 20;
+//
+//			if ( h < baseHour ){
+////				System.out.println(h+"時"+m+"分"+second+"秒");
+//				return ReturnCodeConst.EVERY_UPDATE_NOTHING;
+//			}else{
+//				if ( h == baseHour ){
+//					if ( m < baseMinitu ){
+//						int sleepTime = 1000 * 60 * ( baseMinitu - m );
+//						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + (sleepTime / (1000*60)) + "分間停止します。",logWriting.DATEDATE_LOG_FLG);
+//						try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
+//						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
+//					}
+//				}
+//			}
+//		}else{
+//			commonAP.writeInLog("即座モードで動かします。ただし一回だけ。ばらまきも即座にやる。",logWriting.DATEDATE_LOG_FLG);
+//			PROPARTY.CLOALING_TIME = 1;
+//		}
+
+		int resultZikeiretu = checkZikeiretuDataUpdate(mainDTO);
+		if (resultZikeiretu!=ReturnCodeConst.CHECK_START){
+			return resultZikeiretu;
+		}
 
 		S s = new S();
 		s.getCon();
