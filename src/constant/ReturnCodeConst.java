@@ -35,6 +35,10 @@ public class ReturnCodeConst {
 	final public static int EVERY_UPDATE_ERR		=30000;
 	//時系列更新にふさわしくない時間に起動した
 	final public static int NO_UPDATE_TIME	=40000;
+	//同日に更新を試みた
+	final public static int SAME_DAY	=40001;
+	//土日のどちらかに起動した
+	final public static int HOLIDAY		=40002;
 	//意図しないよくわからんエラー
 	final public static int NAZO_ERR		=99999;
 }

@@ -61,7 +61,13 @@ public class cloringDate {
 				break;
 			case ReturnCodeConst.NO_UPDATE_TIME:
 				PROPARTY.CLOALING_TIME = PROPARTY.CLOALING_TIME_CONST;
-				commonAP.writeInLog("アップデートなし" + "。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
+				commonAP.writeInLog("アップデートなし。ふさわしくない時間に起動しています。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
+				return TimerShoriConst.NO_UPDATE;
+			case ReturnCodeConst.SAME_DAY:
+				commonAP.writeInLog("アップデートなし。本日は既に実行済みです。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
+				return TimerShoriConst.NO_UPDATE;
+			case ReturnCodeConst.HOLIDAY:
+				commonAP.writeInLog("アップデートなし。土日に更新しました。実行にかかった時間は " + (stop - start) + " ﾐﾘ秒です。" ,logWriting.MOVING_LOG_FLG);
 				return TimerShoriConst.NO_UPDATE;
 			case ReturnCodeConst.EVERY_UPDATE_NOTHING:
 				stop = System.currentTimeMillis();
@@ -909,12 +915,10 @@ public class cloringDate {
 		switch (week_name[week]) {
 			case "日曜日":
 //				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
-				commonAP.writeLog(h + ":" + m + ":" + second + ",今日は" + week_name[week] + "。",logWriting.MOVING_LOG_FLG);
-				return ReturnCodeConst.NO_UPDATE_TIME;
+				return ReturnCodeConst.HOLIDAY;
 			case "土曜日":
-				commonAP.writeLog(h + ":" + m + ":" + second + ",今日は" + week_name[week] + "。",logWriting.MOVING_LOG_FLG);
 //				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
-				return ReturnCodeConst.NO_UPDATE_TIME;
+				return ReturnCodeConst.HOLIDAY;
 
 			default:
 				break;
@@ -925,7 +929,6 @@ public class cloringDate {
 		//16時以前のお軌道は却下する。
 		if ( h < baseHour ){
 //			System.out.println(h+"時"+m+"分"+second+"秒");
-			commonAP.writeLog(h+"時"+m+"分"+second+"秒なので動きません。",logWriting.MOVING_LOG_FLG);
 			return ReturnCodeConst.NO_UPDATE_TIME;
 		}else{
 			if ( h == baseHour ){
@@ -951,8 +954,7 @@ public class cloringDate {
 		s.closeConection();
 		if (etfUpdateDay.equals(stockUpdateDay)){
 			if (TODAY.equals(stockUpdateDay)){
-				commonAP.writeLog("同日更新。",logWriting.MOVING_LOG_FLG);
-				return ReturnCodeConst.NO_UPDATE_TIME;
+				return ReturnCodeConst.SAME_DAY;
 			}
 		}
 
