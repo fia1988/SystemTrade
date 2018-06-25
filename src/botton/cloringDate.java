@@ -901,14 +901,17 @@ public class cloringDate {
                 "木曜日", "金曜日", "土曜日"};
 		int baseHour = 17;
 		int baseMinitu = 20;
+		int spanTime = ((PROPARTY.CLOALING_TIME_CONST)/1000)/60;
 		int sleepTime = 10;
 		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
 
 		switch (week_name[week]) {
 			case "日曜日":
 //				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
+				commonAP.writeLog(h + ":" + m + ":" + second + ",今日は" + week_name[week] + "。",logWriting.MOVING_LOG_FLG);
 				return ReturnCodeConst.NO_UPDATE_TIME;
 			case "土曜日":
+				commonAP.writeLog(h + ":" + m + ":" + second + ",今日は" + week_name[week] + "。",logWriting.MOVING_LOG_FLG);
 //				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
 				return ReturnCodeConst.NO_UPDATE_TIME;
 
@@ -921,6 +924,7 @@ public class cloringDate {
 		//16時以前のお軌道は却下する。
 		if ( h < baseHour ){
 //			System.out.println(h+"時"+m+"分"+second+"秒");
+			commonAP.writeLog(h+"時"+m+"分"+second+"秒なので動きません。",logWriting.MOVING_LOG_FLG);
 			return ReturnCodeConst.NO_UPDATE_TIME;
 		}else{
 			if ( h == baseHour ){
@@ -946,7 +950,7 @@ public class cloringDate {
 		s.closeConection();
 		if (etfUpdateDay.equals(stockUpdateDay)){
 			if (TODAY.equals(stockUpdateDay)){
-//				commonAP.writeInLog("同日更新",logWriting.MOVING_LOG_FLG);
+				commonAP.writeLog("同日更新。",logWriting.MOVING_LOG_FLG);
 				return ReturnCodeConst.NO_UPDATE_TIME;
 			}
 		}
