@@ -65,9 +65,9 @@ public class PROPARTY {
 	public static String DBPASS = "";
 
 	//へそのごまのID
-	public static final String hesoGomaID = "privatets0001";
+	public static final String hesoGomaID = "";
 	//へそのごまのパスワード
-	public static final String hesoGomePASS = "p4FT-rF4";
+	public static final String hesoGomePASS = "";
 
 
 }
