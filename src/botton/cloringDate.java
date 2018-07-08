@@ -935,12 +935,14 @@ public class cloringDate {
 				if (m >= ( baseMinitu - spanTime )){
 					if ( m < baseMinitu ){
 						sleepTime = 1000 * 60 * ( baseMinitu - m - 1) + ( (60 - second) * 1000 );
-						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + ( (sleepTime  - ( (60 - second) * 1000 ) / (1000*60)) ) + "分" + (60 - second) + "秒停止します。",logWriting.DATEDATE_LOG_FLG);
-						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + ( (sleepTime  - ( (60 - second) * 1000 ) / (1000*60)) ) + "分" + (60 - second) + "秒停止します。",logWriting.MOVING_LOG_FLG);
+						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + ( (sleepTime  - ( (60 - second) * 1000 ) ) / (1000*60) ) + "分" + (60 - second) + "秒停止します。",logWriting.DATEDATE_LOG_FLG);
+						commonAP.writeInLog("zikeiretuDataUpdate：今の時間は：" + h + "時" + m + "分" + second + "秒" + "です。" + ( (sleepTime  - ( (60 - second) * 1000 ) ) / (1000*60) ) + "分" + (60 - second) + "秒停止します。",logWriting.MOVING_LOG_FLG);
 						try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
 						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.MOVING_LOG_FLG);
 					}					
+				}else{
+					return ReturnCodeConst.NO_UPDATE_TIME;
 				}
 			}
 		}
