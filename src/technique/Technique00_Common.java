@@ -313,7 +313,10 @@ public class Technique00_Common {
 		}
 		//--------ここまで財務データ------------
 
-
+//		//高配当銘柄だけ抽出
+//		if (nowDTO.getDIVIDEND() < 1.5){
+//			return Technique98_CONST.NO_GAME;
+//		}
 		return Technique98_CONST.TRADE_FLG;
 
 	}

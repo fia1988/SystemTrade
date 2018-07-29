@@ -94,7 +94,12 @@ public class CheckSign {
 		//これはテスト
 		CHECKTODAY(3,"DD", TechCon.PAC01 ,TechCon.TEC04, "MACD_M_S_OVER0_testbefore",	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
-
+		//CAPM系
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC14, TechCon.CAPM_AVE_Right_L_2,TechCon.PAC01,TechCon.TEC14,TechCon.CAPM_MULTI_1,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC14, TechCon.CAPM_L_2,			TechCon.PAC01,TechCon.TEC14,TechCon.CAPM_MULTI_1,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC14, TechCon.CAPM_MULTI_3,		TechCon.PAC01,TechCon.TEC14,TechCon.CAPM_S_1,			STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC14, TechCon.CAPM_MULTI_3,		TechCon.PAC01,TechCon.TEC14,TechCon.CAPM_AVE_Right_S_1,	STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC14, TechCon.CAPM_MULTI_1,		TechCon.PAC01,TechCon.TEC14,TechCon.CAPM_MULTI_4,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 
 		s.resetConnection();

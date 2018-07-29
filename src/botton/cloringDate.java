@@ -907,7 +907,7 @@ public class cloringDate {
 		String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
                 "木曜日", "金曜日", "土曜日"};
 		int baseHour = 17;
-		int baseMinitu = 20;
+		int baseMinitu = 16;
 		int spanTime = ((PROPARTY.CLOALING_TIME_CONST)/1000)/60;
 		int sleepTime = 10;
 		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
@@ -940,7 +940,7 @@ public class cloringDate {
 						try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.DATEDATE_LOG_FLG);
 						commonAP.writeInLog("zikeiretuDataUpdate：動き始めます。",logWriting.MOVING_LOG_FLG);
-					}					
+					}
 				}else{
 					return ReturnCodeConst.NO_UPDATE_TIME;
 				}
