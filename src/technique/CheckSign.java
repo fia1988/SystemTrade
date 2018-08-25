@@ -81,18 +81,19 @@ public class CheckSign {
 
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC13, TechCon.CODE9468_L,	TechCon.PAC01,TechCon.TEC13,TechCon.CODE9468_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
-		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		//これはテスト_2018/8/13で終了
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_1_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_2_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_1_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_2_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+//		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC12, TechCon.PBRandDiviteCheck_3_L,	TechCon.PAC01,TechCon.TEC12,TechCon.averageCheck_3_S,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
-		//これはテスト
-		CHECKTODAY(3,"DD", TechCon.PAC01 ,TechCon.TEC04, "MACD_M_S_OVER0_testbefore",	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
+		//これはテスト_2018/8/13で終了
+//		CHECKTODAY(3,"DD", TechCon.PAC01 ,TechCon.TEC04, "MACD_M_S_OVER0_testbefore",	TechCon.PAC01,TechCon.TEC04,TechCon.METH_MACD_M_S_OVER0,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
 
 		//CAPM系
 		CHECKTODAY(1,"DD", TechCon.PAC01 ,TechCon.TEC14, TechCon.CAPM_AVE_Right_L_2,TechCon.PAC01,TechCon.TEC14,TechCon.CAPM_MULTI_1,		STOCKList,SATISTICSList,INDEXList,ETFNameList,keepStockList,TODAY);
@@ -1420,7 +1421,7 @@ public class CheckSign {
 
 		}
 
-		s.closeConection();
+//		s.closeConection();
 		//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
 		int sleepTime = 7;
 		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
@@ -1428,23 +1429,24 @@ public class CheckSign {
 //		System.out.println(code + ":" + resultDTO.getKeepCount());
 //		System.out.println(code + ":" + resultDTO.getEntryTime());
 
-		if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge) == Technique98_CONST.TRADE_FLG ){
+		if ( Techinique_COMMON_METHOD.codeMethodMove(packageName,className,methodName,paraDTO,nowDTOList,nowDTOadress,resultDTO,code,cate,day,size,judge,s) == Technique98_CONST.TRADE_FLG ){
 			resultCodeList.add(code);
 			//売りフラグの時、インターバルタイムがtrueかどうかをチェックする
 			if ( judge==false ){
 				if ( resultDTO.isNowInterValFLG() ){
 
 					//次の処理のためにfalseにする。
-					s = new S();
-					s.getCon();
+//					s = new S();
+//					s.getCon();
 					setIntervalTBL(LMETHOD,SMETHOD,type,code,resultDTO.getMaxInterValTime(),s);
 					resultDTO.setNowInterValFLG(false);
 					//ｓのコネクションを連続稼働するとエラーがでるのでちょっと止める
 					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-					s.closeConection();
+					
 				}
 			};
 		};
+		s.closeConection();
 		resultDTO.resetCount();
 	}
 

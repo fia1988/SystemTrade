@@ -824,46 +824,46 @@ public class SagyoSpace {
 		dayList[0] = "2018-07-30";
 		dayList[1] = "2018-12-31";
 		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2009-01-01";
-//		dayList[1] = "2009-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2010-01-01";
-//		dayList[1] = "2010-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2011-01-01";
-//		dayList[1] = "2011-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2012-01-01";
-//		dayList[1] = "2012-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2013-01-01";
-//		dayList[1] = "2013-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2014-01-01";
-//		dayList[1] = "2014-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2015-01-01";
-//		dayList[1] = "2015-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2016-01-01";
-//		dayList[1] = "2016-12-31";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2017-01-01";
-//		dayList[1] = "2017-12-30";
-//		dayLists.add(dayList.clone());
-//
-//		dayList[0] = "2018-01-01";
-//		dayList[1] = "2018-04-30";
-//		dayLists.add(dayList.clone());
+
+		dayList[0] = "2009-01-01";
+		dayList[1] = "2009-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2010-01-01";
+		dayList[1] = "2010-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2011-01-01";
+		dayList[1] = "2011-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2012-01-01";
+		dayList[1] = "2012-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2013-01-01";
+		dayList[1] = "2013-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2014-01-01";
+		dayList[1] = "2014-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2015-01-01";
+		dayList[1] = "2015-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2016-01-01";
+		dayList[1] = "2016-12-31";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2017-01-01";
+		dayList[1] = "2017-12-30";
+		dayLists.add(dayList.clone());
+
+		dayList[0] = "2018-01-01";
+		dayList[1] = "2018-08-06";
+		dayLists.add(dayList.clone());
 
 
 
@@ -883,14 +883,14 @@ public class SagyoSpace {
 			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_DOLLCOTST_RESULT_LIST_LOG_FLG);
 			commonAP.writeInLog("-----" + a[0] + "_" + a[1]+ "-----",logWriting.CODE_RESULT_LIST_LOG_FLG);
 
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
@@ -911,189 +911,189 @@ public class SagyoSpace {
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_L",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_L",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique08","MACD_IDOHEIKIN_L",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_2",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_2",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_2",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_2",tec,"Technique14","CAPM_MULTI_7",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_2",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_2",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_2",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_2",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_2",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_2",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_2",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_2",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_3",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_3",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique04","MACD_M_L_OVER0",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_12",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_AVE_Right_L_1",tec,"Technique14","CAPM_MULTI_12",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_12",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_L_1",tec,"Technique14","CAPM_MULTI_12",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_4_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_4_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_S",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_S",tec,"Technique14","CAPM_MULTI_1",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_L",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_aveCheck_1_L",tec,"Technique14","CAPM_MULTI_16",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
@@ -1121,35 +1121,35 @@ public class SagyoSpace {
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_1_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_MULTI_3",tec,"Technique14","CAPM_AVE_Right_S_3",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_MULTI_3",tec,"Technique14","CAPM_AVE_Right_S_3",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_MULTI_3",tec,"Technique14","CAPM_S_3",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_MULTI_3",tec,"Technique14","CAPM_S_3",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique06","IDO_HEKIN_3_S",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();
 			nowDTO = new Bean_nowRecord();
 			shokisettei(paraDTO, nowDTO, resultDTO,false);
 			paraDTO.setOnEliteFLG();
-			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_MULTI_3",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
+//			Analysis00_Common.Analysis_COMMON(tec,"Technique14","CAPM_MULTI_3",tec,"Technique14","CAPM_MULTI_4",paraDTO,nowDTO,resultDTO,startDD,endDD);
 
 			paraDTO = new Bean_Parameta();
 			resultDTO = new Bean_Result();

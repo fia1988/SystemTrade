@@ -105,7 +105,7 @@ public class Techinique_COMMON_METHOD {
 	//パッケージ名とDTOとコードとtrue,falseをいれる
 	//例）Techinique_COMMON_METHOD.codeMethodMove("technique","Technique04","MACD_L",paraDTO,nowDTOList,8,resultDTO,"9994_T","2016-06-06",5,true);
 	//nowDTOadressの値はなんでもよい
-	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,String dayTime,int size,boolean entryCheck){
+	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,String dayTime,int size,boolean entryCheck,S s){
 //	public static int codeMethodMove(String packageName,String className,String methodName,Bean_Parameta paraDTO,List<Bean_nowRecord> nowDTOList,int nowDTOadress,Bean_Result resultDTO,String code,String cate,int size,boolean entryCheck){
 
 		if( size <= 0 ){return Technique98_CONST.NO_GAME;}
@@ -116,8 +116,8 @@ public class Techinique_COMMON_METHOD {
 		//連続稼働させないように休息する。
 		try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 
-		S s = new S();
-		s.getCon();
+//		S s = new S();
+//		s.getCon();
 		String startDay = commonAP.getStartDay(dayTime,size, s);
 //		s.closeConection();
 
@@ -234,7 +234,7 @@ public class Techinique_COMMON_METHOD {
 		}
 
 
-		s.closeConection();
+//		s.closeConection();
 		return Technique98_CONST.NO_GAME;
 	}
 
