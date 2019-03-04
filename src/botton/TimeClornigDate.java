@@ -25,7 +25,7 @@ public class TimeClornigDate {
 			timer = new Timer();
 			this.MainDTO = mainDTO;
 //			timer.scheduleAtFixedRate(task,0, 1800000);
-			
+
 			timer.schedule(task,0, PROPARTY.CLOALING_TIME);
 //			timer.schedule(task,0, 18);
 //			timer.scheduleWithFixedDelay(task,0,0);
@@ -51,8 +51,9 @@ public class TimeClornigDate {
 				C_D.getDayDate(MainDTO);
 			} catch (Exception e) {
 				commonAP.writeInLog("何か致命的にエラーが発生している。以下にエラーメッセージ",logWriting.DATEDATE_LOG_FLG);
+				commonAP.writeInLog("何か致命的にエラーが発生している。以下にエラーメッセージ",logWriting.CODE_SEPACON_ERR_LOG_FLG);
+
 				e.printStackTrace();
-				
 				commonAP.writeInErrLog(e);
 
 
@@ -62,7 +63,7 @@ public class TimeClornigDate {
 			C_D = new cloringDate();
 		}
 	};
-	
-	
+
+
 
 }

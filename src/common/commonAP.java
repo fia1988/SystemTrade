@@ -137,7 +137,7 @@ public class commonAP {
         e.printStackTrace(pw);
         String trace = sw.toString();
         commonAP.writeInLog(trace,logWriting.DATEDATE_LOG_FLG);
-
+        commonAP.writeInLog(trace,logWriting.CODE_SEPACON_ERR_LOG_FLG);
         try {
             if ( sw != null ) {
                 sw.flush();
