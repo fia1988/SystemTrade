@@ -154,6 +154,9 @@ public class cloringDate {
 		//backUp開始
 		backUpLogic(mainDTO,LS_TODAY,checkDay);
 
+		//手法ごと投資記録出力をつける。
+		keepStockOut(mainDTO,LS_TODAY);
+
 		stop = System.currentTimeMillis();
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.MOVING_LOG_FLG);
 		commonAP.writeInLog("実行にかかった時間は " + (stop - start)/1000 + " 秒です。",logWriting.DATEDATE_LOG_FLG);
@@ -161,6 +164,45 @@ public class cloringDate {
 		return TimerShoriConst.SUCCESS;
 
 	}
+
+
+	//手法ごと投資記録出力
+	private void keepStockOut(TAB_MainDTO mainDTO,String TODAY){
+		S s = new S();
+		s.getCon();
+		String SQL;
+		String A = "A";
+		String B = "B";
+		String asetMoney = "asetMoney";
+		String nowPrice = "nowPrice";
+		String meigaraSuu = "meigaraSuu";
+		SQL = "select "
+			+ A + "." + COLUMN.ENTRYMETHOD + ","
+			+ B + "." + COLUMN.EXITMETHOD + ","
+			+ "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY																				  + ") as " + asetMoney	 + ", "
+			+       "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE											  + ") as " + nowPrice	 + ", "
+			+ "(" + "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE + ") - " + A + COLUMN.REAL_TOTAL_ENTRY_MONEY + ") as " + asetMoney	 + ", "
+			+ "sum(" + A + "." + COLUMN.CODE																								  + ") as " + meigaraSuu + "  "
+			+ " from "
+			+ TBL_Name.KEEPLISTTBL + " as " + A
+			+ " inner join "
+			+ TBL_Name.STOCK_DD + " as " + B
+			+ " on " + A + "." + COLUMN.CODE + " = " + B + "." + COLUMN.CODE
+			+ " where "
+			+ B + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
+			+ " group by "
+			+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "";
+
+		commonAP.writeInLog("手法ごと投資記録出力処理を開始します。",logWriting.DATEDATE_LOG_FLG);
+
+		System.out.println(SQL);
+		commonAP.writeInLog("手法ごと投資記録出力処理を終了します。",logWriting.DATEDATE_LOG_FLG);
+
+		s.closeConection();
+	}
+
+
+
 	//common.getStartDayを使う直前に起動させること。
 	private boolean checkBasicCode(){
 
