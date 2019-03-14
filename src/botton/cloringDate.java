@@ -212,6 +212,7 @@ public class cloringDate {
 				R4 = s.rs2.getString(	 nowPrice													);
 				R5 = s.rs2.getString(	 Appreciation												);
 				R6 = s.rs2.getString(	 meigaraSuu													);
+				//日付,購入メソッド,売却メソッド,投資金額,現在価格,評価損益,投資銘柄数
 				commonAP.writeInLog(R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6,logWriting.DATEDATE_LOG_FLG);
 			}
 		} catch (SQLException e) {
