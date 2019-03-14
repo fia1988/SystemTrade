@@ -168,20 +168,22 @@ public class cloringDate {
 
 	//手法ごと投資記録出力
 	private void keepStockOut(TAB_MainDTO mainDTO,String TODAY){
+		commonAP.writeInLog("手法ごと投資記録出力処理を開始します。",logWriting.DATEDATE_LOG_FLG);
+
 		S s = new S();
 		s.getCon();
 		String SQL;
 		String A = "A";
 		String B = "B";
-		String asetMoney = "asetMoney";
 		String nowPrice = "nowPrice";
+		String Appreciation = "Appreciation";
 		String meigaraSuu = "meigaraSuu";
 		SQL = "select "
 			+ A + "." + COLUMN.ENTRYMETHOD + ","
 			+ B + "." + COLUMN.EXITMETHOD + ","
-			+ "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY																				  + ") as " + asetMoney	 + ", "
+			+ "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY																				  + ") "				 + ", "
 			+       "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE											  + ") as " + nowPrice	 + ", "
-			+ "(" + "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE + ") - " + A + COLUMN.REAL_TOTAL_ENTRY_MONEY + ") as " + asetMoney	 + ", "
+			+ "(" + "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE + ") - " + A + COLUMN.REAL_TOTAL_ENTRY_MONEY + ") as " + Appreciation	 + ", "
 			+ "sum(" + A + "." + COLUMN.CODE																								  + ") as " + meigaraSuu + "  "
 			+ " from "
 			+ TBL_Name.KEEPLISTTBL + " as " + A
@@ -193,12 +195,35 @@ public class cloringDate {
 			+ " group by "
 			+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "";
 
-		commonAP.writeInLog("手法ごと投資記録出力処理を開始します。",logWriting.DATEDATE_LOG_FLG);
-
+		String R0 = TODAY;
+		String R1 = "";
+		String R2 = "";
+		String R3 = "";
+		String R4 = "";
+		String R5 = "";
+		String R6 = "";
 		System.out.println(SQL);
-		commonAP.writeInLog("手法ごと投資記録出力処理を終了します。",logWriting.DATEDATE_LOG_FLG);
+		try {
+			s.rs2 = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs2.next() ) {
+				R1 = s.rs2.getString(	 A + "." + COLUMN.ENTRYMETHOD								);
+				R2 = s.rs2.getString(	 A + "." + COLUMN.EXITMETHOD								);
+				R3 = s.rs2.getString(	 "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY	+ ")"	);
+				R4 = s.rs2.getString(	 nowPrice													);
+				R5 = s.rs2.getString(	 Appreciation												);
+				R6 = s.rs2.getString(	 meigaraSuu													);
+				commonAP.writeInLog(R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6,logWriting.DATEDATE_LOG_FLG);
+			}
+		} catch (SQLException e) {
+			commonAP.writeInLog("投資記録出力に失敗。利用したSQL：" + SQL,logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInLog("投資記録出力に失敗。利用したSQL：" + SQL,logWriting.CODE_SEPACON_ERR_LOG_FLG);
+			commonAP.writeInErrLog(e);
+		}
 
 		s.closeConection();
+
+
+		commonAP.writeInLog("手法ごと投資記録出力処理を終了します。",logWriting.DATEDATE_LOG_FLG);
 	}
 
 

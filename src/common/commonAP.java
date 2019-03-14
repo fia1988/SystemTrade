@@ -220,6 +220,9 @@ public class commonAP {
 			case logWriting.MOVING_LOG_FLG:
 				fileName = "MOVING_CHECK_LOG_" + writeType + logWriting.logKakutyousi;
 				break;
+			case logWriting.ASET_LOG_FLG:
+				fileName = "ASET_LOG_" + writeType + logWriting.logKakutyousi;
+				break;
 			default:
 			break;
 		}
