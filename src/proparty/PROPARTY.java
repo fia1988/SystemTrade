@@ -8,6 +8,21 @@ public class PROPARTY {
 	//各項目の初期値
 	public static String FIRST_SET = "firstRecord";
 
+	//------------------------------------ここはアップロードする前に消してやること
+	//へそのごまのID
+		public static final String hesoGomaID = "";
+		//へそのごまのパスワード
+		public static final String hesoGomePASS = "";
+	//------------------------------------ここはアップロードする前に消してやること
+
+	//everyフォルダの固定値
+	public static final String COMMON_A = "00000.commonBoard_typeA";
+	public static final String COMMON_B = "10000.commonBoard_typeB";
+	public static final String COMMON_OLD = "old";
+
+	//手法ごとの今日までの結果をまとめたファイル
+	public static final String METHOD_RESULE_F = "methodResultFile.csv";
+
 //  集計する年数
 	public static int COLLECTYEAR = 100;
 	//サイトに株価更新時間
@@ -64,10 +79,6 @@ public class PROPARTY {
 //	DBのパス。
 	public static String DBPASS = "";
 
-	//へそのごまのID
-	public static final String hesoGomaID = "";
-	//へそのごまのパスワード
-	public static final String hesoGomePASS = "";
 
 
 }

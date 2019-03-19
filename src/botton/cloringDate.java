@@ -175,26 +175,46 @@ public class cloringDate {
 		String SQL;
 		String A = "A";
 		String B = "B";
+		String C = "C";
+		String D = "D";
 		String nowPrice = "nowPrice";
 		String Appreciation = "Appreciation";
 		String meigaraSuu = "meigaraSuu";
+		String totalReturn = "sumTotalReturn";
 		SQL = "select "
 			+ A + "." + COLUMN.ENTRYMETHOD + ","
-			+ B + "." + COLUMN.EXITMETHOD + ","
+			+ A + "." + COLUMN.EXITMETHOD + ","
 			+ "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY																				  + ") "				 + ", "
 			+       "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE											  + ") as " + nowPrice	 + ", "
-			+ "(" + "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE + ") - " + A + COLUMN.REAL_TOTAL_ENTRY_MONEY + ") as " + Appreciation	 + ", "
-			+ "sum(" + A + "." + COLUMN.CODE																								  + ") as " + meigaraSuu + "  "
+			+ "(" + "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE+ ") " + " - " + "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY + ")) as " + Appreciation	 + ", "
+			+ "count(" + A + "." + COLUMN.CODE																								  + ") as " + meigaraSuu + " , "
+			+ totalReturn
 			+ " from "
 			+ TBL_Name.KEEPLISTTBL + " as " + A
 			+ " inner join "
 			+ TBL_Name.STOCK_DD + " as " + B
 			+ " on " + A + "." + COLUMN.CODE + " = " + B + "." + COLUMN.CODE
+			+ " inner join "
+			+ " ( "
+			+ " select "
+			+ C + "." + COLUMN.ENTRYMETHOD	+ ","
+			+ C + "." + COLUMN.EXITMETHOD	+ ","
+			+ "sum(" + C + "." + COLUMN.REAL_RETURN	 + ") as " + totalReturn +  " "
+			+ " from "
+			+ TBL_Name.RESULTHISTROYTBL + " as " + C
+			+ " group by "
+			+ C + "." + COLUMN.ENTRYMETHOD + "," + C + "." + COLUMN.EXITMETHOD + ""
+			+ " ) "
+			+ " as " + D
+			+ " on "
+			+ A + "." + COLUMN.ENTRYMETHOD + C + "." + COLUMN.ENTRYMETHOD + ""
+			+ " and "
+			+ A + "." + COLUMN.EXITMETHOD + D + "." + COLUMN.EXITMETHOD + ""
 			+ " where "
 			+ B + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
 			+ " group by "
 			+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "";
-
+		System.out.println(SQL);
 		String R0 = TODAY;
 		String R1 = "";
 		String R2 = "";
@@ -202,6 +222,7 @@ public class cloringDate {
 		String R4 = "";
 		String R5 = "";
 		String R6 = "";
+		String R7 = "";
 		commonAP.writeInLog(SQL,logWriting.DATEDATE_LOG_FLG);
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -212,9 +233,12 @@ public class cloringDate {
 				R4 = s.rs2.getString(	 nowPrice													);
 				R5 = s.rs2.getString(	 Appreciation												);
 				R6 = s.rs2.getString(	 meigaraSuu													);
-				//日付,購入メソッド,売却メソッド,投資金額,現在価格,評価損益,投資銘柄数
-				commonAP.writeLog(R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6,logWriting.ASET_LOG_FLG);
-				commonAP.writeLog("\r\n",logWriting.ASET_LOG_FLG);
+				R6 = s.rs2.getString(	 totalReturn													);
+				//日付,購入メソッド,売却メソッド,投資金額,現在価格,評価損益,投資銘柄数,20180521から今日までの結果
+				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,PROPARTY.METHOD_RESULE_F,R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6 + "," + R7);
+				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,PROPARTY.METHOD_RESULE_F,"\r\n");
+				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,"test",R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6 + "," + R7);
+				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,"test","\r\n");
 			}
 		} catch (SQLException e) {
 			commonAP.writeInLog("投資記録出力に失敗。利用したSQL：" + SQL,logWriting.DATEDATE_LOG_FLG);
@@ -776,11 +800,11 @@ public class cloringDate {
         	String parsonalFolderName = parsonalFolderPath.getName();
 
         	switch (parsonalFolderName) {
-				case "00000.commonBoard_typeA":
+				case PROPARTY.COMMON_A:
 					break;
-				case "10000.commonBoard_typeB":
+				case PROPARTY.COMMON_B:
 					break;
-				case "old":
+				case PROPARTY.COMMON_OLD:
 					break;
 				default:
 		        	if(kickFileUserList.indexOf(parsonalFolderName) == -1){
@@ -904,11 +928,11 @@ public class cloringDate {
         	File parsonalFolderPath = new File(personalFolderPath);
         	String parsonalFolderName = parsonalFolderPath.getName();
         	switch (parsonalFolderName) {
-				case "00000.commonBoard_typeA":
+				case PROPARTY.COMMON_A:
 					break;
-				case "10000.commonBoard_typeB":
+				case PROPARTY.COMMON_B:
 					break;
-				case "old":
+				case PROPARTY.COMMON_OLD:
 					break;
 				default:
 

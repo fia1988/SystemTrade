@@ -127,6 +127,8 @@ public class commonAP {
 
 	}
 
+
+
 	public static void writeInErrLog(Exception e) {
 
         StringWriter sw = null;
@@ -149,6 +151,31 @@ public class commonAP {
             }
         } catch (IOException ignore){}
 
+	}
+
+	public static void writeText(String folderPath,String fileName,String writing){
+		File file = new File(folderPath + File.separator + fileName);
+//			File folder = new File(file_name);
+//			folder.mkdirs();
+
+		try {
+			file.createNewFile();
+		} catch (IOException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		try{
+		//				File file = new File(newFile);
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+			        new FileOutputStream(folderPath + File.separator + fileName, true),PROPARTY.MOJI_TYPE)));
+			pw.write(writing);
+			pw.close();
+//			FileWriter filewriter = new FileWriter(file,true);
+//			filewriter.write(writing );
+//			filewriter.close();
+		}catch(IOException e){
+			System.out.println(e);
+		}
 	}
 
 	public static void writeInLog(String writing,int writeType){
@@ -220,37 +247,14 @@ public class commonAP {
 			case logWriting.MOVING_LOG_FLG:
 				fileName = "MOVING_CHECK_LOG_" + writeType + logWriting.logKakutyousi;
 				break;
-			case logWriting.ASET_LOG_FLG:
-				fileName = "ASET_LOG_" + writeType + logWriting.logKakutyousi;
-				break;
 			default:
 			break;
 		}
 
 
 		String logFileFolderPath = PROPARTY.LOG_FILE_OUT;
-		File file = new File(logFileFolderPath + File.separator + fileName);
-//			File folder = new File(file_name);
-//			folder.mkdirs();
 
-		try {
-			file.createNewFile();
-		} catch (IOException e1) {
-			// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-		}
-		try{
-		//				File file = new File(newFile);
-			PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-			        new FileOutputStream(logFileFolderPath + File.separator + fileName, true),PROPARTY.MOJI_TYPE)));
-			pw.write(writing);
-			pw.close();
-//			FileWriter filewriter = new FileWriter(file,true);
-//			filewriter.write(writing );
-//			filewriter.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
+		writeText(logFileFolderPath,fileName,writing);
 
 		System.out.print(writing);
 	}
