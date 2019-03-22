@@ -207,14 +207,14 @@ public class cloringDate {
 			+ " ) "
 			+ " as " + D
 			+ " on "
-			+ A + "." + COLUMN.ENTRYMETHOD + C + "." + COLUMN.ENTRYMETHOD + ""
+			+ A + "." + COLUMN.ENTRYMETHOD + " = " + D + "." + COLUMN.ENTRYMETHOD + ""
 			+ " and "
-			+ A + "." + COLUMN.EXITMETHOD + D + "." + COLUMN.EXITMETHOD + ""
+			+ A + "." + COLUMN.EXITMETHOD  + " = " + D + "." + COLUMN.EXITMETHOD + ""
 			+ " where "
 			+ B + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
 			+ " group by "
 			+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "";
-		System.out.println(SQL);
+//		System.out.println(SQL);
 		String R0 = TODAY;
 		String R1 = "";
 		String R2 = "";
@@ -233,12 +233,11 @@ public class cloringDate {
 				R4 = s.rs2.getString(	 nowPrice													);
 				R5 = s.rs2.getString(	 Appreciation												);
 				R6 = s.rs2.getString(	 meigaraSuu													);
-				R6 = s.rs2.getString(	 totalReturn													);
+				R7 = s.rs2.getString(	 totalReturn													);
 				//日付,購入メソッド,売却メソッド,投資金額,現在価格,評価損益,投資銘柄数,20180521から今日までの結果
 				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,PROPARTY.METHOD_RESULE_F,R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6 + "," + R7);
 				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,PROPARTY.METHOD_RESULE_F,"\r\n");
-				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,"test",R0 + "," + R1 + "," + R2 + "," + R3 + "," + R4 + "," + R5 + "," + R6 + "," + R7);
-				commonAP.writeText(mainDTO.getEntryFolderPath() + File.separator + PROPARTY.COMMON_A,"test","\r\n");
+
 			}
 		} catch (SQLException e) {
 			commonAP.writeInLog("投資記録出力に失敗。利用したSQL：" + SQL,logWriting.DATEDATE_LOG_FLG);
