@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import proparty.S;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 
 public class Super_IDO_HEKIN {
 
@@ -13,13 +13,13 @@ public class Super_IDO_HEKIN {
 		String SQL;
 
 		//ここでテーブル指定
-		SQL = "select " + COLUMN.DAYTIME
+		SQL = "select " + COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
 
@@ -30,16 +30,16 @@ public class Super_IDO_HEKIN {
 			//trueならレコードが存在する。
 			if(s.rs.next()==true){
 				//				もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
-				String start = s.rs.getString((COLUMN.DAYTIME)) ;
+				String start = s.rs.getString((COLUMN_TBL.DAYTIME)) ;
 
 				SQL = "select "
 						+ " avg(" + targetColomn +  ") from "
 						+ TBL
 						+ " where "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'"
 						+ " and "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " between "
 						+ "'" + start + "'"
 						+ " and "
@@ -57,10 +57,10 @@ public class Super_IDO_HEKIN {
 						+ " set "
 						+ updateColomn + " = " + s.rs.getDouble("avg(" + targetColomn +  ")")
 						+ " where "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " = '" + dayTime + "'"
 						+ " and "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'";
 
 //						long	art = System.currentTimeMillis();
@@ -92,15 +92,15 @@ public class Super_IDO_HEKIN {
 		String SQL;
 
 		//ここでテーブル指定
-		SQL = "select " + COLUMN.DAYTIME
+		SQL = "select " + COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " <= '" + dayTime + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME + " <= '" + dayTime + "'"
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
 
@@ -111,16 +111,16 @@ public class Super_IDO_HEKIN {
 			//trueならレコードが存在する。
 			if(s.rs.next()==true){
 				//				もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
-				String start = s.rs.getString((COLUMN.DAYTIME)) ;
+				String start = s.rs.getString((COLUMN_TBL.DAYTIME)) ;
 
 				SQL = "select "
 						+ " avg(" + targetColomn +  ") from "
 						+ TBL
 						+ " where "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'"
 						+ " and "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " between "
 						+ "'" + start + "'"
 						+ " and "

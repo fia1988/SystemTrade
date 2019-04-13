@@ -4,9 +4,11 @@ import java.sql.SQLException;
 
 import proparty.S;
 import proparty.TBL_Name;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 
 public class Bean_calendarBean {
+
+
 
 	private String DAYTIME;
 	private String WEEK_NOW;
@@ -25,31 +27,33 @@ public class Bean_calendarBean {
 	private String MONTH_LONG_BEFORE;
 	private boolean WEEK_CHANGE_FLG ;
 	private boolean MONTH_CHANGE_FLG ;
-	
+
+	//getterの結果がnullの時はnullなのでgetterのnullは考慮すること
+	//例：if(getter==null){}
 	public void setCalendarBean(String TODAY,S s){
-		String SQL = " select * from " + TBL_Name.CALENDAR_TBL + " where " + COLUMN.DAYTIME + " = '" + TODAY + "'";
-		
+		String SQL = " select * from " + TBL_Name.CALENDAR_TBL + " where " + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";
+
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			//trueならレコードが存在する。
 			if(s.rs.next()==true){
-				DAYTIME = s.rs.getString(COLUMN.DAYTIME);
-				WEEK_NOW = s.rs.getString(COLUMN.WEEK_NOW);
-				MONTH_NOW = s.rs.getString(COLUMN.MONTH_NOW);
-				DAYTIME_BEFORE = s.rs.getString(COLUMN.DAYTIME_BEFORE);
-				WEEK_BEFORE = s.rs.getString(COLUMN.WEEK_BEFORE);
-				MONTH_BEFORE = s.rs.getString(COLUMN.MONTH_BEFORE);
-				DAYTIME_SHORT_BEFORE = s.rs.getString(COLUMN.DAYTIME_SHORT_BEFORE);
-				WEEK_SHORT_BEFORE = s.rs.getString(COLUMN.WEEK_SHORT_BEFORE);
-				MONTH_SHORT_BEFORE = s.rs.getString(COLUMN.MONTH_SHORT_BEFORE);
-				DAYTIME_MIDDLE_BEFORE = s.rs.getString(COLUMN.DAYTIME_MIDDLE_BEFORE);
-				WEEK_MIDDLE_BEFORE = s.rs.getString(COLUMN.WEEK_MIDDLE_BEFORE);
-				MONTH_MIDDLE_BEFORE = s.rs.getString(COLUMN.MONTH_MIDDLE_BEFORE);
-				DAYTIME_LONG_BEFORE = s.rs.getString(COLUMN.DAYTIME_LONG_BEFORE);
-				WEEK_LONG_BEFORE = s.rs.getString(COLUMN.WEEK_LONG_BEFORE);
-				MONTH_LONG_BEFORE = s.rs.getString(COLUMN.MONTH_LONG_BEFORE);
-				WEEK_CHANGE_FLG = s.rs.getBoolean(COLUMN.WEEK_CHANGE_FLG);
-				MONTH_CHANGE_FLG = s.rs.getBoolean(COLUMN.MONTH_CHANGE_FLG);
+				DAYTIME = s.rs.getString(COLUMN_TBL.DAYTIME);
+				WEEK_NOW = s.rs.getString(COLUMN_TBL.WEEK_NOW);
+				MONTH_NOW = s.rs.getString(COLUMN_TBL.MONTH_NOW);
+				DAYTIME_BEFORE = s.rs.getString(COLUMN_TBL.DAYTIME_BEFORE);
+				WEEK_BEFORE = s.rs.getString(COLUMN_TBL.WEEK_BEFORE);
+				MONTH_BEFORE = s.rs.getString(COLUMN_TBL.MONTH_BEFORE);
+				DAYTIME_SHORT_BEFORE = s.rs.getString(COLUMN_TBL.DAYTIME_SHORT_BEFORE);
+				WEEK_SHORT_BEFORE = s.rs.getString(COLUMN_TBL.WEEK_SHORT_BEFORE);
+				MONTH_SHORT_BEFORE = s.rs.getString(COLUMN_TBL.MONTH_SHORT_BEFORE);
+				DAYTIME_MIDDLE_BEFORE = s.rs.getString(COLUMN_TBL.DAYTIME_MIDDLE_BEFORE);
+				WEEK_MIDDLE_BEFORE = s.rs.getString(COLUMN_TBL.WEEK_MIDDLE_BEFORE);
+				MONTH_MIDDLE_BEFORE = s.rs.getString(COLUMN_TBL.MONTH_MIDDLE_BEFORE);
+				DAYTIME_LONG_BEFORE = s.rs.getString(COLUMN_TBL.DAYTIME_LONG_BEFORE);
+				WEEK_LONG_BEFORE = s.rs.getString(COLUMN_TBL.WEEK_LONG_BEFORE);
+				MONTH_LONG_BEFORE = s.rs.getString(COLUMN_TBL.MONTH_LONG_BEFORE);
+				WEEK_CHANGE_FLG = s.rs.getBoolean(COLUMN_TBL.WEEK_CHANGE_FLG);
+				MONTH_CHANGE_FLG = s.rs.getBoolean(COLUMN_TBL.MONTH_CHANGE_FLG);
 
 				//				もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
 //				data="'" +  s.rs.getString((col))  + "'" ;
@@ -75,7 +79,7 @@ public class Bean_calendarBean {
 //		+ COLUMN.MONTH_LONG_BEFORE_KATA			 + " ,  "
 //		+ COLUMN.WEEK_CHANGE_FLG_KATA 			 + " ,  "
 //		+ COLUMN.MONTH_CHANGE_FLG_KATA 			 + " ,  "
-		
+
 	}
 
 	public String getDAYTIME() {
@@ -145,8 +149,8 @@ public class Bean_calendarBean {
 	public boolean getMONTH_CHANGE_FLG() {
 		return MONTH_CHANGE_FLG;
 	}
-	
-	
-	
-	
+
+
+
+
 }

@@ -12,7 +12,7 @@ import GamenDTO.TAB_MainDTO;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.ReturnCodeConst;
 import constant.logWriting;
@@ -164,9 +164,9 @@ public class CreateSepaComFile {
 
 		String SQL = "delete from " + TBL_Name.SEPARATE_DD
 					+ " where "
-					+ COLUMN.SEPA_FLG + " is false "
+					+ COLUMN_TBL.SEPA_FLG + " is false "
 					+ " and "
-					+ COLUMN.CHECKSEPA_COMBINE + " is " + judgeStr;
+					+ COLUMN_TBL.CHECKSEPA_COMBINE + " is " + judgeStr;
 
 		int deleteRecord = 0;
 		try {
@@ -248,11 +248,11 @@ public class CreateSepaComFile {
 		//2007-01-04以降しかDBには入っていないため、それ以前のものはsepa_flg is falseをtrueにする
 		String SQL2 = "update " + TBL_Name.SEPARATE_DD
 					+ " set "
-					+ COLUMN.SEPA_FLG + " = true "
+					+ COLUMN_TBL.SEPA_FLG + " = true "
 					+ " where "
-					+ COLUMN.SEPA_FLG + " is false "
+					+ COLUMN_TBL.SEPA_FLG + " is false "
 					+ " and "
-					+ COLUMN.EFFECT_STARTDAY + " < '2007-01-01'";
+					+ COLUMN_TBL.EFFECT_STARTDAY + " < '2007-01-01'";
 //		System.out.println("createSepaComFileAndLoad:" + checkFLG + ":" + LS_TODAY);
 		//取り込む前に削除する
 		deleteOldFalse(checkFLG,s);

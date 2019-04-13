@@ -9,7 +9,7 @@ import proparty.TBL_Name;
 import common.commonAP;
 
 import constant.AccesarryParameta;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.logWriting;
 
 public class makeCalendarCon {
@@ -64,23 +64,23 @@ public class makeCalendarCon {
 		SQL = " update "
 				+ TBL_Name.CALENDAR_TBL
 				+ " set "
-				+ COLUMN.DAYTIME_BEFORE			+ " = " + maeDay		 + " , "
-				+ COLUMN.WEEK_BEFORE			+ " = " + maeWeek		 + " ,  "
-				+ COLUMN.MONTH_BEFORE			+ " = " + maeMonth		 + " , "
+				+ COLUMN_TBL.DAYTIME_BEFORE			+ " = " + maeDay		 + " , "
+				+ COLUMN_TBL.WEEK_BEFORE			+ " = " + maeWeek		 + " ,  "
+				+ COLUMN_TBL.MONTH_BEFORE			+ " = " + maeMonth		 + " , "
 
-				+ COLUMN.DAYTIME_SHORT_BEFORE	+ " = " + shortDay		 + " , "
-				+ COLUMN.WEEK_SHORT_BEFORE		+ " = " + shortWeek		 + " ,  "
-				+ COLUMN.MONTH_SHORT_BEFORE		+ " = " + shortMonth	 + " , "
+				+ COLUMN_TBL.DAYTIME_SHORT_BEFORE	+ " = " + shortDay		 + " , "
+				+ COLUMN_TBL.WEEK_SHORT_BEFORE		+ " = " + shortWeek		 + " ,  "
+				+ COLUMN_TBL.MONTH_SHORT_BEFORE		+ " = " + shortMonth	 + " , "
 
-				+ COLUMN.DAYTIME_MIDDLE_BEFORE	+ " = " + middleDay		 + " , "
-				+ COLUMN.WEEK_MIDDLE_BEFORE		+ " = " + middleWeek	 + " ,  "
-				+ COLUMN.MONTH_MIDDLE_BEFORE	+ " = " + middleMonth	 + " , "
+				+ COLUMN_TBL.DAYTIME_MIDDLE_BEFORE	+ " = " + middleDay		 + " , "
+				+ COLUMN_TBL.WEEK_MIDDLE_BEFORE		+ " = " + middleWeek	 + " ,  "
+				+ COLUMN_TBL.MONTH_MIDDLE_BEFORE	+ " = " + middleMonth	 + " , "
 
-				+ COLUMN.DAYTIME_LONG_BEFORE	+ " = " + longDay		 + " , "
-				+ COLUMN.WEEK_LONG_BEFORE		+ " = " + longWeek		 + " ,  "
-				+ COLUMN.MONTH_LONG_BEFORE		+ " = " + longMonth		 + "   "
+				+ COLUMN_TBL.DAYTIME_LONG_BEFORE	+ " = " + longDay		 + " , "
+				+ COLUMN_TBL.WEEK_LONG_BEFORE		+ " = " + longWeek		 + " ,  "
+				+ COLUMN_TBL.MONTH_LONG_BEFORE		+ " = " + longMonth		 + "   "
 				+ " where "
-				+ COLUMN.DAYTIME + " = '" + TODAY + "'";
+				+ COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";
 				;
 		s.freeUpdateQuery(SQL);
 
@@ -94,22 +94,22 @@ public class makeCalendarCon {
 		SQL = " update "
 				+ TBL_Name.CALENDAR_TBL
 				+ " set "
-				+ COLUMN.MONTH_CHANGE_FLG	+ " = false "
+				+ COLUMN_TBL.MONTH_CHANGE_FLG	+ " = false "
 				+ " where "
-				+ COLUMN.DAYTIME + " = '" + TODAY + "'"
+				+ COLUMN_TBL.DAYTIME + " = '" + TODAY + "'"
 				+ " and "
-				+ COLUMN.MONTH_NOW + " = " + checkMonth;
+				+ COLUMN_TBL.MONTH_NOW + " = " + checkMonth;
 		s.freeUpdateQuery(SQL);
 
 
 		SQL = " update "
 				+ TBL_Name.CALENDAR_TBL
 				+ " set "
-				+ COLUMN.WEEK_CHANGE_FLG	+ " = false "
+				+ COLUMN_TBL.WEEK_CHANGE_FLG	+ " = false "
 				+ " where "
-				+ COLUMN.DAYTIME + " = '" + TODAY + "'"
+				+ COLUMN_TBL.DAYTIME + " = '" + TODAY + "'"
 				+ " and "
-				+ COLUMN.WEEK_NOW + " = " + checkWeek;
+				+ COLUMN_TBL.WEEK_NOW + " = " + checkWeek;
 		s.freeUpdateQuery(SQL);
 
 
@@ -125,13 +125,13 @@ public class makeCalendarCon {
 		String data = "null";
 		switch (cate) {
 			case 1:
-				col = COLUMN.DAYTIME;
+				col = COLUMN_TBL.DAYTIME;
 				break;
 			case 2:
-				col = COLUMN.WEEK_NOW;
+				col = COLUMN_TBL.WEEK_NOW;
 				break;
 			case 3:
-				col = COLUMN.MONTH_NOW;
+				col = COLUMN_TBL.MONTH_NOW;
 				break;
 			default:
 				break;
@@ -139,7 +139,7 @@ public class makeCalendarCon {
 		
 		
 		SQL = " select  " + col + " from " + TBL_Name.CALENDAR_TBL
-				+ " where " + COLUMN.DAYTIME + " <= '" + TODAY + "'"
+				+ " where " + COLUMN_TBL.DAYTIME + " <= '" + TODAY + "'"
 				+ " order by " + col + " desc"
 				+ " limit " + (term - 1) + " , 1";
 
@@ -170,19 +170,19 @@ public class makeCalendarCon {
 		String data = "null";
 		switch (cate) {
 			case 1:
-				col = COLUMN.DAYTIME;
+				col = COLUMN_TBL.DAYTIME;
 				break;
 			case 2:
-				col = COLUMN.WEEK_NOW;
+				col = COLUMN_TBL.WEEK_NOW;
 				break;
 			case 3:
-				col = COLUMN.MONTH_NOW;
+				col = COLUMN_TBL.MONTH_NOW;
 				break;
 			default:
 				break;
 		}
 		SQL = " select distinct " + col + " from " + TBL_Name.CALENDAR_TBL
-				+ " where " + COLUMN.DAYTIME + " <= '" + TODAY + "'"
+				+ " where " + COLUMN_TBL.DAYTIME + " <= '" + TODAY + "'"
 				+ " order by " + col + " desc"
 				+ " limit " + (term - 1) + " , 1";
 
@@ -235,11 +235,11 @@ public class makeCalendarCon {
 		SQL = "insert into "
 				+ TBL_Name.CALENDAR_TBL
 				+ " ( "
-				+ COLUMN.DAYTIME			 + " , "
-				+ COLUMN.MONTH_NOW			 + " , "
-				+ COLUMN.WEEK_NOW			 + " ,  "
-				+ COLUMN.MONTH_CHANGE_FLG	 + " ,  "
-				+ COLUMN.WEEK_CHANGE_FLG	 + "    "
+				+ COLUMN_TBL.DAYTIME			 + " , "
+				+ COLUMN_TBL.MONTH_NOW			 + " , "
+				+ COLUMN_TBL.WEEK_NOW			 + " ,  "
+				+ COLUMN_TBL.MONTH_CHANGE_FLG	 + " ,  "
+				+ COLUMN_TBL.WEEK_CHANGE_FLG	 + "    "
 				+ ")"
 				+ " values "
 				+ "("

@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class controllDay {
@@ -109,9 +109,9 @@ public class controllDay {
 	public static void update_KOSHINBI(String updateDay,String UpdateCulumn,S s){
 		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
-				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
+				+ COLUMN_TBL.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.KOSIN + " = '" + UpdateCulumn + "'";
+				+ COLUMN_TBL.KOSIN + " = '" + UpdateCulumn + "'";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -119,9 +119,9 @@ public class controllDay {
 	public static void update_STOCK_ETF(String updateDay,S s){
 		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
-				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
+				+ COLUMN_TBL.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_STOCK_ETF + "'";
+				+ COLUMN_TBL.KOSIN + " = '" + ReCord.KOSHINBI_STOCK_ETF + "'";
 		s.freeUpdateQuery(SQL);
 
 	}
@@ -129,9 +129,9 @@ public class controllDay {
 	public static void update_INDEX(String updateDay,S s){
 		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
-				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
+				+ COLUMN_TBL.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_INDEX + "'";
+				+ COLUMN_TBL.KOSIN + " = '" + ReCord.KOSHINBI_INDEX + "'";
 		s.freeUpdateQuery(SQL);
 
 	}
@@ -139,9 +139,9 @@ public class controllDay {
 	public static void update_STATISTICS(String updateDay,S s){
 		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
-				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
+				+ COLUMN_TBL.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_STATISTICS + "'";
+				+ COLUMN_TBL.KOSIN + " = '" + ReCord.KOSHINBI_STATISTICS + "'";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -178,7 +178,7 @@ public class controllDay {
 
 
 //		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
-		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + updateColumn + "'";
+		SQL = "select " + COLUMN_TBL.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN_TBL.KOSIN + " ='" + updateColumn + "'";
 
 		s.setPstmt(SQL);
 
@@ -188,7 +188,7 @@ public class controllDay {
 
 			while (s.p_rs.next()) {
 
-				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN_TBL.KOSIN_DAY));
 
 			}
 //			System.out.println(TBLName + "のMAX(setMAX_DD_HAIHUN)：" + MAX_HAIHUN);
@@ -210,7 +210,7 @@ public class controllDay {
 		//-を_に変える。DBには_で入っている
 
 //		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
-		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_STOCK_ETF + "'";
+		SQL = "select " + COLUMN_TBL.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN_TBL.KOSIN + " ='" + ReCord.KOSHINBI_STOCK_ETF + "'";
 
 		s.setPstmt(SQL);
 
@@ -220,7 +220,7 @@ public class controllDay {
 
 			while (s.p_rs.next()) {
 
-				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN_TBL.KOSIN_DAY));
 
 			}
 //			System.out.println(TBLName + "のMAX(setMAX_DD_HAIHUN)：" + MAX_HAIHUN);
@@ -238,7 +238,7 @@ public class controllDay {
 	public static String getMAX_DD_STATISTICS(S s){
 
 		//-を_に変える。DBには_で入っている
-		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_STATISTICS + "'";
+		SQL = "select " + COLUMN_TBL.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN_TBL.KOSIN + " ='" + ReCord.KOSHINBI_STATISTICS + "'";
 		s.setPstmt(SQL);
 
 		try {
@@ -247,7 +247,7 @@ public class controllDay {
 
 			while (s.p_rs.next()) {
 
-				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN_TBL.KOSIN_DAY));
 
 			}
 
@@ -266,7 +266,7 @@ public class controllDay {
 	public static String getMAX_DD_INDEX(S s){
 
 		//-を_に変える。DBには_で入っている
-		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_INDEX + "'";
+		SQL = "select " + COLUMN_TBL.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN_TBL.KOSIN + " ='" + ReCord.KOSHINBI_INDEX + "'";
 		s.setPstmt(SQL);
 
 		try {
@@ -275,7 +275,7 @@ public class controllDay {
 
 			while (s.p_rs.next()) {
 
-				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN_TBL.KOSIN_DAY));
 
 			}
 

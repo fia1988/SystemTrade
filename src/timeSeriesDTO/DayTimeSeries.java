@@ -12,7 +12,7 @@ import bean.Bean_CodeList;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 
 public class DayTimeSeries {
 	String SQL;
@@ -64,20 +64,20 @@ public class DayTimeSeries {
 	//先物・・・5
 	//通貨・・・6
 	private void setCode1_DD(String code,String startDay,String endDay,S s){
-		SQL = "select * from " + TBL_Name.STOCK_DD + " where " + COLUMN.CODE + "= '" + code + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+		SQL = "select * from " + TBL_Name.STOCK_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 		//
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_OPEN)		)	);
-				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_MAX)		)	);
-				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_MIN)		)	);
-				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_CLOSE)		)	);
-				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_DEKI)		)	);
-				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_BAYBAY)	)	);
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_CLOSE)		)	);
+				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_DEKI)		)	);
+				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_BAYBAY)	)	);
 				B_C.setCatelfg("1");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 				B_Cs.add(B_C);
@@ -91,20 +91,20 @@ public class DayTimeSeries {
 	}
 
 	private void setCode2_DD(String code,String startDay,String endDay,S s){
-		SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + COLUMN.CODE + "= '" + code + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+		SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay		  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME)			)	);
-				B_C.setDeki		  (s.rs.getString(commonAP.cutBlank(COLUMN.DEKI)			)	);
-				B_C.setBaybay	  (s.rs.getString(commonAP.cutBlank(COLUMN.BAYBAY)			)	);
-				B_C.setStockCount (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_NAME_NUM)	)	);
-				B_C.setTakePrice  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_GETPRICE)	)	);
-				B_C.setUpPrice	  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_UPSTOCK)	)	);
-				B_C.setNoChange   (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_NOCHANGE)	)	);
-				B_C.setDownPrice  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_DOWNSTOCK)	)	);
+				B_C.setDay		  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME)			)	);
+				B_C.setDeki		  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)			)	);
+				B_C.setBaybay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)			)	);
+				B_C.setStockCount (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NAME_NUM)	)	);
+				B_C.setTakePrice  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_GETPRICE)	)	);
+				B_C.setUpPrice	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_UPSTOCK)	)	);
+				B_C.setNoChange   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NOCHANGE)	)	);
+				B_C.setDownPrice  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_DOWNSTOCK)	)	);
 				B_C.setCatelfg("2");
 
 
@@ -120,17 +120,17 @@ public class DayTimeSeries {
 	}
 
 	private void setCode3_DD(String code,String startDay,String endDay,S s){
-		SQL = "select * from " + TBL_Name.INDEX_DD + " where " + COLUMN.CODE + "= '" + code + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+		SQL = "select * from " + TBL_Name.INDEX_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
 				B_C.setCatelfg("3");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 				B_Cs.add(B_C);
@@ -143,19 +143,19 @@ public class DayTimeSeries {
 	}
 
 	private void setCode4_DD(String code,String startDay,String endDay,S s){
-		SQL = "select * from " + TBL_Name.ETF_DD + " where " + COLUMN.CODE + "= '" + code + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+		SQL = "select * from " + TBL_Name.ETF_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
-				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN.DEKI)		)	);
-				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN.BAYBAY)	)	);
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
+				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)		)	);
+				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)	)	);
 				B_C.setCatelfg("4");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 				B_Cs.add(B_C);
@@ -168,11 +168,11 @@ public class DayTimeSeries {
 	}
 
 	private void setCode5_DD(String code,String startDay,String endDay,S s){
-		SQL = "select * from " + TBL_Name.SAKIMONO_DD + " where " + COLUMN.CODE + "= '" + code + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+		SQL = "select * from " + TBL_Name.SAKIMONO_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 	}
 
 	private void setCode6_DD(String code,String startDay,String endDay,S s){
-		SQL = "select * from " + TBL_Name.CURRENCY_DD + " where " + COLUMN.CODE + "= '" + code + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+		SQL = "select * from " + TBL_Name.CURRENCY_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 	}
 
 
@@ -225,20 +225,20 @@ public class DayTimeSeries {
 	//先物・・・5
 	//通貨・・・6
 	private void setCode1_DD(String code,S s){
-		SQL = "select * from " + TBL_Name.STOCK_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		SQL = "select * from " + TBL_Name.STOCK_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "'";
 
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_OPEN)		)	);
-				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_MAX)		)	);
-				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_MIN)		)	);
-				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_CLOSE)		)	);
-				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_DEKI)		)	);
-				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN.BEFORE_BAYBAY)	)	);
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_CLOSE)		)	);
+				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_DEKI)		)	);
+				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_BAYBAY)	)	);
 				B_C.setCatelfg("1");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 				B_Cs.add(B_C);
@@ -252,20 +252,20 @@ public class DayTimeSeries {
 	}
 
 	private void setCode2_DD(String code,S s){
-		SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay		  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME)			)	);
-				B_C.setDeki		  (s.rs.getString(commonAP.cutBlank(COLUMN.DEKI)			)	);
-				B_C.setBaybay	  (s.rs.getString(commonAP.cutBlank(COLUMN.BAYBAY)			)	);
-				B_C.setStockCount (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_NAME_NUM)	)	);
-				B_C.setTakePrice  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_GETPRICE)	)	);
-				B_C.setUpPrice	  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_UPSTOCK)	)	);
-				B_C.setNoChange   (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_NOCHANGE)	)	);
-				B_C.setDownPrice  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_DOWNSTOCK)	)	);
+				B_C.setDay		  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME)			)	);
+				B_C.setDeki		  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)			)	);
+				B_C.setBaybay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)			)	);
+				B_C.setStockCount (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NAME_NUM)	)	);
+				B_C.setTakePrice  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_GETPRICE)	)	);
+				B_C.setUpPrice	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_UPSTOCK)	)	);
+				B_C.setNoChange   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NOCHANGE)	)	);
+				B_C.setDownPrice  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_DOWNSTOCK)	)	);
 				B_C.setCatelfg("2");
 
 
@@ -281,17 +281,17 @@ public class DayTimeSeries {
 	}
 
 	private void setCode3_DD(String code,S s){
-		SQL = "select * from " + TBL_Name.INDEX_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		SQL = "select * from " + TBL_Name.INDEX_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
 				B_C.setCatelfg("3");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 				B_Cs.add(B_C);
@@ -304,19 +304,19 @@ public class DayTimeSeries {
 	}
 
 	private void setCode4_DD(String code,S s){
-		SQL = "select * from " + TBL_Name.ETF_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		SQL = "select * from " + TBL_Name.ETF_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
-				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
-				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN.DEKI)		)	);
-				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN.BAYBAY)	)	);
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
+				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)		)	);
+				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)	)	);
 				B_C.setCatelfg("4");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 				B_Cs.add(B_C);
@@ -329,11 +329,11 @@ public class DayTimeSeries {
 	}
 
 	private void setCode5_DD(String code,S s){
-		SQL = "select * from " + TBL_Name.SAKIMONO_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		SQL = "select * from " + TBL_Name.SAKIMONO_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "'";
 	}
 
 	private void setCode6_DD(String code,S s){
-		SQL = "select * from " + TBL_Name.CURRENCY_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		SQL = "select * from " + TBL_Name.CURRENCY_DD + " where " + COLUMN_TBL.CODE + "= '" + code + "'";
 	}
 
 	public List<Bean_CodeList> getCodeDTO_DD(){

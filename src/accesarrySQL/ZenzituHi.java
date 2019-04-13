@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import proparty.S;
 import proparty.TBL_Name;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class ZenzituHi {
@@ -49,30 +49,30 @@ public class ZenzituHi {
 
 
 		SQL = "select "
-				+ COLUMN.CLOSE + " , "
-				+ COLUMN.SHORTIDO + " , "
-				+ COLUMN.MIDDLEIDO + " , "
-				+ COLUMN.LONGIDO + " , "
-				+ COLUMN.DEKI + " , "
-				+ COLUMN.BAYBAY + " , "
-				+ COLUMN.SHORTIDO_DEKI + " , "
-				+ COLUMN.MIDDLEIDO_DEKI + " , "
-				+ COLUMN.LONGIDO_DEKI + " , "
-				+ COLUMN.SHORTIDO_BAYBAY + " , "
-				+ COLUMN.MIDDLEIDO_BAYBAY + " , "
-				+ COLUMN.LONGIDO_BAYBAY + " , "
-				+ COLUMN.SHORTIDO_HEKATU + " , "
-				+ COLUMN.MIDDLEIDO_HEKATU + " , "
-				+ COLUMN.LONGIDO_HEKATU + "  "
+				+ COLUMN_TBL.CLOSE + " , "
+				+ COLUMN_TBL.SHORTIDO + " , "
+				+ COLUMN_TBL.MIDDLEIDO + " , "
+				+ COLUMN_TBL.LONGIDO + " , "
+				+ COLUMN_TBL.DEKI + " , "
+				+ COLUMN_TBL.BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_DEKI + " , "
+				+ COLUMN_TBL.MIDDLEIDO_DEKI + " , "
+				+ COLUMN_TBL.LONGIDO_DEKI + " , "
+				+ COLUMN_TBL.SHORTIDO_BAYBAY + " , "
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY + " , "
+				+ COLUMN_TBL.LONGIDO_BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_HEKATU + " , "
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU + " , "
+				+ COLUMN_TBL.LONGIDO_HEKATU + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -87,70 +87,70 @@ public class ZenzituHi {
 						+ TBL
 						+ " set "
 						//前日比
-						+ COLUMN.CHANGE_PRICE				  + " = " + COLUMN.CLOSE + " - " + s.rs.getDouble((COLUMN.CLOSE)) + ","
+						+ COLUMN_TBL.CHANGE_PRICE				  + " = " + COLUMN_TBL.CLOSE + " - " + s.rs.getDouble((COLUMN_TBL.CLOSE)) + ","
 						//前日比率
-						+ COLUMN.CHANGERATE					  + " = " + COLUMN.CLOSE + " / " + s.rs.getDouble((COLUMN.CLOSE)) + " -  1 " + ","
+						+ COLUMN_TBL.CHANGERATE					  + " = " + COLUMN_TBL.CLOSE + " / " + s.rs.getDouble((COLUMN_TBL.CLOSE)) + " -  1 " + ","
 						//株価短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_CHANGERATE		  + " = " + COLUMN.SHORTIDO + " - " + s.rs.getDouble((COLUMN.SHORTIDO)) + ","
+						+ COLUMN_TBL.SHORTIDO_CHANGERATE		  + " = " + COLUMN_TBL.SHORTIDO + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO)) + ","
 						//株価中期間移動平均線前日比
-						+ COLUMN.MIDDLEIDO_CHANGERATE		  + " = " + COLUMN.MIDDLEIDO + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_CHANGERATE		  + " = " + COLUMN_TBL.MIDDLEIDO + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) + ","
 						//株価長期間移動平均線前日比
-						+ COLUMN.LONGIDO_CHANGERATE			  + " = " + COLUMN.LONGIDO  + " - " + s.rs.getDouble((COLUMN.LONGIDO)) + ","
+						+ COLUMN_TBL.LONGIDO_CHANGERATE			  + " = " + COLUMN_TBL.LONGIDO  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO)) + ","
 						//株価短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_RATIO				  + " = " + COLUMN.SHORTIDO  + " / " + s.rs.getDouble((COLUMN.SHORTIDO)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_RATIO				  + " = " + COLUMN_TBL.SHORTIDO  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO)) + " -  1 " + ","
 						//株価中期間移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_RATIO			  + " = " + COLUMN.MIDDLEIDO  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO)) + " - 1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_RATIO			  + " = " + COLUMN_TBL.MIDDLEIDO  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) + " - 1 " + ","
 						//株価長期間移動平均線前日比率
-						+ COLUMN.LONGIDO_RATIO				  + " = " + COLUMN.LONGIDO  + " / " + s.rs.getDouble((COLUMN.LONGIDO)) + " - 1 " + ","
+						+ COLUMN_TBL.LONGIDO_RATIO				  + " = " + COLUMN_TBL.LONGIDO  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO)) + " - 1 " + ","
 						//出来高前日比
-						+ COLUMN.DEKI_CHANGERATE			  + " = " + COLUMN.DEKI + " - " + s.rs.getDouble((COLUMN.DEKI)) + ","
+						+ COLUMN_TBL.DEKI_CHANGERATE			  + " = " + COLUMN_TBL.DEKI + " - " + s.rs.getDouble((COLUMN_TBL.DEKI)) + ","
 						//出来高前日比率
-						+ COLUMN.DEKI_RATIO					  + " = " + COLUMN.DEKI + " / " + s.rs.getDouble((COLUMN.DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.DEKI_RATIO					  + " = " + COLUMN_TBL.DEKI + " / " + s.rs.getDouble((COLUMN_TBL.DEKI)) + " -  1 " + ","
 						//売買代金前日比
-						+ COLUMN.BAYBAY_CHANGERATE			  + " = " + COLUMN.BAYBAY + " - " + s.rs.getDouble((COLUMN.BAYBAY)) + ","
+						+ COLUMN_TBL.BAYBAY_CHANGERATE			  + " = " + COLUMN_TBL.BAYBAY + " - " + s.rs.getDouble((COLUMN_TBL.BAYBAY)) + ","
 						//売買代金前日比率
-						+ COLUMN.BAYBAY_RATIO				  + " = " + COLUMN.BAYBAY + " / " + s.rs.getDouble((COLUMN.BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.BAYBAY_RATIO				  + " = " + COLUMN_TBL.BAYBAY + " / " + s.rs.getDouble((COLUMN_TBL.BAYBAY)) + " -  1 " + ","
 						//出来高短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_DEKI_CHANGERATE	  + " = " + COLUMN.SHORTIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) + ","
+						+ COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) + ","
 						//出来高中期移動平均線前日比
-						+ COLUMN.MIDDLEIDO_DEKI_CHANGERATE	  + " = " + COLUMN.MIDDLEIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.MIDDLEIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) + ","
 						//出来高長期移動平均線前日比
-						+ COLUMN.LONGIDO_DEKI_CHANGERATE	  + " = " + COLUMN.LONGIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.LONGIDO_DEKI)) + ","
+						+ COLUMN_TBL.LONGIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) + ","
 						//出来高短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_DEKI_RATIO		  + " = " + COLUMN.SHORTIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_DEKI_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) + " -  1 " + ","
 						//出来高中期移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_DEKI_RATIO		  + " = " + COLUMN.MIDDLEIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_DEKI_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) + " -  1 " + ","
 						//出来高長期移動平均線前日比率
-						+ COLUMN.LONGIDO_DEKI_RATIO			  + " = " + COLUMN.LONGIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.LONGIDO_DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.LONGIDO_DEKI_RATIO			  + " = " + COLUMN_TBL.LONGIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) + " -  1 " + ","
 						//売買代金短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN.SHORTIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) + ","
+						+ COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) + ","
 						//売買代金中期間移動平均線前日比
-						+ COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE  + " = " + COLUMN.MIDDLEIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE  + " = " + COLUMN_TBL.MIDDLEIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) + ","
 						//売買代金長期移動平均線前日比
-						+ COLUMN.LONGIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN.LONGIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) + ","
+						+ COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) + ","
 						//売買代金短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_BAYBAY_RATIO		  + " = " + COLUMN.SHORTIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) + " -  1 " + ","
 						//売買代金中期間移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_BAYBAY_RATIO		  + " = " + COLUMN.MIDDLEIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) + " -  1 " + ","
 						//売買代金長期移動平均線前日比率
-						+ COLUMN.LONGIDO_BAYBAY_RATIO		  + " = " + COLUMN.LONGIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.LONGIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.LONGIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) + " -  1 " + ","
 						//指数平滑移動平均短期前日比
-						+ COLUMN.SHORTIDO_HEKATU_CHANGERATE	  + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) + ","
+						+ COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) + ","
 						//指数平滑移動平均中期前日比
-						+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE  + " = " + COLUMN.MIDDLEIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE  + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) + ","
 						//指数平滑移動平均長期前日比
-						+ COLUMN.LONGIDO_HEKATU_CHANGERATE	  + " = " + COLUMN.LONGIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) + ","
+						+ COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) + ","
 						//指数平滑移動平均短期前日比率
-						+ COLUMN.SHORTIDO_HEKATU_RATIO		  + " = " + COLUMN.SHORTIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) + " -  1 " + ","
 						//指数平滑移動平均中期前日比率
-						+ COLUMN.MIDDLEIDO_HEKATU_RATIO		  + " = " + COLUMN.MIDDLEIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) + " -  1 " + ","
 						//指数平滑移動平均長期前日比率
-						+ COLUMN.LONGIDO_HEKATU_RATIO		  + " = " + COLUMN.LONGIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) + " -  1 " + ""
+						+ COLUMN_TBL.LONGIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.LONGIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) + " -  1 " + ""
 						+ " where "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " = '" + dayTime + "'"
 						+ " and "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'";
 
 				s.sqlGetter().executeUpdate(SQL);
@@ -170,31 +170,31 @@ public class ZenzituHi {
 		String SQL;
 
 		SQL = "select "
-				+ COLUMN.STOCK_GETPRICE + " , "
-				+ COLUMN.STOCK_GETPRICE_IDO_SHORT + " , "
-				+ COLUMN.STOCK_GETPRICE_IDO_MIDDLE + " , "
-				+ COLUMN.STOCK_GETPRICE_IDO_LONG + " , "
-				+ COLUMN.STOCK_NOCHANGE + " , "
-				+ COLUMN.STOCK_NOCHANGE_IDO_SHORT + " , "
-				+ COLUMN.STOCK_NOCHANGE_IDO_MIDDLE + " , "
-				+ COLUMN.STOCK_NOCHANGE_IDO_LONG + " , "
-				+ COLUMN.DEKI + " , "
-				+ COLUMN.BAYBAY + " , "
-				+ COLUMN.SHORTIDO_DEKI + " , "
-				+ COLUMN.MIDDLEIDO_DEKI + " , "
-				+ COLUMN.LONGIDO_DEKI + " , "
-				+ COLUMN.SHORTIDO_BAYBAY + " , "
-				+ COLUMN.MIDDLEIDO_BAYBAY + " , "
-				+ COLUMN.LONGIDO_BAYBAY + "  "
+				+ COLUMN_TBL.STOCK_GETPRICE + " , "
+				+ COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT + " , "
+				+ COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE + " , "
+				+ COLUMN_TBL.STOCK_GETPRICE_IDO_LONG + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG + " , "
+				+ COLUMN_TBL.DEKI + " , "
+				+ COLUMN_TBL.BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_DEKI + " , "
+				+ COLUMN_TBL.MIDDLEIDO_DEKI + " , "
+				+ COLUMN_TBL.LONGIDO_DEKI + " , "
+				+ COLUMN_TBL.SHORTIDO_BAYBAY + " , "
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY + " , "
+				+ COLUMN_TBL.LONGIDO_BAYBAY + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -210,78 +210,78 @@ public class ZenzituHi {
 						+ " set "
 
 						//値付き前日比
-						+ COLUMN.STOCK_GETPRICE_CHANGERATE			  + " = " + COLUMN.STOCK_GETPRICE + " - " + s.rs.getInt((COLUMN.STOCK_GETPRICE)) + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_CHANGERATE			  + " = " + COLUMN_TBL.STOCK_GETPRICE + " - " + s.rs.getInt((COLUMN_TBL.STOCK_GETPRICE)) + ","
 						//値付き前日比率
-						+ COLUMN.STOCK_GETPRICE_RATIO				  + " = " + COLUMN.STOCK_GETPRICE + " / " + s.rs.getDouble((COLUMN.STOCK_GETPRICE)) + " -  1 " + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_RATIO				  + " = " + COLUMN_TBL.STOCK_GETPRICE + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE)) + " -  1 " + ","
 						//値付き短期間移動平均線前日比
-						+ COLUMN.STOCK_GETPRICE_IDO_SHORT_CHANGERATE  + " = " + COLUMN.STOCK_GETPRICE_IDO_SHORT  + " - " + s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_SHORT)) + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT_CHANGERATE  + " = " + COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT  + " - " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT)) + ","
 						//値付き中期移動平均線前日比
-						+ COLUMN.STOCK_GETPRICE_IDO_MIDDLE_CHANGERATE + " = " + COLUMN.STOCK_GETPRICE_IDO_MIDDLE  + " - " + s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_MIDDLE)) + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE_CHANGERATE + " = " + COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE  + " - " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE)) + ","
 						//値付き長期移動平均線前日比
-						+ COLUMN.STOCK_GETPRICE_IDO_LONG_CHANGERATE	  + " = " + COLUMN.STOCK_GETPRICE_IDO_LONG  + " - " + s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_LONG)) + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_IDO_LONG_CHANGERATE	  + " = " + COLUMN_TBL.STOCK_GETPRICE_IDO_LONG  + " - " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_LONG)) + ","
 						//値付き短期間移動平均線前日比率
-						+ COLUMN.STOCK_GETPRICE_IDO_SHORT_RATIO		  + " = " + COLUMN.STOCK_GETPRICE_IDO_SHORT  + " / " + s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_SHORT)) + " -  1 " + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT_RATIO		  + " = " + COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT  + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT)) + " -  1 " + ","
 						//値付き中期移動平均線前日比率
-						+ COLUMN.STOCK_GETPRICE_IDO_MIDDLE_RATIO	  + " = " + COLUMN.STOCK_GETPRICE_IDO_MIDDLE  + " / " + s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_MIDDLE)) + " -  1 " + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE_RATIO	  + " = " + COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE  + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE)) + " -  1 " + ","
 						//値付き長期移動平均線前日比率
-						+ COLUMN.STOCK_GETPRICE_IDO_LONG_RATIO		  + " = " + COLUMN.STOCK_GETPRICE_IDO_LONG  + " / " + s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_LONG)) + " -  1 " + ","
+						+ COLUMN_TBL.STOCK_GETPRICE_IDO_LONG_RATIO		  + " = " + COLUMN_TBL.STOCK_GETPRICE_IDO_LONG  + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_LONG)) + " -  1 " + ","
 
 				//変わらず前日比
-				+ COLUMN.STOCK_NOCHANGE_CHANGERATE			  + " = " + COLUMN.STOCK_NOCHANGE + " - " + s.rs.getInt((COLUMN.STOCK_NOCHANGE)) + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_CHANGERATE			  + " = " + COLUMN_TBL.STOCK_NOCHANGE + " - " + s.rs.getInt((COLUMN_TBL.STOCK_NOCHANGE)) + ","
 				//変わらず前日比率
-				+ COLUMN.STOCK_NOCHANGE_RATIO				  + " = " + COLUMN.STOCK_NOCHANGE + " / " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE)) + " -  1 " + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_RATIO				  + " = " + COLUMN_TBL.STOCK_NOCHANGE + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE)) + " -  1 " + ","
 				//変わらず短期間移動平均線前日比
-				+ COLUMN.STOCK_NOCHANGE_IDO_SHORT_CHANGERATE  + " = " + COLUMN.STOCK_NOCHANGE_IDO_SHORT  + " - " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_SHORT)) + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT_CHANGERATE  + " = " + COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT  + " - " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT)) + ","
 				//変わらず中期移動平均線前日比
-				+ COLUMN.STOCK_NOCHANGE_IDO_MIDDLE_CHANGERATE + " = " + COLUMN.STOCK_NOCHANGE_IDO_MIDDLE  + " - " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_MIDDLE)) + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE_CHANGERATE + " = " + COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE  + " - " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE)) + ","
 				//変わらず長期移動平均線前日比
-				+ COLUMN.STOCK_NOCHANGE_IDO_LONG_CHANGERATE	  + " = " + COLUMN.STOCK_NOCHANGE_IDO_LONG  + " - " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_LONG)) + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG_CHANGERATE	  + " = " + COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG  + " - " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG)) + ","
 				//変わらず短期間移動平均線前日比率
-				+ COLUMN.STOCK_NOCHANGE_IDO_SHORT_RATIO		  + " = " + COLUMN.STOCK_NOCHANGE_IDO_SHORT  + " / " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_SHORT)) + " -  1 " + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT_RATIO		  + " = " + COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT  + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT)) + " -  1 " + ","
 				//変わらず中期移動平均線前日比率
-				+ COLUMN.STOCK_NOCHANGE_IDO_MIDDLE_RATIO	  + " = " + COLUMN.STOCK_NOCHANGE_IDO_MIDDLE  + " / " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_MIDDLE)) + " -  1 " + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE_RATIO	  + " = " + COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE  + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE)) + " -  1 " + ","
 				//変わらず長期移動平均線前日比率
-				+ COLUMN.STOCK_NOCHANGE_IDO_LONG_RATIO		  + " = " + COLUMN.STOCK_NOCHANGE_IDO_LONG  + " / " + s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_LONG)) + " -  1 " + ","
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG_RATIO		  + " = " + COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG  + " / " + s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG)) + " -  1 " + ","
 
 				//出来高前日比
-				+ COLUMN.DEKI_CHANGERATE			  + " = " + COLUMN.DEKI + " - " + s.rs.getDouble((COLUMN.DEKI)) + ","
+				+ COLUMN_TBL.DEKI_CHANGERATE			  + " = " + COLUMN_TBL.DEKI + " - " + s.rs.getDouble((COLUMN_TBL.DEKI)) + ","
 				//出来高前日比率
-				+ COLUMN.DEKI_RATIO					  + " = " + COLUMN.DEKI + " / " + s.rs.getDouble((COLUMN.DEKI)) + " -  1 " + ","
+				+ COLUMN_TBL.DEKI_RATIO					  + " = " + COLUMN_TBL.DEKI + " / " + s.rs.getDouble((COLUMN_TBL.DEKI)) + " -  1 " + ","
 				//出来高短期間移動平均線前日比
-				+ COLUMN.SHORTIDO_DEKI_CHANGERATE	  + " = " + COLUMN.SHORTIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) + ","
+				+ COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) + ","
 				//出来高中期移動平均線前日比
-				+ COLUMN.MIDDLEIDO_DEKI_CHANGERATE	  + " = " + COLUMN.MIDDLEIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) + ","
+				+ COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.MIDDLEIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) + ","
 				//出来高長期移動平均線前日比
-				+ COLUMN.LONGIDO_DEKI_CHANGERATE	  + " = " + COLUMN.LONGIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.LONGIDO_DEKI)) + ","
+				+ COLUMN_TBL.LONGIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) + ","
 				//出来高短期間移動平均線前日比率
-				+ COLUMN.SHORTIDO_DEKI_RATIO		  + " = " + COLUMN.SHORTIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) + " -  1 " + ","
+				+ COLUMN_TBL.SHORTIDO_DEKI_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) + " -  1 " + ","
 				//出来高中期移動平均線前日比率
-				+ COLUMN.MIDDLEIDO_DEKI_RATIO		  + " = " + COLUMN.MIDDLEIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) + " -  1 " + ","
+				+ COLUMN_TBL.MIDDLEIDO_DEKI_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) + " -  1 " + ","
 				//出来高長期移動平均線前日比率
-				+ COLUMN.LONGIDO_DEKI_RATIO			  + " = " + COLUMN.LONGIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.LONGIDO_DEKI)) + " -  1 " + ","
+				+ COLUMN_TBL.LONGIDO_DEKI_RATIO			  + " = " + COLUMN_TBL.LONGIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) + " -  1 " + ","
 
 				//売買代金前日比
-				+ COLUMN.BAYBAY_CHANGERATE			  + " = " + COLUMN.BAYBAY + " - " + s.rs.getDouble((COLUMN.BAYBAY)) + ","
+				+ COLUMN_TBL.BAYBAY_CHANGERATE			  + " = " + COLUMN_TBL.BAYBAY + " - " + s.rs.getDouble((COLUMN_TBL.BAYBAY)) + ","
 				//売買代金前日比率
-				+ COLUMN.BAYBAY_RATIO				  + " = " + COLUMN.BAYBAY + " / " + s.rs.getDouble((COLUMN.BAYBAY)) + " -  1 " + ","
+				+ COLUMN_TBL.BAYBAY_RATIO				  + " = " + COLUMN_TBL.BAYBAY + " / " + s.rs.getDouble((COLUMN_TBL.BAYBAY)) + " -  1 " + ","
 				//売買代金短期間移動平均線前日比
-				+ COLUMN.SHORTIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN.SHORTIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) + ","
+				+ COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) + ","
 				//売買代金中期間移動平均線前日比
-				+ COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE  + " = " + COLUMN.MIDDLEIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) + ","
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE  + " = " + COLUMN_TBL.MIDDLEIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) + ","
 				//売買代金長期移動平均線前日比
-				+ COLUMN.LONGIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN.LONGIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) + ","
+				+ COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) + ","
 				//売買代金短期間移動平均線前日比率
-				+ COLUMN.SHORTIDO_BAYBAY_RATIO		  + " = " + COLUMN.SHORTIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) + " -  1 " + ","
+				+ COLUMN_TBL.SHORTIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) + " -  1 " + ","
 				//売買代金中期間移動平均線前日比率
-				+ COLUMN.MIDDLEIDO_BAYBAY_RATIO		  + " = " + COLUMN.MIDDLEIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) + " -  1 " + ","
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) + " -  1 " + ","
 				//売買代金長期移動平均線前日比率
-				+ COLUMN.LONGIDO_BAYBAY_RATIO		  + " = " + COLUMN.LONGIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) + " -  1 " + ""
+				+ COLUMN_TBL.LONGIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.LONGIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) + " -  1 " + ""
 
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " = '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'";
 
 				s.sqlGetter().executeUpdate(SQL);
@@ -300,22 +300,22 @@ public class ZenzituHi {
 
 		//ここでテーブル指定
 		SQL = "select "
-				+ COLUMN.CLOSE + " , "
-				+ COLUMN.SHORTIDO + " , "
-				+ COLUMN.MIDDLEIDO + " , "
-				+ COLUMN.LONGIDO + " , "
-				+ COLUMN.SHORTIDO_HEKATU + " , "
-				+ COLUMN.MIDDLEIDO_HEKATU + " , "
-				+ COLUMN.LONGIDO_HEKATU + "  "
+				+ COLUMN_TBL.CLOSE + " , "
+				+ COLUMN_TBL.SHORTIDO + " , "
+				+ COLUMN_TBL.MIDDLEIDO + " , "
+				+ COLUMN_TBL.LONGIDO + " , "
+				+ COLUMN_TBL.SHORTIDO_HEKATU + " , "
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU + " , "
+				+ COLUMN_TBL.LONGIDO_HEKATU + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -330,38 +330,38 @@ public class ZenzituHi {
 						+ TBL
 						+ " set "
 						//前日比
-						+ COLUMN.CHANGE_PRICE				  + " = " + COLUMN.CLOSE + " - " + s.rs.getDouble((COLUMN.CLOSE)) + ","
+						+ COLUMN_TBL.CHANGE_PRICE				  + " = " + COLUMN_TBL.CLOSE + " - " + s.rs.getDouble((COLUMN_TBL.CLOSE)) + ","
 						//前日比率
-						+ COLUMN.CHANGERATE					  + " = " + COLUMN.CLOSE + " / " + s.rs.getDouble((COLUMN.CLOSE)) + " -  1 " + ","
+						+ COLUMN_TBL.CHANGERATE					  + " = " + COLUMN_TBL.CLOSE + " / " + s.rs.getDouble((COLUMN_TBL.CLOSE)) + " -  1 " + ","
 						//株価短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_CHANGERATE		  + " = " + COLUMN.SHORTIDO  + " - " + s.rs.getDouble((COLUMN.SHORTIDO)) + ","
+						+ COLUMN_TBL.SHORTIDO_CHANGERATE		  + " = " + COLUMN_TBL.SHORTIDO  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO)) + ","
 						//株価中期間移動平均線前日比
-						+ COLUMN.MIDDLEIDO_CHANGERATE		  + " = " + COLUMN.MIDDLEIDO  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_CHANGERATE		  + " = " + COLUMN_TBL.MIDDLEIDO  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) + ","
 						//株価長期間移動平均線前日比
-						+ COLUMN.LONGIDO_CHANGERATE			  + " = " + COLUMN.LONGIDO  + " - " + s.rs.getDouble((COLUMN.LONGIDO)) + ","
+						+ COLUMN_TBL.LONGIDO_CHANGERATE			  + " = " + COLUMN_TBL.LONGIDO  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO)) + ","
 						//株価短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_RATIO				  + " = " + COLUMN.SHORTIDO  + " / " + s.rs.getDouble((COLUMN.SHORTIDO)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_RATIO				  + " = " + COLUMN_TBL.SHORTIDO  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO)) + " -  1 " + ","
 						//株価中期間移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_RATIO			  + " = " + COLUMN.MIDDLEIDO  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO)) + " - 1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_RATIO			  + " = " + COLUMN_TBL.MIDDLEIDO  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) + " - 1 " + ","
 						//株価長期間移動平均線前日比率
-						+ COLUMN.LONGIDO_RATIO				  + " = " + COLUMN.LONGIDO  + " / " + s.rs.getDouble((COLUMN.LONGIDO)) + " - 1 " + ","
+						+ COLUMN_TBL.LONGIDO_RATIO				  + " = " + COLUMN_TBL.LONGIDO  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO)) + " - 1 " + ","
 						//指数平滑移動平均短期前日比
-						+ COLUMN.SHORTIDO_HEKATU_CHANGERATE	  + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) + ","
+						+ COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) + ","
 						//指数平滑移動平均中期前日比
-						+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE  + " = " + COLUMN.MIDDLEIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE  + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) + ","
 						//指数平滑移動平均長期前日比
-						+ COLUMN.LONGIDO_HEKATU_CHANGERATE	  + " = " + COLUMN.LONGIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) + ","
+						+ COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) + ","
 						//指数平滑移動平均短期前日比率
-						+ COLUMN.SHORTIDO_HEKATU_RATIO		  + " = " + COLUMN.SHORTIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) + " -  1 " + ","
 						//指数平滑移動平均中期前日比率
-						+ COLUMN.MIDDLEIDO_HEKATU_RATIO		  + " = " + COLUMN.MIDDLEIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) + " -  1 " + ","
 						//指数平滑移動平均長期前日比率
-						+ COLUMN.LONGIDO_HEKATU_RATIO		  + " = " + COLUMN.LONGIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) + " -  1 " + ""
+						+ COLUMN_TBL.LONGIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.LONGIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) + " -  1 " + ""
 						+ " where "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " = '" + dayTime + "'"
 						+ " and "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'";
 
 				s.sqlGetter().executeUpdate(SQL);
@@ -381,30 +381,30 @@ public class ZenzituHi {
 
 		//ここでテーブル指定
 		SQL = "select "
-				+ COLUMN.CLOSE + " , "
-				+ COLUMN.SHORTIDO + " , "
-				+ COLUMN.MIDDLEIDO + " , "
-				+ COLUMN.LONGIDO + " , "
-				+ COLUMN.DEKI + " , "
-				+ COLUMN.BAYBAY + " , "
-				+ COLUMN.SHORTIDO_DEKI + " , "
-				+ COLUMN.MIDDLEIDO_DEKI + " , "
-				+ COLUMN.LONGIDO_DEKI + " , "
-				+ COLUMN.SHORTIDO_BAYBAY + " , "
-				+ COLUMN.MIDDLEIDO_BAYBAY + " , "
-				+ COLUMN.LONGIDO_BAYBAY + " , "
-				+ COLUMN.SHORTIDO_HEKATU + " , "
-				+ COLUMN.MIDDLEIDO_HEKATU + " , "
-				+ COLUMN.LONGIDO_HEKATU + "  "
+				+ COLUMN_TBL.CLOSE + " , "
+				+ COLUMN_TBL.SHORTIDO + " , "
+				+ COLUMN_TBL.MIDDLEIDO + " , "
+				+ COLUMN_TBL.LONGIDO + " , "
+				+ COLUMN_TBL.DEKI + " , "
+				+ COLUMN_TBL.BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_DEKI + " , "
+				+ COLUMN_TBL.MIDDLEIDO_DEKI + " , "
+				+ COLUMN_TBL.LONGIDO_DEKI + " , "
+				+ COLUMN_TBL.SHORTIDO_BAYBAY + " , "
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY + " , "
+				+ COLUMN_TBL.LONGIDO_BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_HEKATU + " , "
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU + " , "
+				+ COLUMN_TBL.LONGIDO_HEKATU + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -419,70 +419,70 @@ public class ZenzituHi {
 						+ TBL
 						+ " set "
 						//前日比
-						+ COLUMN.CHANGE_PRICE				  + " = " + COLUMN.CLOSE + " - " + s.rs.getDouble((COLUMN.CLOSE)) + ","
+						+ COLUMN_TBL.CHANGE_PRICE				  + " = " + COLUMN_TBL.CLOSE + " - " + s.rs.getDouble((COLUMN_TBL.CLOSE)) + ","
 						//前日比率
-						+ COLUMN.CHANGERATE					  + " = " + COLUMN.CLOSE + " / " + s.rs.getDouble((COLUMN.CLOSE)) + " -  1 " + ","
+						+ COLUMN_TBL.CHANGERATE					  + " = " + COLUMN_TBL.CLOSE + " / " + s.rs.getDouble((COLUMN_TBL.CLOSE)) + " -  1 " + ","
 						//株価短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_CHANGERATE		  + " = " + COLUMN.SHORTIDO  + " - " + s.rs.getDouble((COLUMN.SHORTIDO)) + ","
+						+ COLUMN_TBL.SHORTIDO_CHANGERATE		  + " = " + COLUMN_TBL.SHORTIDO  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO)) + ","
 						//株価中期間移動平均線前日比
-						+ COLUMN.MIDDLEIDO_CHANGERATE		  + " = " + COLUMN.MIDDLEIDO  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_CHANGERATE		  + " = " + COLUMN_TBL.MIDDLEIDO  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) + ","
 						//株価長期間移動平均線前日比
-						+ COLUMN.LONGIDO_CHANGERATE			  + " = " + COLUMN.LONGIDO  + " - " + s.rs.getDouble((COLUMN.LONGIDO)) + ","
+						+ COLUMN_TBL.LONGIDO_CHANGERATE			  + " = " + COLUMN_TBL.LONGIDO  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO)) + ","
 						//株価短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_RATIO				  + " = " + COLUMN.SHORTIDO  + " / " + s.rs.getDouble((COLUMN.SHORTIDO)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_RATIO				  + " = " + COLUMN_TBL.SHORTIDO  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO)) + " -  1 " + ","
 						//株価中期間移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_RATIO			  + " = " + COLUMN.MIDDLEIDO  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO)) + " - 1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_RATIO			  + " = " + COLUMN_TBL.MIDDLEIDO  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) + " - 1 " + ","
 						//株価長期間移動平均線前日比率
-						+ COLUMN.LONGIDO_RATIO				  + " = " + COLUMN.LONGIDO  + " / " + s.rs.getDouble((COLUMN.LONGIDO)) + " - 1 " + ","
+						+ COLUMN_TBL.LONGIDO_RATIO				  + " = " + COLUMN_TBL.LONGIDO  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO)) + " - 1 " + ","
 						//出来高前日比
-						+ COLUMN.DEKI_CHANGERATE			  + " = " + COLUMN.DEKI + " - " + s.rs.getDouble((COLUMN.DEKI)) + ","
+						+ COLUMN_TBL.DEKI_CHANGERATE			  + " = " + COLUMN_TBL.DEKI + " - " + s.rs.getDouble((COLUMN_TBL.DEKI)) + ","
 						//出来高前日比率
-						+ COLUMN.DEKI_RATIO					  + " = " + COLUMN.DEKI + " / " + s.rs.getDouble((COLUMN.DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.DEKI_RATIO					  + " = " + COLUMN_TBL.DEKI + " / " + s.rs.getDouble((COLUMN_TBL.DEKI)) + " -  1 " + ","
 						//売買代金前日比
-						+ COLUMN.BAYBAY_CHANGERATE			  + " = " + COLUMN.BAYBAY + " - " + s.rs.getDouble((COLUMN.BAYBAY)) + ","
+						+ COLUMN_TBL.BAYBAY_CHANGERATE			  + " = " + COLUMN_TBL.BAYBAY + " - " + s.rs.getDouble((COLUMN_TBL.BAYBAY)) + ","
 						//売買代金前日比率
-						+ COLUMN.BAYBAY_RATIO				  + " = " + COLUMN.BAYBAY + " / " + s.rs.getDouble((COLUMN.BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.BAYBAY_RATIO				  + " = " + COLUMN_TBL.BAYBAY + " / " + s.rs.getDouble((COLUMN_TBL.BAYBAY)) + " -  1 " + ","
 						//出来高短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_DEKI_CHANGERATE	  + " = " + COLUMN.SHORTIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) + ","
+						+ COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) + ","
 						//出来高中期移動平均線前日比
-						+ COLUMN.MIDDLEIDO_DEKI_CHANGERATE	  + " = " + COLUMN.MIDDLEIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.MIDDLEIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) + ","
 						//出来高長期移動平均線前日比
-						+ COLUMN.LONGIDO_DEKI_CHANGERATE	  + " = " + COLUMN.LONGIDO_DEKI  + " - " + s.rs.getDouble((COLUMN.LONGIDO_DEKI)) + ","
+						+ COLUMN_TBL.LONGIDO_DEKI_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_DEKI  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) + ","
 						//出来高短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_DEKI_RATIO		  + " = " + COLUMN.SHORTIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_DEKI_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) + " -  1 " + ","
 						//出来高中期移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_DEKI_RATIO		  + " = " + COLUMN.MIDDLEIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_DEKI_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) + " -  1 " + ","
 						//出来高長期移動平均線前日比率
-						+ COLUMN.LONGIDO_DEKI_RATIO			  + " = " + COLUMN.LONGIDO_DEKI  + " / " + s.rs.getDouble((COLUMN.LONGIDO_DEKI)) + " -  1 " + ","
+						+ COLUMN_TBL.LONGIDO_DEKI_RATIO			  + " = " + COLUMN_TBL.LONGIDO_DEKI  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) + " -  1 " + ","
 						//売買代金短期間移動平均線前日比
-						+ COLUMN.SHORTIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN.SHORTIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) + ","
+						+ COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) + ","
 						//売買代金中期間移動平均線前日比
-						+ COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE  + " = " + COLUMN.MIDDLEIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE  + " = " + COLUMN_TBL.MIDDLEIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) + ","
 						//売買代金長期移動平均線前日比
-						+ COLUMN.LONGIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN.LONGIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) + ","
+						+ COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_BAYBAY  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) + ","
 						//売買代金短期間移動平均線前日比率
-						+ COLUMN.SHORTIDO_BAYBAY_RATIO		  + " = " + COLUMN.SHORTIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) + " -  1 " + ","
 						//売買代金中期間移動平均線前日比率
-						+ COLUMN.MIDDLEIDO_BAYBAY_RATIO		  + " = " + COLUMN.MIDDLEIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) + " -  1 " + ","
 						//売買代金長期移動平均線前日比率
-						+ COLUMN.LONGIDO_BAYBAY_RATIO		  + " = " + COLUMN.LONGIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) + " -  1 " + ","
+						+ COLUMN_TBL.LONGIDO_BAYBAY_RATIO		  + " = " + COLUMN_TBL.LONGIDO_BAYBAY  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) + " -  1 " + ","
 						//指数平滑移動平均短期前日比
-						+ COLUMN.SHORTIDO_HEKATU_CHANGERATE	  + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) + ","
+						+ COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE	  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) + ","
 						//指数平滑移動平均中期前日比
-						+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE  + " = " + COLUMN.MIDDLEIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) + ","
+						+ COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE  + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) + ","
 						//指数平滑移動平均長期前日比
-						+ COLUMN.LONGIDO_HEKATU_CHANGERATE	  + " = " + COLUMN.LONGIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) + ","
+						+ COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE	  + " = " + COLUMN_TBL.LONGIDO_HEKATU  + " - " + s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) + ","
 						//指数平滑移動平均短期前日比率
-						+ COLUMN.SHORTIDO_HEKATU_RATIO		  + " = " + COLUMN.SHORTIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) + " -  1 " + ","
+						+ COLUMN_TBL.SHORTIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) + " -  1 " + ","
 						//指数平滑移動平均中期前日比率
-						+ COLUMN.MIDDLEIDO_HEKATU_RATIO		  + " = " + COLUMN.MIDDLEIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) + " -  1 " + ","
+						+ COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) + " -  1 " + ","
 						//指数平滑移動平均長期前日比率
-						+ COLUMN.LONGIDO_HEKATU_RATIO		  + " = " + COLUMN.LONGIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) + " -  1 " + ""
+						+ COLUMN_TBL.LONGIDO_HEKATU_RATIO		  + " = " + COLUMN_TBL.LONGIDO_HEKATU  + " / " + s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) + " -  1 " + ""
 						+ " where "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " = '" + dayTime + "'"
 						+ " and "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'";
 
 				s.sqlGetter().executeUpdate(SQL);
@@ -581,30 +581,30 @@ public class ZenzituHi {
 
 
 		SQL = "select "
-				+ COLUMN.CLOSE + " , "
-				+ COLUMN.SHORTIDO + " , "
-				+ COLUMN.MIDDLEIDO + " , "
-				+ COLUMN.LONGIDO + " , "
-				+ COLUMN.DEKI + " , "
-				+ COLUMN.BAYBAY + " , "
-				+ COLUMN.SHORTIDO_DEKI + " , "
-				+ COLUMN.MIDDLEIDO_DEKI + " , "
-				+ COLUMN.LONGIDO_DEKI + " , "
-				+ COLUMN.SHORTIDO_BAYBAY + " , "
-				+ COLUMN.MIDDLEIDO_BAYBAY + " , "
-				+ COLUMN.LONGIDO_BAYBAY + " , "
-				+ COLUMN.SHORTIDO_HEKATU + " , "
-				+ COLUMN.MIDDLEIDO_HEKATU + " , "
-				+ COLUMN.LONGIDO_HEKATU + "  "
+				+ COLUMN_TBL.CLOSE + " , "
+				+ COLUMN_TBL.SHORTIDO + " , "
+				+ COLUMN_TBL.MIDDLEIDO + " , "
+				+ COLUMN_TBL.LONGIDO + " , "
+				+ COLUMN_TBL.DEKI + " , "
+				+ COLUMN_TBL.BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_DEKI + " , "
+				+ COLUMN_TBL.MIDDLEIDO_DEKI + " , "
+				+ COLUMN_TBL.LONGIDO_DEKI + " , "
+				+ COLUMN_TBL.SHORTIDO_BAYBAY + " , "
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY + " , "
+				+ COLUMN_TBL.LONGIDO_BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_HEKATU + " , "
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU + " , "
+				+ COLUMN_TBL.LONGIDO_HEKATU + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -615,214 +615,214 @@ public class ZenzituHi {
 
 
 				//今日の日付の前日比を更新する。
-				if(s.rs.getDouble((COLUMN.CLOSE))!=0){
+				if(s.rs.getDouble((COLUMN_TBL.CLOSE))!=0){
 					//前日比
-					resultDouble=(EDIT.getDouble(COLUMN.CLOSE) - s.rs.getDouble((COLUMN.CLOSE)) ) ;
-					EDIT.updateDouble(COLUMN.CHANGE_PRICE,resultDouble);
+					resultDouble=(EDIT.getDouble(COLUMN_TBL.CLOSE) - s.rs.getDouble((COLUMN_TBL.CLOSE)) ) ;
+					EDIT.updateDouble(COLUMN_TBL.CHANGE_PRICE,resultDouble);
 
 					//前日比率
-					resultDouble=(EDIT.getDouble(COLUMN.CLOSE) / s.rs.getDouble((COLUMN.CLOSE)) ) - 1;
-					EDIT.updateDouble(COLUMN.CHANGERATE,resultDouble);
+					resultDouble=(EDIT.getDouble(COLUMN_TBL.CLOSE) / s.rs.getDouble((COLUMN_TBL.CLOSE)) ) - 1;
+					EDIT.updateDouble(COLUMN_TBL.CHANGERATE,resultDouble);
 
 					//窓を埋める。前日の終値と今日の始値の差。終値ー始値
-					resultDouble=( s.rs.getDouble((COLUMN.CLOSE)) - EDIT.getDouble(COLUMN.OPEN) ) ;
-					EDIT.updateDouble(COLUMN.WINDOW,resultDouble);
+					resultDouble=( s.rs.getDouble((COLUMN_TBL.CLOSE)) - EDIT.getDouble(COLUMN_TBL.OPEN) ) ;
+					EDIT.updateDouble(COLUMN_TBL.WINDOW,resultDouble);
 				}
 
 				//株価短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO) - s.rs.getDouble((COLUMN.SHORTIDO)) );
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO) - s.rs.getDouble((COLUMN_TBL.SHORTIDO)) );
 
-				if(s.rs.getDouble((COLUMN.SHORTIDO))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_CHANGERATE,resultDouble);
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価中期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO) - s.rs.getDouble((COLUMN.MIDDLEIDO)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価長期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO) - s.rs.getDouble((COLUMN.LONGIDO)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO) - s.rs.getDouble((COLUMN_TBL.LONGIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO) / s.rs.getDouble((COLUMN.SHORTIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO) / s.rs.getDouble((COLUMN_TBL.SHORTIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_RATIO,resultDouble);
 				}
 
 
 				//株価中期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO) / s.rs.getDouble((COLUMN.MIDDLEIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_RATIO,resultDouble);
 				}
 
 
 				//株価長期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO) / s.rs.getDouble((COLUMN.LONGIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO) / s.rs.getDouble((COLUMN_TBL.LONGIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_RATIO,resultDouble);
 				}
 
 
 				//出来高前日比
-				resultDouble=(EDIT.getDouble(COLUMN.DEKI) - s.rs.getDouble((COLUMN.DEKI)) );
-				if(s.rs.getDouble((COLUMN.DEKI))!=0){
-					EDIT.updateDouble(COLUMN.DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.DEKI) - s.rs.getDouble((COLUMN_TBL.DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.DEKI) / s.rs.getDouble((COLUMN.DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.DEKI))!=0){
-					EDIT.updateDouble(COLUMN.DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.DEKI) / s.rs.getDouble((COLUMN_TBL.DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.DEKI_RATIO,resultDouble);
 				}
 
 
 				//売買代金前日比
-				resultDouble=(EDIT.getDouble(COLUMN.BAYBAY) - s.rs.getDouble((COLUMN.BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.BAYBAY) - s.rs.getDouble((COLUMN_TBL.BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.BAYBAY) / s.rs.getDouble((COLUMN.BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.BAYBAY) / s.rs.getDouble((COLUMN_TBL.BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//出来高短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_DEKI) - s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高中期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_DEKI) - s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_DEKI) - s.rs.getDouble((COLUMN.LONGIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_DEKI) / s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//出来高中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_DEKI) / s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//出来高長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_DEKI) / s.rs.getDouble((COLUMN.LONGIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//売買代金短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_BAYBAY) - s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金中期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_BAYBAY) - s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_BAYBAY) - s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_BAYBAY) / s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//売買代金中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_BAYBAY) / s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//売買代金長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_BAYBAY) / s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均短期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_HEKATU) - s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)));
-				if(s.rs.getDouble((COLUMN.SHORTIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)));
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均中期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) - s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)));
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)));
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均長期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_HEKATU) - s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均短期前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_HEKATU) / s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) ) -  1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) ) -  1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均中期前日比率
-				resultDouble=( EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) / s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=( EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均長期前日比率
-				resultDouble=( EDIT.getDouble(COLUMN.LONGIDO_HEKATU) / s.rs.getDouble(COLUMN.LONGIDO_HEKATU) ) - 1;
-				if(s.rs.getDouble(COLUMN.LONGIDO_HEKATU)!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=( EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU) / s.rs.getDouble(COLUMN_TBL.LONGIDO_HEKATU) ) - 1;
+				if(s.rs.getDouble(COLUMN_TBL.LONGIDO_HEKATU)!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_HEKATU_RATIO,resultDouble);
 				}
 
 			}
@@ -843,31 +843,31 @@ public class ZenzituHi {
 		double resultDouble;
 
 		SQL = "select "
-				+ COLUMN.STOCK_GETPRICE + " , "
-				+ COLUMN.STOCK_GETPRICE_IDO_SHORT + " , "
-				+ COLUMN.STOCK_GETPRICE_IDO_MIDDLE + " , "
-				+ COLUMN.STOCK_GETPRICE_IDO_LONG + " , "
-				+ COLUMN.STOCK_NOCHANGE + " , "
-				+ COLUMN.STOCK_NOCHANGE_IDO_SHORT + " , "
-				+ COLUMN.STOCK_NOCHANGE_IDO_MIDDLE + " , "
-				+ COLUMN.STOCK_NOCHANGE_IDO_LONG + " , "
-				+ COLUMN.DEKI + " , "
-				+ COLUMN.BAYBAY + " , "
-				+ COLUMN.SHORTIDO_DEKI + " , "
-				+ COLUMN.MIDDLEIDO_DEKI + " , "
-				+ COLUMN.LONGIDO_DEKI + " , "
-				+ COLUMN.SHORTIDO_BAYBAY + " , "
-				+ COLUMN.MIDDLEIDO_BAYBAY + " , "
-				+ COLUMN.LONGIDO_BAYBAY + "  "
+				+ COLUMN_TBL.STOCK_GETPRICE + " , "
+				+ COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT + " , "
+				+ COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE + " , "
+				+ COLUMN_TBL.STOCK_GETPRICE_IDO_LONG + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE + " , "
+				+ COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG + " , "
+				+ COLUMN_TBL.DEKI + " , "
+				+ COLUMN_TBL.BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_DEKI + " , "
+				+ COLUMN_TBL.MIDDLEIDO_DEKI + " , "
+				+ COLUMN_TBL.LONGIDO_DEKI + " , "
+				+ COLUMN_TBL.SHORTIDO_BAYBAY + " , "
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY + " , "
+				+ COLUMN_TBL.LONGIDO_BAYBAY + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -878,201 +878,201 @@ public class ZenzituHi {
 
 
 				//値付き前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE) - s.rs.getDouble((COLUMN.STOCK_GETPRICE)) );
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE) - s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_CHANGERATE,resultDouble);
 				}
 
 				//値付き前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE) / s.rs.getDouble((COLUMN.STOCK_GETPRICE)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE) / s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_RATIO,resultDouble);
 				}
 
 				//値付き短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE_IDO_SHORT) - s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_SHORT)) );
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_SHORT))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_IDO_SHORT_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT) - s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT_CHANGERATE,resultDouble);
 				}
 
 				//値付き中期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE_IDO_MIDDLE) - s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_MIDDLE)) );
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_MIDDLE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_IDO_MIDDLE_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE) - s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE_CHANGERATE,resultDouble);
 				}
 
 				//値付き長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE_IDO_LONG) - s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_LONG)) );
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_LONG))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_IDO_LONG_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_LONG) - s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_LONG)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_LONG))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_LONG_CHANGERATE,resultDouble);
 				}
 
 				//値付き短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE_IDO_SHORT) / s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_SHORT)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_SHORT))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_IDO_SHORT_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT) / s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_SHORT_RATIO,resultDouble);
 				}
 
 				//値付き中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE_IDO_MIDDLE) / s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_MIDDLE)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_MIDDLE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_IDO_MIDDLE_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE) / s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_MIDDLE_RATIO,resultDouble);
 				}
 
 				//値付き長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_GETPRICE_IDO_LONG) / s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_LONG)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_GETPRICE_IDO_LONG))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_GETPRICE_IDO_LONG_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_LONG) / s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_LONG)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_GETPRICE_IDO_LONG))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_GETPRICE_IDO_LONG_RATIO,resultDouble);
 				}
 
 				//変わらず前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE) - s.rs.getDouble((COLUMN.STOCK_NOCHANGE)) );
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE) - s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_CHANGERATE,resultDouble);
 				}
 
 				//変わらず前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE) / s.rs.getDouble((COLUMN.STOCK_NOCHANGE)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE) / s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_RATIO,resultDouble);
 				}
 
 
 				//変わらず短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE_IDO_SHORT) - s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_SHORT)) );
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_SHORT))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_IDO_SHORT_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT) - s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT_CHANGERATE,resultDouble);
 				}
 
 				//変わらず中期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE_IDO_MIDDLE) - s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_MIDDLE)) );
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_MIDDLE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_IDO_MIDDLE_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE) - s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE_CHANGERATE,resultDouble);
 				}
 
 				//変わらず長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE_IDO_LONG) - s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_LONG)) );
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_LONG))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_IDO_LONG_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG) - s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG)) );
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG_CHANGERATE,resultDouble);
 				}
 
 
 				//変わらず短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE_IDO_SHORT) / s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_SHORT)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_SHORT))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_IDO_SHORT_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT) / s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_SHORT_RATIO,resultDouble);
 				}
 
 				//変わらず中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE_IDO_MIDDLE) / s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_MIDDLE)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_MIDDLE))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_IDO_MIDDLE_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE) / s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_MIDDLE_RATIO,resultDouble);
 				}
 
 				//変わらず長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.STOCK_NOCHANGE_IDO_LONG) / s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_LONG)) ) - 1;
-				if(s.rs.getDouble((COLUMN.STOCK_NOCHANGE_IDO_LONG))!=0){
-					EDIT.updateDouble(COLUMN.STOCK_NOCHANGE_IDO_LONG_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG) / s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG))!=0){
+					EDIT.updateDouble(COLUMN_TBL.STOCK_NOCHANGE_IDO_LONG_RATIO,resultDouble);
 				}
 
 				//出来高前日比
-				resultDouble=(EDIT.getDouble(COLUMN.DEKI) - s.rs.getDouble((COLUMN.DEKI)) );
-				if(s.rs.getDouble((COLUMN.DEKI))!=0){
-					EDIT.updateDouble(COLUMN.DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.DEKI) - s.rs.getDouble((COLUMN_TBL.DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.DEKI_CHANGERATE,resultDouble);
 				}
 
 				//出来高前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.DEKI) / s.rs.getDouble((COLUMN.DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.DEKI))!=0){
-					EDIT.updateDouble(COLUMN.DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.DEKI) / s.rs.getDouble((COLUMN_TBL.DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.DEKI_RATIO,resultDouble);
 				}
 
 				//出来高短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_DEKI) - s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高中期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_DEKI) - s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_DEKI) - s.rs.getDouble((COLUMN.LONGIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_DEKI) / s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//出来高中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_DEKI) / s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//出来高長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_DEKI) / s.rs.getDouble((COLUMN.LONGIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_DEKI_RATIO,resultDouble);
 				}
 
 				//売買代金前日比
-				resultDouble=(EDIT.getDouble(COLUMN.BAYBAY) - s.rs.getDouble((COLUMN.BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.BAYBAY) - s.rs.getDouble((COLUMN_TBL.BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.BAYBAY) / s.rs.getDouble((COLUMN.BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.BAYBAY) / s.rs.getDouble((COLUMN_TBL.BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.BAYBAY_RATIO,resultDouble);
 				}
 
 				//売買代金中期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_BAYBAY) - s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_BAYBAY) - s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_BAYBAY) / s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//売買代金中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_BAYBAY) / s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//売買代金長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_BAYBAY) / s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_BAYBAY_RATIO,resultDouble);
 				}
 			}
 		} catch (SQLException ea) {
@@ -1091,22 +1091,22 @@ public class ZenzituHi {
 
 		//ここでテーブル指定
 		SQL = "select "
-				+ COLUMN.CLOSE + " , "
-				+ COLUMN.SHORTIDO + " , "
-				+ COLUMN.MIDDLEIDO + " , "
-				+ COLUMN.LONGIDO + " , "
-				+ COLUMN.SHORTIDO_HEKATU + " , "
-				+ COLUMN.MIDDLEIDO_HEKATU + " , "
-				+ COLUMN.LONGIDO_HEKATU + "  "
+				+ COLUMN_TBL.CLOSE + " , "
+				+ COLUMN_TBL.SHORTIDO + " , "
+				+ COLUMN_TBL.MIDDLEIDO + " , "
+				+ COLUMN_TBL.LONGIDO + " , "
+				+ COLUMN_TBL.SHORTIDO_HEKATU + " , "
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU + " , "
+				+ COLUMN_TBL.LONGIDO_HEKATU + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -1118,100 +1118,100 @@ public class ZenzituHi {
 
 				//今日の日付の前日比を更新する。
 
-				if(s.rs.getDouble((COLUMN.CLOSE))!=0){
+				if(s.rs.getDouble((COLUMN_TBL.CLOSE))!=0){
 					//前日比
-					resultDouble=(EDIT.getDouble(COLUMN.CLOSE) - s.rs.getDouble((COLUMN.CLOSE)) ) ;
-					EDIT.updateDouble(COLUMN.CHANGE_PRICE,resultDouble);
+					resultDouble=(EDIT.getDouble(COLUMN_TBL.CLOSE) - s.rs.getDouble((COLUMN_TBL.CLOSE)) ) ;
+					EDIT.updateDouble(COLUMN_TBL.CHANGE_PRICE,resultDouble);
 
 					//前日比率
-					resultDouble=(EDIT.getDouble(COLUMN.CLOSE) / s.rs.getDouble((COLUMN.CLOSE)) ) - 1;
-					EDIT.updateDouble(COLUMN.CHANGERATE,resultDouble);
+					resultDouble=(EDIT.getDouble(COLUMN_TBL.CLOSE) / s.rs.getDouble((COLUMN_TBL.CLOSE)) ) - 1;
+					EDIT.updateDouble(COLUMN_TBL.CHANGERATE,resultDouble);
 
 					//窓を埋める。前日の終値と今日の始値の差。終値ー始値
-					resultDouble=( s.rs.getDouble((COLUMN.CLOSE)) - EDIT.getDouble(COLUMN.OPEN) ) ;
-					EDIT.updateDouble(COLUMN.WINDOW,resultDouble);
+					resultDouble=( s.rs.getDouble((COLUMN_TBL.CLOSE)) - EDIT.getDouble(COLUMN_TBL.OPEN) ) ;
+					EDIT.updateDouble(COLUMN_TBL.WINDOW,resultDouble);
 				}
 
 				//株価短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO) - s.rs.getDouble((COLUMN.SHORTIDO)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO) - s.rs.getDouble((COLUMN_TBL.SHORTIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価中期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO) - s.rs.getDouble((COLUMN.MIDDLEIDO)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価長期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO) - s.rs.getDouble((COLUMN.LONGIDO)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO) - s.rs.getDouble((COLUMN_TBL.LONGIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO) / s.rs.getDouble((COLUMN.SHORTIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO) / s.rs.getDouble((COLUMN_TBL.SHORTIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_RATIO,resultDouble);
 				}
 
 
 				//株価中期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO) / s.rs.getDouble((COLUMN.MIDDLEIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_RATIO,resultDouble);
 				}
 
 
 				//株価長期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO) / s.rs.getDouble((COLUMN.LONGIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO) / s.rs.getDouble((COLUMN_TBL.LONGIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_RATIO,resultDouble);
 				}
 
 				//指数平滑移動平均短期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_HEKATU) - s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)));
-				if(s.rs.getDouble((COLUMN.SHORTIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)));
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均中期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) - s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)));
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)));
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均長期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_HEKATU) - s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均短期前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_HEKATU) / s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) ) -  1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) ) -  1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均中期前日比率
-				resultDouble=( EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) / s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=( EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均長期前日比率
-				resultDouble=( EDIT.getDouble(COLUMN.LONGIDO_HEKATU) / s.rs.getDouble(COLUMN.LONGIDO_HEKATU) ) - 1;
-				if(s.rs.getDouble(COLUMN.LONGIDO_HEKATU)!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=( EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU) / s.rs.getDouble(COLUMN_TBL.LONGIDO_HEKATU) ) - 1;
+				if(s.rs.getDouble(COLUMN_TBL.LONGIDO_HEKATU)!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
@@ -1233,30 +1233,30 @@ public class ZenzituHi {
 
 		//ここでテーブル指定
 		SQL = "select "
-				+ COLUMN.CLOSE + " , "
-				+ COLUMN.SHORTIDO + " , "
-				+ COLUMN.MIDDLEIDO + " , "
-				+ COLUMN.LONGIDO + " , "
-				+ COLUMN.DEKI + " , "
-				+ COLUMN.BAYBAY + " , "
-				+ COLUMN.SHORTIDO_DEKI + " , "
-				+ COLUMN.MIDDLEIDO_DEKI + " , "
-				+ COLUMN.LONGIDO_DEKI + " , "
-				+ COLUMN.SHORTIDO_BAYBAY + " , "
-				+ COLUMN.MIDDLEIDO_BAYBAY + " , "
-				+ COLUMN.LONGIDO_BAYBAY + " , "
-				+ COLUMN.SHORTIDO_HEKATU + " , "
-				+ COLUMN.MIDDLEIDO_HEKATU + " , "
-				+ COLUMN.LONGIDO_HEKATU + "  "
+				+ COLUMN_TBL.CLOSE + " , "
+				+ COLUMN_TBL.SHORTIDO + " , "
+				+ COLUMN_TBL.MIDDLEIDO + " , "
+				+ COLUMN_TBL.LONGIDO + " , "
+				+ COLUMN_TBL.DEKI + " , "
+				+ COLUMN_TBL.BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_DEKI + " , "
+				+ COLUMN_TBL.MIDDLEIDO_DEKI + " , "
+				+ COLUMN_TBL.LONGIDO_DEKI + " , "
+				+ COLUMN_TBL.SHORTIDO_BAYBAY + " , "
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY + " , "
+				+ COLUMN_TBL.LONGIDO_BAYBAY + " , "
+				+ COLUMN_TBL.SHORTIDO_HEKATU + " , "
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU + " , "
+				+ COLUMN_TBL.LONGIDO_HEKATU + "  "
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " < '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit 1";
 
@@ -1268,211 +1268,211 @@ public class ZenzituHi {
 
 				//今日の日付の前日比を更新する。
 
-				if(s.rs.getDouble((COLUMN.CLOSE))!=0){
+				if(s.rs.getDouble((COLUMN_TBL.CLOSE))!=0){
 					//前日比
-					resultDouble=(EDIT.getDouble(COLUMN.CLOSE) - s.rs.getDouble((COLUMN.CLOSE)) ) ;
-					EDIT.updateDouble(COLUMN.CHANGE_PRICE,resultDouble);
+					resultDouble=(EDIT.getDouble(COLUMN_TBL.CLOSE) - s.rs.getDouble((COLUMN_TBL.CLOSE)) ) ;
+					EDIT.updateDouble(COLUMN_TBL.CHANGE_PRICE,resultDouble);
 
 					//前日比率
-					resultDouble=(EDIT.getDouble(COLUMN.CLOSE) / s.rs.getDouble((COLUMN.CLOSE)) ) - 1;
-					EDIT.updateDouble(COLUMN.CHANGERATE,resultDouble);
+					resultDouble=(EDIT.getDouble(COLUMN_TBL.CLOSE) / s.rs.getDouble((COLUMN_TBL.CLOSE)) ) - 1;
+					EDIT.updateDouble(COLUMN_TBL.CHANGERATE,resultDouble);
 
 					//窓を埋める。前日の終値と今日の始値の差。終値ー始値
-					resultDouble=( s.rs.getDouble((COLUMN.CLOSE)) - EDIT.getDouble(COLUMN.OPEN) ) ;
-					EDIT.updateDouble(COLUMN.WINDOW,resultDouble);
+					resultDouble=( s.rs.getDouble((COLUMN_TBL.CLOSE)) - EDIT.getDouble(COLUMN_TBL.OPEN) ) ;
+					EDIT.updateDouble(COLUMN_TBL.WINDOW,resultDouble);
 				}
 
 				//株価短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO) - s.rs.getDouble((COLUMN.SHORTIDO)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO) - s.rs.getDouble((COLUMN_TBL.SHORTIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価中期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO) - s.rs.getDouble((COLUMN.MIDDLEIDO)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価長期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO) - s.rs.getDouble((COLUMN.LONGIDO)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO) - s.rs.getDouble((COLUMN_TBL.LONGIDO)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_CHANGERATE,resultDouble);
 				}
 
 
 				//株価短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO) / s.rs.getDouble((COLUMN.SHORTIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO) / s.rs.getDouble((COLUMN_TBL.SHORTIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_RATIO,resultDouble);
 				}
 
 
 				//株価中期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO) / s.rs.getDouble((COLUMN.MIDDLEIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_RATIO,resultDouble);
 				}
 
 
 				//株価長期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO) / s.rs.getDouble((COLUMN.LONGIDO)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO) / s.rs.getDouble((COLUMN_TBL.LONGIDO)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_RATIO,resultDouble);
 				}
 				//出来高前日比
-				resultDouble=(EDIT.getDouble(COLUMN.DEKI) - s.rs.getDouble((COLUMN.DEKI)) );
-				if(s.rs.getDouble((COLUMN.DEKI))!=0){
-					EDIT.updateDouble(COLUMN.DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.DEKI) - s.rs.getDouble((COLUMN_TBL.DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.DEKI) / s.rs.getDouble((COLUMN.DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.DEKI))!=0){
-					EDIT.updateDouble(COLUMN.DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.DEKI) / s.rs.getDouble((COLUMN_TBL.DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.DEKI_RATIO,resultDouble);
 				}
 
 
 				//売買代金前日比
-				resultDouble=(EDIT.getDouble(COLUMN.BAYBAY) - s.rs.getDouble((COLUMN.BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.BAYBAY) - s.rs.getDouble((COLUMN_TBL.BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.BAYBAY) / s.rs.getDouble((COLUMN.BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.BAYBAY) / s.rs.getDouble((COLUMN_TBL.BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//出来高短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_DEKI) - s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高中期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_DEKI) - s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_DEKI) - s.rs.getDouble((COLUMN.LONGIDO_DEKI)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_DEKI_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_DEKI) - s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_DEKI_CHANGERATE,resultDouble);
 				}
 
 
 				//出来高短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_DEKI) / s.rs.getDouble((COLUMN.SHORTIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//出来高中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_DEKI) / s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//出来高長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_DEKI) / s.rs.getDouble((COLUMN.LONGIDO_DEKI)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO_DEKI))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_DEKI_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_DEKI) / s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_DEKI))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_DEKI_RATIO,resultDouble);
 				}
 
 
 				//売買代金短期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_BAYBAY) - s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金中期間移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_BAYBAY) - s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金長期移動平均線前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_BAYBAY) - s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_BAYBAY_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_BAYBAY) - s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE,resultDouble);
 				}
 
 
 				//売買代金短期間移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_BAYBAY) / s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//売買代金中期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_BAYBAY) / s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//売買代金長期移動平均線前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_BAYBAY) / s.rs.getDouble((COLUMN.LONGIDO_BAYBAY)) ) - 1;
-				if(s.rs.getDouble((COLUMN.LONGIDO_BAYBAY))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_BAYBAY_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_BAYBAY) / s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_BAYBAY))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_BAYBAY_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均短期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_HEKATU) - s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)));
-				if(s.rs.getDouble((COLUMN.SHORTIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)));
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均中期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) - s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)));
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)));
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均長期前日比
-				resultDouble=(EDIT.getDouble(COLUMN.LONGIDO_HEKATU) - s.rs.getDouble((COLUMN.LONGIDO_HEKATU)) );
-				if(s.rs.getDouble((COLUMN.LONGIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_HEKATU_CHANGERATE,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU) - s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU)) );
+				if(s.rs.getDouble((COLUMN_TBL.LONGIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE,resultDouble);
 				}
 
 
 				//指数平滑移動平均短期前日比率
-				resultDouble=(EDIT.getDouble(COLUMN.SHORTIDO_HEKATU) / s.rs.getDouble((COLUMN.SHORTIDO_HEKATU)) ) -  1;
-				if(s.rs.getDouble((COLUMN.SHORTIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.SHORTIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=(EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU) / s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU)) ) -  1;
+				if(s.rs.getDouble((COLUMN_TBL.SHORTIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.SHORTIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均中期前日比率
-				resultDouble=( EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) / s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU)) ) - 1;
-				if(s.rs.getDouble((COLUMN.MIDDLEIDO_HEKATU))!=0){
-					EDIT.updateDouble(COLUMN.MIDDLEIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=( EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) / s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU)) ) - 1;
+				if(s.rs.getDouble((COLUMN_TBL.MIDDLEIDO_HEKATU))!=0){
+					EDIT.updateDouble(COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO,resultDouble);
 				}
 
 
 				//指数平滑移動平均長期前日比率
-				resultDouble=( EDIT.getDouble(COLUMN.LONGIDO_HEKATU) / s.rs.getDouble(COLUMN.LONGIDO_HEKATU) ) - 1;
-				if(s.rs.getDouble(COLUMN.LONGIDO_HEKATU)!=0){
-					EDIT.updateDouble(COLUMN.LONGIDO_HEKATU_RATIO,resultDouble);
+				resultDouble=( EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU) / s.rs.getDouble(COLUMN_TBL.LONGIDO_HEKATU) ) - 1;
+				if(s.rs.getDouble(COLUMN_TBL.LONGIDO_HEKATU)!=0){
+					EDIT.updateDouble(COLUMN_TBL.LONGIDO_HEKATU_RATIO,resultDouble);
 				}
 
 

@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import proparty.S;
 import proparty.TBL_Name;
 import constant.AccesarryParameta;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 //MACD
@@ -46,11 +46,11 @@ public class MACD_SIGNAL extends Super_IDO_HEKIN {
 
 	private static void setMACD_signal_1_Stock(String code,String TBL,String dayTime,S s){
 		//MACDshort
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.SHORT_MACD_SIGNAL),(COLUMN.SHORT_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.SHORT_MACD_SIGNAL),(COLUMN_TBL.SHORT_MACD), s);
 		//MACDmiddle
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.MIDDLE_MACD_SIGNAL),(COLUMN.MIDDLE_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.MIDDLE_MACD_SIGNAL),(COLUMN_TBL.MIDDLE_MACD), s);
 		//MACDlong
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.LONG_MACD_SIGNAL),(COLUMN.LONG_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.LONG_MACD_SIGNAL),(COLUMN_TBL.LONG_MACD), s);
 	}
 
 
@@ -61,21 +61,21 @@ public class MACD_SIGNAL extends Super_IDO_HEKIN {
 
 	private static void setMACD_signal_3_Index(String code,String TBL,String dayTime,S s){
 		//MACDshort
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.SHORT_MACD_SIGNAL),(COLUMN.SHORT_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.SHORT_MACD_SIGNAL),(COLUMN_TBL.SHORT_MACD), s);
 		//MACDmiddle
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.MIDDLE_MACD_SIGNAL),(COLUMN.MIDDLE_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.MIDDLE_MACD_SIGNAL),(COLUMN_TBL.MIDDLE_MACD), s);
 		//MACDlong
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.LONG_MACD_SIGNAL),(COLUMN.LONG_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.LONG_MACD_SIGNAL),(COLUMN_TBL.LONG_MACD), s);
 	}
 
 
 	private static void setMACD_signal_4_ETF(String code,String TBL,String dayTime,S s){
 		//MACDshort
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.SHORT_MACD_SIGNAL),(COLUMN.SHORT_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.SHORT_MACD_SIGNAL),(COLUMN_TBL.SHORT_MACD), s);
 		//MACDmiddle
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.MIDDLE_MACD_SIGNAL),(COLUMN.MIDDLE_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.MIDDLE_MACD_SIGNAL),(COLUMN_TBL.MIDDLE_MACD), s);
 		//MACDlong
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.LONG_MACD_SIGNAL),(COLUMN.LONG_MACD), s);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.LONG_MACD_SIGNAL),(COLUMN_TBL.LONG_MACD), s);
 	}
 
 	private static void setMACD_signal_5_SAKIMONO(String code,String TBL,String dayTime,S s){
@@ -142,11 +142,11 @@ public class MACD_SIGNAL extends Super_IDO_HEKIN {
 
 	private static void setMACD_signal_1_Stock(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//MACDshort
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.SHORT_MACD_SIGNAL),(COLUMN.SHORT_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.SHORT_MACD_SIGNAL),(COLUMN_TBL.SHORT_MACD), s,EDIT);
 		//MACDmiddle
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.MIDDLE_MACD_SIGNAL),(COLUMN.MIDDLE_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.MIDDLE_MACD_SIGNAL),(COLUMN_TBL.MIDDLE_MACD), s,EDIT);
 		//MACDlong
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.LONG_MACD_SIGNAL),(COLUMN.LONG_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.LONG_MACD_SIGNAL),(COLUMN_TBL.LONG_MACD), s,EDIT);
 	}
 
 
@@ -157,21 +157,21 @@ public class MACD_SIGNAL extends Super_IDO_HEKIN {
 
 	private static void setMACD_signal_3_Index(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//MACDshort
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.SHORT_MACD_SIGNAL),(COLUMN.SHORT_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.SHORT_MACD_SIGNAL),(COLUMN_TBL.SHORT_MACD), s,EDIT);
 		//MACDmiddle
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.MIDDLE_MACD_SIGNAL),(COLUMN.MIDDLE_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.MIDDLE_MACD_SIGNAL),(COLUMN_TBL.MIDDLE_MACD), s,EDIT);
 		//MACDlong
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.LONG_MACD_SIGNAL),(COLUMN.LONG_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.LONG_MACD_SIGNAL),(COLUMN_TBL.LONG_MACD), s,EDIT);
 	}
 
 
 	private static void setMACD_signal_4_ETF(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//MACDshort
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.SHORT_MACD_SIGNAL),(COLUMN.SHORT_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.SHORT_MACD_SIGNAL),(COLUMN_TBL.SHORT_MACD), s,EDIT);
 		//MACDmiddle
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.MIDDLE_MACD_SIGNAL),(COLUMN.MIDDLE_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.MIDDLE_MACD_SIGNAL),(COLUMN_TBL.MIDDLE_MACD), s,EDIT);
 		//MACDlong
-		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN.LONG_MACD_SIGNAL),(COLUMN.LONG_MACD), s,EDIT);
+		setIDOHeikin_base(code,TBL, dayTime, AccesarryParameta.MACD_SIGNAL, (COLUMN_TBL.LONG_MACD_SIGNAL),(COLUMN_TBL.LONG_MACD), s,EDIT);
 	}
 
 	private static void setMACD_signal_5_SAKIMONO(String code,String TBL,String dayTime,S s,ResultSet EDIT){

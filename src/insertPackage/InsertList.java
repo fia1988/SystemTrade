@@ -9,7 +9,7 @@ import bean.Bean_CodeList;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -82,11 +82,11 @@ public class InsertList {
 		SQL = "insert into "
 				+ TBL_Name.CODELISTTBL
 				+ " ("
-				+ COLUMN.CODE + " , "
-				+ COLUMN.CODENAME + " , "
-				+ COLUMN.MARKET + " , "
-				+ COLUMN.CATEGORY + " , "
-				+ COLUMN.CATE_FLG
+				+ COLUMN_TBL.CODE + " , "
+				+ COLUMN_TBL.CODENAME + " , "
+				+ COLUMN_TBL.MARKET + " , "
+				+ COLUMN_TBL.CATEGORY + " , "
+				+ COLUMN_TBL.CATE_FLG
 				+ " ) "
 				+ "values (?,?,?,?,?)";
 
@@ -95,11 +95,11 @@ public class InsertList {
 		SQL = "insert into "
 				+ TBL_Name.CODELISTTBL
 				+ " ("
-				+ COLUMN.CODE + " , "
-				+ COLUMN.CODENAME + " , "
-				+ COLUMN.MARKET + " , "
-				+ COLUMN.CATEGORY + " , "
-				+ COLUMN.CATE_FLG
+				+ COLUMN_TBL.CODE + " , "
+				+ COLUMN_TBL.CODENAME + " , "
+				+ COLUMN_TBL.MARKET + " , "
+				+ COLUMN_TBL.CATEGORY + " , "
+				+ COLUMN_TBL.CATE_FLG
 				+ " ) "
 				+ "values (?,?,?,?,?)";
 
@@ -130,9 +130,9 @@ public class InsertList {
 		SQL = "insert into "
 				+ TBL_Name.CODELISTTBL
 				+ " ("
-				+ COLUMN.CODE + " , "
-				+ COLUMN.CODENAME + " , "
-				+ COLUMN.CATE_FLG
+				+ COLUMN_TBL.CODE + " , "
+				+ COLUMN_TBL.CODENAME + " , "
+				+ COLUMN_TBL.CATE_FLG
 				+ " ) "
 				+ "values (?,?,?)";
 
@@ -160,11 +160,11 @@ public class InsertList {
 		SQL = "insert into "
 				+ TBL_Name.CODELISTTBL
 				+ " ("
-				+ COLUMN.CODE + " , "
-				+ COLUMN.CODENAME + " , "
-				+ COLUMN.MARKET + " , "
-				+ COLUMN.CATEGORY + " , "
-				+ COLUMN.CATE_FLG
+				+ COLUMN_TBL.CODE + " , "
+				+ COLUMN_TBL.CODENAME + " , "
+				+ COLUMN_TBL.MARKET + " , "
+				+ COLUMN_TBL.CATEGORY + " , "
+				+ COLUMN_TBL.CATE_FLG
 				+ " ) "
 				+ "values (?,?,?,?,?)";
 
@@ -202,11 +202,11 @@ public class InsertList {
 		SQL = "insert into "
 				+ TBL_Name.CODELISTTBL
 				+ " ("
-				+ COLUMN.CODE + " , "
-				+ COLUMN.CODENAME + " , "
-				+ COLUMN.MARKET + " , "
-				+ COLUMN.CATEGORY + " , "
-				+ COLUMN.CATE_FLG
+				+ COLUMN_TBL.CODE + " , "
+				+ COLUMN_TBL.CODENAME + " , "
+				+ COLUMN_TBL.MARKET + " , "
+				+ COLUMN_TBL.CATEGORY + " , "
+				+ COLUMN_TBL.CATE_FLG
 				+ " ) "
 				+ "values (?,?,?,?,?)";
 

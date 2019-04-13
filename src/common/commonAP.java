@@ -20,7 +20,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
 import accesarrySQL.SQLChecker;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -44,17 +44,17 @@ public class commonAP {
 	//例：2017/01/11,2→2017/01/10
 	//例：2017/01/11,1→2017/01/11
 	public static String getStartDay(String end,int count,S s){
-		String SQL = " select " + COLUMN.DAYTIME + " from " + ReCord.BASIC_TBL
+		String SQL = " select " + COLUMN_TBL.DAYTIME + " from " + ReCord.BASIC_TBL
 				+" where "
-				+ COLUMN.CODE + " = '" + ReCord.BASIC_CODE_01 + "'"
+				+ COLUMN_TBL.CODE + " = '" + ReCord.BASIC_CODE_01 + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " <= '" + end + "'"
-				+ " order by " + COLUMN.DAYTIME + " desc limit " + count;
+				+ COLUMN_TBL.DAYTIME + " <= '" + end + "'"
+				+ " order by " + COLUMN_TBL.DAYTIME + " desc limit " + count;
 		String startDay = "";
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
-				startDay=s.rs.getString(COLUMN.DAYTIME);
+				startDay=s.rs.getString(COLUMN_TBL.DAYTIME);
 
 			}
 
@@ -74,11 +74,11 @@ public class commonAP {
 
 		String checkDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 
-		String SQL = " select " + COLUMN.CODE + " from " + TBL
+		String SQL = " select " + COLUMN_TBL.CODE + " from " + TBL
 					+ " where "
-					+ COLUMN.CODE + " = '" + code + "'"
+					+ COLUMN_TBL.CODE + " = '" + code + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " = '" + checkDay + "'";
+					+ COLUMN_TBL.DAYTIME + " = '" + checkDay + "'";
 
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -104,20 +104,20 @@ public class commonAP {
 			return 0;
 		}
 
-		String SQL = " select count(" + COLUMN.DAYTIME + ")"
+		String SQL = " select count(" + COLUMN_TBL.DAYTIME + ")"
 					+" from " + ReCord.BASIC_TBL
 					+" where "
-					+ COLUMN.CODE + " = '" + ReCord.BASIC_CODE_01 + "'"
+					+ COLUMN_TBL.CODE + " = '" + ReCord.BASIC_CODE_01 + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " <= '" + end + "'"
+					+ COLUMN_TBL.DAYTIME + " <= '" + end + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " >= '" + start + "'";
+					+ COLUMN_TBL.DAYTIME + " >= '" + start + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			s.rs.next();
 
-			return s.rs.getInt(	"count(" + COLUMN.DAYTIME + ")"	);
+			return s.rs.getInt(	"count(" + COLUMN_TBL.DAYTIME + ")"	);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -665,13 +665,13 @@ public class commonAP {
 //		codeList[] = new String[2];
 		codeListwithiCate = new ArrayList<String[]>();
 //		codeSingle=null;
-		String SQL = " select " + COLUMN.CODE + "," + COLUMN.CATE_FLG + " from " + TBL_Name.CODELISTTBL;
+		String SQL = " select " + COLUMN_TBL.CODE + "," + COLUMN_TBL.CATE_FLG + " from " + TBL_Name.CODELISTTBL;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				codeSingle = new String[2];
-				codeSingle[0]=s.rs.getString(COLUMN.CODE);
-				codeSingle[1]=s.rs.getString(COLUMN.CATE_FLG);
+				codeSingle[0]=s.rs.getString(COLUMN_TBL.CODE);
+				codeSingle[1]=s.rs.getString(COLUMN_TBL.CATE_FLG);
 
 				codeListwithiCate.add(codeSingle);
 
@@ -685,31 +685,31 @@ public class commonAP {
 
 	public static void setKeepCodeList(String type,S s){
 		codeListwithiCate = new ArrayList<String[]>();
-		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.KEEPLISTTBL;
+		String SQL = " select " + COLUMN_TBL.CODE + " from " + TBL_Name.KEEPLISTTBL;
 		String TBL = TBL_Name.ELETE_LIST_TBL;
 
 		SQL = " select * from " +  TBL +" AAA "
 				+ " left outer join " + TBL_Name.KEEPLISTTBL + " BBB "
-				+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+				+ " on " + "AAA." + COLUMN_TBL.CODE + " = " + "BBB." + COLUMN_TBL.CODE
 				+ " where "
-				+ "BBB." + COLUMN.TYPE			+ " = '" + type + "'";
+				+ "BBB." + COLUMN_TBL.TYPE			+ " = '" + type + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				codeSingle = new String[8];
-				String code = s.rs.getString("BBB." + COLUMN.CODE);
+				String code = s.rs.getString("BBB." + COLUMN_TBL.CODE);
 //				String cate = SQLChecker.getCate(code, s);
 				//setCodeList（本番）に合わせる
 				codeSingle[0]=code;
 //				codeSingle[1]=cate;
 
-				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
-				codeSingle[3]=s.rs.getString("AAA." + COLUMN.EXITMETHOD);
-				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
-				codeSingle[5]=s.rs.getString("AAA." + COLUMN.MAX_KEEP_TIME);
-				codeSingle[6]=s.rs.getString("AAA." + COLUMN.MAX_INTERVAL);
-				codeSingle[7]=s.rs.getString("AAA." + COLUMN.MAX_LOSS);
+				codeSingle[2]=s.rs.getString("AAA." + COLUMN_TBL.ENTRYMETHOD);
+				codeSingle[3]=s.rs.getString("AAA." + COLUMN_TBL.EXITMETHOD);
+				codeSingle[4]=s.rs.getString("AAA." + COLUMN_TBL.MAX_ENTRY_TIME);
+				codeSingle[5]=s.rs.getString("AAA." + COLUMN_TBL.MAX_KEEP_TIME);
+				codeSingle[6]=s.rs.getString("AAA." + COLUMN_TBL.MAX_INTERVAL);
+				codeSingle[7]=s.rs.getString("AAA." + COLUMN_TBL.MAX_LOSS);
 				codeListwithiCate.add(codeSingle);
 			}
 
@@ -740,31 +740,31 @@ public class commonAP {
 			SQL = " select * from " +  TBL +" AAA "
 					+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
 					+ " on "
-					+ "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+					+ "AAA." + COLUMN_TBL.CODE + " = " + "BBB." + COLUMN_TBL.CODE
 					+ " left outer join " + TBL_Name.INTERVAL_TIME_TBL + " CCC "
 					+ " on "
-					+ "AAA." + COLUMN.CODE + " = " + "CCC." + COLUMN.CODE
+					+ "AAA." + COLUMN_TBL.CODE + " = " + "CCC." + COLUMN_TBL.CODE
 					+ " and "
-					+ "AAA." + COLUMN.ENTRYMETHOD + " = " + "CCC." + COLUMN.ENTRYMETHOD
+					+ "AAA." + COLUMN_TBL.ENTRYMETHOD + " = " + "CCC." + COLUMN_TBL.ENTRYMETHOD
 					+ " and "
-					+ "AAA." + COLUMN.EXITMETHOD + " = " + "CCC." + COLUMN.EXITMETHOD
+					+ "AAA." + COLUMN_TBL.EXITMETHOD + " = " + "CCC." + COLUMN_TBL.EXITMETHOD
 					+ " and "
-					+ "AAA." + COLUMN.CODE + " = " + "CCC." + COLUMN.CODE
+					+ "AAA." + COLUMN_TBL.CODE + " = " + "CCC." + COLUMN_TBL.CODE
 					+ " where "
-					+ "BBB." + COLUMN.CATE_FLG	+ " = '" + cate + "'"
+					+ "BBB." + COLUMN_TBL.CATE_FLG	+ " = '" + cate + "'"
 					+ " and "
-					+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  "
+					+ "AAA." + COLUMN_TBL.TYPE			+ " = '" + type + "'"	 	 + "  "
 					+ " and "
-					+ "CCC." + COLUMN.MAX_INTERVAL + " is null";
+					+ "CCC." + COLUMN_TBL.MAX_INTERVAL + " is null";
 		}else{
 			//試験環境
 			TBL = TBL_Name.ELETE_LIST_TEST_TBL;
 			SQL = " select * from " +  TBL +" AAA "
 					+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
-					+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+					+ " on " + "AAA." + COLUMN_TBL.CODE + " = " + "BBB." + COLUMN_TBL.CODE
 					+ " where "
-					+ "BBB." + COLUMN.CATE_FLG	+ " = '" + cate + "'"	 + " and " //
-					+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  " ;
+					+ "BBB." + COLUMN_TBL.CATE_FLG	+ " = '" + cate + "'"	 + " and " //
+					+ "AAA." + COLUMN_TBL.TYPE			+ " = '" + type + "'"	 	 + "  " ;
 
 		}
 
@@ -776,14 +776,14 @@ public class commonAP {
 			while ( s.rs.next() ) {
 				//keepCodeListと揃える
 				codeSingle = new String[8];
-				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
+				codeSingle[0]=s.rs.getString("AAA." + COLUMN_TBL.CODE);
 				codeSingle[1]=cate;
-				codeSingle[2]=s.rs.getString("AAA." + COLUMN.ENTRYMETHOD);
-				codeSingle[3]=s.rs.getString("AAA." + COLUMN.EXITMETHOD);
-				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
-				codeSingle[5]=s.rs.getString("AAA." + COLUMN.MAX_KEEP_TIME);
-				codeSingle[6]=s.rs.getString("AAA." + COLUMN.MAX_INTERVAL);
-				codeSingle[7]=s.rs.getString("AAA." + COLUMN.MAX_LOSS);
+				codeSingle[2]=s.rs.getString("AAA." + COLUMN_TBL.ENTRYMETHOD);
+				codeSingle[3]=s.rs.getString("AAA." + COLUMN_TBL.EXITMETHOD);
+				codeSingle[4]=s.rs.getString("AAA." + COLUMN_TBL.MAX_ENTRY_TIME);
+				codeSingle[5]=s.rs.getString("AAA." + COLUMN_TBL.MAX_KEEP_TIME);
+				codeSingle[6]=s.rs.getString("AAA." + COLUMN_TBL.MAX_INTERVAL);
+				codeSingle[7]=s.rs.getString("AAA." + COLUMN_TBL.MAX_LOSS);
 				codeListwithiCate.add(codeSingle);
 			}
 
@@ -808,22 +808,22 @@ public class commonAP {
 		String SQL;
 		SQL = " select * from " +  TBL +" AAA "
 				+ " left outer join " + TBL_Name.CODELISTTBL + " BBB "
-				+ " on " + "AAA." + COLUMN.CODE + " = " + "BBB." + COLUMN.CODE
+				+ " on " + "AAA." + COLUMN_TBL.CODE + " = " + "BBB." + COLUMN_TBL.CODE
 				+ " where "
-				+ "AAA." + COLUMN.ENTRYMETHOD	+ " = '" + LMETHOD + "'"	 + " and " //
-				+ "AAA." + COLUMN.EXITMETHOD	+ " = '" + SMETHOD + "'"	 + " and  " //
-				+ "AAA." + COLUMN.TYPE			+ " = '" + type + "'"	 	 + "  " ;
+				+ "AAA." + COLUMN_TBL.ENTRYMETHOD	+ " = '" + LMETHOD + "'"	 + " and " //
+				+ "AAA." + COLUMN_TBL.EXITMETHOD	+ " = '" + SMETHOD + "'"	 + " and  " //
+				+ "AAA." + COLUMN_TBL.TYPE			+ " = '" + type + "'"	 	 + "  " ;
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				codeSingle = new String[6];
-				codeSingle[0]=s.rs.getString("AAA." + COLUMN.CODE);
-				codeSingle[1]=s.rs.getString("BBB." + COLUMN.CATE_FLG);
-				codeSingle[2]=s.rs.getString("AAA." + COLUMN.MAX_ENTRY_TIME);
-				codeSingle[3]=s.rs.getString("AAA." + COLUMN.MAX_KEEP_TIME);
-				codeSingle[4]=s.rs.getString("AAA." + COLUMN.MAX_INTERVAL);
-				codeSingle[5]=s.rs.getString("AAA." + COLUMN.MAX_LOSS);
+				codeSingle[0]=s.rs.getString("AAA." + COLUMN_TBL.CODE);
+				codeSingle[1]=s.rs.getString("BBB." + COLUMN_TBL.CATE_FLG);
+				codeSingle[2]=s.rs.getString("AAA." + COLUMN_TBL.MAX_ENTRY_TIME);
+				codeSingle[3]=s.rs.getString("AAA." + COLUMN_TBL.MAX_KEEP_TIME);
+				codeSingle[4]=s.rs.getString("AAA." + COLUMN_TBL.MAX_INTERVAL);
+				codeSingle[5]=s.rs.getString("AAA." + COLUMN_TBL.MAX_LOSS);
 				codeListwithiCate.add(codeSingle);
 			}
 
@@ -842,9 +842,9 @@ public class commonAP {
 		String SQL;
 
 		if(cate.equals(ReCord.CODE_99_ALLTYPE)){
-			SQL = " select " + COLUMN.CODE + "," + COLUMN.CATE_FLG + " from " + TBL_Name.CODELISTTBL;
+			SQL = " select " + COLUMN_TBL.CODE + "," + COLUMN_TBL.CATE_FLG + " from " + TBL_Name.CODELISTTBL;
 		}else{
-			SQL = " select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
+			SQL = " select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '" + cate + "'";
 		}
 
 
@@ -854,7 +854,7 @@ public class commonAP {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				codeSingle = new String[2];
-				codeSingle[0]=s.rs.getString(COLUMN.CODE);
+				codeSingle[0]=s.rs.getString(COLUMN_TBL.CODE);
 				codeSingle[1]=cate;
 				codeListwithiCate.add(codeSingle);
 			}

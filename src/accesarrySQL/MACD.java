@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import proparty.S;
 import proparty.TBL_Name;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class MACD {
@@ -81,14 +81,14 @@ public class MACD {
 		SQL = " update "
 			+ TBL
 			+ " set "
-			+ COLUMN.SHORT_MACD  + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + COLUMN.MIDDLEIDO_HEKATU + ","
-			+ COLUMN.MIDDLE_MACD + " = " + COLUMN.MIDDLEIDO_HEKATU + " - " + COLUMN.LONGIDO_HEKATU	 + ","
-			+ COLUMN.LONG_MACD   + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + COLUMN.LONGIDO_HEKATU	 + ""
+			+ COLUMN_TBL.SHORT_MACD  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + COLUMN_TBL.MIDDLEIDO_HEKATU + ","
+			+ COLUMN_TBL.MIDDLE_MACD + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU + " - " + COLUMN_TBL.LONGIDO_HEKATU	 + ","
+			+ COLUMN_TBL.LONG_MACD   + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + COLUMN_TBL.LONGIDO_HEKATU	 + ""
 			+ " where "
-			+ COLUMN.DAYTIME
+			+ COLUMN_TBL.DAYTIME
 			+ " = '" + dayTime + "'"
 			+ " and "
-			+ COLUMN.CODE
+			+ COLUMN_TBL.CODE
 			+ " ='" + code + "'";
 
 		try {
@@ -182,31 +182,31 @@ public class MACD {
 		SQL = " update "
 			+ TBL
 			+ " set "
-			+ COLUMN.SHORT_MACD  + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + COLUMN.MIDDLEIDO_HEKATU + ","
-			+ COLUMN.MIDDLE_MACD + " = " + COLUMN.MIDDLEIDO_HEKATU + " - " + COLUMN.LONGIDO_HEKATU	 + ","
-			+ COLUMN.LONG_MACD   + " = " + COLUMN.SHORTIDO_HEKATU  + " - " + COLUMN.LONGIDO_HEKATU	 + ""
+			+ COLUMN_TBL.SHORT_MACD  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + COLUMN_TBL.MIDDLEIDO_HEKATU + ","
+			+ COLUMN_TBL.MIDDLE_MACD + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU + " - " + COLUMN_TBL.LONGIDO_HEKATU	 + ","
+			+ COLUMN_TBL.LONG_MACD   + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + COLUMN_TBL.LONGIDO_HEKATU	 + ""
 			+ " where "
-			+ COLUMN.DAYTIME
+			+ COLUMN_TBL.DAYTIME
 			+ " = '" + dayTime + "'"
 			+ " and "
-			+ COLUMN.CODE
+			+ COLUMN_TBL.CODE
 			+ " ='" + code + "'";
 
 		try {
 
 //			s.sqlGetter().executeUpdate(SQL);
-			if (EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU)!=0){
-				resultDouble = EDIT.getDouble(COLUMN.SHORTIDO_HEKATU)  - EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU);
-				EDIT.updateDouble(COLUMN.SHORT_MACD		,resultDouble);
+			if (EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU)!=0){
+				resultDouble = EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU)  - EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU);
+				EDIT.updateDouble(COLUMN_TBL.SHORT_MACD		,resultDouble);
 
 			}
 
-			if(EDIT.getDouble(COLUMN.LONGIDO_HEKATU)!=0){
-				resultDouble = EDIT.getDouble(COLUMN.MIDDLEIDO_HEKATU) - EDIT.getDouble(COLUMN.LONGIDO_HEKATU);
-				EDIT.updateDouble(COLUMN.MIDDLE_MACD	,resultDouble);
+			if(EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU)!=0){
+				resultDouble = EDIT.getDouble(COLUMN_TBL.MIDDLEIDO_HEKATU) - EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU);
+				EDIT.updateDouble(COLUMN_TBL.MIDDLE_MACD	,resultDouble);
 
-					resultDouble = EDIT.getDouble(COLUMN.SHORTIDO_HEKATU)  - EDIT.getDouble(COLUMN.LONGIDO_HEKATU);
-					EDIT.updateDouble(COLUMN.LONG_MACD		,resultDouble);
+					resultDouble = EDIT.getDouble(COLUMN_TBL.SHORTIDO_HEKATU)  - EDIT.getDouble(COLUMN_TBL.LONGIDO_HEKATU);
+					EDIT.updateDouble(COLUMN_TBL.LONG_MACD		,resultDouble);
 
 			}
 

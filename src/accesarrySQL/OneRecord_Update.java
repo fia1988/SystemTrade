@@ -7,7 +7,7 @@ import proparty.S;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -57,16 +57,16 @@ public class OneRecord_Update {
 
 		//ここでテーブル指定
 		SQL = "select "
-				+ COLUMN.STOCK_DOWNSTOCK + " , "
-				+ COLUMN.STOCK_UPSTOCK + " , "
-				+ COLUMN.NETUKI_MAXMINRATIO + "  "
+				+ COLUMN_TBL.STOCK_DOWNSTOCK + " , "
+				+ COLUMN_TBL.STOCK_UPSTOCK + " , "
+				+ COLUMN_TBL.NETUKI_MAXMINRATIO + "  "
 				+ " from "
 				+ SQLChecker.getTBL(cate)
 				+ " where "
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME
 				+ " = '" + dayTime + "'"
 				+ " and "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'";
 
 		try {
@@ -77,14 +77,14 @@ public class OneRecord_Update {
 				//騰落レシオ
 				//値上がり銘柄数 ÷ 値下がり銘柄数
 
-				double stock_downStock = s.rs.getDouble(COLUMN.STOCK_DOWNSTOCK);
+				double stock_downStock = s.rs.getDouble(COLUMN_TBL.STOCK_DOWNSTOCK);
 				if ( stock_downStock == 0 ){
 					stock_downStock = 1;
 				}
 
-				resultDouble=( s.rs.getDouble(COLUMN.STOCK_UPSTOCK) / stock_downStock );
+				resultDouble=( s.rs.getDouble(COLUMN_TBL.STOCK_UPSTOCK) / stock_downStock );
 
-				EDIT.updateDouble(COLUMN.NETUKI_MAXMINRATIO,resultDouble);
+				EDIT.updateDouble(COLUMN_TBL.NETUKI_MAXMINRATIO,resultDouble);
 
 			}
 
@@ -128,10 +128,10 @@ public class OneRecord_Update {
 			//ETF・・・4
 			//先物・・・5
 			//通貨・・・6
-			String targetCOMUMN = COLUMN.MAXMIN				+ " = " + COLUMN.MAX + " - " + COLUMN.MIN							+ " , "
-								+ COLUMN.MAXMINRATIO		+ " = " + " ( 1 -  (" + COLUMN.MIN + "/" + COLUMN.MAX + "  ) )"		+ " , "
-								+ COLUMN.CANDLE_AREA		+ " = " + COLUMN.CLOSE + " - " + COLUMN.OPEN						+ " , "
-								+ COLUMN.CANDLE_AREA_SCALE	+ " = " + "( (" +  COLUMN.CLOSE + " - " + COLUMN.OPEN + ") / (" + COLUMN.MAX + " - " + COLUMN.MIN + ") )";
+			String targetCOMUMN = COLUMN_TBL.MAXMIN				+ " = " + COLUMN_TBL.MAX + " - " + COLUMN_TBL.MIN							+ " , "
+								+ COLUMN_TBL.MAXMINRATIO		+ " = " + " ( 1 -  (" + COLUMN_TBL.MIN + "/" + COLUMN_TBL.MAX + "  ) )"		+ " , "
+								+ COLUMN_TBL.CANDLE_AREA		+ " = " + COLUMN_TBL.CLOSE + " - " + COLUMN_TBL.OPEN						+ " , "
+								+ COLUMN_TBL.CANDLE_AREA_SCALE	+ " = " + "( (" +  COLUMN_TBL.CLOSE + " - " + COLUMN_TBL.OPEN + ") / (" + COLUMN_TBL.MAX + " - " + COLUMN_TBL.MIN + ") )";
 			switch(cate){
 			case ReCord.CODE_01_STOCK:
 
@@ -156,13 +156,13 @@ public class OneRecord_Update {
 			}
 
 			String omake = "";
-			omake =  " and "	 + COLUMN.DAYTIME + " > '2016-06-30'";
+			omake =  " and "	 + COLUMN_TBL.DAYTIME + " > '2016-06-30'";
 
 			SQL = " update " + SQLChecker.getTBL(cate)
 			+ " set "
 			+ targetCOMUMN
 			+ " where "
-			+ COLUMN.MAXMIN + " is null " + omake;
+			+ COLUMN_TBL.MAXMIN + " is null " + omake;
 
 //			SQL = " update " + SQLChecker.getTBL(cate)
 //					+ " set "

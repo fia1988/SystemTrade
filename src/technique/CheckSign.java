@@ -16,7 +16,7 @@ import bean.Bean_nowRecord;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.TechCon;
 import constant.logWriting;
@@ -171,21 +171,21 @@ public class CheckSign {
 		//理想的株数を計算する
 		SQL  = " update "+ TBL_Name.LASTORDER
 				+ " set "
-				+ COLUMN.IDEA_VOLUME + " = " + "( " + (entryMoney*10000) + " / " + COLUMN.CLOSE + " ) "
+				+ COLUMN_TBL.IDEA_VOLUME + " = " + "( " + (entryMoney*10000) + " / " + COLUMN_TBL.CLOSE + " ) "
 				+ " where "
-				+ COLUMN.SIGN_FLG + " is true and "
-				+ COLUMN.ENTRYMETHOD + " = '" + L_method + "' and "
-				+ COLUMN.EXITMETHOD + " = '" + S_method + "'";
+				+ COLUMN_TBL.SIGN_FLG + " is true and "
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + L_method + "' and "
+				+ COLUMN_TBL.EXITMETHOD + " = '" + S_method + "'";
 		s.freeUpdateQuery(SQL);
 
 		//現実的株数を計算する
 		SQL  = " update "+ TBL_Name.LASTORDER
 				+ " set "
-				+ COLUMN.REAL_ENTRY_VOLUME + " = " + COLUMN.IDEA_VOLUME
+				+ COLUMN_TBL.REAL_ENTRY_VOLUME + " = " + COLUMN_TBL.IDEA_VOLUME
 				+ " where "
-				+ COLUMN.SIGN_FLG + " is true and "
-				+ COLUMN.ENTRYMETHOD + " = '" + L_method + "' and "
-				+ COLUMN.EXITMETHOD + " = '" + S_method + "'";
+				+ COLUMN_TBL.SIGN_FLG + " is true and "
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + L_method + "' and "
+				+ COLUMN_TBL.EXITMETHOD + " = '" + S_method + "'";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -195,50 +195,50 @@ public class CheckSign {
 		String TBLName = TBL_Name.STOCK_DD;
 		String SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBLName
 				+ " set "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBLName + "." + COLUMN.CLOSE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CLOSE + " = " + TBLName + "." + COLUMN_TBL.CLOSE
 				+ " where "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBLName + "." + COLUMN.CODE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CODE + " = " + TBLName + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ TBLName + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+				+ TBLName + "." + COLUMN_TBL.DAYTIME + " = " + "'" + TODAY + "'";
 		s.freeUpdateQuery(SQL);
 
 		//次はインデックス
 		TBLName = TBL_Name.INDEX_DD;
 		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBLName
 				+ " set "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBLName + "." + COLUMN.CLOSE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CLOSE + " = " + TBLName + "." + COLUMN_TBL.CLOSE
 				+ " where "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBLName + "." + COLUMN.CODE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CODE + " = " + TBLName + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ TBLName + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+				+ TBLName + "." + COLUMN_TBL.DAYTIME + " = " + "'" + TODAY + "'";
 		s.freeUpdateQuery(SQL);
 
 		//次はETF
 		TBLName = TBL_Name.ETF_DD;
 		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBLName
 				+ " set "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CLOSE + " = " + TBLName + "." + COLUMN.CLOSE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CLOSE + " = " + TBLName + "." + COLUMN_TBL.CLOSE
 				+ " where "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBLName + "." + COLUMN.CODE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CODE + " = " + TBLName + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ TBLName + "." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+				+ TBLName + "." + COLUMN_TBL.DAYTIME + " = " + "'" + TODAY + "'";
 		s.freeUpdateQuery(SQL);
 
 		//以下true:買い
 		//理想的株数を計算する
 		SQL  = " update "+ TBL_Name.LASTORDER
 				+ " set "
-				+ COLUMN.IDEA_VOLUME + " = " + "( " + (entryMoney*10000) + " / " + COLUMN.CLOSE + " ) "
+				+ COLUMN_TBL.IDEA_VOLUME + " = " + "( " + (entryMoney*10000) + " / " + COLUMN_TBL.CLOSE + " ) "
 				+ " where "
-				+ COLUMN.SIGN_FLG + " is true";
+				+ COLUMN_TBL.SIGN_FLG + " is true";
 		s.freeUpdateQuery(SQL);
 
 		//現実的株数を計算する
 		SQL  = " update "+ TBL_Name.LASTORDER
 				+ " set "
-				+ COLUMN.REAL_ENTRY_VOLUME + " = " + COLUMN.IDEA_VOLUME
+				+ COLUMN_TBL.REAL_ENTRY_VOLUME + " = " + COLUMN_TBL.IDEA_VOLUME
 				+ " where "
-				+ COLUMN.SIGN_FLG + " is true";
+				+ COLUMN_TBL.SIGN_FLG + " is true";
 		s.freeUpdateQuery(SQL);
 
 		setEleteMethod(s);
@@ -246,44 +246,44 @@ public class CheckSign {
 		//切り上げ処理
 		SQL  = " update "+ TBL_Name.LASTORDER
 				+ " set "
-				+ COLUMN.REAL_ENTRY_VOLUME + " = " + COLUMN.REAL_ENTRY_VOLUME + " + 1 "
+				+ COLUMN_TBL.REAL_ENTRY_VOLUME + " = " + COLUMN_TBL.REAL_ENTRY_VOLUME + " + 1 "
 				+ " where "
-				+ COLUMN.REAL_ENTRY_VOLUME + " < " + COLUMN.IDEA_VOLUME
+				+ COLUMN_TBL.REAL_ENTRY_VOLUME + " < " + COLUMN_TBL.IDEA_VOLUME
 				+ " and "
-				+ COLUMN.SIGN_FLG + " is true";
+				+ COLUMN_TBL.SIGN_FLG + " is true";
 		s.freeUpdateQuery(SQL);
 
 		//以下false売り
 		//現実的
 		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.KEEPLISTTBL
 				+ " set "
-				+ TBL_Name.LASTORDER + "." + COLUMN.REAL_ENTRY_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.REAL_ENTRY_VOLUME
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.REAL_ENTRY_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.REAL_ENTRY_VOLUME
 				+ " where "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.CODE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ TBL_Name.LASTORDER + "." + COLUMN.EXITMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.EXITMETHOD
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.EXITMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.EXITMETHOD
 				+ " and "
-				+ TBL_Name.LASTORDER + "." + COLUMN.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.ENTRYMETHOD
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.ENTRYMETHOD
 				+ " and "
-				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false "
+				+ TBL_Name.LASTORDER + "."+ COLUMN_TBL.SIGN_FLG + " is false "
 				+ " and "
-				+ TBL_Name.LASTORDER + "."+ COLUMN.MINI_CHECK_FLG + " = " + TBL_Name.KEEPLISTTBL + "."+ COLUMN.MINI_CHECK_FLG;
+				+ TBL_Name.LASTORDER + "."+ COLUMN_TBL.MINI_CHECK_FLG + " = " + TBL_Name.KEEPLISTTBL + "."+ COLUMN_TBL.MINI_CHECK_FLG;
 		s.freeUpdateQuery(SQL);
 
 		//理想的
 		SQL  = " update "+ TBL_Name.LASTORDER + " , " + TBL_Name.KEEPLISTTBL
 				+ " set "
-				+ TBL_Name.LASTORDER + "." + COLUMN.IDEA_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.IDEA_VOLUME
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.IDEA_VOLUME + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.IDEA_VOLUME
 				+ " where "
-				+ TBL_Name.LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.CODE
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.CODE + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ TBL_Name.LASTORDER + "." + COLUMN.EXITMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.EXITMETHOD
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.EXITMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.EXITMETHOD
 				+ " and "
-				+ TBL_Name.LASTORDER + "." + COLUMN.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN.ENTRYMETHOD
+				+ TBL_Name.LASTORDER + "." + COLUMN_TBL.ENTRYMETHOD + " = " + TBL_Name.KEEPLISTTBL + "." + COLUMN_TBL.ENTRYMETHOD
 				+ " and "
-				+ TBL_Name.LASTORDER + "."+ COLUMN.SIGN_FLG + " is false "
+				+ TBL_Name.LASTORDER + "."+ COLUMN_TBL.SIGN_FLG + " is false "
 				+ " and "
-				+ TBL_Name.LASTORDER + "."+ COLUMN.MINI_CHECK_FLG + " = " + TBL_Name.KEEPLISTTBL + "."+ COLUMN.MINI_CHECK_FLG;
+				+ TBL_Name.LASTORDER + "."+ COLUMN_TBL.MINI_CHECK_FLG + " = " + TBL_Name.KEEPLISTTBL + "."+ COLUMN_TBL.MINI_CHECK_FLG;
 		s.freeUpdateQuery(SQL);
 
 	}
@@ -295,22 +295,22 @@ public class CheckSign {
 
 		List<String[]> methodList = new ArrayList<String[]>();
 		String SQL = " SELECT DISTINCT "
-				   + COLUMN.ENTRYMETHOD +	","
-				   + COLUMN.EXITMETHOD +	","
-				   + COLUMN.TYPE +			" "
+				   + COLUMN_TBL.ENTRYMETHOD +	","
+				   + COLUMN_TBL.EXITMETHOD +	","
+				   + COLUMN_TBL.TYPE +			" "
 				   + " from "
 				   + TBL_Name.LASTORDER
 				   + " where "
-				   + COLUMN.DAYTIME + " < '" + checkDay + "'";
+				   + COLUMN_TBL.DAYTIME + " < '" + checkDay + "'";
 		S s = new S();
 		s.getCon();
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			while(s.rs2.next()){
 				String codeStatus[] = new String[3];
-				codeStatus[0] = s.rs2.getString(	COLUMN.ENTRYMETHOD	);
-				codeStatus[1] = s.rs2.getString(	COLUMN.EXITMETHOD	);
-				codeStatus[2] = s.rs2.getString(	COLUMN.TYPE			);
+				codeStatus[0] = s.rs2.getString(	COLUMN_TBL.ENTRYMETHOD	);
+				codeStatus[1] = s.rs2.getString(	COLUMN_TBL.EXITMETHOD	);
+				codeStatus[2] = s.rs2.getString(	COLUMN_TBL.TYPE			);
 				methodList.add(codeStatus.clone());
 			};
 		} catch (SQLException e) {e.printStackTrace();	}
@@ -468,14 +468,14 @@ public class CheckSign {
 
 			//最新日が売りサイン実行日
 			String SQL = " select "
-					+ COLUMN.DAYTIME + "," + COLUMN.OPEN
+					+ COLUMN_TBL.DAYTIME + "," + COLUMN_TBL.OPEN
 					+ " from "
 					+ TBL
 					+ " where "
-					+ COLUMN.DAYTIME + " = '" + TODAY
+					+ COLUMN_TBL.DAYTIME + " = '" + TODAY
 					+ "' and "
-					+ COLUMN.CODE + " = '" + code + "'"
-					+ " order by " + COLUMN.DAYTIME + " desc";
+					+ COLUMN_TBL.CODE + " = '" + code + "'"
+					+ " order by " + COLUMN_TBL.DAYTIME + " desc";
 
 
 
@@ -485,7 +485,7 @@ public class CheckSign {
 				double nowOpen = 0.0;
 
 				if(s.rs2.next()){
-					nowOpen =s.rs2.getDouble(	COLUMN.OPEN	);
+					nowOpen =s.rs2.getDouble(	COLUMN_TBL.OPEN	);
 					exitCheck = true;
 					//					System.out.println("setResultTBL:" + SQL);
 				};
@@ -493,15 +493,15 @@ public class CheckSign {
 				if (exitCheck){
 					SQL = "select * from " + TBL_Name.KEEPLISTTBL
 							+ " where "
-							+ COLUMN.CODE + " = '" + code + "'"
+							+ COLUMN_TBL.CODE + " = '" + code + "'"
 							+ " and "
-							+ COLUMN.TYPE + " = '" + type + "'"
+							+ COLUMN_TBL.TYPE + " = '" + type + "'"
 							+ " and "
-							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+							+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 							+ " and "
-							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+							+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'"
 							+ " and "
-							+ COLUMN.MINI_CHECK_FLG + " is "	+ checkMINI;
+							+ COLUMN_TBL.MINI_CHECK_FLG + " is "	+ checkMINI;
 
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
 
@@ -509,14 +509,14 @@ public class CheckSign {
 					if ( s.rs2.next() ) {
 						//trueのとき、存在する。
 
-						String entryDay = s.rs2.getString(COLUMN.ENTRYDAY);
-						int entryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
-						double realVolume = s.rs2.getDouble(COLUMN.REAL_ENTRY_VOLUME);;
-						double ideaVolume = s.rs2.getDouble(COLUMN.IDEA_VOLUME);;
+						String entryDay = s.rs2.getString(COLUMN_TBL.ENTRYDAY);
+						int entryTime = s.rs2.getInt(COLUMN_TBL.ENTRYTIMES);
+						double realVolume = s.rs2.getDouble(COLUMN_TBL.REAL_ENTRY_VOLUME);;
+						double ideaVolume = s.rs2.getDouble(COLUMN_TBL.IDEA_VOLUME);;
 
-						double averagePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
-						double realAveragePrice = s.rs2.getDouble(COLUMN.REAL_AVERAGEPRICE);
-						double ideaAveragePrice = s.rs2.getDouble(COLUMN.IDEA_AVERAGEPRICE);
+						double averagePrice = s.rs2.getDouble(COLUMN_TBL.AVERAGEPRICE);
+						double realAveragePrice = s.rs2.getDouble(COLUMN_TBL.REAL_AVERAGEPRICE);
+						double ideaAveragePrice = s.rs2.getDouble(COLUMN_TBL.IDEA_AVERAGEPRICE);
 
 						double RETURN = ( nowOpen - averagePrice ) / averagePrice;
 //						double realRETURN = realVolume * ( ( nowOpen - realAveragePrice ) / realAveragePrice );
@@ -530,25 +530,25 @@ public class CheckSign {
 
 						SQL ="insert into " + TBL_Name.RESULTHISTROYTBL
 								+ " ( "
-								+ COLUMN.CODE										 + " , " //
-								+ COLUMN.ENTRYDAY									 + " , " //
-								+ COLUMN.EXITDAY									 + " , " //
-								+ COLUMN.AVERAGEPRICE								 + " , " //
-								+ COLUMN.EXITPRICE									 + " , " //
-								+ COLUMN.IDEA_AVERAGEPRICE 						 	 + " , " //理想的平均取得価格
-								+ COLUMN.IDEA_VOLUME 						  		 + " , " //理想的保有株数
-								+ COLUMN.IDEA_RETURN								 + " ,  " //理想的トータルリターン
-								+ COLUMN.REAL_AVERAGEPRICE 						 	 + " , " //現実的平均取得価格
-								+ COLUMN.REAL_ENTRY_VOLUME 						 	 + " , " //現実的保有株数
-								+ COLUMN.REAL_RETURN								 + " ,  " //現実的トータルリターン
-								+ COLUMN.MINI_CHECK_FLG									 	 + " , " //
-								+ COLUMN.TYPE									 	 + " , " //
-								+ COLUMN.ENTRYTIMES								 + " , " //
-								+ COLUMN.RESULTRETURN									 + " , " //
-								+ COLUMN.TOTAL_RETURN									 + " , " //
-								+ COLUMN.KEEPTIME									 + " , " //
-								+ COLUMN.ENTRYMETHOD								 + " , " //
-								+ COLUMN.EXITMETHOD								 + "   " //
+								+ COLUMN_TBL.CODE										 + " , " //
+								+ COLUMN_TBL.ENTRYDAY									 + " , " //
+								+ COLUMN_TBL.EXITDAY									 + " , " //
+								+ COLUMN_TBL.AVERAGEPRICE								 + " , " //
+								+ COLUMN_TBL.EXITPRICE									 + " , " //
+								+ COLUMN_TBL.IDEA_AVERAGEPRICE 						 	 + " , " //理想的平均取得価格
+								+ COLUMN_TBL.IDEA_VOLUME 						  		 + " , " //理想的保有株数
+								+ COLUMN_TBL.IDEA_RETURN								 + " ,  " //理想的トータルリターン
+								+ COLUMN_TBL.REAL_AVERAGEPRICE 						 	 + " , " //現実的平均取得価格
+								+ COLUMN_TBL.REAL_ENTRY_VOLUME 						 	 + " , " //現実的保有株数
+								+ COLUMN_TBL.REAL_RETURN								 + " ,  " //現実的トータルリターン
+								+ COLUMN_TBL.MINI_CHECK_FLG									 	 + " , " //
+								+ COLUMN_TBL.TYPE									 	 + " , " //
+								+ COLUMN_TBL.ENTRYTIMES								 + " , " //
+								+ COLUMN_TBL.RESULTRETURN									 + " , " //
+								+ COLUMN_TBL.TOTAL_RETURN									 + " , " //
+								+ COLUMN_TBL.KEEPTIME									 + " , " //
+								+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+								+ COLUMN_TBL.EXITMETHOD								 + "   " //
 								+ " ) value ( "
 								+ "'" + code + "'"	 + ","
 								+ "'" + entryDay			+ "'"	 + ","
@@ -583,13 +583,13 @@ public class CheckSign {
 						//ここからはキープテーブルの削除
 						SQL = " delete from " + TBL_Name.KEEPLISTTBL
 								+ " where "
-								+ COLUMN.CODE + " = '" + code + "'"
+								+ COLUMN_TBL.CODE + " = '" + code + "'"
 								+ " and "
-								+ COLUMN.TYPE + " = '" + type + "'"
+								+ COLUMN_TBL.TYPE + " = '" + type + "'"
 								+ " and "
-								+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+								+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 								+ " and "
-								+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";
+								+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";
 						s.freeUpdateQuery(SQL);
 
 					}else{
@@ -673,19 +673,19 @@ public class CheckSign {
 				try {
 					String code = codeList.get(i);
 					//売りフラグの内、キープテーブルに存在するレコードのみをthisresultCodeListにaddする
-					String SQL2 = " select " + COLUMN.CODE + " from "  + TBL_Name.KEEPLISTTBL
+					String SQL2 = " select " + COLUMN_TBL.CODE + " from "  + TBL_Name.KEEPLISTTBL
 							+ " where "
-							+ COLUMN.CODE + " = '" +  code + "'"
+							+ COLUMN_TBL.CODE + " = '" +  code + "'"
 							+ " and "
-							+ COLUMN.TYPE + " = '" + type + "'"
+							+ COLUMN_TBL.TYPE + " = '" + type + "'"
 							+ " and "
-							+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+							+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 							+ " and "
-							+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+							+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";;
 							s.rs2 = s.sqlGetter().executeQuery(SQL2);
 
 							if(s.rs2.next()){
-								thisResultCodeList.add(s.rs2.getString(	COLUMN.CODE	));
+								thisResultCodeList.add(s.rs2.getString(	COLUMN_TBL.CODE	));
 							};
 				} catch (SQLException e) {
 					// TODO 自動生成された catch ブロック
@@ -705,14 +705,14 @@ public class CheckSign {
 
 			SQL ="insert into " + TBL_Name.LASTORDER
 					+ " ( "
-					+ COLUMN.CODE										 + " , " //
-					+ COLUMN.DAYTIME									 + " , " //
-					+ COLUMN.TYPE									 	 + " , " //
-					+ COLUMN.CATE_FLG									 + " , " //
-					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
-					+ COLUMN.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-					+ COLUMN.ENTRYMETHOD								 + " , " //
-					+ COLUMN.EXITMETHOD								 + "  " //
+					+ COLUMN_TBL.CODE										 + " , " //
+					+ COLUMN_TBL.DAYTIME									 + " , " //
+					+ COLUMN_TBL.TYPE									 	 + " , " //
+					+ COLUMN_TBL.CATE_FLG									 + " , " //
+					+ COLUMN_TBL.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
+					+ COLUMN_TBL.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+					+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+					+ COLUMN_TBL.EXITMETHOD								 + "  " //
 					+ " ) value ( "
 					+ "'" + code + "'"	 + ","
 					+ "'" + TODAY			+ "'"	 + ","
@@ -788,14 +788,14 @@ public class CheckSign {
 
 
 			String	SQL = " select "
-					+ COLUMN.DAYTIME + "," + COLUMN.OPEN
+					+ COLUMN_TBL.DAYTIME + "," + COLUMN_TBL.OPEN
 					+ " from "
 					+ TBL
 					+ " where "
-					+ COLUMN.DAYTIME + " = '" + TODAY
+					+ COLUMN_TBL.DAYTIME + " = '" + TODAY
 					+ "' and "
-					+ COLUMN.CODE + " = '" + code + "'"
-					+ " order by " + COLUMN.DAYTIME + " desc";
+					+ COLUMN_TBL.CODE + " = '" + code + "'"
+					+ " order by " + COLUMN_TBL.DAYTIME + " desc";
 
 			try {
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -803,22 +803,22 @@ public class CheckSign {
 
 				boolean existCheck = false;
 				if (s.rs2.next()){
-					nowOpen =s.rs2.getDouble(	COLUMN.OPEN	);
+					nowOpen =s.rs2.getDouble(	COLUMN_TBL.OPEN	);
 					existCheck = true;
 				};
 
 
 				SQL = "select * from " + TBL_Name.KEEPLISTTBL
 						+ " where "
-						+ COLUMN.CODE + " = '" + code + "'"
+						+ COLUMN_TBL.CODE + " = '" + code + "'"
 						+ " and "
-						+ COLUMN.TYPE + " = '" + type + "'"
+						+ COLUMN_TBL.TYPE + " = '" + type + "'"
 						+ " and "
-						+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+						+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 						+ " and "
-						+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+						+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'"
 						+ " and "
-						+ COLUMN.MINI_CHECK_FLG + " is "	+ checkMINI;
+						+ COLUMN_TBL.MINI_CHECK_FLG + " is "	+ checkMINI;
 
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 
@@ -826,15 +826,15 @@ public class CheckSign {
 				if ( s.rs2.next() ) {
 					//trueのとき、存在する。
 
-					if( !s.rs2.getString(COLUMN.LASTENTRYDAY).equals(TODAY)){
+					if( !s.rs2.getString(COLUMN_TBL.LASTENTRYDAY).equals(TODAY)){
 						//一緒じゃない場合だけ動く
 
-						int beforeEntryTime = s.rs2.getInt(COLUMN.ENTRYTIMES);
-						double beforeRealVolume = s.rs2.getDouble(COLUMN.REAL_ENTRY_VOLUME);;
-						double beforeIdeaVolume = s.rs2.getDouble(COLUMN.IDEA_VOLUME);;
-						int beforeRealTotalEntryMoney =s.rs2.getInt(COLUMN.REAL_TOTAL_ENTRY_MONEY);
-						double beforeIdeaTotalEntryMoney =s.rs2.getDouble(COLUMN.IDEA_TOTAL_ENTRY_MONEY);
-						double beforeAveragePrice = s.rs2.getDouble(COLUMN.AVERAGEPRICE);
+						int beforeEntryTime = s.rs2.getInt(COLUMN_TBL.ENTRYTIMES);
+						double beforeRealVolume = s.rs2.getDouble(COLUMN_TBL.REAL_ENTRY_VOLUME);;
+						double beforeIdeaVolume = s.rs2.getDouble(COLUMN_TBL.IDEA_VOLUME);;
+						int beforeRealTotalEntryMoney =s.rs2.getInt(COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY);
+						double beforeIdeaTotalEntryMoney =s.rs2.getDouble(COLUMN_TBL.IDEA_TOTAL_ENTRY_MONEY);
+						double beforeAveragePrice = s.rs2.getDouble(COLUMN_TBL.AVERAGEPRICE);
 						double nowAveragePrice = ( ( beforeAveragePrice * beforeEntryTime ) + nowOpen ) / ( beforeEntryTime + 1);
 						int intRealVolume = (int)realVolume;
 						int intNowOpen = (int)nowOpen;
@@ -855,25 +855,25 @@ public class CheckSign {
 							//
 							SQL = " update "+ TBL_Name.KEEPLISTTBL + " "
 									+ " set "
-									+ COLUMN.ENTRYTIMES + 			" = " + ( beforeEntryTime + 1 ) + " , "
-									+ COLUMN.AVERAGEPRICE + 		" = " + nowAveragePrice + " , "
-									+ COLUMN.LASTENTRYDAY +			" = '" + TODAY + "' , "
-									+ COLUMN.IDEA_TOTAL_ENTRY_MONEY +	" = " + nowIdeaTotalMoney + " , "
-									+ COLUMN.REAL_TOTAL_ENTRY_MONEY +	" = " + nowRealTotalEntryMoney + " , "
-									+ COLUMN.IDEA_AVERAGEPRICE + 	" = " + ( ideaNowAveragePrice ) + " , "//理想的平均取得価格
-									+ COLUMN.IDEA_VOLUME + 			" = " + ( nowIdeaVolume ) + " , "//理想的保有株数
-									+ COLUMN.REAL_AVERAGEPRICE + 	" = " + ( realNowAveragePrice ) + " , "//現実的平均取得価格
-									+ COLUMN.REAL_ENTRY_VOLUME + 	" = " + ( nowRealVolume ) + "  "//現実的保有株数
+									+ COLUMN_TBL.ENTRYTIMES + 			" = " + ( beforeEntryTime + 1 ) + " , "
+									+ COLUMN_TBL.AVERAGEPRICE + 		" = " + nowAveragePrice + " , "
+									+ COLUMN_TBL.LASTENTRYDAY +			" = '" + TODAY + "' , "
+									+ COLUMN_TBL.IDEA_TOTAL_ENTRY_MONEY +	" = " + nowIdeaTotalMoney + " , "
+									+ COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY +	" = " + nowRealTotalEntryMoney + " , "
+									+ COLUMN_TBL.IDEA_AVERAGEPRICE + 	" = " + ( ideaNowAveragePrice ) + " , "//理想的平均取得価格
+									+ COLUMN_TBL.IDEA_VOLUME + 			" = " + ( nowIdeaVolume ) + " , "//理想的保有株数
+									+ COLUMN_TBL.REAL_AVERAGEPRICE + 	" = " + ( realNowAveragePrice ) + " , "//現実的平均取得価格
+									+ COLUMN_TBL.REAL_ENTRY_VOLUME + 	" = " + ( nowRealVolume ) + "  "//現実的保有株数
 									+ " where "
-									+ COLUMN.CODE + " = '" + code + "'"
+									+ COLUMN_TBL.CODE + " = '" + code + "'"
 									+ " and "
-									+ COLUMN.TYPE + " = '" + type + "'"
+									+ COLUMN_TBL.TYPE + " = '" + type + "'"
 									+ " and "
-									+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+									+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 									+ " and "
-									+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+									+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'"
 									+ " and "
-									+ COLUMN.MINI_CHECK_FLG + " is "	+ checkMINI;;
+									+ COLUMN_TBL.MINI_CHECK_FLG + " is "	+ checkMINI;;
 									s.freeUpdateQuery(SQL);
 
 						}
@@ -890,21 +890,21 @@ public class CheckSign {
 
 						SQL ="insert into " + TBL_Name.KEEPLISTTBL
 								+ " ( "
-								+ COLUMN.CODE										 + " , " //
-								+ COLUMN.ENTRYDAY									 + " , " //
-								+ COLUMN.LASTENTRYDAY								 + " , " //
-								+ COLUMN.AVERAGEPRICE								 + " , " //
-								+ COLUMN.ENTRYTIMES									 + " , " //
-								+ COLUMN.IDEA_AVERAGEPRICE 						 	 + " , " //理想的平均取得価格
-								+ COLUMN.IDEA_VOLUME 						  		 + " , " //理想的保有株数
-								+ COLUMN.REAL_AVERAGEPRICE 						 	 + " , " //現実的平均取得価格
-								+ COLUMN.REAL_ENTRY_VOLUME 						 	 + " , " //現実的保有株数
-								+ COLUMN.TYPE									 	 + " , " //
-								+ COLUMN.MINI_CHECK_FLG							 	 + " , " //
-								+ COLUMN.IDEA_TOTAL_ENTRY_MONEY						 	 + " , " //
-								+ COLUMN.REAL_TOTAL_ENTRY_MONEY						 	 + " , " //
-								+ COLUMN.ENTRYMETHOD								 + " , " //
-								+ COLUMN.EXITMETHOD									 + "   " //
+								+ COLUMN_TBL.CODE										 + " , " //
+								+ COLUMN_TBL.ENTRYDAY									 + " , " //
+								+ COLUMN_TBL.LASTENTRYDAY								 + " , " //
+								+ COLUMN_TBL.AVERAGEPRICE								 + " , " //
+								+ COLUMN_TBL.ENTRYTIMES									 + " , " //
+								+ COLUMN_TBL.IDEA_AVERAGEPRICE 						 	 + " , " //理想的平均取得価格
+								+ COLUMN_TBL.IDEA_VOLUME 						  		 + " , " //理想的保有株数
+								+ COLUMN_TBL.REAL_AVERAGEPRICE 						 	 + " , " //現実的平均取得価格
+								+ COLUMN_TBL.REAL_ENTRY_VOLUME 						 	 + " , " //現実的保有株数
+								+ COLUMN_TBL.TYPE									 	 + " , " //
+								+ COLUMN_TBL.MINI_CHECK_FLG							 	 + " , " //
+								+ COLUMN_TBL.IDEA_TOTAL_ENTRY_MONEY						 	 + " , " //
+								+ COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY						 	 + " , " //
+								+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+								+ COLUMN_TBL.EXITMETHOD									 + "   " //
 								+ " ) value ( "
 								+ "'" + code + "'"	 + ","
 								+ "'" + TODAY+ "'"	 + ","
@@ -950,15 +950,15 @@ public class CheckSign {
 //		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 //		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
-		String sqlWhere = COLUMN.TYPE + " = '" + type + "'"
+		String sqlWhere = COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " < '" + checkDay + "'"
+				+ COLUMN_TBL.DAYTIME + " < '" + checkDay + "'"
 				+ " and "
-				+ COLUMN.SIGN_FLG	+ " is " + signFlg;
+				+ COLUMN_TBL.SIGN_FLG	+ " is " + signFlg;
 
 
 		String SQL = " select * from " + TBL_Name.LASTORDER
@@ -971,14 +971,14 @@ public class CheckSign {
 
 			while(s.rs2.next()){
 				String codeStatus[] = new String[9];
-				codeStatus[0] = s.rs2.getString(	COLUMN.CODE				);
-				codeStatus[1] = s.rs2.getString(	COLUMN.DAYTIME			);
-				codeStatus[2] = s.rs2.getString(	COLUMN.CATE_FLG			);
-				codeStatus[3] = s.rs2.getString(	COLUMN.ENTRYMETHOD		);
-				codeStatus[4] = s.rs2.getString(	COLUMN.EXITMETHOD		);
-				codeStatus[5] = s.rs2.getString(	COLUMN.DAYTIME			);
+				codeStatus[0] = s.rs2.getString(	COLUMN_TBL.CODE				);
+				codeStatus[1] = s.rs2.getString(	COLUMN_TBL.DAYTIME			);
+				codeStatus[2] = s.rs2.getString(	COLUMN_TBL.CATE_FLG			);
+				codeStatus[3] = s.rs2.getString(	COLUMN_TBL.ENTRYMETHOD		);
+				codeStatus[4] = s.rs2.getString(	COLUMN_TBL.EXITMETHOD		);
+				codeStatus[5] = s.rs2.getString(	COLUMN_TBL.DAYTIME			);
 
-				if ( s.rs2.getString(	COLUMN.MINI_CHECK_FLG	).equals("1") ){
+				if ( s.rs2.getString(	COLUMN_TBL.MINI_CHECK_FLG	).equals("1") ){
 					codeStatus[6] = "true";
 				}else{
 					codeStatus[6] = "false";
@@ -986,8 +986,8 @@ public class CheckSign {
 
 //				double ideaVolume = Double.valueOf(codeList.get(i)[7]);
 //				double realVolume = Double.valueOf(codeList.get(i)[8]);
-				codeStatus[7] = s.rs2.getString(	COLUMN.IDEA_VOLUME		);
-				codeStatus[8] = s.rs2.getString(	COLUMN.REAL_ENTRY_VOLUME);
+				codeStatus[7] = s.rs2.getString(	COLUMN_TBL.IDEA_VOLUME		);
+				codeStatus[8] = s.rs2.getString(	COLUMN_TBL.REAL_ENTRY_VOLUME);
 
 				lastOrderCodeList.add(codeStatus.clone());
 
@@ -1031,17 +1031,17 @@ public class CheckSign {
 
 		//true:保有期間
 		//false:エントリー回数
-		String column = COLUMN.ENTRYDAY;
+		String column = COLUMN_TBL.ENTRYDAY;
 
 		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
 				+ " where "
-				+ COLUMN.CODE + " = '" + code + "'"
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
 				+ " and "
-				+ COLUMN.TYPE + " = '" + type + "'"
+				+ COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";;
 //				System.out.println(SQL);
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -1081,17 +1081,17 @@ public class CheckSign {
 
 		//true:保有期間
 		//false:エントリー回数
-		String column = COLUMN.ENTRYDAY;
+		String column = COLUMN_TBL.ENTRYDAY;
 
 		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
 				+ " where "
-				+ COLUMN.CODE + " = '" + code + "'"
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
 				+ " and "
-				+ COLUMN.TYPE + " = '" + type + "'"
+				+ COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";;
 //				System.out.println(SQL);
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -1127,26 +1127,26 @@ public class CheckSign {
 		String Lmethod = L_packageName + "." + L_className + "." + L_methodName;
 		String Smethod = S_packageName + "." + S_className + "." + S_methodName;
 
-		String column = COLUMN.ENTRYTIMES + "," + COLUMN.ENTRYDAY + "," + COLUMN.AVERAGEPRICE;
+		String column = COLUMN_TBL.ENTRYTIMES + "," + COLUMN_TBL.ENTRYDAY + "," + COLUMN_TBL.AVERAGEPRICE;
 
 		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
 				+ " where "
-				+ COLUMN.CODE + " = '" + code + "'"
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
 				+ " and "
-				+ COLUMN.TYPE + " = '" + type + "'"
+				+ COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";;
 
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			while(s.rs2.next()){
 
-				resultDTO.setEntryTime(s.rs2.getInt(COLUMN.ENTRYTIMES));
+				resultDTO.setEntryTime(s.rs2.getInt(COLUMN_TBL.ENTRYTIMES));
 //				resultDTO.setKeepCount(s.rs2.getString(COLUMN.ENTRYDAY));
-				resultDTO.setRealStartDay(s.rs2.getString(COLUMN.ENTRYDAY));
-				resultDTO.setRealAveragePrice(s.rs2.getDouble(COLUMN.AVERAGEPRICE));
+				resultDTO.setRealStartDay(s.rs2.getString(COLUMN_TBL.ENTRYDAY));
+				resultDTO.setRealAveragePrice(s.rs2.getDouble(COLUMN_TBL.AVERAGEPRICE));
 			};
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1172,17 +1172,17 @@ public class CheckSign {
 
 		//true:保有期間
 		//false:エントリー回数
-		String column = COLUMN.ENTRYTIMES;
+		String column = COLUMN_TBL.ENTRYTIMES;
 
 		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
 				+ " where "
-				+ COLUMN.CODE + " = '" + code + "'"
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
 				+ " and "
-				+ COLUMN.TYPE + " = '" + type + "'"
+				+ COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";;
 //				System.out.println(SQL);
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);
@@ -1214,15 +1214,15 @@ public class CheckSign {
 
 		//複数行あるレコードのみ抽出
 		//		select code from 95_lastordertbl where entrymethod = 'technique.Technique04.MACD_M_L_OVER0' group by code having count(code) > 1
-		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.LASTORDER
+		String SQL = " select " + COLUMN_TBL.CODE + " from " + TBL_Name.LASTORDER
 				+ " where "
-				+ COLUMN.TYPE + " = '" + type + "'"
+				+ COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'"
-				+ " group by " + COLUMN.CODE
-				+ " having count(" + COLUMN.CODE + ") > 1";
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'"
+				+ " group by " + COLUMN_TBL.CODE
+				+ " having count(" + COLUMN_TBL.CODE + ") > 1";
 
 
 		try {
@@ -1236,9 +1236,9 @@ public class CheckSign {
 				//存在する場合はここを通る。
 				SQL = " delete from " + TBL_Name.LASTORDER
 						+ " where "
-						+ COLUMN.SIGN_FLG + " is true"
+						+ COLUMN_TBL.SIGN_FLG + " is true"
 						+ " and "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " in "
 						+ " ( "
 						+ " select * from "
@@ -1453,12 +1453,12 @@ public class CheckSign {
 	private static void setIntervalTBL(String Lmethod,String Smethod,String type,String code,int maxInterval,S s){
 		String SQL ="insert into " + TBL_Name.INTERVAL_TIME_TBL
 				+ " ( "
-				+ COLUMN.ENTRYMETHOD								 + " , " //
-				+ COLUMN.EXITMETHOD								 	 + " ,  " //
-				+ COLUMN.TYPE									 	 + " , " //
-				+ COLUMN.CODE										 + " , " //
-				+ COLUMN.NOW_INTERVAL								 + " , " //
-				+ COLUMN.MAX_INTERVAL								 + "   " //
+				+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+				+ COLUMN_TBL.EXITMETHOD								 	 + " ,  " //
+				+ COLUMN_TBL.TYPE									 	 + " , " //
+				+ COLUMN_TBL.CODE										 + " , " //
+				+ COLUMN_TBL.NOW_INTERVAL								 + " , " //
+				+ COLUMN_TBL.MAX_INTERVAL								 + "   " //
 				+ " ) value ( "
 				+ "'" + Lmethod + "'"	 + ","
 				+ "'" + Smethod + "'"	 + ","
@@ -1486,7 +1486,7 @@ public class CheckSign {
 		String TBL = TBL_Name.LASTORDER;
 		SQL  = " update "+ TBL
 				+ " set "
-				+ COLUMN.VOLUME_UNIT + " = 100";
+				+ COLUMN_TBL.VOLUME_UNIT + " = 100";
 		s.freeUpdateQuery(SQL);
 
 		//今日の購入株数を計算する
@@ -1519,12 +1519,12 @@ public class CheckSign {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
 				String[] forceDeleteS = new String[5];
-				forceDeleteS[0] = s.rs.getString(	COLUMN.CODE				);
-				forceDeleteS[1] = s.rs.getString(	COLUMN.ENTRYMETHOD		);
-				forceDeleteS[2] = s.rs.getString(	COLUMN.EXITMETHOD		);
-				forceDeleteS[3] = s.rs.getString(	COLUMN.TYPE				);
+				forceDeleteS[0] = s.rs.getString(	COLUMN_TBL.CODE				);
+				forceDeleteS[1] = s.rs.getString(	COLUMN_TBL.ENTRYMETHOD		);
+				forceDeleteS[2] = s.rs.getString(	COLUMN_TBL.EXITMETHOD		);
+				forceDeleteS[3] = s.rs.getString(	COLUMN_TBL.TYPE				);
 				//オールチェックフラグ true全部株、false特定手法のみ
-				if ( s.rs.getString(COLUMN.ALL_CHECK_FLG).equals("1") ){
+				if ( s.rs.getString(COLUMN_TBL.ALL_CHECK_FLG).equals("1") ){
 					forceDeleteS[4] = "true";
 				}else{
 					forceDeleteS[4] = "false";
@@ -1540,16 +1540,16 @@ public class CheckSign {
 			String Where = " where ";
 			if ( sCode[4].equals("true") ){
 				Where	= Where
-						+ COLUMN.CODE		 +	" = '" + sCode[0] + "'";
+						+ COLUMN_TBL.CODE		 +	" = '" + sCode[0] + "'";
 			}else{
 				Where	= Where
-						+ COLUMN.CODE		 +	" = '" + sCode[0] + "'"
+						+ COLUMN_TBL.CODE		 +	" = '" + sCode[0] + "'"
 						+ " and "
-						+ COLUMN.ENTRYMETHOD +	" = '" + sCode[1] + "'"
+						+ COLUMN_TBL.ENTRYMETHOD +	" = '" + sCode[1] + "'"
 						+ " and "
-						+ COLUMN.EXITMETHOD  +	" = '" + sCode[2] + "'"
+						+ COLUMN_TBL.EXITMETHOD  +	" = '" + sCode[2] + "'"
 						+ " and "
-						+ COLUMN.TYPE		 +	" = '" + sCode[3] + "'";
+						+ COLUMN_TBL.TYPE		 +	" = '" + sCode[3] + "'";
 			}
 
 			SQL  = " delete from "+ TBL_Name.LASTORDER
@@ -1567,20 +1567,20 @@ public class CheckSign {
 				while ( s.rs.next() ) {
 					insertSQL ="insert into " + TBL_Name.LASTORDER
 							+ " ( "
-							+ COLUMN.CODE										 + " , " //
-							+ COLUMN.DAYTIME									 + " , " //
-							+ COLUMN.ENTRYMETHOD								 + " , " //
-							+ COLUMN.EXITMETHOD									 + " , "
-							+ COLUMN.TYPE									 	 + " , " ////
-							+ COLUMN.CATE_FLG								 	 + " , " ////
-							+ COLUMN.MINI_CHECK_FLG							 	 + " , " ////
-							+ COLUMN.SIGN_FLG								 	 + "  " ////
+							+ COLUMN_TBL.CODE										 + " , " //
+							+ COLUMN_TBL.DAYTIME									 + " , " //
+							+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+							+ COLUMN_TBL.EXITMETHOD									 + " , "
+							+ COLUMN_TBL.TYPE									 	 + " , " ////
+							+ COLUMN_TBL.CATE_FLG								 	 + " , " ////
+							+ COLUMN_TBL.MINI_CHECK_FLG							 	 + " , " ////
+							+ COLUMN_TBL.SIGN_FLG								 	 + "  " ////
 							+ " ) value ( "
 							+ "'" + sCode[0] + "'"	 + ","
 							+ "'" + TODAY + "'"	 + ","
-							+ "'" + s.rs.getString(	COLUMN.ENTRYMETHOD		) + "'"	 + ","
-							+ "'" + s.rs.getString(	COLUMN.EXITMETHOD		) + "'"	 + ","
-							+ "'" + s.rs.getString(	COLUMN.TYPE				) + "'"	 + ", "
+							+ "'" + s.rs.getString(	COLUMN_TBL.ENTRYMETHOD		) + "'"	 + ","
+							+ "'" + s.rs.getString(	COLUMN_TBL.EXITMETHOD		) + "'"	 + ","
+							+ "'" + s.rs.getString(	COLUMN_TBL.TYPE				) + "'"	 + ", "
 							+ 		"'1'"			 + ","
 							+ " " + " true "+ " "	 + ", "
 							+ " " + " false "+ " "	 + " "
@@ -1620,7 +1620,7 @@ public class CheckSign {
 		String SQL;
 		SQL = "delete from " + TBL_Name.INTERVAL_TIME_TBL
 			+ " where "
-			+ COLUMN.NOW_INTERVAL + " > " + COLUMN.MAX_INTERVAL	;
+			+ COLUMN_TBL.NOW_INTERVAL + " > " + COLUMN_TBL.MAX_INTERVAL	;
 		s.freeUpdateQuery(SQL);
 
 //		+ COLUMN.ENTRYMETHOD_KATA								 + " , " //
@@ -1637,7 +1637,7 @@ public class CheckSign {
 		SQL = " update "
 				+ TBL
 				+ " set "
-				+ COLUMN.NOW_INTERVAL + " = " + COLUMN.NOW_INTERVAL + " + 1";
+				+ COLUMN_TBL.NOW_INTERVAL + " = " + COLUMN_TBL.NOW_INTERVAL + " + 1";
 		try {
 			s.sqlGetter().executeUpdate(SQL);
 		} catch (SQLException e) {

@@ -9,7 +9,7 @@ import proparty.controllDay;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -30,19 +30,19 @@ public class SEPARATE_CHECK {
 
 		//権利付き最終売買日が今日以前のもので分割併合更新がまだのものを探す。
 		String SQL_defo = " select "
-				+ COLUMN.CODE + " , "
-				+ COLUMN.DAYTIME_KENRI_LAST + " , "		//権利付最終売買日。効力は権利付最終日の翌営業日
-				+ COLUMN.AJUSTRATE			+ " , "		//調整レート
-				+ COLUMN.CHECKSEPA_COMBINE	+ "   "		//分割/併合の判断。分割の場合はtrue、併合の場合はfalse
+				+ COLUMN_TBL.CODE + " , "
+				+ COLUMN_TBL.DAYTIME_KENRI_LAST + " , "		//権利付最終売買日。効力は権利付最終日の翌営業日
+				+ COLUMN_TBL.AJUSTRATE			+ " , "		//調整レート
+				+ COLUMN_TBL.CHECKSEPA_COMBINE	+ "   "		//分割/併合の判断。分割の場合はtrue、併合の場合はfalse
 //				+ COLUMN.SEPA_FLG						//分割、併合処理をおえたらここに1を埋める
 				+ " from "
 				+ TBL_Name.SEPARATE_DD
 				+ " where "
 //				+ COLUMN.DAYTIME_KENRI_LAST + " <= '" + commonAP.getTODAY() + "' and "
-				+ COLUMN.DAYTIME_KENRI_LAST + " <= '" + controllDay.getMAX_DD_STOCK_ETF(s) + "' and "
-				+ COLUMN.SEPA_FLG + " is false"
+				+ COLUMN_TBL.DAYTIME_KENRI_LAST + " <= '" + controllDay.getMAX_DD_STOCK_ETF(s) + "' and "
+				+ COLUMN_TBL.SEPA_FLG + " is false"
 				+ " order by "
-				+ COLUMN.DAYTIME_KENRI_LAST;
+				+ COLUMN_TBL.DAYTIME_KENRI_LAST;
 
 
 
@@ -57,7 +57,7 @@ public class SEPARATE_CHECK {
 				String enXan_1="";
 				String enXan_2="";
 				//分割の場合はtrue、併合の場合はfalse
-				if (s.rs.getBoolean(COLUMN.CHECKSEPA_COMBINE)){
+				if (s.rs.getBoolean(COLUMN_TBL.CHECKSEPA_COMBINE)){
 					//分割。過去の株価を安くする。
 					enXan_1=" / ";
 					//出来高
@@ -68,21 +68,21 @@ public class SEPARATE_CHECK {
 					//出来高
 					enXan_2=" / ";
 				}
-				double RATE=s.rs.getDouble(COLUMN.AJUSTRATE);
+				double RATE=s.rs.getDouble(COLUMN_TBL.AJUSTRATE);
 
 
 				//				System.out.println(s.rs.getString(COLUMN.DAYTIME_KENRI_LAST)  + ":" + s.rs.getString(COLUMN.CODE));
 				//証券コード
-				String code_4 = s.rs.getString(COLUMN.CODE);
-				String day_kenri_last = s.rs.getString(COLUMN.DAYTIME_KENRI_LAST);
+				String code_4 = s.rs.getString(COLUMN_TBL.CODE);
+				String day_kenri_last = s.rs.getString(COLUMN_TBL.DAYTIME_KENRI_LAST);
 
 				SQL	= " select "
-						+ COLUMN.CODE + ""
+						+ COLUMN_TBL.CODE + ""
 						+ " from "
 						+ TBL_Name.CODELISTTBL
 						+ " where "
 //						+ "left(" + COLUMN.CODE + ",4) = '" + s.rs.getString(COLUMN.CODE) + "'";
-						+ COLUMN.CODE + " = '" + s.rs.getString(COLUMN.CODE) + "'";
+						+ COLUMN_TBL.CODE + " = '" + s.rs.getString(COLUMN_TBL.CODE) + "'";
 
 				s.rs = s.sqlGetter().executeQuery(SQL);
 				//リストの中から一致するコードを探す。
@@ -90,33 +90,33 @@ public class SEPARATE_CHECK {
 				ArrayList<String> codeList = new ArrayList<String>();
 				while ( s.rs.next() ) {
 					//証券コード+市場
-					codeList.add(	s.rs.getString(COLUMN.CODE)	);
+					codeList.add(	s.rs.getString(COLUMN_TBL.CODE)	);
 				}
 
 				for( int i = 0; i < codeList.size(); i++) {
 					//権利付最終売買日以前の株価などを更新する。効力は権利付最終日の翌営業日から発生するため。
 					SQL = " update " + TBL_Name.STOCK_DD
 							+ " set "
-							+ getColumnSEPA(COLUMN.OPEN		,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.MAX		,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.MIN		,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.CLOSE	,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.DEKI		,	RATE,	enXan_2) + "  "
+							+ getColumnSEPA(COLUMN_TBL.OPEN		,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN_TBL.MAX		,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN_TBL.MIN		,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN_TBL.CLOSE	,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN_TBL.DEKI		,	RATE,	enXan_2) + "  "
 							+ " where "
-							+ COLUMN.DAYTIME + " <= '" + day_kenri_last + "'"
+							+ COLUMN_TBL.DAYTIME + " <= '" + day_kenri_last + "'"
 							+ " and "
-							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
+							+ COLUMN_TBL.CODE + " = '" + codeList.get(i) + "'";
 
 					s.freeUpdateQuery(SQL);
 
 					//キープテーブルの更新をする。
 					SQL = " update " + TBL_Name.KEEPLISTTBL
 							+ " set "
-							+ getColumnSEPA(COLUMN.AVERAGEPRICE			,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.IDEA_AVERAGEPRICE	,	RATE,	enXan_1) + " , "
-							+ getColumnSEPA(COLUMN.REAL_AVERAGEPRICE	,	RATE,	enXan_1) + "  "
+							+ getColumnSEPA(COLUMN_TBL.AVERAGEPRICE			,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN_TBL.IDEA_AVERAGEPRICE	,	RATE,	enXan_1) + " , "
+							+ getColumnSEPA(COLUMN_TBL.REAL_AVERAGEPRICE	,	RATE,	enXan_1) + "  "
 							+ " where "
-							+ COLUMN.CODE + " = '" + codeList.get(i) + "'";
+							+ COLUMN_TBL.CODE + " = '" + codeList.get(i) + "'";
 					commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 					s.freeUpdateQuery(SQL);
 
@@ -127,9 +127,9 @@ public class SEPARATE_CHECK {
 								+ " from "
 								+ TBL_Name.STOCK_DD
 								+ " where "
-								+ COLUMN.CODE + " = '" + codeList.get(i) + "'"
+								+ COLUMN_TBL.CODE + " = '" + codeList.get(i) + "'"
 								+ " and "
-								+ COLUMN.DAYTIME + " > '" + day_kenri_last + "'"
+								+ COLUMN_TBL.DAYTIME + " > '" + day_kenri_last + "'"
 								+ " limit 0,4 ";
 
 
@@ -139,12 +139,12 @@ public class SEPARATE_CHECK {
 						s.rs = s.sqlGetter().executeQuery(SQL);
 						while ( s.rs.next() ) {
 
-							  if (s.rs.getString(COLUMN.BEFORE_OPEN).equals(s.rs.getString(COLUMN.BEFORE_MAX))){
-								  if (s.rs.getString(COLUMN.BEFORE_MIN).equals(s.rs.getString(COLUMN.BEFORE_CLOSE))){
-									  if (s.rs.getString(COLUMN.BEFORE_MIN).equals(s.rs.getString(COLUMN.BEFORE_MAX))){
-										  if (s.rs.getString(COLUMN.BEFORE_DEKI).equals(s.rs.getString(COLUMN.BEFORE_BAYBAY))){
-											  if (s.rs.getString(COLUMN.BEFORE_DEKI).equals(("0"))){
-												  dayList.add(s.rs.getString(COLUMN.DAYTIME));
+							  if (s.rs.getString(COLUMN_TBL.BEFORE_OPEN).equals(s.rs.getString(COLUMN_TBL.BEFORE_MAX))){
+								  if (s.rs.getString(COLUMN_TBL.BEFORE_MIN).equals(s.rs.getString(COLUMN_TBL.BEFORE_CLOSE))){
+									  if (s.rs.getString(COLUMN_TBL.BEFORE_MIN).equals(s.rs.getString(COLUMN_TBL.BEFORE_MAX))){
+										  if (s.rs.getString(COLUMN_TBL.BEFORE_DEKI).equals(s.rs.getString(COLUMN_TBL.BEFORE_BAYBAY))){
+											  if (s.rs.getString(COLUMN_TBL.BEFORE_DEKI).equals(("0"))){
+												  dayList.add(s.rs.getString(COLUMN_TBL.DAYTIME));
 												  checkDelete++;
 											  }
 										  }
@@ -160,11 +160,11 @@ public class SEPARATE_CHECK {
 							SQL = " delete from "
 								+ TBL_Name.STOCK_DD
 								+ " where "
-								+ COLUMN.CODE + " = '" + codeList.get(i) + "'"
+								+ COLUMN_TBL.CODE + " = '" + codeList.get(i) + "'"
 								+ " and "
-								+ COLUMN.DAYTIME + " >= '" + dayList.get(0) + "'"
+								+ COLUMN_TBL.DAYTIME + " >= '" + dayList.get(0) + "'"
 								+ " and "
-								+ COLUMN.DAYTIME + " <= '" + dayList.get(3) + "'";
+								+ COLUMN_TBL.DAYTIME + " <= '" + dayList.get(3) + "'";
 							commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 							s.freeUpdateQuery(SQL);
 						}
@@ -202,13 +202,13 @@ public class SEPARATE_CHECK {
 	public static void updateSEPAFLG(String code,String DAY,S s){
 		String SQL	= " update " + TBL_Name.SEPARATE_DD
 					+ " set "
-					+ COLUMN.SEPA_FLG + " = true "
+					+ COLUMN_TBL.SEPA_FLG + " = true "
 					+ " where "
-					+ COLUMN.DAYTIME_KENRI_LAST + " = '" + DAY + "'"
+					+ COLUMN_TBL.DAYTIME_KENRI_LAST + " = '" + DAY + "'"
 					+ " and "
-					+ COLUMN.CODE + " = '" + code + "'"
+					+ COLUMN_TBL.CODE + " = '" + code + "'"
 					+ " and "
-					+ COLUMN.SEPA_FLG + " is false";
+					+ COLUMN_TBL.SEPA_FLG + " is false";
 		commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 	}
@@ -244,14 +244,14 @@ public class SEPARATE_CHECK {
 
 
 		String SQL	= " select "
-				+ COLUMN.CODE + ","
-				+ COLUMN.DAYTIME
+				+ COLUMN_TBL.CODE + ","
+				+ COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL_Name.STOCK_DD
 				+ " where "
-				+ COLUMN.CODE + " = '" + code + "'"
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
 				+ " order by "
-				+ COLUMN.DAYTIME;
+				+ COLUMN_TBL.DAYTIME;
 		try {
 
 			s.rs = s.sqlGetter().executeQuery(SQL);
@@ -260,10 +260,10 @@ public class SEPARATE_CHECK {
 
 				codeSeparate = new String[4];
 				//コード
-				codeSeparate[0]		=	s.rs.getString(COLUMN.CODE);
+				codeSeparate[0]		=	s.rs.getString(COLUMN_TBL.CODE);
 
 				//日付
-				codeSeparate[1]		=	s.rs.getString(COLUMN.DAYTIME);
+				codeSeparate[1]		=	s.rs.getString(COLUMN_TBL.DAYTIME);
 
 //				System.out.println("code:" + codeSeparate[0]);
 //				System.out.println("day:" + codeSeparate[1]);

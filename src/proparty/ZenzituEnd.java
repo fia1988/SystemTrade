@@ -3,7 +3,7 @@ package proparty;
 import java.sql.SQLException;
 
 import accesarrySQL.SQLChecker;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 
 public class ZenzituEnd {
 
@@ -11,7 +11,7 @@ public class ZenzituEnd {
 		String price = "0";
 		String SQL;
 
-		String column = COLUMN.CLOSE;
+		String column = COLUMN_TBL.CLOSE;
 //		if (cate.equals(ReCord.CODE_01_STOCK)){
 //			column = COLUMN.BEFORE_CLOSE;
 //		}
@@ -19,8 +19,8 @@ public class ZenzituEnd {
 		SQL = "select "
 			+ column
 			+ " from " + SQLChecker.getTBL(cate)
-			+ " where "		   + COLUMN.CODE + " = '" + Code + "'"
-			+ " order by "	   + COLUMN.DAYTIME
+			+ " where "		   + COLUMN_TBL.CODE + " = '" + Code + "'"
+			+ " order by "	   + COLUMN_TBL.DAYTIME
 			+ " desc "
 			+ " limit 1";
 		

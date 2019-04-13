@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class SQLChecker {
@@ -15,16 +15,16 @@ public class SQLChecker {
 		String SQL = "";
 
 		//ここでテーブル指定
-		SQL = "select " + COLUMN.DAYTIME
+		SQL = "select " + COLUMN_TBL.DAYTIME
 			+ " from "
 			+ getTBL(cate)
 			+ " where "
-			+ COLUMN.CODE
+			+ COLUMN_TBL.CODE
 			+ " ='" + code + "'"
 			+ " and "
-			+ COLUMN.DAYTIME
+			+ COLUMN_TBL.DAYTIME
 			+ " <= '" + dayTime + "'"
-			+ " order by "	   + COLUMN.DAYTIME
+			+ " order by "	   + COLUMN_TBL.DAYTIME
 			+ " desc "
 			+ " limit " + ( Term - 1 ) + "," + 1;
 
@@ -61,17 +61,17 @@ public class SQLChecker {
 	public static String getCate(String code,S s){
 
 		String SQL = " select "
-					+ COLUMN.CATE_FLG
+					+ COLUMN_TBL.CATE_FLG
 					+ " from "
 					+ TBL_Name.CODELISTTBL
 					+ " where "
-					+ COLUMN.CODE + " = '"+ code + "'";
+					+ COLUMN_TBL.CODE + " = '"+ code + "'";
 
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			if (s.rs.next()){
-				return s.rs.getString(	COLUMN.CATE_FLG	);
+				return s.rs.getString(	COLUMN_TBL.CATE_FLG	);
 			}else{
 				//コードリストにない場合の処理。とりあえず1を返す
 				return ReCord.CODE_01_STOCK;
@@ -141,9 +141,9 @@ public class SQLChecker {
 			SQL = " select * from "
 				+ TBL_Name.STOCK_DD
 				+ " where "
-				+ COLUMN.CODE + " = '"+ code + "'"
+				+ COLUMN_TBL.CODE + " = '"+ code + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+				+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 
 			break;
 
@@ -151,18 +151,18 @@ public class SQLChecker {
 			SQL = " select * from "
 					+ TBL_Name.STATISTICS_DD
 					+ " where "
-					+ COLUMN.CODE + " = '"+ code + "'"
+					+ COLUMN_TBL.CODE + " = '"+ code + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+					+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 			break;
 
 		case ReCord.CODE_03_INDEX:
 			SQL = " select * from "
 					+ TBL_Name.INDEX_DD
 					+ " where "
-					+ COLUMN.CODE + " = '"+ code + "'"
+					+ COLUMN_TBL.CODE + " = '"+ code + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+					+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 
 			break;
 
@@ -170,27 +170,27 @@ public class SQLChecker {
 			SQL = " select * from "
 					+ TBL_Name.ETF_DD
 					+ " where "
-					+ COLUMN.CODE + " = '"+ code + "'"
+					+ COLUMN_TBL.CODE + " = '"+ code + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+					+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 			break;
 
 		case ReCord.CODE_05_SAKIMONO:
 			SQL = " select * from "
 					+ TBL_Name.SAKIMONO_DD
 					+ " where "
-					+ COLUMN.CODE + " = '"+ code + "'"
+					+ COLUMN_TBL.CODE + " = '"+ code + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+					+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 			break;
 
 		case ReCord.CODE_06_CURRENCY:
 			SQL = " select * from "
 					+ TBL_Name.CURRENCY_DD
 					+ " where "
-					+ COLUMN.CODE + " = '"+ code + "'"
+					+ COLUMN_TBL.CODE + " = '"+ code + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+					+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 			break;
 
 		default:

@@ -6,7 +6,7 @@ import proparty.TBL_Name;
 import common.commonAP;
 
 import constant.AccesarryParameta;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -27,19 +27,19 @@ public class CalculateCAPM {
 				+ TBL_Name.ETF_DD				 + " as A ,"
 				+ TBL							 + " as B "
 			+ " set "
-				+ " B." + COLUMN.NT_RATIO
+				+ " B." + COLUMN_TBL.NT_RATIO
 				+ " = "
-				+ " A." + COLUMN.CLOSE + " / " + " B." + COLUMN.CLOSE
+				+ " A." + COLUMN_TBL.CLOSE + " / " + " B." + COLUMN_TBL.CLOSE
 			+ " where "
-					+ " B." + COLUMN.CODE + " = " + "'" + ReCord.MARKET_CODE_1306 + "'"
+					+ " B." + COLUMN_TBL.CODE + " = " + "'" + ReCord.MARKET_CODE_1306 + "'"
 				+ " and "
-					+ " A." + COLUMN.CODE + " = " + "'" + ReCord.NIKKEI225_CODE_1321 + "'"
+					+ " A." + COLUMN_TBL.CODE + " = " + "'" + ReCord.NIKKEI225_CODE_1321 + "'"
 				+ " and "
-					+ " B." + COLUMN.DAYTIME
+					+ " B." + COLUMN_TBL.DAYTIME
 					+ " = "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 				+ " and "
-					+ " A." + COLUMN.DAYTIME + " = " + "'" + TODAY + "'";
+					+ " A." + COLUMN_TBL.DAYTIME + " = " + "'" + TODAY + "'";
 		commonAP.writeInLog(TBL + "NT倍率の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
@@ -50,11 +50,11 @@ public class CalculateCAPM {
 //		SQL = calculateSQL_1(TBL,TODAY,beforeDay,COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
 //		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 //		s.freeUpdateQuery(SQL);
-		SQL = calculateSQL_2(TBL,TODAY,beforeDay,COLUMN.MARKET_RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.MARKET_RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",true);
+		SQL = calculateSQL_2(TBL,TODAY,beforeDay,COLUMN_TBL.MARKET_RETURN_FOR_BETA,COLUMN_TBL.CHANGERATE,"avg",COLUMN_TBL.MARKET_RISK_FOR_BETA,COLUMN_TBL.CHANGERATE,"STDDEV_SAMP",true);
 		commonAP.writeInLog(TBL + "のリターン、標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
-		persentUpdate(TBL,COLUMN.MARKET_RETURN_FOR_BETA,TODAY,s);
-		persentUpdate(TBL,COLUMN.MARKET_RISK_FOR_BETA,TODAY,s);
+		persentUpdate(TBL,COLUMN_TBL.MARKET_RETURN_FOR_BETA,TODAY,s);
+		persentUpdate(TBL,COLUMN_TBL.MARKET_RISK_FOR_BETA,TODAY,s);
 
 
 //		+ COLUMN.MARKET_RISK_PREMIUM_KATA					 + " , "
@@ -62,23 +62,23 @@ public class CalculateCAPM {
 		//リスクフリーレートは0.8/245%とする。
 		SQL = " update " + TBL
 			+ " set "
-			+ COLUMN.MARKET_RISK_Squaring_FOR_BETA + " = " + COLUMN.MARKET_RISK_FOR_BETA + " * " + COLUMN.MARKET_RISK_FOR_BETA + " , "
-			+ COLUMN.RISK_FREE_RATE + " = " + AccesarryParameta.RISK_FREE_RATE
+			+ COLUMN_TBL.MARKET_RISK_Squaring_FOR_BETA + " = " + COLUMN_TBL.MARKET_RISK_FOR_BETA + " * " + COLUMN_TBL.MARKET_RISK_FOR_BETA + " , "
+			+ COLUMN_TBL.RISK_FREE_RATE + " = " + AccesarryParameta.RISK_FREE_RATE
 			+ " where "
-			+ COLUMN.DAYTIME + " = "+ "'" +  TODAY + "'"
+			+ COLUMN_TBL.DAYTIME + " = "+ "'" +  TODAY + "'"
 			+ " and "
-			+ COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
+			+ COLUMN_TBL.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
 		commonAP.writeInLog(TBL + "の分散、リスクフリーレート計算(" + AccesarryParameta.RISK_FREE_RATE + ")：" + SQL,logWriting.DATEDATE_LOG_FLG);
 
 		s.freeUpdateQuery(SQL);
 		//マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）
 		SQL = " update " + TBL
 				+ " set "
-				+ COLUMN.MARKET_RISK_PREMIUM + " = " + COLUMN.MARKET_RETURN_FOR_BETA + " - " + COLUMN.RISK_FREE_RATE + "  "
+				+ COLUMN_TBL.MARKET_RISK_PREMIUM + " = " + COLUMN_TBL.MARKET_RETURN_FOR_BETA + " - " + COLUMN_TBL.RISK_FREE_RATE + "  "
 				+ " where "
-				+ COLUMN.DAYTIME + " = "+ "'" +  TODAY + "'"
+				+ COLUMN_TBL.DAYTIME + " = "+ "'" +  TODAY + "'"
 				+ " and "
-				+ COLUMN.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
+				+ COLUMN_TBL.CODE + " = " + "'" +  ReCord.MARKET_CODE_1306 + "'";
 		commonAP.writeInLog(TBL + "マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
@@ -97,10 +97,10 @@ public class CalculateCAPM {
 //		commonAP.writeInLog(TBL + "NT倍率の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 //		s.freeUpdateQuery(SQL);
 		SQL = calculateSQL_4(TBL,TODAY,beforeDay,
-				COLUMN.MARKET_RETURN_FOR_BETA_AVE,COLUMN.MARKET_RETURN_FOR_BETA,"avg",
-				COLUMN.MARKET_RISK_FOR_BETA_AVE,COLUMN.MARKET_RISK_FOR_BETA,"avg",
-				COLUMN.MARKET_RISK_PREMIUM_AVE,COLUMN.MARKET_RISK_PREMIUM,"avg",
-				COLUMN.NT_RATIO_AVE,COLUMN.NT_RATIO,"avg",
+				COLUMN_TBL.MARKET_RETURN_FOR_BETA_AVE,COLUMN_TBL.MARKET_RETURN_FOR_BETA,"avg",
+				COLUMN_TBL.MARKET_RISK_FOR_BETA_AVE,COLUMN_TBL.MARKET_RISK_FOR_BETA,"avg",
+				COLUMN_TBL.MARKET_RISK_PREMIUM_AVE,COLUMN_TBL.MARKET_RISK_PREMIUM,"avg",
+				COLUMN_TBL.NT_RATIO_AVE,COLUMN_TBL.NT_RATIO,"avg",
 				true);
 		commonAP.writeInLog(TBL + "リターンの平均、標準偏差平均、マーケットリスクプレミアムの更新、NT倍率の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
@@ -135,19 +135,19 @@ public class CalculateCAPM {
 				+ TBL_Name.INVEST_SIHYO_DD_TBL	 + " as A ,"
 				+ TBL							 + " as B "
 			+ " set "
-				+ " B." + COLUMN.DIVIDEND_PER
+				+ " B." + COLUMN_TBL.DIVIDEND_PER
 				+ " = "
-				+ " (A." + COLUMN.DIVIDEND_PER + "/245) "
+				+ " (A." + COLUMN_TBL.DIVIDEND_PER + "/245) "
 			+ " where "
-					+ " B." + COLUMN.CODE
+					+ " B." + COLUMN_TBL.CODE
 					+ " = "
-					+ " A." + COLUMN.CODE
+					+ " A." + COLUMN_TBL.CODE
 				+ " and "
-					+ " B." + COLUMN.DAYTIME
+					+ " B." + COLUMN_TBL.DAYTIME
 					+ " = "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 				+ " and "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 					+ " = " + "'" + TODAY + "'";
 		commonAP.writeInLog(TBL + "配当のセット。ただしこれは日単位にアジャストする（245で割る）：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
@@ -162,18 +162,18 @@ public class CalculateCAPM {
 //		commonAP.writeInLog(TBL + "の標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 //		s.freeUpdateQuery(SQL);
 
-		SQL = calculateSQL_2(TBL,TODAY,beforeDay,COLUMN.RETURN_FOR_BETA,COLUMN.CHANGERATE,"avg",COLUMN.RISK_FOR_BETA,COLUMN.CHANGERATE,"STDDEV_SAMP",false);
+		SQL = calculateSQL_2(TBL,TODAY,beforeDay,COLUMN_TBL.RETURN_FOR_BETA,COLUMN_TBL.CHANGERATE,"avg",COLUMN_TBL.RISK_FOR_BETA,COLUMN_TBL.CHANGERATE,"STDDEV_SAMP",false);
 		commonAP.writeInLog(TBL + "リターン、標準偏差の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
-		persentUpdate(TBL,COLUMN.RETURN_FOR_BETA,TODAY,s);
-		persentUpdate(TBL,COLUMN.RISK_FOR_BETA,TODAY,s);
+		persentUpdate(TBL,COLUMN_TBL.RETURN_FOR_BETA,TODAY,s);
+		persentUpdate(TBL,COLUMN_TBL.RISK_FOR_BETA,TODAY,s);
 
 		//分散の計算
 		SQL = " update " + TBL
 			+ " set "
-			+ COLUMN.RISK_Squaring_FOR_BETA + " = " + COLUMN.RISK_FOR_BETA + " * " + COLUMN.RISK_FOR_BETA + "  "
+			+ COLUMN_TBL.RISK_Squaring_FOR_BETA + " = " + COLUMN_TBL.RISK_FOR_BETA + " * " + COLUMN_TBL.RISK_FOR_BETA + "  "
 			+ " where "
-			+ COLUMN.DAYTIME + " = "+ "'" +  TODAY + "'";
+			+ COLUMN_TBL.DAYTIME + " = "+ "'" +  TODAY + "'";
 		commonAP.writeInLog(TBL + "の分散：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 		
@@ -195,10 +195,10 @@ public class CalculateCAPM {
 //		s.freeUpdateQuery(SQL);
 
 		SQL = calculateSQL_4(TBL,TODAY,beforeDay,
-				COLUMN.RETURN_FOR_BETA_AVE,COLUMN.RETURN_FOR_BETA,"avg",
-				COLUMN.RISK_FOR_BETA_AVE,COLUMN.RISK_FOR_BETA,"avg",
-				COLUMN.CAPM_AVE,COLUMN.CAPM,"avg",
-				COLUMN.Certainty_FOR_BETA_AVE,COLUMN.Certainty_FOR_BETA,"avg",
+				COLUMN_TBL.RETURN_FOR_BETA_AVE,COLUMN_TBL.RETURN_FOR_BETA,"avg",
+				COLUMN_TBL.RISK_FOR_BETA_AVE,COLUMN_TBL.RISK_FOR_BETA,"avg",
+				COLUMN_TBL.CAPM_AVE,COLUMN_TBL.CAPM,"avg",
+				COLUMN_TBL.Certainty_FOR_BETA_AVE,COLUMN_TBL.Certainty_FOR_BETA,"avg",
 				true);
 		commonAP.writeInLog(TBL + "リターン、標準偏差、CAPM、確実性の平均：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
@@ -220,26 +220,26 @@ public class CalculateCAPM {
 		String SQL = " ";
 		SQL = " update " + stockTBL + " a , " + marketTBL + " b , "
 				+ " ( "
-					+ " select " + stockTBL + "." + COLUMN.CODE + " , "
+					+ " select " + stockTBL + "." + COLUMN_TBL.CODE + " , "
 						+ " ( "
-							+ " avg(" + stockTBL + "." + COLUMN.RETURN_FOR_BETA + " * " + marketTBL + "." + COLUMN.MARKET_RETURN_FOR_BETA + ")"
+							+ " avg(" + stockTBL + "." + COLUMN_TBL.RETURN_FOR_BETA + " * " + marketTBL + "." + COLUMN_TBL.MARKET_RETURN_FOR_BETA + ")"
 								+ " - "
-							+ " avg(" + stockTBL + "." + COLUMN.RETURN_FOR_BETA + ") * avg(" + marketTBL + "." + COLUMN.MARKET_RETURN_FOR_BETA + ")"
+							+ " avg(" + stockTBL + "." + COLUMN_TBL.RETURN_FOR_BETA + ") * avg(" + marketTBL + "." + COLUMN_TBL.MARKET_RETURN_FOR_BETA + ")"
 						+ " )  as dummycolumn "
-					+ " from " + marketTBL + " left outer join " + stockTBL + " on " + stockTBL + "." + COLUMN.DAYTIME + " = " + marketTBL + "." + COLUMN.DAYTIME
+					+ " from " + marketTBL + " left outer join " + stockTBL + " on " + stockTBL + "." + COLUMN_TBL.DAYTIME + " = " + marketTBL + "." + COLUMN_TBL.DAYTIME
 					+ " where "
-						+ marketTBL + "." + COLUMN.DAYTIME + " <= '" + TODAY + "'"
+						+ marketTBL + "." + COLUMN_TBL.DAYTIME + " <= '" + TODAY + "'"
 						+ " and "
-						+ marketTBL + "." + COLUMN.DAYTIME + " >= '" + beforeDay + "'"
-					+ " group by " + stockTBL + "." + COLUMN.CODE
+						+ marketTBL + "." + COLUMN_TBL.DAYTIME + " >= '" + beforeDay + "'"
+					+ " group by " + stockTBL + "." + COLUMN_TBL.CODE
 				+ " ) c "
 			+ " set "
-				+ " a." + COLUMN.COVAR_with_TOPIX + " = "
+				+ " a." + COLUMN_TBL.COVAR_with_TOPIX + " = "
 				+ " c.dummycolumn "
 			+ " where "
-				+ " a." + COLUMN.CODE + " = "+ " c." + COLUMN.CODE
+				+ " a." + COLUMN_TBL.CODE + " = "+ " c." + COLUMN_TBL.CODE
 				+ " and "
-				+ " a." + COLUMN.DAYTIME + " = '" + TODAY + "'";
+				+ " a." + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";
 
 		commonAP.writeInLog("共分散の計算：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
@@ -250,18 +250,18 @@ public class CalculateCAPM {
 				+ stockTBL	 + " as A ,"
 				+ marketTBL	 + " as B "
 			+ " set "
-				+ " A." + COLUMN.BETA
+				+ " A." + COLUMN_TBL.BETA
 				+ " = "
-				+ " (A." + COLUMN.COVAR_with_TOPIX + " / " + " B." + COLUMN.MARKET_RISK_Squaring_FOR_BETA + " ) , "
-				+ " A." + COLUMN.Certainty_FOR_BETA
+				+ " (A." + COLUMN_TBL.COVAR_with_TOPIX + " / " + " B." + COLUMN_TBL.MARKET_RISK_Squaring_FOR_BETA + " ) , "
+				+ " A." + COLUMN_TBL.Certainty_FOR_BETA
 				+ " = "
-				+ " (A." + COLUMN.COVAR_with_TOPIX + " / ( " + " B." + COLUMN.MARKET_RISK_FOR_BETA + " * A." + COLUMN.RISK_FOR_BETA + " ) )  "
+				+ " (A." + COLUMN_TBL.COVAR_with_TOPIX + " / ( " + " B." + COLUMN_TBL.MARKET_RISK_FOR_BETA + " * A." + COLUMN_TBL.RISK_FOR_BETA + " ) )  "
 			+ " where "
-					+ " B." + COLUMN.DAYTIME
+					+ " B." + COLUMN_TBL.DAYTIME
 					+ " = "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 				+ " and "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 					+ " = " + "'" + TODAY + "'";
 		commonAP.writeInLog(stockTBL + "のベータとベータの確実度セット：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
@@ -271,15 +271,15 @@ public class CalculateCAPM {
 				+ stockTBL	 + " as A ,"
 				+ marketTBL	 + " as B "
 			+ " set "
-				+ " A." + COLUMN.CAPM
+				+ " A." + COLUMN_TBL.CAPM
 				+ " = "
-				+ " (B." + COLUMN.RISK_FREE_RATE + " + ( A." + COLUMN.BETA + " * B." + COLUMN.MARKET_RISK_PREMIUM + "  ) ) "
+				+ " (B." + COLUMN_TBL.RISK_FREE_RATE + " + ( A." + COLUMN_TBL.BETA + " * B." + COLUMN_TBL.MARKET_RISK_PREMIUM + "  ) ) "
 			+ " where "
-					+ " B." + COLUMN.DAYTIME
+					+ " B." + COLUMN_TBL.DAYTIME
 					+ " = "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 				+ " and "
-					+ " A." + COLUMN.DAYTIME
+					+ " A." + COLUMN_TBL.DAYTIME
 					+ " = " + "'" + TODAY + "'";
 		commonAP.writeInLog(stockTBL + "CAPMセット：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
@@ -303,21 +303,21 @@ public class CalculateCAPM {
 		SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
 				+ " ( "
 				+ " select "
-				+ COLUMN.CODE + " , "
+				+ COLUMN_TBL.CODE + " , "
 				+ " " + calculateLetter +  "(" + calculateColumn + ") as " + dummyCOLUMN + "  "
 				+ " from " + TBL
 				+ " where "
-				+ COLUMN.DAYTIME + " <= " + "'" + TODAY + "'"
+				+ COLUMN_TBL.DAYTIME + " <= " + "'" + TODAY + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
-				+ " group by "+ COLUMN.CODE
+				+ COLUMN_TBL.DAYTIME + " >= " + "'" + beforeDay + "'"
+				+ " group by "+ COLUMN_TBL.CODE
 				+ " )  " + selectLetter
 		+ " set "
 				+ updateLetter + "." + updateColumn	 + " = " + selectLetter + "." + dummyCOLUMN + "   "
 		+ " where "
-				+ updateLetter + "." + COLUMN.CODE + " = "+ selectLetter + "." + COLUMN.CODE
+				+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ updateLetter + "." + COLUMN.DAYTIME + " = " + "'" +  TODAY + "'";
+				+ updateLetter + "." + COLUMN_TBL.DAYTIME + " = " + "'" +  TODAY + "'";
 
 		if (marketFLG){
 //			SQL = SQL+ " and "
@@ -340,23 +340,23 @@ public class CalculateCAPM {
 		SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
 				+ " ( "
 				+ " select "
-				+ COLUMN.CODE + " , "
+				+ COLUMN_TBL.CODE + " , "
 				+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
 				+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + "   "
 				+ " from " + TBL
 				+ " where "
-				+ COLUMN.DAYTIME + " <= " + "'" + TODAY + "'"
+				+ COLUMN_TBL.DAYTIME + " <= " + "'" + TODAY + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
-				+ " group by "+ COLUMN.CODE
+				+ COLUMN_TBL.DAYTIME + " >= " + "'" + beforeDay + "'"
+				+ " group by "+ COLUMN_TBL.CODE
 				+ " )  " + selectLetter
 				+ " set "
 				+ updateLetter + "." + updateColumn1	 + " = " + selectLetter + "." + dummyCOLUMN_1 + " ,  "
 				+ updateLetter + "." + updateColumn2	 + " = " + selectLetter + "." + dummyCOLUMN_2 + "    "
 				+ " where "
-				+ updateLetter + "." + COLUMN.CODE + " = "+ selectLetter + "." + COLUMN.CODE
+				+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ updateLetter + "." + COLUMN.DAYTIME + " = " + "'" +  TODAY + "'";
+				+ updateLetter + "." + COLUMN_TBL.DAYTIME + " = " + "'" +  TODAY + "'";
 
 		if (marketFLG){
 			//				SQL = SQL+ " and "
@@ -383,17 +383,17 @@ public class CalculateCAPM {
 		SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
 				+ " ( "
 				+ " select "
-				+ COLUMN.CODE + " , "
+				+ COLUMN_TBL.CODE + " , "
 				+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
 				+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + " , "
 				+ " " + calculateLetter3 +  "(" + calculateColumn3 + ") as " + dummyCOLUMN_3 + " , "
 				+ " " + calculateLetter4 +  "(" + calculateColumn4 + ") as " + dummyCOLUMN_4 + "  "
 				+ " from " + TBL
 				+ " where "
-				+ COLUMN.DAYTIME + " <= " + "'" + TODAY + "'"
+				+ COLUMN_TBL.DAYTIME + " <= " + "'" + TODAY + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " >= " + "'" + beforeDay + "'"
-				+ " group by "+ COLUMN.CODE
+				+ COLUMN_TBL.DAYTIME + " >= " + "'" + beforeDay + "'"
+				+ " group by "+ COLUMN_TBL.CODE
 				+ " )  " + selectLetter
 		+ " set "
 				+ updateLetter + "." + updateColumn1	 + " = " + selectLetter + "." + dummyCOLUMN_1 + " ,  "
@@ -401,9 +401,9 @@ public class CalculateCAPM {
 				+ updateLetter + "." + updateColumn3	 + " = " + selectLetter + "." + dummyCOLUMN_3 + " ,  "
 				+ updateLetter + "." + updateColumn4	 + " = " + selectLetter + "." + dummyCOLUMN_4 + "   "
 		+ " where "
-				+ updateLetter + "." + COLUMN.CODE + " = "+ selectLetter + "." + COLUMN.CODE
+				+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ updateLetter + "." + COLUMN.DAYTIME + " = " + "'" +  TODAY + "'";
+				+ updateLetter + "." + COLUMN_TBL.DAYTIME + " = " + "'" +  TODAY + "'";
 
 		if (marketFLG){
 //			SQL = SQL+ " and "
@@ -421,7 +421,7 @@ public class CalculateCAPM {
 				+ " set "
 				+ column + " = " + column + " * 100 "
 				+ " where "
-				+ COLUMN.DAYTIME + " = '" + dayTime + "'";
+				+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
 
 		s.freeUpdateQuery(SQL);
 	}

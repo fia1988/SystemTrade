@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import proparty.S;
 import proparty.TBL_Name;
 import constant.AccesarryParameta;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class Sigma{
@@ -45,13 +45,13 @@ public class Sigma{
 	//個別銘柄・・・1
 	private static void setSigma_1_Stock(String code,String TBL,String dayTime,S s){
 		//短
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
 
 		//中
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s);
 
 		//長
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN.CLOSE),AccesarryParameta.SIGMA_LONG ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_LONG ,s);
 	}
 
 	//統計・・・2
@@ -62,21 +62,21 @@ public class Sigma{
 	//指数・・・3
 	private static void setSigma_3_Index(String code,String TBL,String dayTime,S s){
 		//短
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
 		//中
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s);
 		//長
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN.CLOSE),AccesarryParameta.SIGMA_LONG ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_LONG ,s);
 	}
 
 	//ETF・・・4
 	private static void setSigma_4_ETF(String code,String TBL,String dayTime,S s){
 		//短
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
 		//中
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s);
 		//長
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN.CLOSE),AccesarryParameta.SIGMA_LONG ,s);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_LONG ,s);
 	}
 
 	//先物・・・5
@@ -102,13 +102,13 @@ public class Sigma{
 		//今日の価格
 //		double now = 0;
 
-		SQL = "select "  + COLUMN.DAYTIME
+		SQL = "select "  + COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
 
@@ -117,7 +117,7 @@ public class Sigma{
 			//trueならレコードが存在する。
 			if(s.rs.next()==true){
 
-				String start = s.rs.getString((COLUMN.DAYTIME)) ;
+				String start = s.rs.getString((COLUMN_TBL.DAYTIME)) ;
 
 
 
@@ -128,10 +128,10 @@ public class Sigma{
 						+ "from "
 						+ TBL
 						+ " where "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'"
 						+ " and "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " between "
 						+ "'" + start + "'"
 						+ " and "
@@ -201,19 +201,19 @@ public class Sigma{
 					SQL = " update "
 							+ TBL
 							+ " set "
-							+ COLUMN.SHORT_DEV + 	   " = " + stv + ","
+							+ COLUMN_TBL.SHORT_DEV + 	   " = " + stv + ","
 							//							+ COLUMN.SHORT_NOW_SIGMA + " = " + now + ","
-							+ COLUMN.SHORT_1_H_SIGMA + " = " + (ave + stv) + ","
-							+ COLUMN.SHORT_1_L_SIGMA + " = " + (ave - stv) + ","
-							+ COLUMN.SHORT_2_H_SIGMA + " = " + (ave + stv + stv) + ","
-							+ COLUMN.SHORT_2_L_SIGMA + " = " + (ave - stv - stv) + ","
-							+ COLUMN.SHORT_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
-							+ COLUMN.SHORT_3_L_SIGMA + " = " + (ave - stv - stv - stv)
+							+ COLUMN_TBL.SHORT_1_H_SIGMA + " = " + (ave + stv) + ","
+							+ COLUMN_TBL.SHORT_1_L_SIGMA + " = " + (ave - stv) + ","
+							+ COLUMN_TBL.SHORT_2_H_SIGMA + " = " + (ave + stv + stv) + ","
+							+ COLUMN_TBL.SHORT_2_L_SIGMA + " = " + (ave - stv - stv) + ","
+							+ COLUMN_TBL.SHORT_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
+							+ COLUMN_TBL.SHORT_3_L_SIGMA + " = " + (ave - stv - stv - stv)
 							+ " where "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = '" + dayTime + "'"
 							+ " and "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'";
 					s.sqlGetter().executeUpdate(SQL);
 
@@ -231,19 +231,19 @@ public class Sigma{
 					SQL = " update "
 							+ TBL
 							+ " set "
-							+ COLUMN.MIDDLE_DEV + 	   " = " + stv + ","
+							+ COLUMN_TBL.MIDDLE_DEV + 	   " = " + stv + ","
 							//							+ COLUMN.MIDDLE_NOW_SIGMA + " = " + now + ","
-							+ COLUMN.MIDDLE_1_H_SIGMA + " = " + (ave + stv) + ","
-							+ COLUMN.MIDDLE_1_L_SIGMA + " = " + (ave - stv) + ","
-							+ COLUMN.MIDDLE_2_H_SIGMA + " = " + (ave + stv + stv) + ","
-							+ COLUMN.MIDDLE_2_L_SIGMA + " = " + (ave - stv - stv) + ","
-							+ COLUMN.MIDDLE_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
-							+ COLUMN.MIDDLE_3_L_SIGMA + " = " + (ave - stv - stv - stv)
+							+ COLUMN_TBL.MIDDLE_1_H_SIGMA + " = " + (ave + stv) + ","
+							+ COLUMN_TBL.MIDDLE_1_L_SIGMA + " = " + (ave - stv) + ","
+							+ COLUMN_TBL.MIDDLE_2_H_SIGMA + " = " + (ave + stv + stv) + ","
+							+ COLUMN_TBL.MIDDLE_2_L_SIGMA + " = " + (ave - stv - stv) + ","
+							+ COLUMN_TBL.MIDDLE_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
+							+ COLUMN_TBL.MIDDLE_3_L_SIGMA + " = " + (ave - stv - stv - stv)
 							+ " where "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = '" + dayTime + "'"
 							+ " and "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'";
 
 					s.sqlGetter().executeUpdate(SQL);
@@ -254,19 +254,19 @@ public class Sigma{
 					SQL = " update "
 							+ TBL
 							+ " set "
-							+ COLUMN.LONG_DEV + 	   " = " + stv + ","
+							+ COLUMN_TBL.LONG_DEV + 	   " = " + stv + ","
 							//							+ COLUMN.LONG_NOW_SIGMA + " = " + now + ","
-							+ COLUMN.LONG_1_H_SIGMA + " = " + (ave + stv) + ","
-							+ COLUMN.LONG_1_L_SIGMA + " = " + (ave - stv) + ","
-							+ COLUMN.LONG_2_H_SIGMA + " = " + (ave + stv + stv) + ","
-							+ COLUMN.LONG_2_L_SIGMA + " = " + (ave - stv - stv) + ","
-							+ COLUMN.LONG_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
-							+ COLUMN.LONG_3_L_SIGMA + " = " + (ave - stv - stv - stv)
+							+ COLUMN_TBL.LONG_1_H_SIGMA + " = " + (ave + stv) + ","
+							+ COLUMN_TBL.LONG_1_L_SIGMA + " = " + (ave - stv) + ","
+							+ COLUMN_TBL.LONG_2_H_SIGMA + " = " + (ave + stv + stv) + ","
+							+ COLUMN_TBL.LONG_2_L_SIGMA + " = " + (ave - stv - stv) + ","
+							+ COLUMN_TBL.LONG_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
+							+ COLUMN_TBL.LONG_3_L_SIGMA + " = " + (ave - stv - stv - stv)
 							+ " where "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = '" + dayTime + "'"
 							+ " and "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'";
 
 					s.sqlGetter().executeUpdate(SQL);
@@ -355,13 +355,13 @@ public class Sigma{
 	//個別銘柄・・・1
 	private static void setSigma_1_Stock(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//短
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_SHORT ,s,EDIT);
 
 		//中
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s,EDIT);
 
 		//長
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN.CLOSE),AccesarryParameta.SIGMA_LONG ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_LONG ,s,EDIT);
 	}
 
 	//統計・・・2
@@ -372,21 +372,21 @@ public class Sigma{
 	//指数・・・3
 	private static void setSigma_3_Index(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//短
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_SHORT ,s,EDIT);
 		//中
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s,EDIT);
 		//長
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN.CLOSE),AccesarryParameta.SIGMA_LONG ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_LONG ,s,EDIT);
 	}
 
 	//ETF・・・4
 	private static void setSigma_4_ETF(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//短
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_SHORT, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_SHORT ,s,EDIT);
 		//中
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_MIDDLE, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_MIDDLE ,s,EDIT);
 		//長
-		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN.CLOSE),AccesarryParameta.SIGMA_LONG ,s,EDIT);
+		setIDOHeikinSigma_base(code,TBL,dayTime, AccesarryParameta.SIGMA_TERM_LONG, (COLUMN_TBL.CLOSE),AccesarryParameta.SIGMA_LONG ,s,EDIT);
 	}
 
 	//先物・・・5
@@ -412,15 +412,15 @@ public class Sigma{
 		//今日の価格
 //		double now = 0;
 
-		SQL = "select "  + COLUMN.DAYTIME
+		SQL = "select "  + COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " <= '" + dayTime + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME + " <= '" + dayTime + "'"
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
 
@@ -429,7 +429,7 @@ public class Sigma{
 			//trueならレコードが存在する。
 			if(s.rs.next()==true){
 
-				String start = s.rs.getString((COLUMN.DAYTIME)) ;
+				String start = s.rs.getString((COLUMN_TBL.DAYTIME)) ;
 
 
 
@@ -440,10 +440,10 @@ public class Sigma{
 						+ "from "
 						+ TBL
 						+ " where "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'"
 						+ " and "
-						+ COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME
 						+ " between "
 						+ "'" + start + "'"
 						+ " and "
@@ -513,29 +513,29 @@ public class Sigma{
 					SQL = " update "
 							+ TBL
 							+ " set "
-							+ COLUMN.SHORT_DEV + 	   " = " + stv + ","
+							+ COLUMN_TBL.SHORT_DEV + 	   " = " + stv + ","
 							//							+ COLUMN.SHORT_NOW_SIGMA + " = " + now + ","
-							+ COLUMN.SHORT_1_H_SIGMA + " = " + (ave + stv) + ","
-							+ COLUMN.SHORT_1_L_SIGMA + " = " + (ave - stv) + ","
-							+ COLUMN.SHORT_2_H_SIGMA + " = " + (ave + stv + stv) + ","
-							+ COLUMN.SHORT_2_L_SIGMA + " = " + (ave - stv - stv) + ","
-							+ COLUMN.SHORT_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
-							+ COLUMN.SHORT_3_L_SIGMA + " = " + (ave - stv - stv - stv)
+							+ COLUMN_TBL.SHORT_1_H_SIGMA + " = " + (ave + stv) + ","
+							+ COLUMN_TBL.SHORT_1_L_SIGMA + " = " + (ave - stv) + ","
+							+ COLUMN_TBL.SHORT_2_H_SIGMA + " = " + (ave + stv + stv) + ","
+							+ COLUMN_TBL.SHORT_2_L_SIGMA + " = " + (ave - stv - stv) + ","
+							+ COLUMN_TBL.SHORT_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
+							+ COLUMN_TBL.SHORT_3_L_SIGMA + " = " + (ave - stv - stv - stv)
 							+ " where "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = '" + dayTime + "'"
 							+ " and "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'";
 //					s.sqlGetter().executeUpdate(SQL);
 //					System.out.println(COLUMN.SHORT_DEV + "," + stv);
-					EDIT.updateDouble(COLUMN.SHORT_DEV,stv);
-					EDIT.updateDouble(COLUMN.SHORT_1_H_SIGMA,(ave + stv));
-					EDIT.updateDouble(COLUMN.SHORT_1_L_SIGMA,(ave - stv));
-					EDIT.updateDouble(COLUMN.SHORT_2_H_SIGMA,(ave + stv + stv));
-					EDIT.updateDouble(COLUMN.SHORT_2_L_SIGMA,(ave - stv - stv));
-					EDIT.updateDouble(COLUMN.SHORT_3_H_SIGMA,(ave + stv + stv + stv));
-					EDIT.updateDouble(COLUMN.SHORT_3_L_SIGMA,(ave - stv - stv - stv));
+					EDIT.updateDouble(COLUMN_TBL.SHORT_DEV,stv);
+					EDIT.updateDouble(COLUMN_TBL.SHORT_1_H_SIGMA,(ave + stv));
+					EDIT.updateDouble(COLUMN_TBL.SHORT_1_L_SIGMA,(ave - stv));
+					EDIT.updateDouble(COLUMN_TBL.SHORT_2_H_SIGMA,(ave + stv + stv));
+					EDIT.updateDouble(COLUMN_TBL.SHORT_2_L_SIGMA,(ave - stv - stv));
+					EDIT.updateDouble(COLUMN_TBL.SHORT_3_H_SIGMA,(ave + stv + stv + stv));
+					EDIT.updateDouble(COLUMN_TBL.SHORT_3_L_SIGMA,(ave - stv - stv - stv));
 
 
 //					long	art = System.currentTimeMillis();
@@ -552,29 +552,29 @@ public class Sigma{
 					SQL = " update "
 							+ TBL
 							+ " set "
-							+ COLUMN.MIDDLE_DEV + 	   " = " + stv + ","
+							+ COLUMN_TBL.MIDDLE_DEV + 	   " = " + stv + ","
 							//							+ COLUMN.MIDDLE_NOW_SIGMA + " = " + now + ","
-							+ COLUMN.MIDDLE_1_H_SIGMA + " = " + (ave + stv) + ","
-							+ COLUMN.MIDDLE_1_L_SIGMA + " = " + (ave - stv) + ","
-							+ COLUMN.MIDDLE_2_H_SIGMA + " = " + (ave + stv + stv) + ","
-							+ COLUMN.MIDDLE_2_L_SIGMA + " = " + (ave - stv - stv) + ","
-							+ COLUMN.MIDDLE_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
-							+ COLUMN.MIDDLE_3_L_SIGMA + " = " + (ave - stv - stv - stv)
+							+ COLUMN_TBL.MIDDLE_1_H_SIGMA + " = " + (ave + stv) + ","
+							+ COLUMN_TBL.MIDDLE_1_L_SIGMA + " = " + (ave - stv) + ","
+							+ COLUMN_TBL.MIDDLE_2_H_SIGMA + " = " + (ave + stv + stv) + ","
+							+ COLUMN_TBL.MIDDLE_2_L_SIGMA + " = " + (ave - stv - stv) + ","
+							+ COLUMN_TBL.MIDDLE_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
+							+ COLUMN_TBL.MIDDLE_3_L_SIGMA + " = " + (ave - stv - stv - stv)
 							+ " where "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = '" + dayTime + "'"
 							+ " and "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'";
 
 //					s.sqlGetter().executeUpdate(SQL);
-					EDIT.updateDouble(COLUMN.MIDDLE_DEV,stv);
-					EDIT.updateDouble(COLUMN.MIDDLE_1_H_SIGMA,(ave + stv));
-					EDIT.updateDouble(COLUMN.MIDDLE_1_L_SIGMA,(ave - stv));
-					EDIT.updateDouble(COLUMN.MIDDLE_2_H_SIGMA,(ave + stv + stv));
-					EDIT.updateDouble(COLUMN.MIDDLE_2_L_SIGMA,(ave - stv - stv));
-					EDIT.updateDouble(COLUMN.MIDDLE_3_H_SIGMA,(ave + stv + stv + stv));
-					EDIT.updateDouble(COLUMN.MIDDLE_3_L_SIGMA,(ave - stv - stv - stv));
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_DEV,stv);
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_1_H_SIGMA,(ave + stv));
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_1_L_SIGMA,(ave - stv));
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_2_H_SIGMA,(ave + stv + stv));
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_2_L_SIGMA,(ave - stv - stv));
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_3_H_SIGMA,(ave + stv + stv + stv));
+					EDIT.updateDouble(COLUMN_TBL.MIDDLE_3_L_SIGMA,(ave - stv - stv - stv));
 					break;
 
 					//長期
@@ -582,29 +582,29 @@ public class Sigma{
 					SQL = " update "
 							+ TBL
 							+ " set "
-							+ COLUMN.LONG_DEV + 	   " = " + stv + ","
+							+ COLUMN_TBL.LONG_DEV + 	   " = " + stv + ","
 							//							+ COLUMN.LONG_NOW_SIGMA + " = " + now + ","
-							+ COLUMN.LONG_1_H_SIGMA + " = " + (ave + stv) + ","
-							+ COLUMN.LONG_1_L_SIGMA + " = " + (ave - stv) + ","
-							+ COLUMN.LONG_2_H_SIGMA + " = " + (ave + stv + stv) + ","
-							+ COLUMN.LONG_2_L_SIGMA + " = " + (ave - stv - stv) + ","
-							+ COLUMN.LONG_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
-							+ COLUMN.LONG_3_L_SIGMA + " = " + (ave - stv - stv - stv)
+							+ COLUMN_TBL.LONG_1_H_SIGMA + " = " + (ave + stv) + ","
+							+ COLUMN_TBL.LONG_1_L_SIGMA + " = " + (ave - stv) + ","
+							+ COLUMN_TBL.LONG_2_H_SIGMA + " = " + (ave + stv + stv) + ","
+							+ COLUMN_TBL.LONG_2_L_SIGMA + " = " + (ave - stv - stv) + ","
+							+ COLUMN_TBL.LONG_3_H_SIGMA + " = " + (ave + stv + stv + stv) + ","
+							+ COLUMN_TBL.LONG_3_L_SIGMA + " = " + (ave - stv - stv - stv)
 							+ " where "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = '" + dayTime + "'"
 							+ " and "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'";
 
 //					s.sqlGetter().executeUpdate(SQL);
-					EDIT.updateDouble(COLUMN.LONG_DEV,stv);
-					EDIT.updateDouble(COLUMN.LONG_1_H_SIGMA,(ave + stv));
-					EDIT.updateDouble(COLUMN.LONG_1_L_SIGMA,(ave - stv));
-					EDIT.updateDouble(COLUMN.LONG_2_H_SIGMA,(ave + stv + stv));
-					EDIT.updateDouble(COLUMN.LONG_2_L_SIGMA,(ave - stv - stv));
-					EDIT.updateDouble(COLUMN.LONG_3_H_SIGMA,(ave + stv + stv + stv));
-					EDIT.updateDouble(COLUMN.LONG_3_L_SIGMA,(ave - stv - stv - stv));
+					EDIT.updateDouble(COLUMN_TBL.LONG_DEV,stv);
+					EDIT.updateDouble(COLUMN_TBL.LONG_1_H_SIGMA,(ave + stv));
+					EDIT.updateDouble(COLUMN_TBL.LONG_1_L_SIGMA,(ave - stv));
+					EDIT.updateDouble(COLUMN_TBL.LONG_2_H_SIGMA,(ave + stv + stv));
+					EDIT.updateDouble(COLUMN_TBL.LONG_2_L_SIGMA,(ave - stv - stv));
+					EDIT.updateDouble(COLUMN_TBL.LONG_3_H_SIGMA,(ave + stv + stv + stv));
+					EDIT.updateDouble(COLUMN_TBL.LONG_3_L_SIGMA,(ave - stv - stv - stv));
 
 					break;
 

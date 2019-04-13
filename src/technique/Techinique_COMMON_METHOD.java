@@ -14,7 +14,7 @@ import bean.Bean_nowRecord;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 
@@ -139,36 +139,36 @@ public class Techinique_COMMON_METHOD {
 			case ReCord.CODE_01_STOCK:
 				headLetter = ReCord.STOCK_TBK_DD_A +  ".";
 				SQL = SQL
-						+	"and '"	+	startDay + "' <= " + headLetter + COLUMN.DAYTIME + " and "
-						+	headLetter + COLUMN.DAYTIME + " <= '" + endDay + "'"
-						+ " order by " + headLetter + COLUMN.DAYTIME +  " desc limit " + size;
+						+	"and '"	+	startDay + "' <= " + headLetter + COLUMN_TBL.DAYTIME + " and "
+						+	headLetter + COLUMN_TBL.DAYTIME + " <= '" + endDay + "'"
+						+ " order by " + headLetter + COLUMN_TBL.DAYTIME +  " desc limit " + size;
 
 
 				break;
 			case ReCord.CODE_02_SATISTICS:
 				SQL = SQL
-				+	"and '"	+	startDay + "' <= " + headLetter + COLUMN.DAYTIME + " and "
-				+	headLetter + COLUMN.DAYTIME + " <= '" + endDay + "'"
-				+ " order by " +  COLUMN.DAYTIME +  " desc limit " + size;
+				+	"and '"	+	startDay + "' <= " + headLetter + COLUMN_TBL.DAYTIME + " and "
+				+	headLetter + COLUMN_TBL.DAYTIME + " <= '" + endDay + "'"
+				+ " order by " +  COLUMN_TBL.DAYTIME +  " desc limit " + size;
 				break;
 			case ReCord.CODE_03_INDEX:
 				SQL = SQL
-				+	"and '"	+	startDay + "' <= " + headLetter + COLUMN.DAYTIME + " and "
-				+	headLetter + COLUMN.DAYTIME + " <= '" + endDay + "'"
-				+ " order by " +  COLUMN.DAYTIME +  " desc limit " + size;
+				+	"and '"	+	startDay + "' <= " + headLetter + COLUMN_TBL.DAYTIME + " and "
+				+	headLetter + COLUMN_TBL.DAYTIME + " <= '" + endDay + "'"
+				+ " order by " +  COLUMN_TBL.DAYTIME +  " desc limit " + size;
 				break;
 			case ReCord.CODE_04_ETF:
 				headLetter = ReCord.ETF_DD_E +  ".";
 				SQL = SQL
-						+	" and '"	+	startDay + "' <= " + headLetter + COLUMN.DAYTIME + " and "
-						+	headLetter + COLUMN.DAYTIME + " <= '" + endDay + "'"
-						+ " order by " + headLetter + COLUMN.DAYTIME +  " desc limit " + size;
+						+	" and '"	+	startDay + "' <= " + headLetter + COLUMN_TBL.DAYTIME + " and "
+						+	headLetter + COLUMN_TBL.DAYTIME + " <= '" + endDay + "'"
+						+ " order by " + headLetter + COLUMN_TBL.DAYTIME +  " desc limit " + size;
 				break;
 			case ReCord.CODE_05_SAKIMONO:
-				SQL = SQL + " order by " +  COLUMN.DAYTIME +  " desc limit " + size;
+				SQL = SQL + " order by " +  COLUMN_TBL.DAYTIME +  " desc limit " + size;
 				break;
 			case ReCord.CODE_06_CURRENCY:
-				SQL = SQL + " order by " +  COLUMN.DAYTIME +  " desc limit " + size;
+				SQL = SQL + " order by " +  COLUMN_TBL.DAYTIME +  " desc limit " + size;
 				break;
 			default:
 				break;
@@ -182,7 +182,7 @@ public class Techinique_COMMON_METHOD {
 			s.rs2.last();
 			s.rs2.next();
 			while ( s.rs2.previous() ) {
-				String nowDay = s.rs2.getString(headLetter + COLUMN.DAYTIME);
+				String nowDay = s.rs2.getString(headLetter + COLUMN_TBL.DAYTIME);
 //				System.out.println(startDay);
 //				System.out.println(endDay);
 				//startDay =< nowDay =< endDayであればよい

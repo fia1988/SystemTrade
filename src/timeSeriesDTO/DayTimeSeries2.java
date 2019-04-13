@@ -11,7 +11,7 @@ import bean.Bean_CodeList;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 
 public class DayTimeSeries2 {
 	String SQL;
@@ -141,27 +141,27 @@ public class DayTimeSeries2 {
 	//個別銘柄・・・1
 	private void setCodeDTO_01_STOCK_DD(String startDay,String endDay,S s){
 
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '1'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '1'";
 		String CODENAME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.STOCK_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+				SQL = "select * from " + TBL_Name.STOCK_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 				while (s.rs2.next()) {
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_OPEN)		)	);
-					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_MAX)		)	);
-					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_MIN)		)	);
-					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_CLOSE)	)	);
-					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_DEKI)		)	);
-					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_BAYBAY)	)	);
+					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_OPEN)		)	);
+					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MAX)		)	);
+					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MIN)		)	);
+					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_CLOSE)	)	);
+					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_DEKI)		)	);
+					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_BAYBAY)	)	);
 					B_C.setCatelfg("1");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -180,30 +180,30 @@ public class DayTimeSeries2 {
 
 	//統計・・・2
 	private void setCodeDTO_02_STATISTICS_DD(String startDay,String endDay,S s){
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '2'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '2'";
 
 		String CODENAME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+				SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 				while (s.rs2.next()) {
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay		  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME)			)	);
-					B_C.setDeki		  (s.rs2.getString(commonAP.cutBlank(COLUMN.DEKI)			)	);
-					B_C.setBaybay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.BAYBAY)			)	);
-					B_C.setStockCount (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_NAME_NUM)	)	);
-					B_C.setTakePrice  (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_GETPRICE)	)	);
-					B_C.setUpPrice	  (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_UPSTOCK)	)	);
-					B_C.setNoChange   (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_NOCHANGE)	)	);
-					B_C.setDownPrice  (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_DOWNSTOCK)	)	);
+					B_C.setDay		  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME)			)	);
+					B_C.setDeki		  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)			)	);
+					B_C.setBaybay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)			)	);
+					B_C.setStockCount (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NAME_NUM)	)	);
+					B_C.setTakePrice  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_GETPRICE)	)	);
+					B_C.setUpPrice	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_UPSTOCK)	)	);
+					B_C.setNoChange   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NOCHANGE)	)	);
+					B_C.setDownPrice  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_DOWNSTOCK)	)	);
 					B_C.setCatelfg("2");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -219,28 +219,28 @@ public class DayTimeSeries2 {
 	}
 	//指数・・・3
 	private void setCodeDTO_03_INDEX_DD(String startDay,String endDay,S s){
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '3'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '3'";
 		String CODENAME;
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.INDEX_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+				SQL = "select * from " + TBL_Name.INDEX_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 
 				while (s.rs2.next()) {
 
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME)	)	);
-					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
+					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME)	)	);
+					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
 					B_C.setCatelfg("1");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -257,27 +257,27 @@ public class DayTimeSeries2 {
 	//ETF・・・4
 	private void setCodeDTO_04_ETF_DD(String startDay,String endDay,S s){
 
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '4'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '4'";
 		String CODENAME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.ETF_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "' and " + COLUMN.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
+				SQL = "select * from " + TBL_Name.ETF_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "' and " + COLUMN_TBL.DAYTIME + " between '" + startDay + "' and '" + endDay + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 				while (s.rs2.next()) {
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
-					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN.DEKI)		)	);
-					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN.BAYBAY)	)	);
+					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
+					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)		)	);
+					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)	)	);
 					B_C.setCatelfg("4");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -305,27 +305,27 @@ public class DayTimeSeries2 {
 	//個別銘柄・・・1
 	private void setCodeDTO_01_STOCK_DD(S s){
 
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '1'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '1'";
 		String CODENAME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.STOCK_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "'";
+				SQL = "select * from " + TBL_Name.STOCK_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 				while (s.rs2.next()) {
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_OPEN)		)	);
-					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_MAX)		)	);
-					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_MIN)		)	);
-					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_CLOSE)	)	);
-					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_DEKI)		)	);
-					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN.BEFORE_BAYBAY)	)	);
+					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_OPEN)		)	);
+					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MAX)		)	);
+					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_MIN)		)	);
+					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_CLOSE)	)	);
+					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_DEKI)		)	);
+					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BEFORE_BAYBAY)	)	);
 					B_C.setCatelfg("1");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -344,30 +344,30 @@ public class DayTimeSeries2 {
 
 	//統計・・・2
 	private void setCodeDTO_02_STATISTICS_DD(S s){
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '2'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '2'";
 
 		String CODENAME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "'";
+				SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 				while (s.rs2.next()) {
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay		  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME)			)	);
-					B_C.setDeki		  (s.rs2.getString(commonAP.cutBlank(COLUMN.DEKI)			)	);
-					B_C.setBaybay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.BAYBAY)			)	);
-					B_C.setStockCount (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_NAME_NUM)	)	);
-					B_C.setTakePrice  (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_GETPRICE)	)	);
-					B_C.setUpPrice	  (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_UPSTOCK)	)	);
-					B_C.setNoChange   (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_NOCHANGE)	)	);
-					B_C.setDownPrice  (s.rs2.getString(commonAP.cutBlank(COLUMN.STOCK_DOWNSTOCK)	)	);
+					B_C.setDay		  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME)			)	);
+					B_C.setDeki		  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)			)	);
+					B_C.setBaybay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)			)	);
+					B_C.setStockCount (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NAME_NUM)	)	);
+					B_C.setTakePrice  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_GETPRICE)	)	);
+					B_C.setUpPrice	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_UPSTOCK)	)	);
+					B_C.setNoChange   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_NOCHANGE)	)	);
+					B_C.setDownPrice  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.STOCK_DOWNSTOCK)	)	);
 					B_C.setCatelfg("2");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -383,28 +383,28 @@ public class DayTimeSeries2 {
 	}
 	//指数・・・3
 	private void setCodeDTO_03_INDEX_DD(S s){
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '3'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '3'";
 		String CODENAME;
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.INDEX_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "'";
+				SQL = "select * from " + TBL_Name.INDEX_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 
 				while (s.rs2.next()) {
 
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME)	)	);
-					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
+					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME)	)	);
+					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
 					B_C.setCatelfg("1");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);
@@ -421,27 +421,27 @@ public class DayTimeSeries2 {
 	//ETF・・・4
 	private void setCodeDTO_04_ETF_DD(S s){
 
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '4'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '4'";
 		String CODENAME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
-				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN.CODE));
+				CODENAME = s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE));
 				List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
 				//ここにすべての株の一覧を取得する。
 				//取得した銘柄のSQLを株テーブルから持ってくる。
 
-				SQL = "select * from " + TBL_Name.ETF_DD + " where " + (COLUMN.CODE) + " = '" + CODENAME + "'";
+				SQL = "select * from " + TBL_Name.ETF_DD + " where " + (COLUMN_TBL.CODE) + " = '" + CODENAME + "'";
 				s.rs2 = s.sqlGetter().executeQuery(SQL);
 				while (s.rs2.next()) {
 					Bean_CodeList B_C = new Bean_CodeList();
-					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
-					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
-					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
-					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
-					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
-					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN.DEKI)		)	);
-					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN.BAYBAY)	)	);
+					B_C.setDay	  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DAYTIME	 )		)	);
+					B_C.setOpen   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.OPEN)		)	);
+					B_C.setMax    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MAX)		)	);
+					B_C.setMin    (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.MIN)		)	);
+					B_C.setClose  (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.CLOSE)		)	);
+					B_C.setDeki   (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.DEKI)		)	);
+					B_C.setBaybay (s.rs2.getString(commonAP.cutBlank(COLUMN_TBL.BAYBAY)	)	);
 					B_C.setCatelfg("4");
 					//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
 					B_Cs.add(B_C);

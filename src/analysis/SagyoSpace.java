@@ -1,6 +1,5 @@
 package analysis;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,12 +12,10 @@ import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_calendarBean;
 import bean.Bean_nowRecord;
-import botton.cloringDate;
 
 import common.commonAP;
 
 import constant.ReCord;
-import constant.ReturnCodeConst;
 import constant.TechCon;
 import constant.logWriting;
 
@@ -122,12 +119,21 @@ public class SagyoSpace {
 
 	public static void testCaseS(){
 
-		Bean_calendarBean b = new Bean_calendarBean();
-		String folderPath = "C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.everyDayFile\\00001.syoki".replace(File.separator,ReturnCodeConst.SQL_SEPA);
-		cloringDate c = new cloringDate();
-
-		//あとでoutPutLSfileをprivateになおす
-		int resultInt = c.outPutLSfile(folderPath);
+		S s = new S();
+		s.getCon();
+		Bean_calendarBean v = new Bean_calendarBean();
+		v.setCalendarBean("2007-01-03", s);
+		
+		if ("null".equals(v.getMONTH_LONG_BEFORE())){
+			System.out.println("string");	
+		}else{
+			System.out.println(v.getMONTH_LONG_BEFORE());
+		}
+		
+		if (v.getMONTH_LONG_BEFORE() == null){
+			System.out.println("kanpekinull");
+		}
+		
 
 
 	}

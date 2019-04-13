@@ -9,7 +9,7 @@ import bean.Bean_FinancialStatement;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class Technique00_Common {
@@ -590,21 +590,21 @@ public class Technique00_Common {
 
 		//true:保有期間
 		//false:エントリー回数
-		String column = COLUMN.ENTRYDAY;
+		String column = COLUMN_TBL.ENTRYDAY;
 
 		if ( check = false ) {
-			column = COLUMN.ENTRYTIMES;
+			column = COLUMN_TBL.ENTRYTIMES;
 		}
 
 		SQL = "select " + column + " from " + TBL_Name.KEEPLISTTBL
 				+ " where "
-				+ COLUMN.CODE + " = '" + code + "'"
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
 				+ " and "
-				+ COLUMN.TYPE + " = '" + type + "'"
+				+ COLUMN_TBL.TYPE + " = '" + type + "'"
 				+ " and "
-				+ COLUMN.ENTRYMETHOD + " = '" + Lmethod + "'"
+				+ COLUMN_TBL.ENTRYMETHOD + " = '" + Lmethod + "'"
 				+ " and "
-				+ COLUMN.EXITMETHOD + " = '" + Smethod + "'";;
+				+ COLUMN_TBL.EXITMETHOD + " = '" + Smethod + "'";;
 
 				try {
 					s.rs2 = s.sqlGetter().executeQuery(SQL);

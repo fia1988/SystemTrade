@@ -30,7 +30,7 @@ import bean.Bean_nowRecord;
 import common.commonAP;
 
 import constant.AccesarryParameta;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.ReturnCodeConst;
 import constant.TimerShoriConst;
@@ -184,38 +184,38 @@ public class cloringDate {
 		String meigaraSuu = "meigaraSuu";
 		String totalReturn = "sumTotalReturn";
 		SQL = "select "
-			+ A + "." + COLUMN.ENTRYMETHOD + ","
-			+ A + "." + COLUMN.EXITMETHOD + ","
-			+ "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY																				  + ") "				 + ", "
-			+       "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE											  + ") as " + nowPrice	 + ", "
-			+ "(" + "sum(" + A + "." + COLUMN.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN.CLOSE+ ") " + " - " + "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY + ")) as " + Appreciation	 + ", "
-			+ "count(" + A + "." + COLUMN.CODE																								  + ") as " + meigaraSuu + " , "
+			+ A + "." + COLUMN_TBL.ENTRYMETHOD + ","
+			+ A + "." + COLUMN_TBL.EXITMETHOD + ","
+			+ "sum(" + A + "." + COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY																				  + ") "				 + ", "
+			+       "sum(" + A + "." + COLUMN_TBL.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN_TBL.CLOSE											  + ") as " + nowPrice	 + ", "
+			+ "(" + "sum(" + A + "." + COLUMN_TBL.REAL_ENTRY_VOLUME + " * " + B + "." + COLUMN_TBL.CLOSE+ ") " + " - " + "sum(" + A + "." + COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY + ")) as " + Appreciation	 + ", "
+			+ "count(" + A + "." + COLUMN_TBL.CODE																								  + ") as " + meigaraSuu + " , "
 			+ totalReturn
 			+ " from "
 			+ TBL_Name.KEEPLISTTBL + " as " + A
 			+ " inner join "
 			+ TBL_Name.STOCK_DD + " as " + B
-			+ " on " + A + "." + COLUMN.CODE + " = " + B + "." + COLUMN.CODE
+			+ " on " + A + "." + COLUMN_TBL.CODE + " = " + B + "." + COLUMN_TBL.CODE
 			+ " inner join "
 			+ " ( "
 			+ " select "
-			+ C + "." + COLUMN.ENTRYMETHOD	+ ","
-			+ C + "." + COLUMN.EXITMETHOD	+ ","
-			+ "sum(" + C + "." + COLUMN.REAL_RETURN	 + ") as " + totalReturn +  " "
+			+ C + "." + COLUMN_TBL.ENTRYMETHOD	+ ","
+			+ C + "." + COLUMN_TBL.EXITMETHOD	+ ","
+			+ "sum(" + C + "." + COLUMN_TBL.REAL_RETURN	 + ") as " + totalReturn +  " "
 			+ " from "
 			+ TBL_Name.RESULTHISTROYTBL + " as " + C
 			+ " group by "
-			+ C + "." + COLUMN.ENTRYMETHOD + "," + C + "." + COLUMN.EXITMETHOD + ""
+			+ C + "." + COLUMN_TBL.ENTRYMETHOD + "," + C + "." + COLUMN_TBL.EXITMETHOD + ""
 			+ " ) "
 			+ " as " + D
 			+ " on "
-			+ A + "." + COLUMN.ENTRYMETHOD + " = " + D + "." + COLUMN.ENTRYMETHOD + ""
+			+ A + "." + COLUMN_TBL.ENTRYMETHOD + " = " + D + "." + COLUMN_TBL.ENTRYMETHOD + ""
 			+ " and "
-			+ A + "." + COLUMN.EXITMETHOD  + " = " + D + "." + COLUMN.EXITMETHOD + ""
+			+ A + "." + COLUMN_TBL.EXITMETHOD  + " = " + D + "." + COLUMN_TBL.EXITMETHOD + ""
 			+ " where "
-			+ B + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
+			+ B + "." + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'"
 			+ " group by "
-			+ COLUMN.ENTRYMETHOD + "," + COLUMN.EXITMETHOD + "";
+			+ COLUMN_TBL.ENTRYMETHOD + "," + COLUMN_TBL.EXITMETHOD + "";
 //		System.out.println(SQL);
 		String R0 = TODAY;
 		String R1 = "";
@@ -229,9 +229,9 @@ public class cloringDate {
 		try {
 			s.rs2 = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs2.next() ) {
-				R1 = s.rs2.getString(	 A + "." + COLUMN.ENTRYMETHOD								);
-				R2 = s.rs2.getString(	 A + "." + COLUMN.EXITMETHOD								);
-				R3 = s.rs2.getString(	 "sum(" + A + "." + COLUMN.REAL_TOTAL_ENTRY_MONEY	+ ")"	);
+				R1 = s.rs2.getString(	 A + "." + COLUMN_TBL.ENTRYMETHOD								);
+				R2 = s.rs2.getString(	 A + "." + COLUMN_TBL.EXITMETHOD								);
+				R3 = s.rs2.getString(	 "sum(" + A + "." + COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY	+ ")"	);
 				R4 = s.rs2.getString(	 nowPrice													);
 				R5 = s.rs2.getString(	 Appreciation												);
 				R6 = s.rs2.getString(	 meigaraSuu													);
@@ -536,7 +536,7 @@ public class cloringDate {
 		s.getCon();
 		boolean resultBoolean = false;
 		String TBL = TBL_Name.SEPARATE_DD;
-		String SQL1 = "select * from " + TBL + " where "+ COLUMN.DAYTIME_KENRI_LAST + " = '" + TODAY + "'";
+		String SQL1 = "select * from " + TBL + " where "+ COLUMN_TBL.DAYTIME_KENRI_LAST + " = '" + TODAY + "'";
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL1);
 
@@ -545,15 +545,15 @@ public class cloringDate {
 				String filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileName;
 				filePath = filePath.replace(File.separator,ReturnCodeConst.SQL_SEPA);
 
-				String column = COLUMN.CODE						 + " , "
-								+ COLUMN.CHECKSEPA_COMBINE		 + " , "//falseは併合、trueは分割
+				String column = COLUMN_TBL.CODE						 + " , "
+								+ COLUMN_TBL.CHECKSEPA_COMBINE		 + " , "//falseは併合、trueは分割
 //								+ COLUMN.DAYTIME_KENRI_LAST		 + " , " //権利付最終売買日。効力は権利付最終日の翌営業日から発生する
-								+ COLUMN.AJUSTRATE				 + "  "; //調整レート。仕様はまだ決まっていないが、
+								+ COLUMN_TBL.AJUSTRATE				 + "  "; //調整レート。仕様はまだ決まっていないが、
 
-				String heddaColumn =  "'" +  COLUMN.CODE		 			+ "' , "
-									+ "'" +  COLUMN.CHECKSEPA_COMBINE		+ "' , "
+				String heddaColumn =  "'" +  COLUMN_TBL.CODE		 			+ "' , "
+									+ "'" +  COLUMN_TBL.CHECKSEPA_COMBINE		+ "' , "
 //									+ "'" +  COLUMN.DAYTIME_KENRI_LAST		+ "' , "
-									+ "'" +  COLUMN.AJUSTRATE				+ "'  ";
+									+ "'" +  COLUMN_TBL.AJUSTRATE				+ "'  ";
 
 				String SQL2 =	" SELECT "
 							+ heddaColumn
@@ -561,7 +561,7 @@ public class cloringDate {
 							+ " SELECT "
 							+ " " + column + " "
 							+ " FROM " + TBL
-							+ " where "+ COLUMN.DAYTIME_KENRI_LAST + " = '" + TODAY + "'"
+							+ " where "+ COLUMN_TBL.DAYTIME_KENRI_LAST + " = '" + TODAY + "'"
 							+	" INTO OUTFILE '" + filePath +  "'"
 							+	" FIELDS TERMINATED BY ','"
 							+	" OPTIONALLY ENCLOSED BY '\"'";
@@ -601,13 +601,13 @@ public class cloringDate {
 
 		SQL = "update " + TBL
 				+ " set "
-				+ COLUMN.KOSIN_DAYTIME + " = '" + TODAY + "'";
+				+ COLUMN_TBL.KOSIN_DAYTIME + " = '" + TODAY + "'";
 		s.freeUpdateQuery(SQL);
 
 
 		SQL = " delete from " + TBL
 			+	" where "
-			+	COLUMN.KOSIN_DAYTIME + " >= " + COLUMN.LIMIT_DAYTIME;
+			+	COLUMN_TBL.KOSIN_DAYTIME + " >= " + COLUMN_TBL.LIMIT_DAYTIME;
 		s.freeUpdateQuery(SQL);
 
 
@@ -626,16 +626,16 @@ public class cloringDate {
 
 		filePath = filePath.replace(File.separator,ReturnCodeConst.SQL_SEPA);
 
-		String column =  COLUMN.ENTRYMETHOD							 + " , " //
-						+ COLUMN.EXITMETHOD							 + " ,  " //
-						+ COLUMN.TYPE								 + " , " //
-						+ COLUMN.CODE								 + "   "; //
+		String column =  COLUMN_TBL.ENTRYMETHOD							 + " , " //
+						+ COLUMN_TBL.EXITMETHOD							 + " ,  " //
+						+ COLUMN_TBL.TYPE								 + " , " //
+						+ COLUMN_TBL.CODE								 + "   "; //
 
 
-		String heddaColumn =   "'" + COLUMN.ENTRYMETHOD				 + "' , " //
-							+  "'" + COLUMN.EXITMETHOD				 + "' , " //
-							+  "'" + COLUMN.TYPE					 + "' , " //
-							+  "'" + COLUMN.CODE					 + "'  ";  //
+		String heddaColumn =   "'" + COLUMN_TBL.ENTRYMETHOD				 + "' , " //
+							+  "'" + COLUMN_TBL.EXITMETHOD				 + "' , " //
+							+  "'" + COLUMN_TBL.TYPE					 + "' , " //
+							+  "'" + COLUMN_TBL.CODE					 + "'  ";  //
 
 		SQL =	" SELECT "
 				+ heddaColumn
@@ -663,21 +663,21 @@ public class cloringDate {
 
 		filePath = filePath.replace(File.separator,ReturnCodeConst.SQL_SEPA);
 
-		String column = COLUMN.CODE										 + " , " //
-						+ COLUMN.ENTRYDAY								 + " , " //
-						+ COLUMN.LASTENTRYDAY							 + " , " //
-						+ COLUMN.ENTRYTIMES								 + " , " //
-						+ COLUMN.AVERAGEPRICE							 + " , " //
-						+ COLUMN.TYPE									 + " , " //
-						+ COLUMN.ENTRYMETHOD							 + " , " //
-						+ COLUMN.EXITMETHOD								 + " ,  " //
-						+ COLUMN.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-						+ COLUMN.IDEA_VOLUME							 + " ,  "  //理想的保持数
-						+ COLUMN.IDEA_AVERAGEPRICE						 + " ,  "  //理想的平均取得価格
-						+ COLUMN.IDEA_TOTAL_ENTRY_MONEY					 + " ,  "  //理想的合計投資金額
-						+ COLUMN.REAL_ENTRY_VOLUME						 + " ,  "  //現実保有数
-						+ COLUMN.REAL_AVERAGEPRICE						 + " ,  "  //現実平均取得価格
-						+ COLUMN.REAL_TOTAL_ENTRY_MONEY					 + "   " ;	//現実的合計投資金額
+		String column = COLUMN_TBL.CODE										 + " , " //
+						+ COLUMN_TBL.ENTRYDAY								 + " , " //
+						+ COLUMN_TBL.LASTENTRYDAY							 + " , " //
+						+ COLUMN_TBL.ENTRYTIMES								 + " , " //
+						+ COLUMN_TBL.AVERAGEPRICE							 + " , " //
+						+ COLUMN_TBL.TYPE									 + " , " //
+						+ COLUMN_TBL.ENTRYMETHOD							 + " , " //
+						+ COLUMN_TBL.EXITMETHOD								 + " ,  " //
+						+ COLUMN_TBL.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+						+ COLUMN_TBL.IDEA_VOLUME							 + " ,  "  //理想的保持数
+						+ COLUMN_TBL.IDEA_AVERAGEPRICE						 + " ,  "  //理想的平均取得価格
+						+ COLUMN_TBL.IDEA_TOTAL_ENTRY_MONEY					 + " ,  "  //理想的合計投資金額
+						+ COLUMN_TBL.REAL_ENTRY_VOLUME						 + " ,  "  //現実保有数
+						+ COLUMN_TBL.REAL_AVERAGEPRICE						 + " ,  "  //現実平均取得価格
+						+ COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY					 + "   " ;	//現実的合計投資金額
 
 //		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
 //							+ "'" +  COLUMN.DAYTIME				+ "' , " //
@@ -689,21 +689,21 @@ public class cloringDate {
 //							+ "'" +  COLUMN.ENTRY_MONEY			+ "'" ;
 
 
-		String heddaColumn =  "'" + COLUMN.CODE								 + "' , " //
-					+  "'" + COLUMN.ENTRYDAY								 + "' , " //
-					+  "'" + COLUMN.LASTENTRYDAY							 + "' , " //
-					+  "'" + COLUMN.ENTRYTIMES								 + "' , "  //
-					+  "'" + COLUMN.AVERAGEPRICE							 + "' , "  //
-					+  "'" + COLUMN.TYPE								 	 + "' , "  //
-					+  "'" + COLUMN.ENTRYMETHOD								 + "' , "  //
-					+  "'" + COLUMN.EXITMETHOD								 + "' , "  //
-					+  "'" + COLUMN.MINI_CHECK_FLG							 + "' , "  //ミニ株本株チェック trueミニ株、false普通株
-					+  "'" + COLUMN.IDEA_VOLUME								 + "' , "   //理想的保持数
-					+  "'" + COLUMN.IDEA_AVERAGEPRICE						 + "' , "   //理想的平均取得価格
-					+  "'" + COLUMN.IDEA_TOTAL_ENTRY_MONEY					 + "' , "   //理想的合計投資金額
-					+  "'" + COLUMN.REAL_ENTRY_VOLUME						 + "' , "   //現実保有数
-					+  "'" + COLUMN.REAL_AVERAGEPRICE						 + "' , "   //現実平均取得価格
-					+  "'" + COLUMN.REAL_TOTAL_ENTRY_MONEY					 +  "'  "  ;	//現実的合計投資金額
+		String heddaColumn =  "'" + COLUMN_TBL.CODE								 + "' , " //
+					+  "'" + COLUMN_TBL.ENTRYDAY								 + "' , " //
+					+  "'" + COLUMN_TBL.LASTENTRYDAY							 + "' , " //
+					+  "'" + COLUMN_TBL.ENTRYTIMES								 + "' , "  //
+					+  "'" + COLUMN_TBL.AVERAGEPRICE							 + "' , "  //
+					+  "'" + COLUMN_TBL.TYPE								 	 + "' , "  //
+					+  "'" + COLUMN_TBL.ENTRYMETHOD								 + "' , "  //
+					+  "'" + COLUMN_TBL.EXITMETHOD								 + "' , "  //
+					+  "'" + COLUMN_TBL.MINI_CHECK_FLG							 + "' , "  //ミニ株本株チェック trueミニ株、false普通株
+					+  "'" + COLUMN_TBL.IDEA_VOLUME								 + "' , "   //理想的保持数
+					+  "'" + COLUMN_TBL.IDEA_AVERAGEPRICE						 + "' , "   //理想的平均取得価格
+					+  "'" + COLUMN_TBL.IDEA_TOTAL_ENTRY_MONEY					 + "' , "   //理想的合計投資金額
+					+  "'" + COLUMN_TBL.REAL_ENTRY_VOLUME						 + "' , "   //現実保有数
+					+  "'" + COLUMN_TBL.REAL_AVERAGEPRICE						 + "' , "   //現実平均取得価格
+					+  "'" + COLUMN_TBL.REAL_TOTAL_ENTRY_MONEY					 +  "'  "  ;	//現実的合計投資金額
 
 		SQL =	" SELECT "
 				+ heddaColumn
@@ -737,7 +737,7 @@ public class cloringDate {
 		S s = new S();
 		s.getCon();
 
-		String FBS_KEY = commonAP.getParametaChoseTBL(TBL_Name.PROPARTY_TBL,COLUMN.ITEMNAME,COLUMN.ITEMNAME_DESC,PROPARTY.FBS_KEY,s);
+		String FBS_KEY = commonAP.getParametaChoseTBL(TBL_Name.PROPARTY_TBL,COLUMN_TBL.ITEMNAME,COLUMN_TBL.ITEMNAME_DESC,PROPARTY.FBS_KEY,s);
 		FBS_KEY = FBS_KEY + "_" + TODAY;
 
 		//FBS_KICK_2017-07-31.fbs
@@ -786,7 +786,7 @@ public class cloringDate {
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
-				kickFileUserList.add(s.rs.getString(COLUMN.KICK_FILE_USER_FOLDER));
+				kickFileUserList.add(s.rs.getString(COLUMN_TBL.KICK_FILE_USER_FOLDER));
 			}
 		} catch (SQLException e) {}
         s.closeConection();
@@ -845,7 +845,7 @@ public class cloringDate {
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
-				kickFileUserList.add(s.rs.getString(COLUMN.KICK_FILE_USER_FOLDER));
+				kickFileUserList.add(s.rs.getString(COLUMN_TBL.KICK_FILE_USER_FOLDER));
 			}
 		} catch (SQLException e) {}
         s.closeConection();
@@ -1253,14 +1253,14 @@ public class cloringDate {
 		s.getCon();
 		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		String lastUpdateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_MARKET_TBL, s);
-		String column = COLUMN.CODE									 + " , " //銘柄名
-				+ COLUMN.DAYTIME								 + " , " //日付
-				+ COLUMN.OPEN									 + " , " //始値
-				+ COLUMN.MAX									 + " , " //最高値
-				+ COLUMN.MIN									 + " , " //最安値
-				+ COLUMN.CLOSE									 + " , " //終値
-				+ COLUMN.DEKI									 + " , " //出来高
-				+ COLUMN.BAYBAY								 + " , " //売買代金
+		String column = COLUMN_TBL.CODE									 + " , " //銘柄名
+				+ COLUMN_TBL.DAYTIME								 + " , " //日付
+				+ COLUMN_TBL.OPEN									 + " , " //始値
+				+ COLUMN_TBL.MAX									 + " , " //最高値
+				+ COLUMN_TBL.MIN									 + " , " //最安値
+				+ COLUMN_TBL.CLOSE									 + " , " //終値
+				+ COLUMN_TBL.DEKI									 + " , " //出来高
+				+ COLUMN_TBL.BAYBAY								 + " , " //売買代金
 				//+ COLUMN.STOCK_NUM								 + " , " //発行済み株式数
 				//+ COLUMN.MARKET_CAP							 + " , " //時価総額
 				//+ COLUMN.M_AND_A_FLG							 + " , " //合併フラグ
@@ -1268,89 +1268,89 @@ public class cloringDate {
 //				+ COLUMN.SHORT_FLG								 + " , " //売りフラグ
 //				+ COLUMN.L_TOTAL_FLG							 + " , " //買いフラグ合計
 //				+ COLUMN.S_TOTAL_A_FLG							 + " , " //売りフラグ合計
-				+ COLUMN.CHANGE_PRICE							 + " , " //前日比
-				+ COLUMN.CHANGERATE							 + " , " //前日比率
-				+ COLUMN.SHORTIDO								 + " , " //株価短期間移動平均線
-				+ COLUMN.MIDDLEIDO								 + " , " //株価中期間移動平均線
-				+ COLUMN.LONGIDO								 + " , " //株価長期間移動平均線
-				+ COLUMN.SHORTIDO_CHANGERATE					 + " , " //株価短期間移動平均線前日比
-				+ COLUMN.MIDDLEIDO_CHANGERATE					 + " , " //株価中期間移動平均線前日比
-				+ COLUMN.LONGIDO_CHANGERATE					 + " , " //株価長期間移動平均線前日比
-				+ COLUMN.SHORTIDO_RATIO						 + " , " //株価短期間移動平均線前日比率
-				+ COLUMN.MIDDLEIDO_RATIO						 + " , " //株価中期間移動平均線前日比率
-				+ COLUMN.LONGIDO_RATIO							 + " , " //株価長期間移動平均線前日比率
-				+ COLUMN.MAXMIN								 + " , " //当日の最高値-最安値
-				+ COLUMN.MAXMINRATIO							 + " , " //（1-最安値)/最高値
-				+ COLUMN.CANDLE_AREA							 + " , " //ローソク足の面積
-				+ COLUMN.CANDLE_AREA_SCALE						 + " , " //ひげの長さと比較したローソク足面積の比率
-				+ COLUMN.WINDOW								 + " , " //前日の終値-今日の始値
-				+ COLUMN.DEKI_CHANGERATE						 + " , " //出来高前日比
-				+ COLUMN.DEKI_RATIO							 + " , " //出来高前日比率
-				+ COLUMN.BAYBAY_CHANGERATE						 + " , " //売買代金前日比
-				+ COLUMN.BAYBAY_RATIO							 + " , " //売買代金前日比率
-				+ COLUMN.SHORTIDO_DEKI							 + " , " //出来高短期移動平均線
-				+ COLUMN.MIDDLEIDO_DEKI						 + " , " //出来高中期移動平均線
-				+ COLUMN.LONGIDO_DEKI							 + " , " //出来高長期移動平均線
-				+ COLUMN.SHORTIDO_DEKI_CHANGERATE				 + " , " //出来高短期移動平均線前日比
-				+ COLUMN.MIDDLEIDO_DEKI_CHANGERATE				 + " , " //出来高中期移動平均線前日比
-				+ COLUMN.LONGIDO_DEKI_CHANGERATE				 + " , " //出来高長期移動平均線前日比
-				+ COLUMN.SHORTIDO_DEKI_RATIO					 + " , " //出来高短期間移動平均線前日比率
-				+ COLUMN.MIDDLEIDO_DEKI_RATIO					 + " , " //出来高中期移動平均線前日比率
-				+ COLUMN.LONGIDO_DEKI_RATIO					 + " , " //出来高長期移動平均線前日比率
-				+ COLUMN.SHORTIDO_BAYBAY						 + " , " //売買代金短期移動平均線
-				+ COLUMN.MIDDLEIDO_BAYBAY						 + " , " //売買代金中期移動平均線
-				+ COLUMN.LONGIDO_BAYBAY						 + " , " //売買代金長期移動平均線
-				+ COLUMN.SHORTIDO_BAYBAY_CHANGERATE			 + " , " //売買代金短期間移動平均線前日比
-				+ COLUMN.MIDDLEIDO_BAYBAY_CHANGERATE			 + " , " //売買代金中期間移動平均線前日比
-				+ COLUMN.LONGIDO_BAYBAY_CHANGERATE				 + " , " //売買代金長期移動平均線前日比
-				+ COLUMN.SHORTIDO_BAYBAY_RATIO					 + " , " //売買代金短期間移動平均線前日比率
-				+ COLUMN.MIDDLEIDO_BAYBAY_RATIO				 + " , " //売買代金中期間移動平均線前日比率
-				+ COLUMN.LONGIDO_BAYBAY_RATIO					 + " , " //売買代金長期移動平均線前日比率
-				+ COLUMN.CREDIT_LONG							 + " , " //信用買い残
-				+ COLUMN.CREDIT_SHORT							 + " , " //信用売り残
-				+ COLUMN.CREDIT_RATIO							 + " , " //信用倍率＝信用買い残÷信用売り残
-				+ COLUMN.CREDIT_LONG_CHANGERATE				 + " , " //信用買い残前日比
-				+ COLUMN.CREDIT_SHORT_CHANGERATE				 + " , " //信用売り残前日比
-				+ COLUMN.CREDIT_RATIO_CHANGERATE				 + " , " //信用倍率前日比
-				+ COLUMN.SHORT_DEV								 + " , " //短期間の標準偏差（シグマ）
-				+ COLUMN.SHORT_NOW_SIGMA						 + " , " //短期間内で今日の終値がシグマと比較して何パーセント上か。
-				+ COLUMN.SHORT_1_H_SIGMA						 + " , " //短期間でのシグマ１
-				+ COLUMN.SHORT_1_L_SIGMA						 + " , " //短期間でのマイナスシグマ１
-				+ COLUMN.SHORT_2_H_SIGMA						 + " , " //短期間でのシグマ２
-				+ COLUMN.SHORT_2_L_SIGMA						 + " , " //短期間でのマイナスシグマ２
-				+ COLUMN.SHORT_3_H_SIGMA						 + " , " //短期間でのシグマ３
-				+ COLUMN.SHORT_3_L_SIGMA						 + " , " //短期間でのマイナスシグマ３
-				+ COLUMN.MIDDLE_DEV							 + " , " //中期間の標準偏差（シグマ）
-				+ COLUMN.MIDDLE_NOW_SIGMA						 + " , " //中期間で今日の終値がシグマと比較して何パーセント上か。
-				+ COLUMN.MIDDLE_1_H_SIGMA						 + " , " //中期間のシグマ１
-				+ COLUMN.MIDDLE_1_L_SIGMA						 + " , " //中期間のマイナスシグマ１
-				+ COLUMN.MIDDLE_2_H_SIGMA						 + " , " //中期間のシグマ２
-				+ COLUMN.MIDDLE_2_L_SIGMA						 + " , " //中期間のマイナスシグマ２
-				+ COLUMN.MIDDLE_3_H_SIGMA						 + " , " //中期間のシグマ３
-				+ COLUMN.MIDDLE_3_L_SIGMA						 + " , " //中期間のマイナスシグマ３
-				+ COLUMN.LONG_DEV								 + " , " //長期間の標準偏差（シグマ）
-				+ COLUMN.LONG_NOW_SIGMA						 + " , " //長期間で今日の終値がシグマと比較して何パーセント上か。
-				+ COLUMN.LONG_1_H_SIGMA						 + " , " //長期間のシグマ１
-				+ COLUMN.LONG_1_L_SIGMA						 + " , " //長期間のマイナスシグマ１
-				+ COLUMN.LONG_2_H_SIGMA						 + " , " //長期間のシグマ２
-				+ COLUMN.LONG_2_L_SIGMA						 + " , " //長期間のマイナスシグマ２
-				+ COLUMN.LONG_3_H_SIGMA						 + " , " //長期間のシグマ３
-				+ COLUMN.LONG_3_L_SIGMA						 + " , " //長期間のマイナスシグマ３
-				+ COLUMN.SHORTIDO_HEKATU						 + " , " //指数平滑移動平均短期
-				+ COLUMN.MIDDLEIDO_HEKATU						 + " , " //指数平滑移動平均中期
-				+ COLUMN.LONGIDO_HEKATU				 		 	 + " , " //指数平滑移動平均長期
-				+ COLUMN.SHORTIDO_HEKATU_CHANGERATE				 + " , " //指数平滑移動平均短期前日比
-				+ COLUMN.MIDDLEIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均中期前日比
-				+ COLUMN.LONGIDO_HEKATU_CHANGERATE		 	 	 + " , " //指数平滑移動平均長期前日比
-				+ COLUMN.SHORTIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均短期前日比率
-				+ COLUMN.MIDDLEIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均中期前日比率
-				+ COLUMN.LONGIDO_HEKATU_RATIO		 	 		 + " , " //指数平滑移動平均長期前日比率
-				+ COLUMN.SHORT_MACD								 + " , " //短期MACD
-				+ COLUMN.SHORT_MACD_SIGNAL						 + " , " //短期MACDシグナル線
-				+ COLUMN.MIDDLE_MACD							 + " , " //中期MACD
-				+ COLUMN.MIDDLE_MACD_SIGNAL						 + " , " //中期MACDシグナル線
-				+ COLUMN.LONG_MACD								 + " , " //長期MACD
-				+ COLUMN.LONG_MACD_SIGNAL						 + "  ";
+				+ COLUMN_TBL.CHANGE_PRICE							 + " , " //前日比
+				+ COLUMN_TBL.CHANGERATE							 + " , " //前日比率
+				+ COLUMN_TBL.SHORTIDO								 + " , " //株価短期間移動平均線
+				+ COLUMN_TBL.MIDDLEIDO								 + " , " //株価中期間移動平均線
+				+ COLUMN_TBL.LONGIDO								 + " , " //株価長期間移動平均線
+				+ COLUMN_TBL.SHORTIDO_CHANGERATE					 + " , " //株価短期間移動平均線前日比
+				+ COLUMN_TBL.MIDDLEIDO_CHANGERATE					 + " , " //株価中期間移動平均線前日比
+				+ COLUMN_TBL.LONGIDO_CHANGERATE					 + " , " //株価長期間移動平均線前日比
+				+ COLUMN_TBL.SHORTIDO_RATIO						 + " , " //株価短期間移動平均線前日比率
+				+ COLUMN_TBL.MIDDLEIDO_RATIO						 + " , " //株価中期間移動平均線前日比率
+				+ COLUMN_TBL.LONGIDO_RATIO							 + " , " //株価長期間移動平均線前日比率
+				+ COLUMN_TBL.MAXMIN								 + " , " //当日の最高値-最安値
+				+ COLUMN_TBL.MAXMINRATIO							 + " , " //（1-最安値)/最高値
+				+ COLUMN_TBL.CANDLE_AREA							 + " , " //ローソク足の面積
+				+ COLUMN_TBL.CANDLE_AREA_SCALE						 + " , " //ひげの長さと比較したローソク足面積の比率
+				+ COLUMN_TBL.WINDOW								 + " , " //前日の終値-今日の始値
+				+ COLUMN_TBL.DEKI_CHANGERATE						 + " , " //出来高前日比
+				+ COLUMN_TBL.DEKI_RATIO							 + " , " //出来高前日比率
+				+ COLUMN_TBL.BAYBAY_CHANGERATE						 + " , " //売買代金前日比
+				+ COLUMN_TBL.BAYBAY_RATIO							 + " , " //売買代金前日比率
+				+ COLUMN_TBL.SHORTIDO_DEKI							 + " , " //出来高短期移動平均線
+				+ COLUMN_TBL.MIDDLEIDO_DEKI						 + " , " //出来高中期移動平均線
+				+ COLUMN_TBL.LONGIDO_DEKI							 + " , " //出来高長期移動平均線
+				+ COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE				 + " , " //出来高短期移動平均線前日比
+				+ COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE				 + " , " //出来高中期移動平均線前日比
+				+ COLUMN_TBL.LONGIDO_DEKI_CHANGERATE				 + " , " //出来高長期移動平均線前日比
+				+ COLUMN_TBL.SHORTIDO_DEKI_RATIO					 + " , " //出来高短期間移動平均線前日比率
+				+ COLUMN_TBL.MIDDLEIDO_DEKI_RATIO					 + " , " //出来高中期移動平均線前日比率
+				+ COLUMN_TBL.LONGIDO_DEKI_RATIO					 + " , " //出来高長期移動平均線前日比率
+				+ COLUMN_TBL.SHORTIDO_BAYBAY						 + " , " //売買代金短期移動平均線
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY						 + " , " //売買代金中期移動平均線
+				+ COLUMN_TBL.LONGIDO_BAYBAY						 + " , " //売買代金長期移動平均線
+				+ COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE			 + " , " //売買代金短期間移動平均線前日比
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE			 + " , " //売買代金中期間移動平均線前日比
+				+ COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE				 + " , " //売買代金長期移動平均線前日比
+				+ COLUMN_TBL.SHORTIDO_BAYBAY_RATIO					 + " , " //売買代金短期間移動平均線前日比率
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO				 + " , " //売買代金中期間移動平均線前日比率
+				+ COLUMN_TBL.LONGIDO_BAYBAY_RATIO					 + " , " //売買代金長期移動平均線前日比率
+				+ COLUMN_TBL.CREDIT_LONG							 + " , " //信用買い残
+				+ COLUMN_TBL.CREDIT_SHORT							 + " , " //信用売り残
+				+ COLUMN_TBL.CREDIT_RATIO							 + " , " //信用倍率＝信用買い残÷信用売り残
+				+ COLUMN_TBL.CREDIT_LONG_CHANGERATE				 + " , " //信用買い残前日比
+				+ COLUMN_TBL.CREDIT_SHORT_CHANGERATE				 + " , " //信用売り残前日比
+				+ COLUMN_TBL.CREDIT_RATIO_CHANGERATE				 + " , " //信用倍率前日比
+				+ COLUMN_TBL.SHORT_DEV								 + " , " //短期間の標準偏差（シグマ）
+				+ COLUMN_TBL.SHORT_NOW_SIGMA						 + " , " //短期間内で今日の終値がシグマと比較して何パーセント上か。
+				+ COLUMN_TBL.SHORT_1_H_SIGMA						 + " , " //短期間でのシグマ１
+				+ COLUMN_TBL.SHORT_1_L_SIGMA						 + " , " //短期間でのマイナスシグマ１
+				+ COLUMN_TBL.SHORT_2_H_SIGMA						 + " , " //短期間でのシグマ２
+				+ COLUMN_TBL.SHORT_2_L_SIGMA						 + " , " //短期間でのマイナスシグマ２
+				+ COLUMN_TBL.SHORT_3_H_SIGMA						 + " , " //短期間でのシグマ３
+				+ COLUMN_TBL.SHORT_3_L_SIGMA						 + " , " //短期間でのマイナスシグマ３
+				+ COLUMN_TBL.MIDDLE_DEV							 + " , " //中期間の標準偏差（シグマ）
+				+ COLUMN_TBL.MIDDLE_NOW_SIGMA						 + " , " //中期間で今日の終値がシグマと比較して何パーセント上か。
+				+ COLUMN_TBL.MIDDLE_1_H_SIGMA						 + " , " //中期間のシグマ１
+				+ COLUMN_TBL.MIDDLE_1_L_SIGMA						 + " , " //中期間のマイナスシグマ１
+				+ COLUMN_TBL.MIDDLE_2_H_SIGMA						 + " , " //中期間のシグマ２
+				+ COLUMN_TBL.MIDDLE_2_L_SIGMA						 + " , " //中期間のマイナスシグマ２
+				+ COLUMN_TBL.MIDDLE_3_H_SIGMA						 + " , " //中期間のシグマ３
+				+ COLUMN_TBL.MIDDLE_3_L_SIGMA						 + " , " //中期間のマイナスシグマ３
+				+ COLUMN_TBL.LONG_DEV								 + " , " //長期間の標準偏差（シグマ）
+				+ COLUMN_TBL.LONG_NOW_SIGMA						 + " , " //長期間で今日の終値がシグマと比較して何パーセント上か。
+				+ COLUMN_TBL.LONG_1_H_SIGMA						 + " , " //長期間のシグマ１
+				+ COLUMN_TBL.LONG_1_L_SIGMA						 + " , " //長期間のマイナスシグマ１
+				+ COLUMN_TBL.LONG_2_H_SIGMA						 + " , " //長期間のシグマ２
+				+ COLUMN_TBL.LONG_2_L_SIGMA						 + " , " //長期間のマイナスシグマ２
+				+ COLUMN_TBL.LONG_3_H_SIGMA						 + " , " //長期間のシグマ３
+				+ COLUMN_TBL.LONG_3_L_SIGMA						 + " , " //長期間のマイナスシグマ３
+				+ COLUMN_TBL.SHORTIDO_HEKATU						 + " , " //指数平滑移動平均短期
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU						 + " , " //指数平滑移動平均中期
+				+ COLUMN_TBL.LONGIDO_HEKATU				 		 	 + " , " //指数平滑移動平均長期
+				+ COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE				 + " , " //指数平滑移動平均短期前日比
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均中期前日比
+				+ COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE		 	 	 + " , " //指数平滑移動平均長期前日比
+				+ COLUMN_TBL.SHORTIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均短期前日比率
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均中期前日比率
+				+ COLUMN_TBL.LONGIDO_HEKATU_RATIO		 	 		 + " , " //指数平滑移動平均長期前日比率
+				+ COLUMN_TBL.SHORT_MACD								 + " , " //短期MACD
+				+ COLUMN_TBL.SHORT_MACD_SIGNAL						 + " , " //短期MACDシグナル線
+				+ COLUMN_TBL.MIDDLE_MACD							 + " , " //中期MACD
+				+ COLUMN_TBL.MIDDLE_MACD_SIGNAL						 + " , " //中期MACDシグナル線
+				+ COLUMN_TBL.LONG_MACD								 + " , " //長期MACD
+				+ COLUMN_TBL.LONG_MACD_SIGNAL						 + "  ";
 //				+ COLUMN.NT_RATIO								 + " , " //NT倍率
 //				+ COLUMN.NT_RATIO_AVE							 + "   "; //NT倍率の平均; //長期MACDシグナル線;
 
@@ -1360,9 +1360,9 @@ public class cloringDate {
 					+ column
 					+ " from "
 					+ TBL_Name.ETF_DD
-					+ " where " + COLUMN.CODE + " = " + "'" + ReCord.MARKET_CODE_1306 + "'"
+					+ " where " + COLUMN_TBL.CODE + " = " + "'" + ReCord.MARKET_CODE_1306 + "'"
 					+ " and "
-					+ COLUMN.DAYTIME + " >  '" + lastUpdateDay + "'";
+					+ COLUMN_TBL.DAYTIME + " >  '" + lastUpdateDay + "'";
 
 //		deleteRecord = s.sqlGetter().executeUpdate(SQL);
 //		インサート
@@ -1425,7 +1425,7 @@ public class cloringDate {
 		return resultInt;
 	}
 
-	public int outPutLSfile(String folderPath){
+	private int outPutLSfile(String folderPath){
 		int resultInt = 0;
 
 		S s = new S();
@@ -1436,23 +1436,23 @@ public class cloringDate {
 		String fileNameL;
 		String fileNameS;
 		String filePath;
-		String column 	= TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.CODE			 	+ " , " //
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.DAYTIME			+ " , " //
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.TYPE				+ " , " //
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.ENTRYMETHOD		+ " , " //
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.EXITMETHOD			+ " , "
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.MINI_CHECK_FLG		+ " , "
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.REAL_ENTRY_VOLUME	+ " , "
-						+ TBL_Name.STOCK_DD + "." + COLUMN.CLOSE;
+		String column 	= TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.CODE			 	+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.DAYTIME			+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.TYPE				+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.ENTRYMETHOD		+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.EXITMETHOD			+ " , "
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.MINI_CHECK_FLG		+ " , "
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.REAL_ENTRY_VOLUME	+ " , "
+						+ TBL_Name.STOCK_DD + "." + COLUMN_TBL.CLOSE;
 
-		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
-						   + "'" +  COLUMN.DAYTIME				+ "' , " //
-						   + "'" +  COLUMN.TYPE					+ "' , " //
-						   + "'" +  COLUMN.ENTRYMETHOD			+ "' , " //
-						   + "'" +  COLUMN.EXITMETHOD			+ "' , "
-						   + "'" +  COLUMN.MINI_CHECK_FLG		+ "' , "
-						   + "'" +  COLUMN.REAL_ENTRY_VOLUME	+ "' , "
-						   + "'" +  COLUMN.CLOSE				+ "'" ;
+		String heddaColumn = "'" +  COLUMN_TBL.CODE		 			+ "' , " //
+						   + "'" +  COLUMN_TBL.DAYTIME				+ "' , " //
+						   + "'" +  COLUMN_TBL.TYPE					+ "' , " //
+						   + "'" +  COLUMN_TBL.ENTRYMETHOD			+ "' , " //
+						   + "'" +  COLUMN_TBL.EXITMETHOD			+ "' , "
+						   + "'" +  COLUMN_TBL.MINI_CHECK_FLG		+ "' , "
+						   + "'" +  COLUMN_TBL.REAL_ENTRY_VOLUME	+ "' , "
+						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
 
 
 
@@ -1498,18 +1498,18 @@ public class cloringDate {
 
 		SQL = " insert into " + TBL_Name.OUT_PUT_LASTORDER
 					+ " select "
-					+ COLUMN.CODE										 + " , " //
-					+ COLUMN.DAYTIME									 + " , " //
-					+ COLUMN.TYPE									 	 + " , " //
-					+ COLUMN.CATE_FLG									 + " , " //
-					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
-					+ COLUMN.ENTRYMETHOD								 + " , " //
-					+ COLUMN.CLOSE										 + " ,  "//今日の終値
-					+ COLUMN.EXITMETHOD									 + " ,  " //
-					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
-					+ COLUMN.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-					+ COLUMN.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
-					+ " ( " + COLUMN.CLOSE + " * " + COLUMN.IDEA_VOLUME	+	" ) as "	+ COLUMN.ENTRY_MONEY + "   " //エントリーマネーを出す。
+					+ COLUMN_TBL.CODE										 + " , " //
+					+ COLUMN_TBL.DAYTIME									 + " , " //
+					+ COLUMN_TBL.TYPE									 	 + " , " //
+					+ COLUMN_TBL.CATE_FLG									 + " , " //
+					+ COLUMN_TBL.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
+					+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+					+ COLUMN_TBL.CLOSE										 + " ,  "//今日の終値
+					+ COLUMN_TBL.EXITMETHOD									 + " ,  " //
+					+ COLUMN_TBL.VOLUME_UNIT								 + " ,  " //売買単位
+					+ COLUMN_TBL.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+					+ COLUMN_TBL.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+					+ " ( " + COLUMN_TBL.CLOSE + " * " + COLUMN_TBL.IDEA_VOLUME	+	" ) as "	+ COLUMN_TBL.ENTRY_MONEY + "   " //エントリーマネーを出す。
 					+ " from "
 					+ TBL_Name.LASTORDER;
 //		System.out.println(SQL);
@@ -1534,9 +1534,9 @@ public class cloringDate {
 		String TBL = TBL_Name.OUT_PUT_LASTORDER;
 		SQL  = " update "+ TBL
 				 + " set "
-				 + COLUMN.MINI_CHECK_FLG + " = false "
+				 + COLUMN_TBL.MINI_CHECK_FLG + " = false "
 				 + " where "
-				 + COLUMN.VOLUME_UNIT + " = " + COLUMN.REAL_ENTRY_VOLUME;
+				 + COLUMN_TBL.VOLUME_UNIT + " = " + COLUMN_TBL.REAL_ENTRY_VOLUME;
 		s.freeUpdateQuery(SQL);
 
 		//売買単位をいい感じにする。
@@ -1552,7 +1552,7 @@ public class cloringDate {
 		checkMINI_NORMAL(s);
 
 		//91_outPutlastOrderTBLにある、購入数0株の銘柄を削除する
-		String SQL = " delete from " + TBL_Name.OUT_PUT_LASTORDER + " where " + COLUMN.REAL_ENTRY_VOLUME + " = 0 ";
+		String SQL = " delete from " + TBL_Name.OUT_PUT_LASTORDER + " where " + COLUMN_TBL.REAL_ENTRY_VOLUME + " = 0 ";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -1565,54 +1565,54 @@ public class cloringDate {
 		//minicheckFLGがtrueのものに対して売買単位をチェックする。単元株数を超えるものをfalseで新規にインサートする。
 		SQL1 = " select * from " + TBL
 			+ " where "
-			+ COLUMN.VOLUME_UNIT + " < " + COLUMN.REAL_ENTRY_VOLUME
+			+ COLUMN_TBL.VOLUME_UNIT + " < " + COLUMN_TBL.REAL_ENTRY_VOLUME
 			+ " and "
-			+ COLUMN.MINI_CHECK_FLG + " is true ";
+			+ COLUMN_TBL.MINI_CHECK_FLG + " is true ";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL1);
 
 			while ( s.rs.next() ) {
-				int volumeUnit = s.rs.getInt(COLUMN.VOLUME_UNIT);
-				int entryVolume = s.rs.getInt(COLUMN.REAL_ENTRY_VOLUME);
+				int volumeUnit = s.rs.getInt(COLUMN_TBL.VOLUME_UNIT);
+				int entryVolume = s.rs.getInt(COLUMN_TBL.REAL_ENTRY_VOLUME);
 				int miniVolume = entryVolume % volumeUnit;
 				int tangenVolume = entryVolume - miniVolume;
-				String code = s.rs.getString	(COLUMN.CODE);
-				String dayTYPE = s.rs.getString	(COLUMN.TYPE);
-				int cate = s.rs.getInt	(COLUMN.CATE_FLG);
-				boolean signFLG = s.rs.getBoolean(COLUMN.SIGN_FLG);
-				String entryMETHOD = s.rs.getString	(COLUMN.ENTRYMETHOD);
-				String exitMETHOD = s.rs.getString	(COLUMN.EXITMETHOD);
+				String code = s.rs.getString	(COLUMN_TBL.CODE);
+				String dayTYPE = s.rs.getString	(COLUMN_TBL.TYPE);
+				int cate = s.rs.getInt	(COLUMN_TBL.CATE_FLG);
+				boolean signFLG = s.rs.getBoolean(COLUMN_TBL.SIGN_FLG);
+				String entryMETHOD = s.rs.getString	(COLUMN_TBL.ENTRYMETHOD);
+				String exitMETHOD = s.rs.getString	(COLUMN_TBL.EXITMETHOD);
 				//単元株用の作成
 				SQL2 = " insert into " + TBL
 					+ " ( "
-					+ COLUMN.CODE										 + " , " //
-					+ COLUMN.DAYTIME									 + " , " //
-					+ COLUMN.TYPE									 	 + " , " //
-					+ COLUMN.CATE_FLG									 + " , " //
-					+ COLUMN.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
-					+ COLUMN.ENTRYMETHOD								 + " , " //
-					+ COLUMN.CLOSE										 + " , " //今日の終値
-					+ COLUMN.EXITMETHOD								 + " ,  " //
-					+ COLUMN.VOLUME_UNIT								 + " ,  " //売買単位
-					+ COLUMN.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-					+ COLUMN.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
-					+ COLUMN.ENTRY_MONEY								 + "   "//一回辺り投資金額
+					+ COLUMN_TBL.CODE										 + " , " //
+					+ COLUMN_TBL.DAYTIME									 + " , " //
+					+ COLUMN_TBL.TYPE									 	 + " , " //
+					+ COLUMN_TBL.CATE_FLG									 + " , " //
+					+ COLUMN_TBL.SIGN_FLG								 	 + " , " //売買サインフラグ。true買い、false売り
+					+ COLUMN_TBL.ENTRYMETHOD								 + " , " //
+					+ COLUMN_TBL.CLOSE										 + " , " //今日の終値
+					+ COLUMN_TBL.EXITMETHOD								 + " ,  " //
+					+ COLUMN_TBL.VOLUME_UNIT								 + " ,  " //売買単位
+					+ COLUMN_TBL.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
+					+ COLUMN_TBL.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+					+ COLUMN_TBL.ENTRY_MONEY								 + "   "//一回辺り投資金額
 					+ " ) "
 					+ "values "
 					+ " ( "
 					+ "'" + code 			+ "'" + ","
-					+ "'" + s.rs.getString	(COLUMN.DAYTIME) 		+ "'" + ","
+					+ "'" + s.rs.getString	(COLUMN_TBL.DAYTIME) 		+ "'" + ","
 					+ "'" + dayTYPE 			+ "'" + ","
 					+ " " + cate 		+ " " + ","
 					+ " " + signFLG 		+ " " + ","
 					+ "'" + entryMETHOD	+ "'" + ","
-					+ " " + s.rs.getDouble	(COLUMN.CLOSE) 			+ " " + ","
+					+ " " + s.rs.getDouble	(COLUMN_TBL.CLOSE) 			+ " " + ","
 					+ "'" + exitMETHOD 	+ "'" + ","
-					+ " " + s.rs.getInt	(COLUMN.VOLUME_UNIT) 	+ " " + ","
+					+ " " + s.rs.getInt	(COLUMN_TBL.VOLUME_UNIT) 	+ " " + ","
 					+ " " + "false" 									+ " " + ","
 					+ " " + tangenVolume								+ " " + ","
-					+ " " + s.rs.getInt	(COLUMN.ENTRY_MONEY) 	+ " " + " "
+					+ " " + s.rs.getInt	(COLUMN_TBL.ENTRY_MONEY) 	+ " " + " "
 					+ " ) ";
 				s.freeUpdateQuery(SQL2);
 
@@ -1622,17 +1622,17 @@ public class cloringDate {
 //				s.rs.updateRow();
 				SQL3 = " update " + TBL
 					 + " set "
-					 + COLUMN.REAL_ENTRY_VOLUME + " = " + miniVolume
+					 + COLUMN_TBL.REAL_ENTRY_VOLUME + " = " + miniVolume
 					 + " where "
-					 + COLUMN.MINI_CHECK_FLG + " is true"
+					 + COLUMN_TBL.MINI_CHECK_FLG + " is true"
 					 + " and "
-					 + COLUMN.CODE + " = '" + code + "'"
+					 + COLUMN_TBL.CODE + " = '" + code + "'"
 					 + " and "
-					 + COLUMN.ENTRYMETHOD + " = '" + entryMETHOD + "'"
+					 + COLUMN_TBL.ENTRYMETHOD + " = '" + entryMETHOD + "'"
 					 + " and "
-					 + COLUMN.EXITMETHOD + " = '" + exitMETHOD + "'"
+					 + COLUMN_TBL.EXITMETHOD + " = '" + exitMETHOD + "'"
 					 + " and "
-					 + COLUMN.TYPE + " = '" + dayTYPE + "'";
+					 + COLUMN_TBL.TYPE + " = '" + dayTYPE + "'";
 
 				s.freeUpdateQuery(SQL3);
 
@@ -1660,11 +1660,11 @@ public class cloringDate {
 				+ " FROM " + TBL_Name.OUT_PUT_LASTORDER
 				+ " left outer join " + TBL_Name.STOCK_DD
 				+ " on "
-				+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.STOCK_DD + "." + COLUMN.CODE
+				+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.CODE + " = " + TBL_Name.STOCK_DD + "." + COLUMN_TBL.CODE
 				+ " and "
-				+ TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
+				+ TBL_Name.STOCK_DD + "." + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'"
 				+	" where "
-				+	COLUMN.SIGN_FLG  + " is  " + judge + " "
+				+	COLUMN_TBL.SIGN_FLG  + " is  " + judge + " "
 				+	" INTO OUTFILE '" + filePath +  "'"
 				+	" FIELDS TERMINATED BY ','"
 				+	" OPTIONALLY ENCLOSED BY '\"'";

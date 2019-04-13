@@ -1,6 +1,6 @@
 package constant;
 
-public class COLUMN {
+public class COLUMN_TBL {
 
 	//count(*)
 	public static String COUNT											= "count(*)";
@@ -138,6 +138,15 @@ public class COLUMN {
 	//前日比率
 	public static String CHANGERATE 										= "changeRate";
 	public static String CHANGERATE_KATA 									= CHANGERATE + " double ";
+	//前日比率
+	public static String SHORT_CHANGERATE 										= "SHORT_changeRate";
+	public static String SHORT_CHANGERATE_KATA 									= SHORT_CHANGERATE + " double ";
+	//前日比率
+	public static String MIDDLE_CHANGERATE 										= "MIDDLE_changeRate";
+	public static String MIDDLE_CHANGERATE_KATA 									= MIDDLE_CHANGERATE + " double ";
+	//前日比率
+	public static String LONG_CHANGERATE 										= "LONG_changeRate";
+	public static String LONG_CHANGERATE_KATA 									= LONG_CHANGERATE + " double ";
 	//株価短期間移動平均線
 	public static String SHORTIDO 											= "shortIDO";
 	public static String SHORTIDO_KATA 										= SHORTIDO + " double unsigned  ";
@@ -1087,6 +1096,10 @@ public class COLUMN {
 //	チェンジ月
 	public static String MONTH_CHANGE_FLG											= "MONTH_CHANGE_FLG";
 	public static String MONTH_CHANGE_FLG_KATA 									= MONTH_CHANGE_FLG + " tinyint(1) ";
+
+	//ピックアップアップフラグ
+	public static String PICK_UP_FLG										= "PICK_UP_FLG";
+	public static String PICK_UP_FLG_KATA 									= PICK_UP_FLG + " tinyint(1) ";
 
 //	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
 //	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）

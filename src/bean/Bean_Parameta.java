@@ -28,13 +28,9 @@ public class Bean_Parameta {
 
 	//これがtrueだと週足を参照する。
 	private boolean checkWeeklyDaraFLG = false;
-	
+
 	//これがtrueだと財務諸表データなど、paraDTOに入ってるテーブル情報を参照するか否かを選べる
 	private boolean checkParaDTOOption = false;
-
-	public boolean isCheckParaDTOOption() {
-		return checkParaDTOOption;
-	}
 
 	public boolean isCheckWeeklyDaraFLG() {
 		return checkWeeklyDaraFLG;
@@ -43,6 +39,11 @@ public class Bean_Parameta {
 	public void setCheckWeeklyDaraFLG(boolean checkWeeklyDaraFLG) {
 		this.checkWeeklyDaraFLG = checkWeeklyDaraFLG;
 	}
+
+	public boolean isCheckParaDTOOption() {
+		return checkParaDTOOption;
+	}
+
 
 	public void setCheckParaDTOOption(boolean checkParaDTOOption) {
 		this.checkParaDTOOption = checkParaDTOOption;

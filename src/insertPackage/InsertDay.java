@@ -12,7 +12,7 @@ import bean.Bean_CodeList;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
 
@@ -261,20 +261,20 @@ public class InsertDay {
 		SQL = "insert into ";
 		SQL = SQL	+ TBL_Name.STOCK_DD
 					+ " ("
-					+ COLUMN.CODE			+ " , "
-					+ COLUMN.DAYTIME	 	+ " , "
-					+ COLUMN.BEFORE_OPEN	 	+ " , "
-					+ COLUMN.BEFORE_MAX	 	+ " , "
-					+ COLUMN.BEFORE_MIN	 	+ " , "
-					+ COLUMN.BEFORE_CLOSE 	+ " , "
-					+ COLUMN.BEFORE_DEKI  	+ " , "
-					+ COLUMN.BEFORE_BAYBAY	+ " , "
-					+ COLUMN.OPEN	 	 	+ " , "
-					+ COLUMN.MAX	 	 	+ " , "
-					+ COLUMN.MIN		 	+ " , "
-					+ COLUMN.CLOSE		 	+ " , "
-					+ COLUMN.DEKI 		 	+ " , "
-					+ COLUMN.BAYBAY 	 	+ "   "
+					+ COLUMN_TBL.CODE			+ " , "
+					+ COLUMN_TBL.DAYTIME	 	+ " , "
+					+ COLUMN_TBL.BEFORE_OPEN	 	+ " , "
+					+ COLUMN_TBL.BEFORE_MAX	 	+ " , "
+					+ COLUMN_TBL.BEFORE_MIN	 	+ " , "
+					+ COLUMN_TBL.BEFORE_CLOSE 	+ " , "
+					+ COLUMN_TBL.BEFORE_DEKI  	+ " , "
+					+ COLUMN_TBL.BEFORE_BAYBAY	+ " , "
+					+ COLUMN_TBL.OPEN	 	 	+ " , "
+					+ COLUMN_TBL.MAX	 	 	+ " , "
+					+ COLUMN_TBL.MIN		 	+ " , "
+					+ COLUMN_TBL.CLOSE		 	+ " , "
+					+ COLUMN_TBL.DEKI 		 	+ " , "
+					+ COLUMN_TBL.BAYBAY 	 	+ "   "
 
 
 					+ " ) "
@@ -328,16 +328,16 @@ public class InsertDay {
 		SQL = "insert into ";
 		SQL = SQL	+ TBL_Name.STATISTICS_DD
 					+ " ("
-					+ COLUMN.CODE				+ " , "
-					+ COLUMN.DAYTIME		 	+ " , "
-					+ COLUMN.DEKI	 	 		+ " , "
-					+ COLUMN.BAYBAY	 	 		+ " , "
-					+ COLUMN.STOCK_NAME_NUM		+ " , "
-					+ COLUMN.STOCK_GETPRICE		+ " , "
-					+ COLUMN.STOCK_UPSTOCK 		+ " , "
-					+ COLUMN.STOCK_NOCHANGE	 	+ " , "
-					+ COLUMN.STOCK_DOWNSTOCK	+ " , "
-					+ COLUMN.STOCK_NOCOMPARE	+ "   "
+					+ COLUMN_TBL.CODE				+ " , "
+					+ COLUMN_TBL.DAYTIME		 	+ " , "
+					+ COLUMN_TBL.DEKI	 	 		+ " , "
+					+ COLUMN_TBL.BAYBAY	 	 		+ " , "
+					+ COLUMN_TBL.STOCK_NAME_NUM		+ " , "
+					+ COLUMN_TBL.STOCK_GETPRICE		+ " , "
+					+ COLUMN_TBL.STOCK_UPSTOCK 		+ " , "
+					+ COLUMN_TBL.STOCK_NOCHANGE	 	+ " , "
+					+ COLUMN_TBL.STOCK_DOWNSTOCK	+ " , "
+					+ COLUMN_TBL.STOCK_NOCOMPARE	+ "   "
 					+ " ) "
 					+ "values (?,?,?,?,?,?,?,?,?,?)";
 
@@ -384,12 +384,12 @@ public class InsertDay {
 		SQL = "insert into ";
 		SQL = SQL	+ TBL_Name.INDEX_DD
 					+ " ("
-					+ COLUMN.CODE			+ " , "
-					+ COLUMN.DAYTIME	 	+ " , "
-					+ COLUMN.OPEN	 	 	+ " , "
-					+ COLUMN.MAX	 	 	+ " , "
-					+ COLUMN.MIN		 	+ " , "
-					+ COLUMN.CLOSE		 	+ "  "
+					+ COLUMN_TBL.CODE			+ " , "
+					+ COLUMN_TBL.DAYTIME	 	+ " , "
+					+ COLUMN_TBL.OPEN	 	 	+ " , "
+					+ COLUMN_TBL.MAX	 	 	+ " , "
+					+ COLUMN_TBL.MIN		 	+ " , "
+					+ COLUMN_TBL.CLOSE		 	+ "  "
 					+ " ) "
 					+ "values (?,?,?,?,?,?)";
 
@@ -430,14 +430,14 @@ public class InsertDay {
 		SQL = "insert into ";
 		SQL = SQL	+ TBL_Name.ETF_DD
 					+ " ("
-					+ COLUMN.CODE			+ " , "
-					+ COLUMN.DAYTIME	 	+ " , "
-					+ COLUMN.OPEN	 	 	+ " , "
-					+ COLUMN.MAX	 	 	+ " , "
-					+ COLUMN.MIN		 	+ " , "
-					+ COLUMN.CLOSE		 	+ " , "
-					+ COLUMN.DEKI 		 	+ " , "
-					+ COLUMN.BAYBAY 	 	+ "  "
+					+ COLUMN_TBL.CODE			+ " , "
+					+ COLUMN_TBL.DAYTIME	 	+ " , "
+					+ COLUMN_TBL.OPEN	 	 	+ " , "
+					+ COLUMN_TBL.MAX	 	 	+ " , "
+					+ COLUMN_TBL.MIN		 	+ " , "
+					+ COLUMN_TBL.CLOSE		 	+ " , "
+					+ COLUMN_TBL.DEKI 		 	+ " , "
+					+ COLUMN_TBL.BAYBAY 	 	+ "  "
 					+ " ) "
 					+ "values (?,?,?,?,?,?,?,?)";
 

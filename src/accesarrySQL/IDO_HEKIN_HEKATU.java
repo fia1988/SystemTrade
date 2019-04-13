@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import proparty.S;
 import proparty.TBL_Name;
 import constant.AccesarryParameta;
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 import constant.ReCord;
 
 public class IDO_HEKIN_HEKATU {
@@ -52,9 +52,9 @@ public class IDO_HEKIN_HEKATU {
 	//個別銘柄・・・1
 	private static void setStockIDO_HEKATU(String code,String TBL,String dayTime,S s){
 		//終値による移動平滑線
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN.SHORTIDO_HEKATU),(COLUMN.CLOSE), s);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN.MIDDLEIDO_HEKATU),(COLUMN.CLOSE), s);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN.LONGIDO_HEKATU),(COLUMN.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN_TBL.SHORTIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN_TBL.MIDDLEIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN_TBL.LONGIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
 
 	}
 
@@ -66,16 +66,16 @@ public class IDO_HEKIN_HEKATU {
 	//指数・・・3
 	private static void setIndexIDO_Heikin(String code,String TBL,String dayTime,S s){
 		//終値による移動平滑線
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN.SHORTIDO_HEKATU),(COLUMN.CLOSE), s);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN.MIDDLEIDO_HEKATU),(COLUMN.CLOSE), s);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN.LONGIDO_HEKATU),(COLUMN.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN_TBL.SHORTIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN_TBL.MIDDLEIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN_TBL.LONGIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
 	}
 
 	//ETF・・・4
 	private static void setETFIDO_Heikin(String code,String TBL,String dayTime,S s){
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN.SHORTIDO_HEKATU),(COLUMN.CLOSE), s);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN.MIDDLEIDO_HEKATU),(COLUMN.CLOSE), s);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN.LONGIDO_HEKATU),(COLUMN.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN_TBL.SHORTIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN_TBL.MIDDLEIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN_TBL.LONGIDO_HEKATU),(COLUMN_TBL.CLOSE), s);
 	}
 
 	//先物・・・5
@@ -108,13 +108,13 @@ public class IDO_HEKIN_HEKATU {
 		double num = 0;
 
 		//ここでテーブル指定
-		SQL = "select " + COLUMN.DAYTIME
+		SQL = "select " + COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
 
@@ -124,18 +124,18 @@ public class IDO_HEKIN_HEKATU {
 			if(s.rs.next()==true){
 				//もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
 
-				start = s.rs.getString((COLUMN.DAYTIME)) ;
+				start = s.rs.getString((COLUMN_TBL.DAYTIME)) ;
 				//前日のレコード
 				SQL = "select "
 						+ updateColomn
 						+ " from "
 						+ TBL
 						+ " where "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'"
 						+ " and "
-						+ COLUMN.DAYTIME + " < " + "'" + dayTime + "'"
-						+ " order by "	   + COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME + " < " + "'" + dayTime + "'"
+						+ " order by "	   + COLUMN_TBL.DAYTIME
 						+ " desc "
 						+ " limit 1";
 
@@ -152,10 +152,10 @@ public class IDO_HEKIN_HEKATU {
 							+ " from "
 							+ TBL
 							+ " where "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'"
 							+ " and "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " between "
 							+ "'" + start + "'"
 							+ " and "
@@ -176,10 +176,10 @@ public class IDO_HEKIN_HEKATU {
 							+ " from "
 							+ TBL
 							+ " where "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'"
 							+ " and "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = " + "'" + dayTime + "'";
 					s.rs = s.sqlGetter().executeQuery(SQL);
 					if(s.rs.next()==true){
@@ -195,10 +195,10 @@ public class IDO_HEKIN_HEKATU {
 					+ " set "
 					+ updateColomn + " = " + num
 					+ " where "
-					+ COLUMN.DAYTIME
+					+ COLUMN_TBL.DAYTIME
 					+ " = '" + dayTime + "'"
 					+ " and "
-					+ COLUMN.CODE
+					+ COLUMN_TBL.CODE
 					+ " ='" + code + "'";
 
 				s.sqlGetter().executeUpdate(SQL);
@@ -278,9 +278,9 @@ public class IDO_HEKIN_HEKATU {
 	//個別銘柄・・・1
 	private static void setStockIDO_HEKATU(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//終値による移動平滑線
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN.SHORTIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN.MIDDLEIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN.LONGIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN_TBL.SHORTIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN_TBL.MIDDLEIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN_TBL.LONGIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
 
 	}
 
@@ -292,16 +292,16 @@ public class IDO_HEKIN_HEKATU {
 	//指数・・・3
 	private static void setIndexIDO_Heikin(String code,String TBL,String dayTime,S s,ResultSet EDIT){
 		//終値による移動平滑線
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN.SHORTIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN.MIDDLEIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN.LONGIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN_TBL.SHORTIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN_TBL.MIDDLEIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN_TBL.LONGIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
 	}
 
 	//ETF・・・4
 	private static void setETFIDO_Heikin(String code,String TBL,String dayTime,S s,ResultSet EDIT){
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN.SHORTIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN.MIDDLEIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
-		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN.LONGIDO_HEKATU),(COLUMN.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUSHORT, (COLUMN_TBL.SHORTIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATUMIDDLE, (COLUMN_TBL.MIDDLEIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
+		setIDOHeikin_HEKATU_base(code,TBL, dayTime, AccesarryParameta.HEKATULONG, (COLUMN_TBL.LONGIDO_HEKATU),(COLUMN_TBL.CLOSE), s,EDIT);
 	}
 
 	//先物・・・5
@@ -334,15 +334,15 @@ public class IDO_HEKIN_HEKATU {
 		double num = 0;
 
 		//ここでテーブル指定
-		SQL = "select " + COLUMN.DAYTIME
+		SQL = "select " + COLUMN_TBL.DAYTIME
 				+ " from "
 				+ TBL
 				+ " where "
-				+ COLUMN.CODE
+				+ COLUMN_TBL.CODE
 				+ " ='" + code + "'"
 				+ " and "
-				+ COLUMN.DAYTIME + " <= '" + dayTime + "'"
-				+ " order by "	   + COLUMN.DAYTIME
+				+ COLUMN_TBL.DAYTIME + " <= '" + dayTime + "'"
+				+ " order by "	   + COLUMN_TBL.DAYTIME
 				+ " desc "
 				+ " limit " + ( term - 1 ) + "," + 1;
 
@@ -352,18 +352,18 @@ public class IDO_HEKIN_HEKATU {
 			if(s.rs.next()==true){
 				//もしも指定したテーブルの中のレコード数が、termよりも少ない場合は処理をしない。
 
-				start = s.rs.getString((COLUMN.DAYTIME)) ;
+				start = s.rs.getString((COLUMN_TBL.DAYTIME)) ;
 				//前日のレコード
 				SQL = "select "
 						+ updateColomn
 						+ " from "
 						+ TBL
 						+ " where "
-						+ COLUMN.CODE
+						+ COLUMN_TBL.CODE
 						+ " ='" + code + "'"
 						+ " and "
-						+ COLUMN.DAYTIME + " < " + "'" + dayTime + "'"
-						+ " order by "	   + COLUMN.DAYTIME
+						+ COLUMN_TBL.DAYTIME + " < " + "'" + dayTime + "'"
+						+ " order by "	   + COLUMN_TBL.DAYTIME
 						+ " desc "
 						+ " limit 1";
 
@@ -380,10 +380,10 @@ public class IDO_HEKIN_HEKATU {
 							+ " from "
 							+ TBL
 							+ " where "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'"
 							+ " and "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " between "
 							+ "'" + start + "'"
 							+ " and "
@@ -404,10 +404,10 @@ public class IDO_HEKIN_HEKATU {
 							+ " from "
 							+ TBL
 							+ " where "
-							+ COLUMN.CODE
+							+ COLUMN_TBL.CODE
 							+ " ='" + code + "'"
 							+ " and "
-							+ COLUMN.DAYTIME
+							+ COLUMN_TBL.DAYTIME
 							+ " = " + "'" + dayTime + "'";
 					s.rs = s.sqlGetter().executeQuery(SQL);
 					if(s.rs.next()==true){
@@ -423,10 +423,10 @@ public class IDO_HEKIN_HEKATU {
 					+ " set "
 					+ updateColomn + " = " + num
 					+ " where "
-					+ COLUMN.DAYTIME
+					+ COLUMN_TBL.DAYTIME
 					+ " = '" + dayTime + "'"
 					+ " and "
-					+ COLUMN.CODE
+					+ COLUMN_TBL.CODE
 					+ " ='" + code + "'";
 
 //				s.sqlGetter().executeUpdate(SQL);

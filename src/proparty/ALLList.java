@@ -8,7 +8,7 @@ import bean.Bean_CodeList;
 
 import common.commonAP;
 
-import constant.COLUMN;
+import constant.COLUMN_TBL;
 
 public class ALLList {
 	static String SQL;
@@ -20,7 +20,7 @@ public class ALLList {
 	static public String getCateFlg(String code,S s){
 
 
-		SQL = "select " + COLUMN.CATE_FLG + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " = '" + code + "'"				;
+		SQL = "select " + COLUMN_TBL.CATE_FLG + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CODE + " = '" + code + "'"				;
 
 		String cateflg= "0";
 
@@ -28,7 +28,7 @@ public class ALLList {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 
-				cateflg = (s.rs.getString(commonAP.cutBlank(COLUMN.CATE_FLG)));
+				cateflg = (s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CATE_FLG)));
 
 			}
 		} catch (SQLException e) {
@@ -47,14 +47,14 @@ public class ALLList {
 	//通貨・・・6
 	static public void setListCode(S s){
 		ALLCODE = new ArrayList<String>();
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL;
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL;
 
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 
-				ALLCODE.add(s.rs.getString(commonAP.cutBlank(COLUMN.CODE)));
+				ALLCODE.add(s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE)));
 
 			}
 		} catch (SQLException e) {
@@ -70,13 +70,13 @@ public class ALLList {
 
 
 		ALLCODE = new ArrayList<String>();
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
+		SQL = "select " + COLUMN_TBL.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN_TBL.CATE_FLG + " = '" + cate + "'";
 
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 
-				ALLCODE.add(s.rs.getString(commonAP.cutBlank(COLUMN.CODE)));
+				ALLCODE.add(s.rs.getString(commonAP.cutBlank(COLUMN_TBL.CODE)));
 
 			}
 		} catch (SQLException e) {
