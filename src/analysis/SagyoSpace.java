@@ -1,5 +1,6 @@
 package analysis;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -10,11 +11,14 @@ import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
+import bean.Bean_calendarBean;
 import bean.Bean_nowRecord;
+import botton.cloringDate;
 
 import common.commonAP;
 
 import constant.ReCord;
+import constant.ReturnCodeConst;
 import constant.TechCon;
 import constant.logWriting;
 
@@ -116,7 +120,17 @@ public class SagyoSpace {
 
 
 
+	public static void testCaseS(){
 
+		Bean_calendarBean b = new Bean_calendarBean();
+		String folderPath = "C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.everyDayFile\\00001.syoki".replace(File.separator,ReturnCodeConst.SQL_SEPA);
+		cloringDate c = new cloringDate();
+
+		//あとでoutPutLSfileをprivateになおす
+		int resultInt = c.outPutLSfile(folderPath);
+
+
+	}
 
 
 	public static void testCase9997(){
@@ -1421,8 +1435,8 @@ public class SagyoSpace {
 //		dayList[0] =	"2017-04-25";
 //		dayList[1] =	"2017-05-31";
 //		dayLists.add(dayList.clone());
-		dayList[0] =	"2017-08-01";
-		dayList[1] =	"2017-09-29";
+		dayList[0] =	"2018-06-01";
+		dayList[1] =	"2020-09-29";
 		dayLists.add(dayList.clone());
 //		dayList[0] = "2007-01-01";
 //		dayList[1] = "2007-12-31";

@@ -1425,7 +1425,7 @@ public class cloringDate {
 		return resultInt;
 	}
 
-	private int outPutLSfile(String folderPath){
+	public int outPutLSfile(String folderPath){
 		int resultInt = 0;
 
 		S s = new S();
@@ -1443,7 +1443,7 @@ public class cloringDate {
 						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.EXITMETHOD			+ " , "
 						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.MINI_CHECK_FLG		+ " , "
 						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.REAL_ENTRY_VOLUME	+ " , "
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.ENTRY_MONEY;
+						+ TBL_Name.STOCK_DD + "." + COLUMN.CLOSE;
 
 		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
 						   + "'" +  COLUMN.DAYTIME				+ "' , " //
@@ -1452,7 +1452,7 @@ public class cloringDate {
 						   + "'" +  COLUMN.EXITMETHOD			+ "' , "
 						   + "'" +  COLUMN.MINI_CHECK_FLG		+ "' , "
 						   + "'" +  COLUMN.REAL_ENTRY_VOLUME	+ "' , "
-						   + "'" +  COLUMN.ENTRY_MONEY			+ "'" ;
+						   + "'" +  COLUMN.CLOSE				+ "'" ;
 
 
 
@@ -1654,8 +1654,15 @@ public class cloringDate {
 				+ heddaColumn
 				+ " union "
 				+ " SELECT "
+//				+ column
+//				+ " FROM " + TBL_Name.OUT_PUT_LASTORDER
 				+ column
 				+ " FROM " + TBL_Name.OUT_PUT_LASTORDER
+				+ " left outer join " + TBL_Name.STOCK_DD
+				+ " on "
+				+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.CODE + " = " + TBL_Name.STOCK_DD + "." + COLUMN.CODE
+				+ " and "
+				+ TBL_Name.STOCK_DD + "." + COLUMN.DAYTIME + " = '" + TODAY + "'"
 				+	" where "
 				+	COLUMN.SIGN_FLG  + " is  " + judge + " "
 				+	" INTO OUTFILE '" + filePath +  "'"
@@ -1675,20 +1682,6 @@ public class cloringDate {
 
 		commonAP.writeInLog(judgeFile + "を作成します。SQL：" + SQL,logWriting.DATEDATE_LOG_FLG);
 
-		String SQL2 =	" SELECT "
-						+ "'" + heddaColumn+ "',"
-						+ COLUMN.CLOSE
-						+ " union "
-						+ " SELECT "
-						+ column
-						+ " , " + COLUMN.CLOSE
-						+ " FROM " + TBL_Name.OUT_PUT_LASTORDER + " as b "
-						+ " left outer join " + TBL_Name.STOCK_DD + " as a"
-						+ " on "
-						+ "b." + COLUMN.CODE + " = a." + COLUMN.CODE
-						+ " and "
-						+ "a." + COLUMN.DAYTIME + " = '" + TODAY + "'";
-		System.out.println("実験的なテーブル："+SQL2);
 		return SQL;
 	}
 
