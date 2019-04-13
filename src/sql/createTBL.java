@@ -46,9 +46,44 @@ public class createTBL {
 		createFORRIGN_RATIO_TBL(s);
 		createMARKET_DD_TBL(s);
 		createCREDIT_WW_TBL(s);
+		createCalendar_DD_TBL(s);
 		return createLastOrderTable(s);
 	}
 
+	private void createCalendar_DD_TBL(S s){
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		colum = " ( "
+				+ COLUMN.DAYTIME_KATA					 + " ,  "
+				+ COLUMN.WEEK_NOW_KATA					 + " ,  "
+				+ COLUMN.MONTH_NOW_KATA					 + " ,  "
+				+ COLUMN.DAYTIME_BEFORE_KATA			 + " ,  "
+				+ COLUMN.WEEK_BEFORE_KATA				 + " ,  "
+				+ COLUMN.MONTH_BEFORE_KATA				 + " ,  "
+				+ COLUMN.DAYTIME_SHORT_BEFORE_KATA		 + " ,  "
+				+ COLUMN.WEEK_SHORT_BEFORE_KATA			 + " ,  "
+				+ COLUMN.MONTH_SHORT_BEFORE_KATA		 + " ,  "
+				+ COLUMN.DAYTIME_MIDDLE_BEFORE_KATA		 + " ,  "
+				+ COLUMN.WEEK_MIDDLE_BEFORE_KATA		 + " ,  "
+				+ COLUMN.MONTH_MIDDLE_BEFORE_KATA		 + " ,  "
+				+ COLUMN.DAYTIME_LONG_BEFORE_KATA		 + " ,  "
+				+ COLUMN.WEEK_LONG_BEFORE_KATA			 + " ,  "
+				+ COLUMN.MONTH_LONG_BEFORE_KATA			 + " ,  "
+				+ COLUMN.WEEK_CHANGE_FLG_KATA 			 + " ,  "
+				+ COLUMN.MONTH_CHANGE_FLG_KATA 			 + " ,  "
+				+ "primary key ("
+				+ COLUMN.DAYTIME +  ") )";;
+
+
+		//SQL文の取得
+		String create = "create table ";
+		SQL = create + TBL_Name.CALENDAR_TBL + colum;
+//		System.out.println(SQL);
+		s.createTBL(SQL);
+	};
 
 	private void createMARKET_DD_TBL(S s){
 		//SQL全文

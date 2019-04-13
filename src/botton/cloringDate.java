@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import makeCalendar.makeCalendarCon;
+import makeWeekMonthTBL.makeWeekMonthCon;
 import makekickfile.Digest;
 import proparty.PROPARTY;
 import proparty.S;
@@ -1229,9 +1231,15 @@ public class cloringDate {
 
 
 		}
-
+		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		s.closeConection();
 
+		//カレンダーテーブル作成
+		makeCalendarCon makeC = new makeCalendarCon();
+		makeC.createCallendar(TODAY);
+		//月足週足を作る
+		makeWeekMonthCon makeW_M = new makeWeekMonthCon();
+		makeW_M.createWeekMonth(TODAY);
 		//マーケットテーブル作成
 		insertMarketTBL();
 		//マーケットテーブル作成、株主資本コストの計算
@@ -1428,14 +1436,14 @@ public class cloringDate {
 		String fileNameL;
 		String fileNameS;
 		String filePath;
-		String column 	= COLUMN.CODE			 	+ " , " //
-						+ COLUMN.DAYTIME			+ " , " //
-						+ COLUMN.TYPE				+ " , " //
-						+ COLUMN.ENTRYMETHOD		+ " , " //
-						+ COLUMN.EXITMETHOD			+ " , "
-						+ COLUMN.MINI_CHECK_FLG		+ " , "
-						+ COLUMN.REAL_ENTRY_VOLUME	+ " , "
-						+ COLUMN.ENTRY_MONEY;
+		String column 	= TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.CODE			 	+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.DAYTIME			+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.TYPE				+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.ENTRYMETHOD		+ " , " //
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.EXITMETHOD			+ " , "
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.MINI_CHECK_FLG		+ " , "
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.REAL_ENTRY_VOLUME	+ " , "
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN.ENTRY_MONEY;
 
 		String heddaColumn = "'" +  COLUMN.CODE		 			+ "' , " //
 						   + "'" +  COLUMN.DAYTIME				+ "' , " //
@@ -1454,7 +1462,7 @@ public class cloringDate {
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameL;
 
-		SQL = getOutFileSQL(heddaColumn, column, filePath, "true");
+		SQL = getOutFileSQL(heddaColumn, column, filePath, "true",today);
 		//戻り値1086の時はファイルが存在する
 		String LSfilePath = filePath.replace(ReturnCodeConst.SQL_SEPA, File.separator);
 		File file = new File(LSfilePath);
@@ -1467,7 +1475,7 @@ public class cloringDate {
 
 
 		filePath = folderPath + ReturnCodeConst.SQL_SEPA + fileNameS;
-		SQL = getOutFileSQL(heddaColumn, column, filePath, "false");
+		SQL = getOutFileSQL(heddaColumn, column, filePath, "false",today);
 		LSfilePath = filePath.replace(ReturnCodeConst.SQL_SEPA, File.separator);
 		file = new File(LSfilePath);
         if(file.delete()){
@@ -1638,8 +1646,8 @@ public class cloringDate {
 
 	}
 
-
-	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge){
+	//LSファイルを作成するSQLを作成している。
+	private String getOutFileSQL(String heddaColumn,String column,String filePath,String judge,String TODAY){
 		String SQL;
 
 		SQL =	" SELECT "
@@ -1659,6 +1667,28 @@ public class cloringDate {
 //				+ COLUMN.ENTRYMETHOD	+ " , " //
 //				+ COLUMN.EXITMETHOD		+ " , "
 
+		String judgeFile = "Sファイル";
+
+		if (judge.equals("true")){
+			judgeFile = "Lファイル";
+		};
+
+		commonAP.writeInLog(judgeFile + "を作成します。SQL：" + SQL,logWriting.DATEDATE_LOG_FLG);
+
+		String SQL2 =	" SELECT "
+						+ "'" + heddaColumn+ "',"
+						+ COLUMN.CLOSE
+						+ " union "
+						+ " SELECT "
+						+ column
+						+ " , " + COLUMN.CLOSE
+						+ " FROM " + TBL_Name.OUT_PUT_LASTORDER + " as b "
+						+ " left outer join " + TBL_Name.STOCK_DD + " as a"
+						+ " on "
+						+ "b." + COLUMN.CODE + " = a." + COLUMN.CODE
+						+ " and "
+						+ "a." + COLUMN.DAYTIME + " = '" + TODAY + "'";
+		System.out.println("実験的なテーブル："+SQL2);
 		return SQL;
 	}
 

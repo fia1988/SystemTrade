@@ -15,11 +15,33 @@ public class Bean_Parameta {
 
 	private boolean creditDateUseFlg = false;
 
+	//これがtrueだと月足を参照する。
+	private boolean checkMonthlyDaraFLG = false;
+	public boolean isCheckMonthlyDaraFLG() {
+		return checkMonthlyDaraFLG;
+	}
+
+	public void setCheckMonthlyDaraFLG(boolean checkMonthlyDaraFLG) {
+		this.checkMonthlyDaraFLG = checkMonthlyDaraFLG;
+	}
+
+
+	//これがtrueだと週足を参照する。
+	private boolean checkWeeklyDaraFLG = false;
+	
 	//これがtrueだと財務諸表データなど、paraDTOに入ってるテーブル情報を参照するか否かを選べる
 	private boolean checkParaDTOOption = false;
 
 	public boolean isCheckParaDTOOption() {
 		return checkParaDTOOption;
+	}
+
+	public boolean isCheckWeeklyDaraFLG() {
+		return checkWeeklyDaraFLG;
+	}
+
+	public void setCheckWeeklyDaraFLG(boolean checkWeeklyDaraFLG) {
+		this.checkWeeklyDaraFLG = checkWeeklyDaraFLG;
 	}
 
 	public void setCheckParaDTOOption(boolean checkParaDTOOption) {

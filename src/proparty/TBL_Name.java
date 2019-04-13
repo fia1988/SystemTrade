@@ -21,6 +21,8 @@ public class TBL_Name {
 	//TOPIXとかマーケットの記録が入ってる
 	final public static String MARKET_DD_TBL    = "07_marketTBL" + TAIL_DAY;
 
+	final public static String CALENDAR_TBL    = "AA_calendarTBL";
+
 	//全上場企業 決算・財務・業績データ
 	//財務諸表データ
 	//japan-all-stock-financial-results_20170107.csv

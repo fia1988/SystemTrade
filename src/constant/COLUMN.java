@@ -1025,6 +1025,69 @@ public class COLUMN {
 	public static String COVAR_with_TOPIX					= "COVAR_with_TOPIX";
 	public static String COVAR_with_TOPIX_KATA				= COVAR_with_TOPIX + " double  ";
 
+
+//	今週
+	public static String WEEK_NOW				= "WEEK_NOW";
+	public static String WEEK_NOW_KATA			= WEEK_NOW + "  varchar(8)   ";
+
+
+//	今月 YYYYMM
+	public static String MONTH_NOW				= "MONTH_NOW";
+	public static String MONTH_NOW_KATA			= MONTH_NOW + "  varchar(6)   ";
+
+	//前日
+	public static String DAYTIME_BEFORE					= "dayTime_BEFORE";
+	public static String DAYTIME_BEFORE_KATA			= DAYTIME_BEFORE + " DATE ";
+
+//	前週 YYYYMMWW
+	public static String WEEK_BEFORE				= "WEEK_BEFORE";
+	public static String WEEK_BEFORE_KATA			= WEEK_BEFORE + "  varchar(8)  ";
+//	前月
+	public static String MONTH_BEFORE				= "MONTH_BEFORE";
+	public static String MONTH_BEFORE_KATA			= MONTH_BEFORE + "  varchar(6)   ";
+
+
+//	ショート前日
+	public static String DAYTIME_SHORT_BEFORE					= "dayTime_SHORT_BEFORE";
+	public static String DAYTIME_SHORT_BEFORE_KATA			= DAYTIME_SHORT_BEFORE + " DATE ";
+//	ショート前週
+	public static String WEEK_SHORT_BEFORE				= "WEEK_SHORT_BEFORE";
+	public static String WEEK_SHORT_BEFORE_KATA			= WEEK_SHORT_BEFORE + "  varchar(8)   ";
+//	ショート前月
+	public static String MONTH_SHORT_BEFORE				= "MONTH_SHORT_BEFORE";
+	public static String MONTH_SHORT_BEFORE_KATA			= MONTH_SHORT_BEFORE + "  varchar(6)   ";
+
+
+//	ミドル前日
+	public static String DAYTIME_MIDDLE_BEFORE					= "dayTime_MIDDLE_BEFORE";
+	public static String DAYTIME_MIDDLE_BEFORE_KATA			= DAYTIME_MIDDLE_BEFORE + " DATE ";
+//	ミドル前週
+	public static String WEEK_MIDDLE_BEFORE				= "WEEK_MIDDLE_BEFORE";
+	public static String WEEK_MIDDLE_BEFORE_KATA			= WEEK_MIDDLE_BEFORE + "  varchar(8)  ";
+//	ミドル前月
+	public static String MONTH_MIDDLE_BEFORE				= "MONTH_MIDDLE_BEFORE";
+	public static String MONTH_MIDDLE_BEFORE_KATA			= MONTH_MIDDLE_BEFORE + "  varchar(6)   ";
+
+
+//	ロング前日
+	public static String DAYTIME_LONG_BEFORE					= "dayTime_LONG_BEFORE";
+	public static String DAYTIME_LONG_BEFORE_KATA			= DAYTIME_LONG_BEFORE + " DATE ";
+//	ロング前週
+	public static String WEEK_LONG_BEFORE				= "WEEK_LONG_BEFORE";
+	public static String WEEK_LONG_BEFORE_KATA			= WEEK_LONG_BEFORE + "  varchar(8)   ";
+//	ロング前月
+	public static String MONTH_LONG_BEFORE				= "MONTH_LONG_BEFORE";
+	public static String MONTH_LONG_BEFORE_KATA			= MONTH_LONG_BEFORE + "  varchar(6)  ";
+
+
+
+//	チェンジ週
+	public static String WEEK_CHANGE_FLG											= "WEEK_CHANGE_FLG";
+	public static String WEEK_CHANGE_FLG_KATA 									= WEEK_CHANGE_FLG + " tinyint(1) ";
+//	チェンジ月
+	public static String MONTH_CHANGE_FLG											= "MONTH_CHANGE_FLG";
+	public static String MONTH_CHANGE_FLG_KATA 									= MONTH_CHANGE_FLG + " tinyint(1) ";
+
 //	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
 //	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
 
