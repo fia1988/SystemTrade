@@ -59,8 +59,8 @@ public class createTBL {
 		String SQL;
 		//列名の取得
 		String colum;
-		String weekMonthCol = COLUMN_TBL.WEEK_NOW;
-		String weekMonthColMae = COLUMN_TBL.WEEK_BEFORE;
+		String weekMonthCol = COLUMN_TBL.WEEK_NOW_KATA;
+		String weekMonthColMae = COLUMN_TBL.WEEK_BEFORE_KATA;
 		String TBL = TBL_Name.STOCK_WW_REAL_TIME;
 
 		//SQL文の取得
@@ -84,9 +84,9 @@ public class createTBL {
 				+ COLUMN_TBL.MARKET_CAP_KATA							 + " , " //時価総額
 				+ COLUMN_TBL.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN_TBL.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
-										+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
+				+ COLUMN_TBL.SHORT_CHANGERATE_KATA						 + " , " //ショート前日比率(0.05表示＝（5％）)
+				+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA						 + " , " //ミドル前日比率(0.05表示＝（5％）)
+				+ COLUMN_TBL.LONG_CHANGERATE_KATA						 + " , " //ロング前日比率(0.05表示＝（5％）)
 				+ COLUMN_TBL.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 				+ COLUMN_TBL.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 				+ COLUMN_TBL.LONGIDO_KATA								 + " , " //株価長期間移動平均線
@@ -181,10 +181,11 @@ public class createTBL {
 				+ COLUMN_TBL.CAPM_AVE_KATA							 + " , " //CAPM_AVE
 				+ COLUMN_TBL.WACC_AVE_KATA							 + " , " //WACC_AVE
 				+ COLUMN_TBL.COVAR_with_TOPIX_KATA						 + " , " //共分散
-
+				+ COLUMN_TBL.COVAR_with_TIME_KATA						 + " , " //時間との共分散
+				+ COLUMN_TBL.SOKANKEISU_with_TIME_KATA						 + " , " //時間との相関係数
 				//				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
-				+ COLUMN_TBL.CODE + " , " +  COLUMN_TBL.DAYTIME + " , " + weekMonthCol + ")) ";
+				+ COLUMN_TBL.CODE + " , " +  COLUMN_TBL.DAYTIME + ")) ";
 		//				+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
 		//				+ "unique (" + COLUMN.CODE + COLUMN.DAYTIME + "),primary key(id)) ";
 
@@ -203,8 +204,8 @@ public class createTBL {
 			String SQL;
 			//列名の取得
 			String colum;
-			String weekMonthCol = COLUMN_TBL.MONTH_NOW;
-			String weekMonthColMae = COLUMN_TBL.MONTH_BEFORE;
+			String weekMonthCol = COLUMN_TBL.MONTH_NOW_KATA;
+			String weekMonthColMae = COLUMN_TBL.MONTH_BEFORE_KATA;
 			String TBL = TBL_Name.STOCK_MM_REAL_TIME;
 
 			//SQL文の取得
@@ -325,10 +326,11 @@ public class createTBL {
 					+ COLUMN_TBL.CAPM_AVE_KATA							 + " , " //CAPM_AVE
 					+ COLUMN_TBL.WACC_AVE_KATA							 + " , " //WACC_AVE
 					+ COLUMN_TBL.COVAR_with_TOPIX_KATA						 + " , " //共分散
-
+					+ COLUMN_TBL.COVAR_with_TIME_KATA						 + " , " //時間との共分散
+					+ COLUMN_TBL.SOKANKEISU_with_TIME_KATA						 + " , " //時間との相関係数
 //					+ "index Idx_day(id)"								 + ","
 					+ "primary key ("
-					+ COLUMN_TBL.CODE + " , " +  COLUMN_TBL.DAYTIME + " , " + weekMonthCol + ")) ";
+					+ COLUMN_TBL.CODE + " , " +  COLUMN_TBL.DAYTIME  + ")) ";
 //					+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
 //					+ "unique (" + COLUMN.CODE + COLUMN.DAYTIME + "),primary key(id)) ";
 
@@ -341,14 +343,6 @@ public class createTBL {
 			s.createTBL(SQL);
 	}
 
-	private void createViewMonthTBL(S s){
-		//SQL全文
-		String SQL;
-		//列名の取得
-		String colum;
-		String weekMonthCol = COLUMN_TBL.MONTH_NOW;
-		String TBL = TBL_Name.STOCK_MM_REAL_TIME;
-	}
 
 
 
@@ -528,8 +522,8 @@ public class createTBL {
 				//列名の取得
 				String colum;
 				String TBL = TBL_Name.MARKET_MM_TBL;
-				String weekMonthCol = COLUMN_TBL.MONTH_NOW;
-				String weekMonthColMae = COLUMN_TBL.MONTH_BEFORE;
+				String weekMonthCol = COLUMN_TBL.MONTH_NOW_KATA;
+				String weekMonthColMae = COLUMN_TBL.MONTH_BEFORE_KATA;
 
 				//SQL文の取得
 				String create = "create table ";
@@ -652,6 +646,8 @@ public class createTBL {
 						+ COLUMN_TBL.MARKET_RISK_PREMIUM_AVE_KATA				 + " , " //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）_平均
 						+ COLUMN_TBL.NT_RATIO_KATA								 + " , " //NT倍率
 						+ COLUMN_TBL.NT_RATIO_AVE_KATA							 + " , " //NT倍率の平均
+						+ COLUMN_TBL.COVAR_with_TIME_KATA						 + " , " //時間との共分散
+						+ COLUMN_TBL.SOKANKEISU_with_TIME_KATA						 + " , " //時間との相関係数
 						+ "primary key ("
 						+ COLUMN_TBL.CODE  + " , " +  COLUMN_TBL.DAYTIME + ")) ";
 //						+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
@@ -672,8 +668,8 @@ public class createTBL {
 				//列名の取得
 				String colum;
 				String TBL = TBL_Name.MARKET_WW_TBL;
-				String weekMonthCol = COLUMN_TBL.WEEK_NOW;
-				String weekMonthColMae = COLUMN_TBL.WEEK_BEFORE;
+				String weekMonthCol = COLUMN_TBL.WEEK_NOW_KATA;
+				String weekMonthColMae = COLUMN_TBL.WEEK_BEFORE_KATA;
 
 				//SQL文の取得
 				String create = "create table ";
@@ -796,6 +792,8 @@ public class createTBL {
 						+ COLUMN_TBL.MARKET_RISK_PREMIUM_AVE_KATA				 + " , " //マーケットリスクプレミアム（トピックスリターン-リスクフリーレート）_平均
 						+ COLUMN_TBL.NT_RATIO_KATA								 + " , " //NT倍率
 						+ COLUMN_TBL.NT_RATIO_AVE_KATA							 + " , " //NT倍率の平均
+						+ COLUMN_TBL.COVAR_with_TIME_KATA						 + " , " //時間との共分散
+						+ COLUMN_TBL.SOKANKEISU_with_TIME_KATA						 + " , " //時間との相関係数
 						+ "primary key ("
 						+ COLUMN_TBL.CODE  + " , " +  COLUMN_TBL.DAYTIME + ")) ";
 //						+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る

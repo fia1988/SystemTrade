@@ -1234,24 +1234,26 @@ public class cloringDate {
 		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		s.closeConection();
 
+		//マーケットテーブル作成
+		insertMarketTBL(TODAY);
+		
 		//カレンダーテーブル作成
 		makeCalendarCon makeC = new makeCalendarCon();
 		makeC.createCallendar(TODAY);
 		//月足週足を作る
 		makeWeekMonthCon makeW_M = new makeWeekMonthCon();
 		makeW_M.createWeekMonth(TODAY);
-		//マーケットテーブル作成
-		insertMarketTBL();
+
 		//マーケットテーブル作成、株主資本コストの計算
-		calculateCAPM();
+		calculateCAPM(TODAY);
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
 
-	private void insertMarketTBL(){
+	private void insertMarketTBL(String TODAY){
 		S s = new S();
 		s.getCon();
-		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+//		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		String lastUpdateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_MARKET_TBL, s);
 		String column = COLUMN_TBL.CODE									 + " , " //銘柄名
 				+ COLUMN_TBL.DAYTIME								 + " , " //日付
@@ -1382,7 +1384,7 @@ public class cloringDate {
 
 
 
-	private void calculateCAPM(){
+	private void calculateCAPM(String TODAY){
 		commonAP.writeInLog("【calculateCAPM()：CAPMの計算開始】",logWriting.DATEDATE_LOG_FLG);
 		if ( checkBasicCode() == false){
 			commonAP.writeInLog("calculateCAPM()：基準日がありません。",logWriting.DATEDATE_LOG_FLG);
@@ -1392,7 +1394,7 @@ public class cloringDate {
 		S s = new S();
 		s.getCon();
 		//今日の日付
-		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+//		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		//今日の日付からX日前。
 		//例：2018-05-05が今日なら2018-05-03が２日前
 		//上記ケースは引数が３のとき
@@ -1401,8 +1403,8 @@ public class cloringDate {
 
 		CalculateCAPM cal = new CalculateCAPM();
 
-		cal.calculateCAPM_MARLET_TBL	(TODAY,beforeDay,AccesarryParameta.MARKET_OBSERVATION_TERM);
-		cal.calculateCAPM_STOCK_TBL		(TODAY,beforeDay,AccesarryParameta.MARKET_OBSERVATION_TERM);
+		cal.calculateCAPM_MARLET_TBL	(TODAY,beforeDay,AccesarryParameta.MARKET_OBSERVATION_TERM , TBL_Name.MARKET_DD_TBL);
+		cal.calculateCAPM_STOCK_TBL		(TODAY,beforeDay,AccesarryParameta.MARKET_OBSERVATION_TERM , TBL_Name.STOCK_DD);
 		s.closeConection();
 		commonAP.writeInLog("【calculateCAPM()：CAPMの計算終了】",logWriting.DATEDATE_LOG_FLG);
 	}
@@ -1452,7 +1454,8 @@ public class cloringDate {
 						   + "'" +  COLUMN_TBL.EXITMETHOD			+ "' , "
 						   + "'" +  COLUMN_TBL.MINI_CHECK_FLG		+ "' , "
 						   + "'" +  COLUMN_TBL.REAL_ENTRY_VOLUME	+ "' , "
-						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
+						   + "'" +  COLUMN_TBL.ENTRY_MONEY				+ "'" ;
+//						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
 
 
 

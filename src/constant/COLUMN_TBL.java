@@ -1030,9 +1030,17 @@ public class COLUMN_TBL {
 	public static String NT_RATIO_AVE					= "NT_RATIO_AVE";
 	public static String NT_RATIO_AVE_KATA				= NT_RATIO_AVE + " double  ";
 
-	//共分散
+	//TOPIXとの共分散
 	public static String COVAR_with_TOPIX					= "COVAR_with_TOPIX";
 	public static String COVAR_with_TOPIX_KATA				= COVAR_with_TOPIX + " double  ";
+
+	//日付月週とのとの共分散
+	public static String COVAR_with_TIME					= "COVAR_with_TIME";
+	public static String COVAR_with_TIME_KATA				= COVAR_with_TIME + " double  ";
+
+	//日付月週とのとの相関係数
+	public static String SOKANKEISU_with_TIME					= "SOKANKEISU_with_TIME";
+	public static String SOKANKEISU_with_TIME_KATA				= SOKANKEISU_with_TIME + " double  ";
 
 
 //	今週
@@ -1099,7 +1107,7 @@ public class COLUMN_TBL {
 
 	//ピックアップアップフラグ
 	public static String PICK_UP_FLG										= "PICK_UP_FLG";
-	public static String PICK_UP_FLG_KATA 									= PICK_UP_FLG + " tinyint(1) ";
+	public static String PICK_UP_FLG_KATA 									= PICK_UP_FLG + " tinyint(1)  default false ";
 
 //	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
 //	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）

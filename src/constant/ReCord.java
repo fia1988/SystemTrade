@@ -33,6 +33,8 @@ public class ReCord {
 	//ETF・・・4
 	//先物・・・5
 	//通貨・・・6
+	//週足株・・・7
+	//月足株・・・8
 	//財務情報・・・21
 	//信用売買残・・・22
 	//投資情報・・・23
@@ -41,6 +43,8 @@ public class ReCord {
 	public static final String CODE_02_SATISTICS = "2";
 	public static final String CODE_03_INDEX = "3";
 	public static final String CODE_04_ETF = "4";
+	public final static String W_STOCK_F	= "7";
+	public final static String M_STOCK_F	= "8";
 	public static final String CODE_21_FINANCIAL = "21";
 	public static final String CODE_22_CREDIT = "22";
 	public static final String CODE_23_INVEST = "23";

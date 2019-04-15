@@ -14,8 +14,8 @@ public class CalculateCAPM {
 
 
 
-	public void calculateCAPM_MARLET_TBL(String TODAY,String beforeDay, int term){
-		String TBL = TBL_Name.MARKET_DD_TBL;
+	public void calculateCAPM_MARLET_TBL(String TODAY,String beforeDay, int term,String TBL){
+//		String TBL = TBL_Name.MARKET_DD_TBL;
 		S s = new S();
 		s.getCon();
 
@@ -111,8 +111,8 @@ public class CalculateCAPM {
 
 
 
-	public void calculateCAPM_STOCK_TBL(String TODAY,String beforeDay, int term){
-		String TBL = TBL_Name.STOCK_DD;
+	public void calculateCAPM_STOCK_TBL(String TODAY,String beforeDay, int term,String TBL){
+//		String TBL = TBL_Name.STOCK_DD;
 		String dummyCOLUMN_A = "dummyCOLUMN_A";
 		String dummyCOLUMN_B = "dummyCOLUMN_B";
 		String dummyCOLUMN_C = "dummyCOLUMN_C";

@@ -2,6 +2,7 @@ package botton;
 
 import proparty.S;
 import sql.createTBL;
+import sql.createView;
 import GamenDTO.TAB_MainDTO;
 import constant.ReturnCodeConst;
 import constant.nyuryokuCheckResultConst;
@@ -57,6 +58,11 @@ public class setUp {
 		//初期テーブルを作る
 		String resultStr = a.createStartTBL(s);
 
+		//ついでにビューも作る
+		createView b = new createView();
+		b.createStartView(s);
+		
+		
 		s.closeConection();
 		return resultStr;
 	}
