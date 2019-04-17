@@ -1107,7 +1107,7 @@ public class COLUMN_TBL {
 
 	//ピックアップアップフラグ
 	public static String PICK_UP_FLG										= "PICK_UP_FLG";
-	public static String PICK_UP_FLG_KATA 									= PICK_UP_FLG + " tinyint(1)  default false ";
+	public static String PICK_UP_FLG_KATA 									= PICK_UP_FLG + " tinyint(1)  default true ";
 
 //	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
 //	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）

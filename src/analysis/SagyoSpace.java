@@ -11,7 +11,6 @@ import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
-import bean.Bean_calendarBean;
 import bean.Bean_nowRecord;
 
 import common.commonAP;
@@ -120,23 +119,24 @@ public class SagyoSpace {
 
 	public static void testCaseS(){
 
-		S s = new S();
-		s.getCon();
-		Bean_calendarBean v = new Bean_calendarBean();
-		v.setCalendarBean("2007-01-03", s);
 
-		if ("null".equals(v.getMONTH_LONG_BEFORE())){
-			System.out.println("string");
-		}else{
-			System.out.println(v.getMONTH_LONG_BEFORE());
-		}
-
-		if (v.getMONTH_LONG_BEFORE() == null){
-			System.out.println("kanpekinull");
-		}
 		makeWeekMonthCon n = new makeWeekMonthCon();
+		
+
+		n.createWeekMonth("2019-03-29");
+		n.createWeekMonth("2019-04-01");
+		n.createWeekMonth("2019-04-02");
+		n.createWeekMonth("2019-04-03");
+		n.createWeekMonth("2019-04-04");
+		n.createWeekMonth("2019-04-05");
+		n.createWeekMonth("2019-04-08");
+		n.createWeekMonth("2019-04-09");
+		n.createWeekMonth("2019-04-10");
+		n.createWeekMonth("2019-04-11");
 		n.createWeekMonth("2019-04-12");
 		n.createWeekMonth("2019-04-15");
+		n.createWeekMonth("2019-04-16");
+		n.createWeekMonth("2019-04-17");
 
 	}
 
