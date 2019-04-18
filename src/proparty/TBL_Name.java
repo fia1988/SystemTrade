@@ -20,8 +20,8 @@ public class TBL_Name {
 
 	//TOPIXとかマーケットの記録が入ってる
 	final public static String MARKET_DD_TBL    = "07_marketTBL" + TAIL_DAY;
-	final public static String MARKET_WW_TBL    = "07_marketTBL" + TAIL_WEEK;
-	final public static String MARKET_MM_TBL    = "07_marketTBL" + TAIL_MONTH;
+	final public static String MARKET_WW_REAL_TIME_TBL    = "07_marketTBL_REAL_TIME" + TAIL_WEEK;
+	final public static String MARKET_MM_REAL_TIME_TBL    = "07_marketTBL_REAL_TIME" + TAIL_MONTH;
 
 	final public static String CALENDAR_TBL    = "AA_calendarTBL";
 
@@ -75,8 +75,8 @@ public class TBL_Name {
 	//ETF・・・4
 	//先物・・・5
 	//通貨・・・6
-	//株週足・・・7
-	//株月足・・・8
+	//株週足・・・8
+	//株月足・・・9
 	final public static String STOCK_DD	     = "01_STOCK" 			+ TAIL_DAY;
 	final public static String STATISTICS_DD	 = "02_statistics"		+ TAIL_DAY;
 	final public static String INDEX_DD	     = "03_INDEX"			+ TAIL_DAY;
@@ -84,8 +84,8 @@ public class TBL_Name {
 	final public static String SAKIMONO_DD	 = "05_sakimono"		+ TAIL_DAY;
 	final public static String CURRENCY_DD	 = "06_currency"		+ TAIL_DAY;
 
-	final public static String STOCK_WW_REAL_TIME	     = "07_STOCK_REAL_TIME" 			+ TAIL_WEEK;
-	final public static String STOCK_MM_REAL_TIME	     = "08_STOCK_REAL_TIME" 			+ TAIL_MONTH;
+	final public static String STOCK_WW_REAL_TIME	     = "08_STOCK_REAL_TIME" 			+ TAIL_WEEK;
+	final public static String STOCK_MM_REAL_TIME	     = "09_STOCK_REAL_TIME" 			+ TAIL_MONTH;
 	//更新日管理
 	final public static String UPDATE_MANAGE	 = "98_UPDATE_MANAGE"	+ TAIL_DAY;
 	//株の分割とか収束を管理するテーブル

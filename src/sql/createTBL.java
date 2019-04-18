@@ -15,8 +15,8 @@ public class createTBL {
 	public String createStartTBL(S s){
 
 		createSTOCK_1_DD(s);
-		createSTOCK_07_WW(s);
-		createSTOCK_08_MM(s);
+		createSTOCK_08_WW(s);
+		createSTOCK_09_MM(s);
 		createStatistical_2_DD(s);
 
 		createINDEX_3_DD(s);
@@ -50,11 +50,13 @@ public class createTBL {
 		createMARKET_MM_TBL(s);
 		createCREDIT_WW_TBL(s);
 		createCalendar_DD_TBL(s);
+		createView c = new createView();
+		c.createStartView(s);
 		return createLastOrderTable(s);
 	}
 
 	//個別銘柄週足・・・07
-	private void createSTOCK_07_WW(S s){
+	private void createSTOCK_08_WW(S s){
 		//SQL全文
 		String SQL;
 		//列名の取得
@@ -199,7 +201,7 @@ public class createTBL {
 	}
 
 	//個別銘柄月足・・・08
-	private void createSTOCK_08_MM(S s){
+	private void createSTOCK_09_MM(S s){
 			//SQL全文
 			String SQL;
 			//列名の取得
@@ -521,7 +523,7 @@ public class createTBL {
 				String SQL;
 				//列名の取得
 				String colum;
-				String TBL = TBL_Name.MARKET_MM_TBL;
+				String TBL = TBL_Name.MARKET_MM_REAL_TIME_TBL;
 				String weekMonthCol = COLUMN_TBL.MONTH_NOW_KATA;
 				String weekMonthColMae = COLUMN_TBL.MONTH_BEFORE_KATA;
 
@@ -541,13 +543,6 @@ public class createTBL {
 						+ COLUMN_TBL.CLOSE_KATA									 + " , " //終値
 						+ COLUMN_TBL.DEKI_KATA									 + " , " //出来高
 						+ COLUMN_TBL.BAYBAY_KATA								 + " , " //売買代金
-						//+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
-						//+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
-						//+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
-//						+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
-//						+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
-//						+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
-//						+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 						+ COLUMN_TBL.CHANGE_PRICE_KATA							 + " , " //前日比
 						+ COLUMN_TBL.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
 						+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
@@ -667,7 +662,7 @@ public class createTBL {
 				String SQL;
 				//列名の取得
 				String colum;
-				String TBL = TBL_Name.MARKET_WW_TBL;
+				String TBL = TBL_Name.MARKET_WW_REAL_TIME_TBL;
 				String weekMonthCol = COLUMN_TBL.WEEK_NOW_KATA;
 				String weekMonthColMae = COLUMN_TBL.WEEK_BEFORE_KATA;
 

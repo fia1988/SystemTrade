@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
+import bean.Bean_calendarBean;
 
 import common.commonAP;
 
@@ -212,18 +213,31 @@ public class SEPARATE_CHECK {
 		commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 	}
-
+	static int checkCount=0;
 	public static void updateAccesary(String code,S s){
 
 
 		setSepaDayList(code,s);
-
+		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK , code);
 
 		//0:code
 		//1:日付
 		for( int i = 0; i < getSepaDayList().size(); i++) {
-
+			//新しい月足週足
+			
+			//ニューアクセサリ
+			Bean_calendarBean calBean = new Bean_calendarBean();
+			calBean.setCalendarBean(getSepaDayList().get(i)[0], s);
+			ac.setConAccessary(calBean,s);
+			//ニューアクセサリここまで
+			
 			ConAccessary.setConAccessary(getSepaDayList().get(i)[0],ReCord.CODE_01_STOCK,getSepaDayList().get(i)[1],s);
+
+//			checkCount++;
+//			if( checkCount%400 == 0){
+//				checkCount=0;
+//				s.resetConnection();
+//			}
 		}
 
 

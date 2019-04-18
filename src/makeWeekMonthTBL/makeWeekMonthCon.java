@@ -2,6 +2,7 @@ package makeWeekMonthTBL;
 
 import proparty.S;
 import proparty.TBL_Name;
+import accesarrySQL.ConAccessaryNew;
 import bean.Bean_calendarBean;
 
 import common.commonAP;
@@ -20,7 +21,8 @@ public class makeWeekMonthCon {
 
 
 	private String SQL_CODE_WHERE;
-
+	private String fromTBL = TBL_Name.STOCK_DD;
+	private String stkDD = TBL_Name.STOCK_DD;
 	private String checkCol = "";
 	private boolean resultCheck = false;
 	private String yesterDay = "";
@@ -91,22 +93,42 @@ public class makeWeekMonthCon {
 				}
 
 				break;
+			case CATE_FLG.M_MARKET_F:
+				w_mLetter = "月";
+				resultCheck = calBean.getMONTH_CHANGE_FLG();
+				TBL = TBL_Name.MARKET_MM_REAL_TIME_TBL;
+				nowTerm = "'" + calBean.getMONTH_NOW() + "'";
+				nowTerm_col = COLUMN_TBL.MONTH_NOW;
+				nowTerm_before_col = COLUMN_TBL.MONTH_BEFORE;
+				if ( calBean.getMONTH_BEFORE() != null){
+					nowTerm_before =  "'" + calBean.getMONTH_BEFORE() + "'";
+				}
+				break;
+			case CATE_FLG.W_MARKET_F:
+				resultCheck = calBean.getWEEK_CHANGE_FLG();
+				w_mLetter = "週";
+				TBL = TBL_Name.MARKET_WW_REAL_TIME_TBL;
+				nowTerm = "'" + calBean.getWEEK_NOW() + "'";
+				nowTerm_col = COLUMN_TBL.WEEK_NOW;
+				nowTerm_before_col = COLUMN_TBL.WEEK_BEFORE;
+				if (calBean.getWEEK_BEFORE() != null){
+					nowTerm_before = "'" + calBean.getWEEK_BEFORE() + "'";
+				}
 
+				break;
 			default:
 				break;
 		}
 	}
 
-	public void createWeekMonth(String TODAY) {
-		
+	public void createWeekMonth(String TODAY,S s) {
+
 		boolean testcord = false;
 		//まだ動かしたくないからダミーをセットして動きをとめる
 		if (testcord == false){
 			return;
 		}
-		
-		S s = new S();
-		s.getCon();
+
 		Bean_calendarBean calBean = new Bean_calendarBean();
 		calBean.setCalendarBean(TODAY, s);
 
@@ -130,21 +152,61 @@ public class makeWeekMonthCon {
 		updateStart(CATE_FLG.W_STOCK_F,calBean,s);
 		updateStart(CATE_FLG.M_STOCK_F,calBean,s);
 
-		
+
 		//アクセサリを作る
+		ConAccessaryNew ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F);
+		ac.setConAccessary(calBean,s);
+		ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F);
+		ac.setConAccessary(calBean,s);
 
 		//全銘柄のアクセサリ、マーケットテーブルを作る、日付と現在株価の相関係数をもとめる、capmを作る。。
 		if (sepaConFLG==false){
-			
+			commonAP.writeInLog("ここからマーケットの月足週足を作る",logWriting.DATEDATE_LOG_FLG);
 			//マーケットテーブル：1306
+			String nowSQL = SQL_CODE_WHERE;
+			String nowTBL = fromTBL;
+			String nowstkDD = stkDD;
+
+			stkDD = TBL_Name.MARKET_DD_TBL;
+			fromTBL = TBL_Name.MARKET_DD_TBL;
+			SQL_CODE_WHERE = COLUMN_TBL.CODE  + " = '" + ReCord.MARKET_CODE_1306 + "'";
+
+			//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
+			checkEndTerm(CATE_FLG.W_MARKET_F,calBean,s);
+			checkEndTerm(CATE_FLG.M_MARKET_F,calBean,s);
+			//日足から月/週足に銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高、ナウ、BEFOREをつくる。
+			checkBaseW_M(CATE_FLG.W_MARKET_F,calBean,s);
+			checkBaseW_M(CATE_FLG.M_MARKET_F,calBean,s);
+			//マーケットの始値以外とか作る
+			//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高正しく加工するつくる。
+			updateCol(CATE_FLG.W_MARKET_F,calBean,s);
+			updateCol(CATE_FLG.M_MARKET_F,calBean,s);
+			//マーケットの始値
+			updateStart(CATE_FLG.W_MARKET_F,calBean,s);
+			updateStart(CATE_FLG.M_MARKET_F,calBean,s);
+
+			//マーケットのアクセサリ
+			ac = new ConAccessaryNew(CATE_FLG.M_MARKET_F,ReCord.MARKET_CODE_1306);
+			ac.setConAccessary(calBean,s);
+			ac = new ConAccessaryNew(CATE_FLG.W_MARKET_F,ReCord.MARKET_CODE_1306);
+			ac.setConAccessary(calBean,s);
 
 			//CAPM
+
+
+			//元に戻す
+			SQL_CODE_WHERE = nowSQL;
+			fromTBL = nowTBL;
+			stkDD = nowstkDD;
+			commonAP.writeInLog("ここまでマーケットの月足週足。無事終了",logWriting.DATEDATE_LOG_FLG);
 		}else{
 			//個別銘柄のアクセサリ
 
 		}
-		s.closeConection();
+
 	}
+
+
 
 	//始値をつくる
 	private void updateStart(String cate,Bean_calendarBean calBean,S s){
@@ -186,7 +248,7 @@ public class makeWeekMonthCon {
 
 //		始値以外の列を作る(高値、安値、出来高、売買高
 		String SQL;
-		String stkDD = TBL_Name.STOCK_DD;
+
 //		String STOCK_DD = TBL_Name.STOCK_DD;
 		String maxTBL	 = "A";
 		String minTBL	 = "B";
@@ -246,7 +308,7 @@ public class makeWeekMonthCon {
 	private void checkBaseW_M(String cate,Bean_calendarBean calBean,S s){
 
 		setParameta(cate, calBean);
-		String fromTBL = TBL_Name.STOCK_DD;
+
 
 		String col =  COLUMN_TBL.CODE	 + " , "
 					+ COLUMN_TBL.DAYTIME + " , "

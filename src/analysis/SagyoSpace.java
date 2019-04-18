@@ -121,23 +121,24 @@ public class SagyoSpace {
 
 
 		makeWeekMonthCon n = new makeWeekMonthCon();
-		
 
-		n.createWeekMonth("2019-03-29");
-		n.createWeekMonth("2019-04-01");
-		n.createWeekMonth("2019-04-02");
-		n.createWeekMonth("2019-04-03");
-		n.createWeekMonth("2019-04-04");
-		n.createWeekMonth("2019-04-05");
-		n.createWeekMonth("2019-04-08");
-		n.createWeekMonth("2019-04-09");
-		n.createWeekMonth("2019-04-10");
-		n.createWeekMonth("2019-04-11");
-		n.createWeekMonth("2019-04-12");
-		n.createWeekMonth("2019-04-15");
-		n.createWeekMonth("2019-04-16");
-		n.createWeekMonth("2019-04-17");
-
+		S s = new S();
+		s.getCon();
+		n.createWeekMonth("2019-03-29",s);
+		n.createWeekMonth("2019-04-01",s);
+		n.createWeekMonth("2019-04-02",s);
+		n.createWeekMonth("2019-04-03",s);
+		n.createWeekMonth("2019-04-04",s);
+		n.createWeekMonth("2019-04-05",s);
+		n.createWeekMonth("2019-04-08",s);
+		n.createWeekMonth("2019-04-09",s);
+		n.createWeekMonth("2019-04-10",s);
+		n.createWeekMonth("2019-04-11",s);
+		n.createWeekMonth("2019-04-12",s);
+		n.createWeekMonth("2019-04-15",s);
+		n.createWeekMonth("2019-04-16",s);
+		n.createWeekMonth("2019-04-17",s);
+		s.closeConection();
 	}
 
 

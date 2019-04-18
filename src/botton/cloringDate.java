@@ -21,10 +21,12 @@ import proparty.controllDay;
 import technique.CheckSign;
 import GamenDTO.TAB_MainDTO;
 import accesarrySQL.CalculateCAPM;
+import accesarrySQL.ConAccessaryNew;
 import accesarrySQL.OneRecord_Update;
 import analysis.SagyoSpace;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
+import bean.Bean_calendarBean;
 import bean.Bean_nowRecord;
 
 import common.commonAP;
@@ -1234,23 +1236,35 @@ public class cloringDate {
 		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		s.closeConection();
 
-		//マーケットテーブル作成
-		insertMarketTBL(TODAY);
-		
+		//日足マーケットテーブル作成
+		insertMarketDD_TBL(TODAY);
+
 		//カレンダーテーブル作成
 		makeCalendarCon makeC = new makeCalendarCon();
 		makeC.createCallendar(TODAY);
-		//月足週足を作る
+
+
+		//ニューアクセサリ
+		s = new S();
+		s.getCon();
+		Bean_calendarBean calBean = new Bean_calendarBean();
+		calBean.setCalendarBean(TODAY, s);
+		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
+		ac.setConAccessary(calBean,s);
+		//アクセサリここまで
+
+		//月足週足を作る中で月足週足マーケットテーブルも作る
 		makeWeekMonthCon makeW_M = new makeWeekMonthCon();
-		makeW_M.createWeekMonth(TODAY);
+		makeW_M.createWeekMonth(TODAY,s);
+		s.closeConection();
 
 		//マーケットテーブル作成、株主資本コストの計算
-		calculateCAPM(TODAY);
+		calculateDD_CAPM(TODAY);
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
 
-	private void insertMarketTBL(String TODAY){
+	private void insertMarketDD_TBL(String TODAY){
 		S s = new S();
 		s.getCon();
 //		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
@@ -1384,7 +1398,7 @@ public class cloringDate {
 
 
 
-	private void calculateCAPM(String TODAY){
+	private void calculateDD_CAPM(String TODAY){
 		commonAP.writeInLog("【calculateCAPM()：CAPMの計算開始】",logWriting.DATEDATE_LOG_FLG);
 		if ( checkBasicCode() == false){
 			commonAP.writeInLog("calculateCAPM()：基準日がありません。",logWriting.DATEDATE_LOG_FLG);
