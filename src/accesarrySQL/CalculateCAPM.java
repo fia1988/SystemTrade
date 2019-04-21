@@ -122,6 +122,7 @@ public class CalculateCAPM {
 		s.getCon();
 		String SQL="";
 
+		int rate =  AccesarryParameta.MARKET_OBSERVATION_TERM;
 
 		//以下２つはまだ
 //		+ COLUMN.WACC_KATA							 + " , " //WACC
@@ -137,7 +138,7 @@ public class CalculateCAPM {
 			+ " set "
 				+ " B." + COLUMN_TBL.DIVIDEND_PER
 				+ " = "
-				+ " (A." + COLUMN_TBL.DIVIDEND_PER + "/245) "
+				+ " (A." + COLUMN_TBL.DIVIDEND_PER + "/" + rate + ") "
 			+ " where "
 					+ " B." + COLUMN_TBL.CODE
 					+ " = "

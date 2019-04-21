@@ -1251,6 +1251,8 @@ public class cloringDate {
 		calBean.setCalendarBean(TODAY, s);
 		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
 		ac.setConAccessary(calBean,s);
+		ac = new ConAccessaryNew(ReCord.CODE_04_ETF);
+		ac.setConAccessary(calBean,s);
 		//アクセサリここまで
 
 		//月足週足を作る中で月足週足マーケットテーブルも作る

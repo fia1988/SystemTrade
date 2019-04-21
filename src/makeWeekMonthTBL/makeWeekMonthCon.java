@@ -125,9 +125,9 @@ public class makeWeekMonthCon {
 
 		boolean testcord = false;
 		//まだ動かしたくないからダミーをセットして動きをとめる
-		if (testcord == false){
-			return;
-		}
+//		if (testcord == false){
+//			return;
+//		}
 
 		Bean_calendarBean calBean = new Bean_calendarBean();
 		calBean.setCalendarBean(TODAY, s);

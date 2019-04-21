@@ -6,6 +6,7 @@ import java.util.List;
 
 import common.commonAP;
 
+import constant.AccesarryParameta;
 import constant.logWriting;
 
 public class Bean_Result {
@@ -1427,7 +1428,7 @@ public class Bean_Result {
 
 
 					//年間営業日は245で想定
-					int yearDay	=	245;
+					int yearDay	=	AccesarryParameta.MARKET_OBSERVATION_TERM;
 					//一日辺りのサイン点灯数
 					double dayRightUpTimes	=	(	getCutAveEntryTimes	*	getTradeCount()		)	/(paraDTO.getObTerm());
 //					double dayRightUpTimes	=	(	getCutAveEntryTimes	*	getTradeCount()	);
@@ -1530,7 +1531,7 @@ public class Bean_Result {
 					double totalResult = totalWinPer + totalLosePer;
 
 					//年間営業日は245で想定
-					int yearDay	=	245;
+					int yearDay	=	AccesarryParameta.MARKET_OBSERVATION_TERM;
 					//一日辺りのサイン点灯数
 					double dayRightUpTimes	=	(	getCutAveEntryTimes	*	getTradeCount()		)	/(paraDTO.getObTerm());
 					//必要資金

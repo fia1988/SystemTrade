@@ -86,9 +86,9 @@ public class createTBL {
 				+ COLUMN_TBL.MARKET_CAP_KATA							 + " , " //時価総額
 				+ COLUMN_TBL.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN_TBL.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
-				+ COLUMN_TBL.SHORT_CHANGERATE_KATA						 + " , " //ショート前日比率(0.05表示＝（5％）)
-				+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA						 + " , " //ミドル前日比率(0.05表示＝（5％）)
-				+ COLUMN_TBL.LONG_CHANGERATE_KATA						 + " , " //ロング前日比率(0.05表示＝（5％）)
+//				+ COLUMN_TBL.SHORT_CHANGERATE_KATA						 + " , " //ショート前日比率(0.05表示＝（5％）)
+//				+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA						 + " , " //ミドル前日比率(0.05表示＝（5％）)
+//				+ COLUMN_TBL.LONG_CHANGERATE_KATA						 + " , " //ロング前日比率(0.05表示＝（5％）)
 				+ COLUMN_TBL.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 				+ COLUMN_TBL.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 				+ COLUMN_TBL.LONGIDO_KATA								 + " , " //株価長期間移動平均線
@@ -231,9 +231,9 @@ public class createTBL {
 					+ COLUMN_TBL.MARKET_CAP_KATA							 + " , " //時価総額
 					+ COLUMN_TBL.CHANGE_PRICE_KATA							 + " , " //前日比
 					+ COLUMN_TBL.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
-											+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
+//					+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
+//					+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
+//					+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
 					+ COLUMN_TBL.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 					+ COLUMN_TBL.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 					+ COLUMN_TBL.LONGIDO_KATA								 + " , " //株価長期間移動平均線
@@ -545,9 +545,9 @@ public class createTBL {
 						+ COLUMN_TBL.BAYBAY_KATA								 + " , " //売買代金
 						+ COLUMN_TBL.CHANGE_PRICE_KATA							 + " , " //前日比
 						+ COLUMN_TBL.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
+//						+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
+//						+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
+//						+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
 						+ COLUMN_TBL.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 						+ COLUMN_TBL.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 						+ COLUMN_TBL.LONGIDO_KATA								 + " , " //株価長期間移動平均線
@@ -691,9 +691,9 @@ public class createTBL {
 //						+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 						+ COLUMN_TBL.CHANGE_PRICE_KATA							 + " , " //前日比
 						+ COLUMN_TBL.CHANGERATE_KATA							 + " , " //前日比率(0.05表示＝（5％）)
-												+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
-						+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
+//						+ COLUMN_TBL.SHORT_CHANGERATE_KATA							 + " , " //ショート前日比率(0.05表示＝（5％）)
+//						+ COLUMN_TBL.MIDDLE_CHANGERATE_KATA							 + " , " //ミドル前日比率(0.05表示＝（5％）)
+//						+ COLUMN_TBL.LONG_CHANGERATE_KATA							 + " , " //ロング前日比率(0.05表示＝（5％）)
 						+ COLUMN_TBL.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
 						+ COLUMN_TBL.MIDDLEIDO_KATA								 + " , " //株価中期間移動平均線
 						+ COLUMN_TBL.LONGIDO_KATA								 + " , " //株価長期間移動平均線
