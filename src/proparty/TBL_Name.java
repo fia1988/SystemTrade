@@ -86,6 +86,7 @@ public class TBL_Name {
 
 	final public static String STOCK_WW_REAL_TIME	     = "08_STOCK_REAL_TIME" 			+ TAIL_WEEK;
 	final public static String STOCK_MM_REAL_TIME	     = "09_STOCK_REAL_TIME" 			+ TAIL_MONTH;
+
 	//更新日管理
 	final public static String UPDATE_MANAGE	 = "98_UPDATE_MANAGE"	+ TAIL_DAY;
 	//株の分割とか収束を管理するテーブル

@@ -1236,6 +1236,9 @@ public class cloringDate {
 		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		s.closeConection();
 
+		//cate:4ETFのリストを作る
+		makeList04ETF(ReCord.CODE_04_ETF);
+		
 		//日足マーケットテーブル作成
 		insertMarketDD_TBL(TODAY);
 
@@ -1265,7 +1268,30 @@ public class cloringDate {
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
 	}
 
+	//ETFのリストを作る
+	private void makeList04ETF(String cate){
+		S s = new S();
+		s.getCon();
+		String TBL = TBL_Name.ETF_DD;
+		String SQL = "";
 
+		String col =  COLUMN_TBL.CODE	 + " , " + COLUMN_TBL.CATE_FLG;
+		String selectSQL;
+		selectSQL = " select "
+				  + " distinct(" + COLUMN_TBL.CODE + ")" + " , "
+				  + "'" + cate +  "'" + " as " + COLUMN_TBL.CATE_FLG
+				  + " from " + TBL + " order by " + COLUMN_TBL.CODE;
+
+		String insSQL;
+		insSQL = "insert into "
+				+ TBL
+				+ " ( "
+				+ col
+				+ ")"
+				+ selectSQL;
+		s.closeConection();
+	}
+	
 	private void insertMarketDD_TBL(String TODAY){
 		S s = new S();
 		s.getCon();

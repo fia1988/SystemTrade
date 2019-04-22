@@ -5,12 +5,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import makeCalendar.makeCalendarCon;
 import makeWeekMonthTBL.makeWeekMonthCon;
 import proparty.S;
 import technique.CheckSign;
 import technique.Technique98_CONST;
-import accesarrySQL.SEPARATE_CHECK;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
 import bean.Bean_nowRecord;
@@ -117,19 +115,20 @@ public class SagyoSpace {
 
 	}
 	public static void testCaseA(){
-		makeCalendarCon c = new makeCalendarCon();
-		S s = new S();
-		s.getCon();
-		SEPARATE_CHECK.setSepaDayList("9432",s);
-		s.closeConection();
-		//0:code
-		//1:日付
-		for( int i = 0; i < SEPARATE_CHECK.getSepaDayList().size(); i++) {
-			
-//			System.out.println(SEPARATE_CHECK.getSepaDayList().get(i)[1]);
-//			c.createCallendar(SEPARATE_CHECK.getSepaDayList().get(i)[1]);
-		}
+//		makeCalendarCon c = new makeCalendarCon();
+//		S s = new S();
+//		s.getCon();
+//		SEPARATE_CHECK.setSepaDayList("9432",s);
+//		s.closeConection();
+//		//0:code
+//		//1:日付
+//		for( int i = 0; i < SEPARATE_CHECK.getSepaDayList().size(); i++) {
+//			
+////			System.out.println(SEPARATE_CHECK.getSepaDayList().get(i)[1]);
+////			c.createCallendar(SEPARATE_CHECK.getSepaDayList().get(i)[1]);
+//		}
 		
+
 	}
 
 

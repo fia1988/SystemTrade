@@ -125,9 +125,9 @@ public class makeWeekMonthCon {
 
 		boolean testcord = false;
 		//まだ動かしたくないからダミーをセットして動きをとめる
-//		if (testcord == false){
-//			return;
-//		}
+		if (testcord == false){
+			return;
+		}
 
 		Bean_calendarBean calBean = new Bean_calendarBean();
 		calBean.setCalendarBean(TODAY, s);
@@ -191,8 +191,20 @@ public class makeWeekMonthCon {
 			ac = new ConAccessaryNew(CATE_FLG.W_MARKET_F,ReCord.MARKET_CODE_1306);
 			ac.setConAccessary(calBean,s);
 
+			//日付と終わりのとの相関係数
+			//マーケットから
+			makeSokanWithTimeCon cover = new makeSokanWithTimeCon(CATE_FLG.M_MARKET_F,ReCord.MARKET_CODE_1306);
+			cover.makeSokanWithTime( calBean, s);
+			cover = new makeSokanWithTimeCon(CATE_FLG.W_MARKET_F,ReCord.MARKET_CODE_1306);
+			cover.makeSokanWithTime( calBean, s);
+			//株の月足週足
+			cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F);
+			cover.makeSokanWithTime( calBean, s);
+			cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F);
+			cover.makeSokanWithTime( calBean, s);
+			
 			//CAPM
-
+			//⇒計算しない
 
 			//元に戻す
 			SQL_CODE_WHERE = nowSQL;

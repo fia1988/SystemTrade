@@ -177,9 +177,9 @@ public class ConAccessaryNew {
 	public void setConAccessary(Bean_calendarBean calBean,S s){
 		boolean testcord = false;
 		//まだ動かしたくないからダミーをセットして動きをとめる
-//		if (testcord == false){
-//			return;
-//		}
+		if (testcord == false){
+			return;
+		}
 //		Bean_calendarBean calBean = new Bean_calendarBean();
 //		calBean.setCalendarBean(TODAY, s);
 
@@ -273,11 +273,11 @@ public class ConAccessaryNew {
 		s.freeUpdateQuery(SQL);
 
 		//データ型の関係で売買前日比と出来高前日比は別処理する。
-//		zenzituhiDEKIBAYBAY_CHANGERATE(COLUMN_TBL.DEKI_CHANGERATE	, COLUMN_TBL.DEKI,COLUMN_TBL.DEKI_RATIO,s);
-//		zenzituhiDEKIBAYBAY_CHANGERATE(COLUMN_TBL.BAYBAY_CHANGERATE	, COLUMN_TBL.BAYBAY,COLUMN_TBL.BAYBAY_RATIO,s);
+//		zenzituhiDEKIBAYBAY_CHANGERATE(COLUMN_TBL.DEKI_CHANGERATE	, COLUMN_TBL.DEKI	, s);
+//		zenzituhiDEKIBAYBAY_CHANGERATE(COLUMN_TBL.BAYBAY_CHANGERATE	, COLUMN_TBL.BAYBAY	, s);
 	}
 
-	private void zenzituhiDEKIBAYBAY_CHANGERATE(String changeRateCol,String motoCol,String ratioCol,S s){
+	private void zenzituhiDEKIBAYBAY_CHANGERATE(String changeRateCol,String motoCol,S s){
 		//株とマーケットの時だけ処理する。
 		if ((cate.equals(ReCord.CODE_04_ETF))){
 			return;
@@ -339,17 +339,7 @@ public class ConAccessaryNew {
 //			+ "A." + SQL_CODE_WHERE;
 //		commonAP.writeInLog("【前日比出来高売買高３】" + SQL,logWriting.DATEDATE_LOG_FLG);
 //		s.freeUpdateQuery(SQL);
-		
-		SQL =
-		" update "
-			+ thisTBL
-			+ " set "
-			+ changeRateCol	 + " = " + " ( " + motoCol + " * " + ratioCol + " ) " + " / " + " ( " + ratioCol + " + 1 " + ")"
-			+ " where "
-			+ termCol + " = " + "'" + nowTerm + "'"
-			+ " and "
-			+ SQL_CODE_WHERE;
-		s.freeUpdateQuery(SQL);
+
 	}
 
 	//平滑指数移動平均線とMACDひく。

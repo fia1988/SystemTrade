@@ -10,9 +10,9 @@ public class AccesarryParameta {
 	public final static double RISK_FREE_RATE = 0.0041;
 
 	//移動平均線長中短
-	public static int IDOSHORT = 9;
-	public static int IDOMIDDLE = 13;
-	public static int IDOLONG = 26;
+	public static final int IDOSHORT = 9;
+	public static final int IDOMIDDLE = 13;
+	public static final int IDOLONG = 26;
 
 	//移動平滑線
 	public static int HEKATUSHORT = 9;
