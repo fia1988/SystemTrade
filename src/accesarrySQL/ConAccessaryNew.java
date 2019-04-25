@@ -176,12 +176,10 @@ public class ConAccessaryNew {
 
 	public void setConAccessary(Bean_calendarBean calBean,S s){
 		boolean testcord = false;
-		//まだ動かしたくないからダミーをセットして動きをとめる
+//		まだ動かしたくないからダミーをセットして動きをとめる
 		if (testcord == false){
 			return;
 		}
-//		Bean_calendarBean calBean = new Bean_calendarBean();
-//		calBean.setCalendarBean(TODAY, s);
 
 		TODAY  = calBean.getDAYTIME();
 		setParameta(calBean,cate);

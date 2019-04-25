@@ -309,6 +309,7 @@ public class editHesogomaFile {
 					insertHesoGomaFile insHego = new insertHesoGomaFile();
 					insHego.insertHesoGomaFileController(mainDTO, filePath, checkPointDay,lastUpDateDay, cate,TBL,updateColumn,updateCheckPointColumn,s);
 					s.resetConnection();
+					//一日でも取り込むとループから抜け出して処理終了。LSファイル作成にうつる。
 					resultInsertExit = true;
 					upCounter = 0;
 				}else{

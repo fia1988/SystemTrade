@@ -7,6 +7,7 @@ import java.util.List;
 
 import makeWeekMonthTBL.makeWeekMonthCon;
 import proparty.S;
+import proparty.TBL_Name;
 import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
@@ -15,6 +16,7 @@ import bean.Bean_nowRecord;
 
 import common.commonAP;
 
+import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.TechCon;
 import constant.logWriting;
@@ -114,6 +116,117 @@ public class SagyoSpace {
 		paraDTO.setCheckRenzokuSign(false);
 
 	}
+	
+	public static void testCaseinsert(){
+		String col;
+		col = 	  COLUMN_TBL.CODE									 + " , " //銘柄名
+				+ COLUMN_TBL.DAYTIME								 + " , " //日付
+				+ COLUMN_TBL.OPEN									 + " , " //始値
+				+ COLUMN_TBL.MAX									 + " , " //最高値
+				+ COLUMN_TBL.MIN									 + " , " //最安値
+				+ COLUMN_TBL.CLOSE									 + " , " //終値
+				+ COLUMN_TBL.DEKI									 + " , " //出来高
+				+ COLUMN_TBL.BAYBAY								 + " , " //売買代金
+				+ COLUMN_TBL.CHANGE_PRICE							 + " , " //前日比
+				+ COLUMN_TBL.CHANGERATE							 + " , " //前日比率
+				+ COLUMN_TBL.SHORTIDO								 + " , " //株価短期間移動平均線
+				+ COLUMN_TBL.MIDDLEIDO								 + " , " //株価中期間移動平均線
+				+ COLUMN_TBL.LONGIDO								 + " , " //株価長期間移動平均線
+				+ COLUMN_TBL.SHORTIDO_CHANGERATE					 + " , " //株価短期間移動平均線前日比
+				+ COLUMN_TBL.MIDDLEIDO_CHANGERATE					 + " , " //株価中期間移動平均線前日比
+				+ COLUMN_TBL.LONGIDO_CHANGERATE					 + " , " //株価長期間移動平均線前日比
+				+ COLUMN_TBL.SHORTIDO_RATIO						 + " , " //株価短期間移動平均線前日比率
+				+ COLUMN_TBL.MIDDLEIDO_RATIO						 + " , " //株価中期間移動平均線前日比率
+				+ COLUMN_TBL.LONGIDO_RATIO							 + " , " //株価長期間移動平均線前日比率
+				+ COLUMN_TBL.MAXMIN								 + " , " //当日の最高値-最安値
+				+ COLUMN_TBL.MAXMINRATIO							 + " , " //（1-最安値)/最高値
+				+ COLUMN_TBL.CANDLE_AREA							 + " , " //ローソク足の面積
+				+ COLUMN_TBL.CANDLE_AREA_SCALE						 + " , " //ひげの長さと比較したローソク足面積の比率
+				+ COLUMN_TBL.WINDOW								 + " , " //前日の終値-今日の始値
+				+ COLUMN_TBL.DEKI_CHANGERATE						 + " , " //出来高前日比
+				+ COLUMN_TBL.DEKI_RATIO							 + " , " //出来高前日比率
+				+ COLUMN_TBL.BAYBAY_CHANGERATE						 + " , " //売買代金前日比
+				+ COLUMN_TBL.BAYBAY_RATIO							 + " , " //売買代金前日比率
+				+ COLUMN_TBL.SHORTIDO_DEKI							 + " , " //出来高短期移動平均線
+				+ COLUMN_TBL.MIDDLEIDO_DEKI						 + " , " //出来高中期移動平均線
+				+ COLUMN_TBL.LONGIDO_DEKI							 + " , " //出来高長期移動平均線
+				+ COLUMN_TBL.SHORTIDO_DEKI_CHANGERATE				 + " , " //出来高短期移動平均線前日比
+				+ COLUMN_TBL.MIDDLEIDO_DEKI_CHANGERATE				 + " , " //出来高中期移動平均線前日比
+				+ COLUMN_TBL.LONGIDO_DEKI_CHANGERATE				 + " , " //出来高長期移動平均線前日比
+				+ COLUMN_TBL.SHORTIDO_DEKI_RATIO					 + " , " //出来高短期間移動平均線前日比率
+				+ COLUMN_TBL.MIDDLEIDO_DEKI_RATIO					 + " , " //出来高中期移動平均線前日比率
+				+ COLUMN_TBL.LONGIDO_DEKI_RATIO					 + " , " //出来高長期移動平均線前日比率
+				+ COLUMN_TBL.SHORTIDO_BAYBAY						 + " , " //売買代金短期移動平均線
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY						 + " , " //売買代金中期移動平均線
+				+ COLUMN_TBL.LONGIDO_BAYBAY						 + " , " //売買代金長期移動平均線
+				+ COLUMN_TBL.SHORTIDO_BAYBAY_CHANGERATE			 + " , " //売買代金短期間移動平均線前日比
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY_CHANGERATE			 + " , " //売買代金中期間移動平均線前日比
+				+ COLUMN_TBL.LONGIDO_BAYBAY_CHANGERATE				 + " , " //売買代金長期移動平均線前日比
+				+ COLUMN_TBL.SHORTIDO_BAYBAY_RATIO					 + " , " //売買代金短期間移動平均線前日比率
+				+ COLUMN_TBL.MIDDLEIDO_BAYBAY_RATIO				 + " , " //売買代金中期間移動平均線前日比率
+				+ COLUMN_TBL.LONGIDO_BAYBAY_RATIO					 + " , " //売買代金長期移動平均線前日比率
+				+ COLUMN_TBL.CREDIT_LONG							 + " , " //信用買い残
+				+ COLUMN_TBL.CREDIT_SHORT							 + " , " //信用売り残
+				+ COLUMN_TBL.CREDIT_RATIO							 + " , " //信用倍率＝信用買い残÷信用売り残
+				+ COLUMN_TBL.CREDIT_LONG_CHANGERATE				 + " , " //信用買い残前日比
+				+ COLUMN_TBL.CREDIT_SHORT_CHANGERATE				 + " , " //信用売り残前日比
+				+ COLUMN_TBL.CREDIT_RATIO_CHANGERATE				 + " , " //信用倍率前日比
+				+ COLUMN_TBL.SHORT_DEV								 + " , " //短期間の標準偏差（シグマ）
+				+ COLUMN_TBL.SHORT_NOW_SIGMA						 + " , " //短期間内で今日の終値がシグマと比較して何パーセント上か。
+				+ COLUMN_TBL.SHORT_1_H_SIGMA						 + " , " //短期間でのシグマ１
+				+ COLUMN_TBL.SHORT_1_L_SIGMA						 + " , " //短期間でのマイナスシグマ１
+				+ COLUMN_TBL.SHORT_2_H_SIGMA						 + " , " //短期間でのシグマ２
+				+ COLUMN_TBL.SHORT_2_L_SIGMA						 + " , " //短期間でのマイナスシグマ２
+				+ COLUMN_TBL.SHORT_3_H_SIGMA						 + " , " //短期間でのシグマ３
+				+ COLUMN_TBL.SHORT_3_L_SIGMA						 + " , " //短期間でのマイナスシグマ３
+				+ COLUMN_TBL.MIDDLE_DEV							 + " , " //中期間の標準偏差（シグマ）
+				+ COLUMN_TBL.MIDDLE_NOW_SIGMA						 + " , " //中期間で今日の終値がシグマと比較して何パーセント上か。
+				+ COLUMN_TBL.MIDDLE_1_H_SIGMA						 + " , " //中期間のシグマ１
+				+ COLUMN_TBL.MIDDLE_1_L_SIGMA						 + " , " //中期間のマイナスシグマ１
+				+ COLUMN_TBL.MIDDLE_2_H_SIGMA						 + " , " //中期間のシグマ２
+				+ COLUMN_TBL.MIDDLE_2_L_SIGMA						 + " , " //中期間のマイナスシグマ２
+				+ COLUMN_TBL.MIDDLE_3_H_SIGMA						 + " , " //中期間のシグマ３
+				+ COLUMN_TBL.MIDDLE_3_L_SIGMA						 + " , " //中期間のマイナスシグマ３
+				+ COLUMN_TBL.LONG_DEV								 + " , " //長期間の標準偏差（シグマ）
+				+ COLUMN_TBL.LONG_NOW_SIGMA						 + " , " //長期間で今日の終値がシグマと比較して何パーセント上か。
+				+ COLUMN_TBL.LONG_1_H_SIGMA						 + " , " //長期間のシグマ１
+				+ COLUMN_TBL.LONG_1_L_SIGMA						 + " , " //長期間のマイナスシグマ１
+				+ COLUMN_TBL.LONG_2_H_SIGMA						 + " , " //長期間のシグマ２
+				+ COLUMN_TBL.LONG_2_L_SIGMA						 + " , " //長期間のマイナスシグマ２
+				+ COLUMN_TBL.LONG_3_H_SIGMA						 + " , " //長期間のシグマ３
+				+ COLUMN_TBL.LONG_3_L_SIGMA						 + " , " //長期間のマイナスシグマ３
+				+ COLUMN_TBL.SHORTIDO_HEKATU						 + " , " //指数平滑移動平均短期
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU						 + " , " //指数平滑移動平均中期
+				+ COLUMN_TBL.LONGIDO_HEKATU				 	 	 + " , " //指数平滑移動平均長期
+				+ COLUMN_TBL.SHORTIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均短期前日比
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU_CHANGERATE			 + " , " //指数平滑移動平均中期前日比
+				+ COLUMN_TBL.LONGIDO_HEKATU_CHANGERATE		 	 	 + " , " //指数平滑移動平均長期前日比
+				+ COLUMN_TBL.SHORTIDO_HEKATU_RATIO					 + " , " //指数平滑移動平均短期前日比率
+				+ COLUMN_TBL.MIDDLEIDO_HEKATU_RATIO				 + " , " //指数平滑移動平均中期前日比率
+				+ COLUMN_TBL.LONGIDO_HEKATU_RATIO		 	 		 + " , " //指数平滑移動平均長期前日比率
+				+ COLUMN_TBL.SHORT_MACD							 + " , " //短期MACD
+				+ COLUMN_TBL.SHORT_MACD_SIGNAL						 + " , " //短期MACDシグナル線
+				+ COLUMN_TBL.MIDDLE_MACD							 + " , " //中期MACD
+				+ COLUMN_TBL.MIDDLE_MACD_SIGNAL					 + " , " //中期MACDシグナル線
+				+ COLUMN_TBL.LONG_MACD								 + " , " //長期MACD
+				+ COLUMN_TBL.LONG_MACD_SIGNAL						 + "  "; //長期MACDシグナル線
+		
+		String selectSQL;
+		selectSQL = " select "
+				  + col
+				  + " from " + TBL_Name.ETF_DD;
+		
+		String insSQL;
+		insSQL = "insert into "
+				+ TBL_Name.STOCK_DD
+				+ " ( "
+				+ col
+				+ ")"
+				+ selectSQL;
+		
+		System.out.println(insSQL);
+	}
+	
 	public static void testCaseA(){
 //		makeCalendarCon c = new makeCalendarCon();
 //		S s = new S();
@@ -139,12 +252,12 @@ public class SagyoSpace {
 
 		S s = new S();
 		s.getCon();
-		n.createWeekMonth("2017-03-17",s);
-		n.createWeekMonth("2017-03-21",s);
-		n.createWeekMonth("2017-03-22",s);
-		n.createWeekMonth("2017-03-23",s);
-		n.createWeekMonth("2017-03-24",s);
-		n.createWeekMonth("2017-03-27",s);
+//		n.createWeekMonth("2017-03-17",s);
+//		n.createWeekMonth("2017-03-21",s);
+//		n.createWeekMonth("2017-03-22",s);
+//		n.createWeekMonth("2017-03-23",s);
+//		n.createWeekMonth("2017-03-24",s);
+//		n.createWeekMonth("2017-03-27",s);
 //		n.createWeekMonth("2017-03-28",s);
 //		n.createWeekMonth("2017-03-29",s);
 //		n.createWeekMonth("2017-03-30",s);
@@ -186,12 +299,12 @@ public class SagyoSpace {
 //		n.createWeekMonth("2017-05-24",s);
 //		n.createWeekMonth("2017-05-25",s);
 //		n.createWeekMonth("2017-05-26",s);
-//		n.createWeekMonth("2017-05-29",s);
-//		n.createWeekMonth("2017-05-30",s);
-//		n.createWeekMonth("2017-05-31",s);
-//		n.createWeekMonth("2017-06-01",s);
-//		n.createWeekMonth("2017-06-02",s);
-//		n.createWeekMonth("2017-06-05",s);
+		n.createWeekMonth("2017-05-29",s);
+		n.createWeekMonth("2017-05-30",s);
+		n.createWeekMonth("2017-05-31",s);
+		n.createWeekMonth("2017-06-01",s);
+		n.createWeekMonth("2017-06-02",s);
+		n.createWeekMonth("2017-06-05",s);
 //		n.createWeekMonth("2017-06-06",s);
 //		n.createWeekMonth("2017-06-07",s);
 //		n.createWeekMonth("2017-06-08",s);

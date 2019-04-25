@@ -62,7 +62,7 @@ public class makeSokanWithTimeCon {
 
 	public makeSokanWithTimeCon(String cate,String code){
 		this.code = code;
-
+		this.cate = cate;
 		SQL_CODE_WHERE = COLUMN_TBL.CODE
 				  + " = '" + code + "'"
 				  ;
@@ -78,6 +78,7 @@ public class makeSokanWithTimeCon {
 		//通貨・・・6
 		//週足個別銘柄・・・8
 		//月足個別銘柄・・・9
+
 		switch(cate){
 		case ReCord.CODE_01_STOCK:
 			thisTBL = TBL_Name.STOCK_DD;
@@ -204,11 +205,12 @@ public class makeSokanWithTimeCon {
 			list.add((double)counter);
 		}
 		double timeBunsan = commonAP.getDev(list, true);
+		double timeHensa =  Math.sqrt(timeBunsan); 
 		double timeAve =  ( term+1 ) / 2 ;
+		
 
-
-
-		String idoHeikinSQL_A	= " select "
+		String idoHeikinSQL_A	= " ( "
+								+ " select "
 								+ COLUMN_TBL.CODE + " , "
 								+ idoHeikinCol
 								+ " from "
@@ -217,10 +219,13 @@ public class makeSokanWithTimeCon {
 								+ SQL_CODE_WHERE
 								+ " and "
 								+ termCol + " = " + "'" + nowTerm + "'"
+								+ " ) "
 								+ " as A";
 
-		String updateSQL_B		= " select "
+		String updateSQL_B		= " ( "
+								+ " select "
 								+ COLUMN_TBL.CODE + " , "
+								+ termCol + " , "
 								+ COLUMN_TBL.CLOSE
 								+ " from "
 								+ thisTBL
@@ -230,21 +235,89 @@ public class makeSokanWithTimeCon {
 								+ termCol + " <= " + "'" + nowTerm + "'"
 								+ " and "
 								+ SQL_CODE_WHERE
+								+ " ) "
 								+ "as B";
 
-		String SQL_B_leftOn_C	= " select "
-								+ "A." +  COLUMN_TBL.CODE + " , "
-								+ "B." + COLUMN_TBL.CLOSE + " , "
-								+ "A." + idoHeikinCol
+		String calendarCol = "aa";
+		String calendarCol_use = "bbbb";
+		String idCol = "cal_id";
+		String selectSQL_C		= " ( "
+										+ " select "
+										+ calendarCol
+										+ " as " + " bbbb " + " , "
+										+ "(@num := @num +1) " + " as " + idCol
+										+ " from "
+										+ " ( "
+											+ " select distinct(" + termCol + ") as " + calendarCol + " from " + TBL_Name.CALENDAR_TBL
+											+ " where "
+											+ "'" + startShortterm + "'" + " <= "+ termCol
+											+ " and "
+											+ termCol + " <= " + "'" + nowTerm + "'"
+										+ " ) " + " as " + "XX" + ","
+										+ "(select @num :=0) "  + " as " + " dmy "
+										+ "order by " + calendarCol
+								+ " ) "
+								+ "as C";
+
+		String targetCol = "targetCol";
+		String dmyA		 = "dmyA";
+		String dmyB		 = "dmyB";
+		
+		String asCombine = "asCombine";
+		String SQL_B_leftOn_A_leftOn_C
+								= " ( " 
+								+ " select "
+								+ "sum("
+									+ " ( " + "C." +  idCol + " - " + timeAve + " ) "
+									+ " * "
+									+ " (" + "B." + COLUMN_TBL.CLOSE + " - " + "A." + idoHeikinCol + " ) "
+								+ ")" + " as " + targetCol	 + " , " 
+//								+ "C." +  idCol				 + " , "
+								+ "A." +  COLUMN_TBL.CODE	 + "  "
+//								+ "B." + termCol			 + " , "
+//								+ "B." + COLUMN_TBL.CLOSE	 + " , "
+//								+ "A." + idoHeikinCol		 + " "
 								+ " from "
 								+ updateSQL_B
 								+ " left outer join "
 								+ idoHeikinSQL_A
 								+ " on "
 								+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE
-								+ " where "
-								+ "A." + SQL_CODE_WHERE;;
+								+ " left outer join "
+								+ selectSQL_C
+								+ " on "
+								+ "B." + termCol + " = " + "C." + calendarCol_use
+								+ " where "	//group byにかわるかも
+								+ "A." + SQL_CODE_WHERE
+								+ " group by "
+								+ "A." +  COLUMN_TBL.CODE
+								+ " ) as " + asCombine;
+		String upSQL = 
+		   " update " + thisTBL + "," + SQL_B_leftOn_A_leftOn_C
+		 + " set "
+		 + thisTBL + "." + COLUMN_TBL.COVAR_with_TIME	+ " = " + asCombine	 + "."  + targetCol	
+		 + " where "
+		 + thisTBL + "."+ termCol + " = " + "'" + nowTerm + "'"
+		 + " and "
+		 + thisTBL + "."+ COLUMN_TBL.CODE + " = " + asCombine + "."+ COLUMN_TBL.CODE
+		 ;
+		
+		
+		commonAP.writeInLog("upDateCoverWithTime" + logLetter+"の共分散:" + upSQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(upSQL);
 
-		System.out.println("＜SQL＞"+ SQL_B_leftOn_C);
+		upSQL = " update "
+			  + thisTBL 
+			  + " set "
+			  + COLUMN_TBL.SOKANKEISU_with_TIME
+			  	+ " = "
+			  + " ( " +  COLUMN_TBL.COVAR_with_TIME + " /" + " ( " + COLUMN_TBL.SHORT_DEV + " * " + timeHensa + " ) " + ")"
+			  + " where "
+			  + SQL_CODE_WHERE
+			  + " and "
+			  + termCol + " = " + "'" + nowTerm + "'";
+		
+		commonAP.writeInLog("upDateCoverWithTime" + logLetter+"の相関係数（時間）:" + upSQL,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(upSQL);
 	}
 }

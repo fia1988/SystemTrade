@@ -4,9 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import proparty.S;
+import proparty.TBL_Name;
 
 import common.commonAP;
 
+import constant.CATE_FLG;
 import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.logWriting;
@@ -96,22 +98,42 @@ public class OneRecord_Update {
 
 
 
-	//前日など参照せず、一行のレコードのみで比較できるもの
-	public static void OneRecord(S s){
+	//前日など参照せず、一行のレコードのみで比較できるもの日足：株、ETF
+	//true:通常、false:分割併合
+	public static void OneRecord_stock_ETF_DD(String TODAY,S s,boolean checkFLG){
 
 //		if(commonAP.getTODAY().equals(controllDay.getMAX_DD_STOCK_ETF(s) )){
 //			return;
 //		}
 
-		commonAP.writeInLog("1行レコードのみで比較できるものの更新開始",logWriting.DATEDATE_LOG_FLG);
-		windowScale(ReCord.CODE_01_STOCK,s);
-		windowScale(ReCord.CODE_03_INDEX,s);
-		windowScale(ReCord.CODE_04_ETF,s);
-		commonAP.writeInLog("1行レコードのみで比較できるものの更新終了",logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog("日足：ETF、株の1行レコードのみで比較できるものの更新開始",logWriting.DATEDATE_LOG_FLG);
+		windowScale(ReCord.CODE_01_STOCK,s,TODAY, checkFLG);
+//		windowScale(ReCord.CODE_03_INDEX,s); //今はもうない
+		windowScale(ReCord.CODE_04_ETF,s,TODAY, checkFLG);
+//		windowScale(CATE_FLG.M_MARKET_F,s);
+//		windowScale(CATE_FLG.W_MARKET_F,s);
+//		windowScale(CATE_FLG.W_STOCK_F,s);
+//		windowScale(CATE_FLG.M_STOCK_F,s);
+		commonAP.writeInLog("日足：ETF、株の1行レコードのみで比較できるものの更新終了",logWriting.DATEDATE_LOG_FLG);
 	}
 
+	//前日など参照せず、一行のレコードのみで比較できるもの月足週足
+	//true:通常、false:分割併合
+	public static void OneRecord_stock_MARKET_DD(String TODAY,S s,boolean checkFLG){
 
-	private static void windowScale(String cate,S s){
+//		if(commonAP.getTODAY().equals(controllDay.getMAX_DD_STOCK_ETF(s) )){
+//			return;
+//		}
+
+		commonAP.writeInLog("月足週足：マーケット、株の1行レコードのみで比較できるものの更新開始",logWriting.DATEDATE_LOG_FLG);
+		windowScale(CATE_FLG.M_MARKET_F,s,TODAY, checkFLG);
+		windowScale(CATE_FLG.W_MARKET_F,s,TODAY, checkFLG);
+		windowScale(CATE_FLG.W_STOCK_F,s,TODAY, checkFLG);
+		windowScale(CATE_FLG.M_STOCK_F,s,TODAY, checkFLG);
+		commonAP.writeInLog("月足週足：マーケット、株の1行レコードのみで比較できるものの更新終了",logWriting.DATEDATE_LOG_FLG);
+	}
+
+	private static void windowScale(String cate,S s,String TODAY,boolean checkFLG){
 
 //		+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
 //		+ COLUMN.MAXMINRATIO_KATA							 + " , " //（1-最安値)/最高値
@@ -132,6 +154,8 @@ public class OneRecord_Update {
 								+ COLUMN_TBL.MAXMINRATIO		+ " = " + " ( 1 -  (" + COLUMN_TBL.MIN + "/" + COLUMN_TBL.MAX + "  ) )"		+ " , "
 								+ COLUMN_TBL.CANDLE_AREA		+ " = " + COLUMN_TBL.CLOSE + " - " + COLUMN_TBL.OPEN						+ " , "
 								+ COLUMN_TBL.CANDLE_AREA_SCALE	+ " = " + "( (" +  COLUMN_TBL.CLOSE + " - " + COLUMN_TBL.OPEN + ") / (" + COLUMN_TBL.MAX + " - " + COLUMN_TBL.MIN + ") )";
+			
+			String nowCate = cate;
 			switch(cate){
 			case ReCord.CODE_01_STOCK:
 
@@ -151,18 +175,52 @@ public class OneRecord_Update {
 			case ReCord.CODE_06_CURRENCY:
 
 				break;
+			case CATE_FLG.M_MARKET_F:
+				nowCate = ReCord.CODE_04_ETF;
+				break;
+				
+			case CATE_FLG.W_MARKET_F:
+				nowCate = ReCord.CODE_04_ETF;
+				break;
+				
+			case CATE_FLG.M_STOCK_F:
+				nowCate = ReCord.CODE_01_STOCK;
+				break;
+				
+			case CATE_FLG.W_STOCK_F:
+				nowCate = ReCord.CODE_01_STOCK;
+				break;
+
 			default:
 				break;
 			}
 
+			String SQL_CODE_WHERE = COLUMN_TBL.CODE
+					  + " in "
+					  + " ( "
+					  	+ " select " + TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE
+					  	+ " from "
+					  	+ TBL_Name.CODELISTTBL
+					  	+ " where "
+					  	+ COLUMN_TBL.CATE_FLG + " = '" + nowCate + "'"
+					  + " ) ";
+			
 			String omake = "";
-			omake =  " and "	 + COLUMN_TBL.DAYTIME + " > '2016-06-30'";
-
-			SQL = " update " + SQLChecker.getTBL(cate)
+			
+			if (checkFLG){
+				omake =  " and "	 + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";	
+			}else{
+				omake =  " and "	 + COLUMN_TBL.DAYTIME + " > '2007-01-01'";	
+			}
+			
+			String TBL = SQLChecker.getTBL(nowCate);
+			SQL = " update " + TBL
 			+ " set "
 			+ targetCOMUMN
 			+ " where "
-			+ COLUMN_TBL.MAXMIN + " is null " + omake;
+			+ COLUMN_TBL.MAXMIN + " is null " + omake
+			+ " and "
+			+ TBL + "." + SQL_CODE_WHERE;
 
 //			SQL = " update " + SQLChecker.getTBL(cate)
 //					+ " set "
@@ -170,6 +228,7 @@ public class OneRecord_Update {
 //					+ " where "
 //+ COLUMN.DAYTIME + " > '2016-06-30'";
 //			System.out.println(SQL);
+			commonAP.writeInLog("windowScale:"+SQL,logWriting.DATEDATE_LOG_FLG);
 			s.sqlGetter().executeUpdate(SQL);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック

@@ -3,6 +3,7 @@ package makeWeekMonthTBL;
 import proparty.S;
 import proparty.TBL_Name;
 import accesarrySQL.ConAccessaryNew;
+import accesarrySQL.OneRecord_Update;
 import bean.Bean_calendarBean;
 
 import common.commonAP;
@@ -132,17 +133,23 @@ public class makeWeekMonthCon {
 		Bean_calendarBean calBean = new Bean_calendarBean();
 		calBean.setCalendarBean(TODAY, s);
 
+		//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
+		//前月、前週をセットする
+		checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
+		checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
+
 		//個別銘柄の時は処理しない
 		if (sepaConFLG==false){
-			//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
-			checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
-			checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
-			//日足から月/週足に銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高、ナウ、BEFOREをつくる。
+			//日足から月/週足に銘柄名、日付をつくる
 			checkBaseW_M(CATE_FLG.W_STOCK_F,calBean,s);
 			checkBaseW_M(CATE_FLG.M_STOCK_F,calBean,s);
+		}else{
+			//この中に分割併合時に始値(仮)、高値、安値、終値、売買高、出来高、ナウ、BEFOREをセットする仕組みを書く
 		}
 
-
+		//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
+		makeBeseMonthWeek(CATE_FLG.W_STOCK_F,calBean,s);
+		makeBeseMonthWeek(CATE_FLG.M_STOCK_F,calBean,s);
 
 		//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高正しく加工するつくる。
 		updateCol(CATE_FLG.W_STOCK_F,calBean,s);
@@ -177,6 +184,9 @@ public class makeWeekMonthCon {
 			//日足から月/週足に銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高、ナウ、BEFOREをつくる。
 			checkBaseW_M(CATE_FLG.W_MARKET_F,calBean,s);
 			checkBaseW_M(CATE_FLG.M_MARKET_F,calBean,s);
+			//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
+			makeBeseMonthWeek(CATE_FLG.W_MARKET_F,calBean,s);
+			makeBeseMonthWeek(CATE_FLG.M_MARKET_F,calBean,s);
 			//マーケットの始値以外とか作る
 			//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高正しく加工するつくる。
 			updateCol(CATE_FLG.W_MARKET_F,calBean,s);
@@ -202,7 +212,7 @@ public class makeWeekMonthCon {
 			cover.makeSokanWithTime( calBean, s);
 			cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F);
 			cover.makeSokanWithTime( calBean, s);
-			
+
 			//CAPM
 			//⇒計算しない
 
@@ -211,14 +221,58 @@ public class makeWeekMonthCon {
 			fromTBL = nowTBL;
 			stkDD = nowstkDD;
 			commonAP.writeInLog("ここまでマーケットの月足週足。無事終了",logWriting.DATEDATE_LOG_FLG);
+			//前日など参照せず、一行のレコードのみで比較できるもの月足週足
+			OneRecord_Update.OneRecord_stock_MARKET_DD(TODAY,s,true);
 		}else{
 			//個別銘柄のアクセサリ
 
 		}
 
+
 	}
 
+	//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
+	private void makeBeseMonthWeek(String cate,Bean_calendarBean calBean,S s){
+//		+ COLUMN_TBL.OPEN	 + " , "
+//		+ COLUMN_TBL.MAX	 + " , "
+//		+ COLUMN_TBL.MIN	 + " , "
+//		+ COLUMN_TBL.DEKI	 + " , "
+//		+ COLUMN_TBL.BAYBAY	 + " , "
+//		+ COLUMN_TBL.CLOSE;
 
+//		String selectSQL;
+//		selectSQL = " select "
+//				  + col
+//				  + " from " + fromTBL
+//				  + " where "
+//				  + COLUMN_TBL.DAYTIME + " = " + TODAY
+//				  + " and "
+//				  + SQL_CODE_WHERE;
+//
+		setParameta(cate, calBean);
+		String SQL;
+		SQL = " update "
+			+ TBL		 + " as A "
+			+ " left outer join " + stkDD + " as B" + " on "
+			+ "A" + "." + COLUMN_TBL.CODE + " = " + "B"  + "." + COLUMN_TBL.CODE
+			+ " and "
+			+ "A" + "." + COLUMN_TBL.DAYTIME + " = " + "B" + "." +  COLUMN_TBL.DAYTIME + "  "
+			+ " set "
+			+ "A" + "." + COLUMN_TBL.OPEN		 + " = " + "B"	 + "."  + COLUMN_TBL.OPEN	 +  " , "
+			+ "A" + "." + COLUMN_TBL.CLOSE		 + " = " + "B"	 + "."  + COLUMN_TBL.CLOSE	 +  "   "
+//			+ "A" + "." + COLUMN_TBL.MIN		 + " = " + "B"	 + "."  + COLUMN_TBL.MIN	 +  " , "
+//			+ "A" + "." + COLUMN_TBL.MAX		 + " = " + "B"	 + "."  + COLUMN_TBL.MAX	 +  " , "
+//			+ "A" + "." + COLUMN_TBL.DEKI		 + " = " + "B"	 + "."  + COLUMN_TBL.DEKI	 +  " , "
+//			+ "A" + "." + COLUMN_TBL.BAYBAY		 + " = " + "B"	 + "."  + COLUMN_TBL.BAYBAY	 +  "   "
+			+ " where "
+			+ "A" + "." + COLUMN_TBL.DAYTIME + " = " + TODAY
+			+ " and "
+			+ "A" + "." + SQL_CODE_WHERE;
+
+		commonAP.writeInLog("makeBeseMonthWeek:" + w_mLetter + "足の各列のリアルタイムとして仮基本情報作成：" + SQL,logWriting.DATEDATE_LOG_FLG);
+
+		s.freeUpdateQuery(SQL);
+	}
 
 	//始値をつくる
 	private void updateStart(String cate,Bean_calendarBean calBean,S s){
@@ -316,20 +370,22 @@ public class makeWeekMonthCon {
 	}
 
 
-	//日足から月/週足に銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高、ナウ、BEFOREをつくる。
+	//日足から月/週足に銘柄名、日付をつくる
 	private void checkBaseW_M(String cate,Bean_calendarBean calBean,S s){
 
 		setParameta(cate, calBean);
 
 
 		String col =  COLUMN_TBL.CODE	 + " , "
-					+ COLUMN_TBL.DAYTIME + " , "
-					+ COLUMN_TBL.OPEN	 + " , "
-					+ COLUMN_TBL.MAX	 + " , "
-					+ COLUMN_TBL.MIN	 + " , "
-					+ COLUMN_TBL.DEKI	 + " , "
-					+ COLUMN_TBL.BAYBAY	 + " , "
-					+ COLUMN_TBL.CLOSE;
+					+ COLUMN_TBL.DAYTIME + "   "
+//					+ " ,  "
+//					+ COLUMN_TBL.OPEN	 + " , "
+//					+ COLUMN_TBL.MAX	 + " , "
+//					+ COLUMN_TBL.MIN	 + " , "
+//					+ COLUMN_TBL.DEKI	 + " , "
+//					+ COLUMN_TBL.BAYBAY	 + " , "
+//					+ COLUMN_TBL.CLOSE
+					;
 		String selectSQL;
 		selectSQL = " select "
 				  + col

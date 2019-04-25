@@ -1158,9 +1158,6 @@ public class cloringDate {
 
 
 
-			//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
-			OneRecord_Update.OneRecord(s);
-
 		}else{
 			//使わない
 			CONTOLLBOTTON CB = new CONTOLLBOTTON();
@@ -1227,18 +1224,28 @@ public class cloringDate {
 			}
 
 
-
-			//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
-			OneRecord_Update.OneRecord(s);
-
-
 		}
+
+
 		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
-		s.closeConection();
+//		//分割ファイルの作成/取込を行う。
+//		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+//		sepaComCheck.checkSepaComFile(mainDTO,TODAY);
+//		//分割チェック。
+//		s.resetConnection();
+//		SEPARATE_CHECK.checkSEPARATE_controll(s);
+
+		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
+		//いまや日足の株ETFのみ
+		OneRecord_Update.OneRecord_stock_ETF_DD(TODAY,s,true);
+
 
 		//cate:4ETFのリストを作る
-		makeList04ETF(ReCord.CODE_04_ETF);
-		
+		makeList04ETF(ReCord.CODE_04_ETF,s);
+
+		s.closeConection();
+
+
 		//日足マーケットテーブル作成
 		insertMarketDD_TBL(TODAY);
 
@@ -1247,7 +1254,7 @@ public class cloringDate {
 		makeC.createCallendar(TODAY);
 
 
-		//ニューアクセサリ
+		//ニューアクセサリ(日足：株、ETF）
 		s = new S();
 		s.getCon();
 		Bean_calendarBean calBean = new Bean_calendarBean();
@@ -1269,29 +1276,37 @@ public class cloringDate {
 	}
 
 	//ETFのリストを作る
-	private void makeList04ETF(String cate){
-		S s = new S();
-		s.getCon();
+	private void makeList04ETF(String cate,S s){
+
 		String TBL = TBL_Name.ETF_DD;
-		String SQL = "";
+		String insTBL = TBL_Name.CODELISTTBL;
 
 		String col =  COLUMN_TBL.CODE	 + " , " + COLUMN_TBL.CATE_FLG;
 		String selectSQL;
+		String tokusyuTaiou = " where code <> '8421' ";
 		selectSQL = " select "
 				  + " distinct(" + COLUMN_TBL.CODE + ")" + " , "
 				  + "'" + cate +  "'" + " as " + COLUMN_TBL.CATE_FLG
-				  + " from " + TBL + " order by " + COLUMN_TBL.CODE;
+				  + " from " + TBL
+				  + tokusyuTaiou
+				  + " order by " + COLUMN_TBL.CODE;
 
 		String insSQL;
 		insSQL = "insert into "
-				+ TBL
+				+ insTBL
 				+ " ( "
 				+ col
 				+ ")"
 				+ selectSQL;
-		s.closeConection();
+		try {
+			int addRecord = s.sqlGetter().executeUpdate(insSQL);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
 	}
-	
+
 	private void insertMarketDD_TBL(String TODAY){
 		S s = new S();
 		s.getCon();
