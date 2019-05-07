@@ -150,12 +150,12 @@ public class OneRecord_Update {
 			//ETF・・・4
 			//先物・・・5
 			//通貨・・・6
-			String targetCOMUMN = COLUMN_TBL.MAXMIN				+ " = " + COLUMN_TBL.MAX + " - " + COLUMN_TBL.MIN							+ " , "
-								+ COLUMN_TBL.MAXMINRATIO		+ " = " + " ( 1 -  (" + COLUMN_TBL.MIN + "/" + COLUMN_TBL.MAX + "  ) )"		+ " , "
-								+ COLUMN_TBL.CANDLE_AREA		+ " = " + COLUMN_TBL.CLOSE + " - " + COLUMN_TBL.OPEN						+ " , "
-								+ COLUMN_TBL.CANDLE_AREA_SCALE	+ " = " + "( (" +  COLUMN_TBL.CLOSE + " - " + COLUMN_TBL.OPEN + ") / (" + COLUMN_TBL.MAX + " - " + COLUMN_TBL.MIN + ") )";
+			String targetCOMUMN = "A." + COLUMN_TBL.MAXMIN				+ " = " + "A." + COLUMN_TBL.MAX + " - " + "A." + COLUMN_TBL.MIN							+ " , "
+								+ "A." + COLUMN_TBL.MAXMINRATIO		+ " = " + " ( 1 -  (" + "A." + COLUMN_TBL.MIN + "/" + "A." + COLUMN_TBL.MAX + "  ) )"		+ " , "
+								+ "A." + COLUMN_TBL.CANDLE_AREA		+ " = " + "A." + COLUMN_TBL.CLOSE + " - " + "A." + COLUMN_TBL.OPEN						+ " , "
+								+ "A." + COLUMN_TBL.CANDLE_AREA_SCALE	+ " = " + "( (" +  "A." + COLUMN_TBL.CLOSE + " - " + "A." + COLUMN_TBL.OPEN + ") / (" + "A." + COLUMN_TBL.MAX + " - " + "A." + COLUMN_TBL.MIN + ") )";
 			
-			String nowCate = cate;
+			String listCate = cate;
 			switch(cate){
 			case ReCord.CODE_01_STOCK:
 
@@ -176,19 +176,19 @@ public class OneRecord_Update {
 
 				break;
 			case CATE_FLG.M_MARKET_F:
-				nowCate = ReCord.CODE_04_ETF;
+				listCate = ReCord.CODE_04_ETF;
 				break;
 				
 			case CATE_FLG.W_MARKET_F:
-				nowCate = ReCord.CODE_04_ETF;
+				listCate = ReCord.CODE_04_ETF;
 				break;
 				
 			case CATE_FLG.M_STOCK_F:
-				nowCate = ReCord.CODE_01_STOCK;
+				listCate = ReCord.CODE_01_STOCK;
 				break;
 				
 			case CATE_FLG.W_STOCK_F:
-				nowCate = ReCord.CODE_01_STOCK;
+				listCate = ReCord.CODE_01_STOCK;
 				break;
 
 			default:
@@ -202,25 +202,31 @@ public class OneRecord_Update {
 					  	+ " from "
 					  	+ TBL_Name.CODELISTTBL
 					  	+ " where "
-					  	+ COLUMN_TBL.CATE_FLG + " = '" + nowCate + "'"
+					  	+ COLUMN_TBL.CATE_FLG + " = '" + listCate + "'"
 					  + " ) ";
 			
 			String omake = "";
 			
 			if (checkFLG){
-				omake =  " and "	 + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";	
+				omake =  "  "	 + "A." + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";	
 			}else{
-				omake =  " and "	 + COLUMN_TBL.DAYTIME + " > '2007-01-01'";	
+				omake =  "  "	 + "A." + COLUMN_TBL.DAYTIME + " > '2007-01-01'";	
 			}
 			
-			String TBL = SQLChecker.getTBL(nowCate);
-			SQL = " update " + TBL
+			String TBL = SQLChecker.getTBL(cate);
+			SQL = " update " + TBL + " as A "
+			+ " left outer join "
+			+ TBL + " as B "
+			+ " on "
+			+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE	  + " "
+			+ " and "
+			+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME	  + " "
 			+ " set "
 			+ targetCOMUMN
 			+ " where "
-			+ COLUMN_TBL.MAXMIN + " is null " + omake
+			+ omake
 			+ " and "
-			+ TBL + "." + SQL_CODE_WHERE;
+			+ "A." + SQL_CODE_WHERE;
 
 //			SQL = " update " + SQLChecker.getTBL(cate)
 //					+ " set "

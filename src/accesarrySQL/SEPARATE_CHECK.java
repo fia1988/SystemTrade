@@ -3,6 +3,7 @@ package accesarrySQL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import makeWeekMonthTBL.makeWeekMonthCon;
 import proparty.S;
 import proparty.TBL_Name;
 import proparty.controllDay;
@@ -45,7 +46,7 @@ public class SEPARATE_CHECK {
 				+ " order by "
 				+ COLUMN_TBL.DAYTIME_KENRI_LAST;
 
-
+		commonAP.writeInLog("checkSEPARATE_controll:本日の対象検索:" + SQL_defo ,logWriting.DATEDATE_LOG_FLG);
 
 
 		try {
@@ -107,7 +108,7 @@ public class SEPARATE_CHECK {
 							+ COLUMN_TBL.DAYTIME + " <= '" + day_kenri_last + "'"
 							+ " and "
 							+ COLUMN_TBL.CODE + " = '" + codeList.get(i) + "'";
-
+					commonAP.writeInLog("checkSEPARATE_controll:株テーブル更新開始:" + SQL ,logWriting.DATEDATE_LOG_FLG);
 					s.freeUpdateQuery(SQL);
 
 					//キープテーブルの更新をする。
@@ -118,7 +119,7 @@ public class SEPARATE_CHECK {
 							+ getColumnSEPA(COLUMN_TBL.REAL_AVERAGEPRICE	,	RATE,	enXan_1) + "  "
 							+ " where "
 							+ COLUMN_TBL.CODE + " = '" + codeList.get(i) + "'";
-					commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
+					commonAP.writeInLog("checkSEPARATE_controll:キープテーブル更新開始:" + SQL ,logWriting.DATEDATE_LOG_FLG);
 					s.freeUpdateQuery(SQL);
 
 					//2010-01-01以前、権利付最終売買日以後4営業日は取引期間後4営業日を営業停止期間としている。これのレコードを削除する。
@@ -210,7 +211,7 @@ public class SEPARATE_CHECK {
 					+ COLUMN_TBL.CODE + " = '" + code + "'"
 					+ " and "
 					+ COLUMN_TBL.SEPA_FLG + " is false";
-		commonAP.writeInLog(SQL ,logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog("updateSEPAFLG:" + code + ":" + SQL ,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 	}
 	static int checkCount=0;
@@ -219,29 +220,33 @@ public class SEPARATE_CHECK {
 
 		setSepaDayList(code,s);
 		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK , code);
-
+		makeWeekMonthCon n = new makeWeekMonthCon( code);
+		commonAP.writeInLog("updateAccesary:" + code + ":過去の更新開始" ,logWriting.DATEDATE_LOG_FLG);
 		//0:code
 		//1:日付
 		for( int i = 0; i < getSepaDayList().size(); i++) {
 			//新しい月足週足
-			
+
 			//ニューアクセサリ
 			Bean_calendarBean calBean = new Bean_calendarBean();
-			calBean.setCalendarBean(getSepaDayList().get(i)[0], s);
+			calBean.setCalendarBean(getSepaDayList().get(i)[1], s);
 			ac.setConAccessary(calBean,s);
 			//ニューアクセサリここまで
-			
-			ConAccessary.setConAccessary(getSepaDayList().get(i)[0],ReCord.CODE_01_STOCK,getSepaDayList().get(i)[1],s);
 
-//			checkCount++;
-//			if( checkCount%400 == 0){
-//				checkCount=0;
-//				s.resetConnection();
-//			}
+			//月週足の加工
+			n.createWeekMonth(getSepaDayList().get(i)[1],s);
+			
+//			ConAccessary.setConAccessary(getSepaDayList().get(i)[0],ReCord.CODE_01_STOCK,getSepaDayList().get(i)[1],s);
+
+			checkCount++;
+			if( checkCount%400 == 0){
+				checkCount=0;
+				s.resetConnection();
+			}
 		}
 
 
-
+		commonAP.writeInLog("updateAccesary:" + code + ":過去の更新終了" ,logWriting.DATEDATE_LOG_FLG);
 
 	}
 

@@ -1,5 +1,7 @@
 package makeWeekMonthTBL;
 
+import java.util.ArrayList;
+
 import proparty.S;
 import proparty.TBL_Name;
 import accesarrySQL.ConAccessaryNew;
@@ -151,7 +153,7 @@ public class makeWeekMonthCon {
 		makeBeseMonthWeek(CATE_FLG.W_STOCK_F,calBean,s);
 		makeBeseMonthWeek(CATE_FLG.M_STOCK_F,calBean,s);
 
-		//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高正しく加工するつくる。
+		//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高を正しく加工するつくる。
 		updateCol(CATE_FLG.W_STOCK_F,calBean,s);
 		updateCol(CATE_FLG.M_STOCK_F,calBean,s);
 
@@ -258,8 +260,8 @@ public class makeWeekMonthCon {
 			+ " and "
 			+ "A" + "." + COLUMN_TBL.DAYTIME + " = " + "B" + "." +  COLUMN_TBL.DAYTIME + "  "
 			+ " set "
-			+ "A" + "." + COLUMN_TBL.OPEN		 + " = " + "B"	 + "."  + COLUMN_TBL.OPEN	 +  " , "
-			+ "A" + "." + COLUMN_TBL.CLOSE		 + " = " + "B"	 + "."  + COLUMN_TBL.CLOSE	 +  "   "
+			+ "A" + "." + COLUMN_TBL.OPEN				+ " = " + "B"	 + "."  + COLUMN_TBL.OPEN	 +  " , "
+			+ "A" + "." + COLUMN_TBL.CLOSE				+ " = " + "B"	 + "."  + COLUMN_TBL.CLOSE	 +  "   "
 //			+ "A" + "." + COLUMN_TBL.MIN		 + " = " + "B"	 + "."  + COLUMN_TBL.MIN	 +  " , "
 //			+ "A" + "." + COLUMN_TBL.MAX		 + " = " + "B"	 + "."  + COLUMN_TBL.MAX	 +  " , "
 //			+ "A" + "." + COLUMN_TBL.DEKI		 + " = " + "B"	 + "."  + COLUMN_TBL.DEKI	 +  " , "
@@ -305,6 +307,42 @@ public class makeWeekMonthCon {
 
 			s.freeUpdateQuery(SQL);
 	}
+
+	//true:週足、false月足
+	private String createUnionSQL(boolean checkMonthWeek,String TBL,S s){
+		ArrayList<String> thisList = new ArrayList<String>();
+		String checkCol;
+		if(checkMonthWeek){
+			//週足
+//			thisList = useListShort;
+			checkCol = COLUMN_TBL.WEEK_NOW;
+		}else{
+			//月足
+			checkCol = COLUMN_TBL.MONTH_NOW;
+		}
+
+		String unionSQL = "";
+
+		if (thisList.size()==1){
+			unionSQL = " select * from " + TBL +" where " + TBL + "." + SQL_CODE_WHERE + " and " + checkCol + " = '" + thisList.get(0) + "'";
+		}else{
+
+			for (String term:thisList){
+				unionSQL = unionSQL + " select * from " + TBL + " where " + TBL + "." + SQL_CODE_WHERE + " and "  + checkCol + " = '" + term + "'" + " UNION ALL ";
+			}
+
+//			+第一引数：刈り取り対象文字列（テキスト）
+//			+第二引数：刈り取る文字
+			unionSQL = commonAP.stripEnd(unionSQL," UNION ALL ");
+
+		}
+
+
+
+
+		return unionSQL;
+	}
+
 	//始値以外の列を作る(高値、安値、出来高、売買高、ピックアップフラグ(=true))
 	private void updateCol(String cate,Bean_calendarBean calBean,S s){
 
@@ -339,7 +377,17 @@ public class makeWeekMonthCon {
 							+ stkDD + "." + COLUMN_TBL.DAYTIME + " = " + TBL  + "." + COLUMN_TBL.DAYTIME;;
 		String groupBy   = " group by " + stkDD + "." + COLUMN_TBL.CODE;
 
-		String fromTBL  = " from " + stkDD  + leftJoin + " where " + stkDD + "." + COLUMN_TBL.DAYTIME + " <= " + TODAY + " and " + nowTerm_col + " = " + nowTerm + " and " + stkDD + "." +  SQL_CODE_WHERE + groupBy + "  ";
+		String fromTBL  = " from "
+						+ stkDD
+						+ leftJoin
+						+ " where "
+							+ stkDD + "." +  SQL_CODE_WHERE
+						+ " and "
+							+ stkDD + "." + COLUMN_TBL.DAYTIME + " <= " + TODAY
+						+ " and "
+							+ nowTerm_col + " = " + nowTerm
+						+ groupBy + "  "
+						;
 
 		String dummyT = "dummyT";
 		String dummyTBL = " ( "
@@ -350,17 +398,23 @@ public class makeWeekMonthCon {
 //		System.out.println("a:" + dummyTBL);
 
 		SQL = " update "
+//			+ TBL		 + "  "
+//			+ " left outer join "
+//			+ dummyTBL	 + "   "
+//			+ " on "
+//			+ TBL + "." + COLUMN_TBL.CODE		 + " = " + dummyT	 + "."  + codeCol
+//			+ " set "
 			+ TBL		 + " , "
 			+ dummyTBL	 + "   "
 			+ " set "
 			+ TBL + "." + COLUMN_TBL.MAX		 + " = " + dummyT	 + "."  + maxCol	 +  " , "
 			+ TBL + "." + COLUMN_TBL.MIN		 + " = " + dummyT	 + "."  + minCol	 +  " , "
 			+ TBL + "." + COLUMN_TBL.DEKI		 + " = " + dummyT	 + "."  + dekCol	 +  " , "
-			+ TBL + "." + COLUMN_TBL.BAYBAY		 + " = " + dummyT + "."  + bayCol	 +  "   "
+			+ TBL + "." + COLUMN_TBL.BAYBAY		 + " = " + dummyT	 + "."  + bayCol	 +  "   "
 			+ " where "
-			+ TBL + "." + COLUMN_TBL.DAYTIME + " = " + TODAY
-			+ " and "
 			+ TBL + "." + SQL_CODE_WHERE
+			+ " and "
+			+ TBL + "." + COLUMN_TBL.DAYTIME + " = " + TODAY
 			+ " and "
 			+ TBL + "." + COLUMN_TBL.CODE + " = " + dummyT + "." + codeCol;
 

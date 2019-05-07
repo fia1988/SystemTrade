@@ -15,10 +15,8 @@ import java.util.List;
 import proparty.S;
 import proparty.controllDay;
 import GamenDTO.TAB_MainDTO;
-import accesarrySQL.SEPARATE_CHECK;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
-import botton.CreateSepaComFile;
 
 import common.commonAP;
 
@@ -218,13 +216,13 @@ public class insertHesoGomaFile {
 
 		i_d.hesoGomaInsertDD(DTO, s);
 
-		//分割ファイルの作成/取込を行う。
-		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
-		sepaComCheck.checkSepaComFile(mainDTO,TODAY);
-
-		//分割チェック。
-		s.resetConnection();
-		SEPARATE_CHECK.checkSEPARATE_controll(s);
+//		//分割ファイルの作成/取込を行う。
+//		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+//		sepaComCheck.checkSepaComFile(mainDTO,TODAY);
+//
+//		//分割チェック。
+//		s.resetConnection();
+//		SEPARATE_CHECK.checkSEPARATE_controll(s);
 	}
 
 	private void insertKariFileToTBLandKariFileDelete(TAB_MainDTO mainDTO,String filePath,String TODAY,String updateColumn,String TBL,String kariFilePath,String cate,S s){

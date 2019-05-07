@@ -7,7 +7,6 @@ import proparty.S;
 import proparty.TBL_Name;
 import proparty.ZenzituEnd;
 import proparty.controllDay;
-import accesarrySQL.ConAccessary;
 import bean.Bean_CodeList;
 
 import common.commonAP;
@@ -97,7 +96,7 @@ public class InsertDay {
 						DTO.get(i).setClose(price);
 
 						InsertDD_case1(DTO.get(i),s);
-						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 //						System.out.println(DTO.get(i).getCode() + ":" + DTO.get(i).getDay());
 						//0のとき＝前日の価格が存在しない。レコードが存在しない。
 						//0の時は何もしない。
@@ -106,7 +105,7 @@ public class InsertDay {
 				}else{
 					InsertDD_case1(DTO.get(i),s);
 
-					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				}
 
 				break;
@@ -135,13 +134,13 @@ public class InsertDay {
 						DTO.get(i).setMin  (price);
 						DTO.get(i).setClose(price);
 						InsertDD_case4(DTO.get(i),s);
-						ConAccessary.setConAccessary(DTO.get(i).getCode(), ReCord.CODE_04_ETF, DTO.get(i).getDay(), s);
+//						ConAccessary.setConAccessary(DTO.get(i).getCode(), ReCord.CODE_04_ETF, DTO.get(i).getDay(), s);
 						//0のとき＝前日の価格が存在しない。レコードが存在しない。
 						//0の時は何もしない。
 					}
 				}else{
 					InsertDD_case4(DTO.get(i),s);
-					ConAccessary.setConAccessary(DTO.get(i).getCode(), ReCord.CODE_04_ETF, DTO.get(i).getDay(), s);
+//					ConAccessary.setConAccessary(DTO.get(i).getCode(), ReCord.CODE_04_ETF, DTO.get(i).getDay(), s);
 				}
 
 				break;
@@ -187,7 +186,7 @@ public class InsertDay {
 						DTO.get(i).setMin  (price);
 						DTO.get(i).setClose(price);
 						InsertDD_case1(DTO.get(i),s);
-						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 //						System.out.println(DTO.get(i).getCode() + ":" + DTO.get(i).getDay());
 						//0のとき＝前日の価格が存在しない。レコードが存在しない。
 						//0の時は何もしない。
@@ -195,17 +194,17 @@ public class InsertDay {
 
 				}else{
 					InsertDD_case1(DTO.get(i),s);
-					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				}
 
 				break;
 			case ReCord.CODE_02_SATISTICS:
 				InsertDD_case2(DTO.get(i),s);
-				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case ReCord.CODE_03_INDEX:
 				InsertDD_case3(DTO.get(i),s);
-				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case ReCord.CODE_04_ETF:
 
@@ -220,24 +219,24 @@ public class InsertDay {
 						DTO.get(i).setMin  (price);
 						DTO.get(i).setClose(price);
 						InsertDD_case4(DTO.get(i),s);
-						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 						//0のとき＝前日の価格が存在しない。レコードが存在しない。
 						//0の時は何もしない。
 					}
 				}else{
 					InsertDD_case4(DTO.get(i),s);
-					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				}
 
 
 				break;
 			case ReCord.CODE_05_SAKIMONO:
 				InsertDD_case5(DTO.get(i),s);
-				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case ReCord.CODE_06_CURRENCY:
 				InsertDD_case6(DTO.get(i),s);
-				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			default:
 				System.out.println("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName());
@@ -261,20 +260,20 @@ public class InsertDay {
 		SQL = "insert into ";
 		SQL = SQL	+ TBL_Name.STOCK_DD
 					+ " ("
-					+ COLUMN_TBL.CODE			+ " , "
-					+ COLUMN_TBL.DAYTIME	 	+ " , "
+					+ COLUMN_TBL.CODE				+ " , "
+					+ COLUMN_TBL.DAYTIME	 		+ " , "
 					+ COLUMN_TBL.BEFORE_OPEN	 	+ " , "
-					+ COLUMN_TBL.BEFORE_MAX	 	+ " , "
-					+ COLUMN_TBL.BEFORE_MIN	 	+ " , "
-					+ COLUMN_TBL.BEFORE_CLOSE 	+ " , "
-					+ COLUMN_TBL.BEFORE_DEKI  	+ " , "
-					+ COLUMN_TBL.BEFORE_BAYBAY	+ " , "
-					+ COLUMN_TBL.OPEN	 	 	+ " , "
-					+ COLUMN_TBL.MAX	 	 	+ " , "
-					+ COLUMN_TBL.MIN		 	+ " , "
-					+ COLUMN_TBL.CLOSE		 	+ " , "
-					+ COLUMN_TBL.DEKI 		 	+ " , "
-					+ COLUMN_TBL.BAYBAY 	 	+ "   "
+					+ COLUMN_TBL.BEFORE_MAX	 		+ " , "
+					+ COLUMN_TBL.BEFORE_MIN	 		+ " , "
+					+ COLUMN_TBL.BEFORE_CLOSE 		+ " , "
+					+ COLUMN_TBL.BEFORE_DEKI  		+ " , "
+					+ COLUMN_TBL.BEFORE_BAYBAY		+ " , "
+					+ COLUMN_TBL.OPEN	 	 		+ " , "
+					+ COLUMN_TBL.MAX	 	 		+ " , "
+					+ COLUMN_TBL.MIN		 		+ " , "
+					+ COLUMN_TBL.CLOSE		 		+ " , "
+					+ COLUMN_TBL.DEKI 		 		+ " , "
+					+ COLUMN_TBL.BAYBAY 	 		+ "  "
 
 
 					+ " ) "
@@ -430,14 +429,14 @@ public class InsertDay {
 		SQL = "insert into ";
 		SQL = SQL	+ TBL_Name.ETF_DD
 					+ " ("
-					+ COLUMN_TBL.CODE			+ " , "
-					+ COLUMN_TBL.DAYTIME	 	+ " , "
-					+ COLUMN_TBL.OPEN	 	 	+ " , "
-					+ COLUMN_TBL.MAX	 	 	+ " , "
-					+ COLUMN_TBL.MIN		 	+ " , "
-					+ COLUMN_TBL.CLOSE		 	+ " , "
-					+ COLUMN_TBL.DEKI 		 	+ " , "
-					+ COLUMN_TBL.BAYBAY 	 	+ "  "
+					+ COLUMN_TBL.CODE				+ " , "
+					+ COLUMN_TBL.DAYTIME		 	+ " , "
+					+ COLUMN_TBL.OPEN	 		 	+ " , "
+					+ COLUMN_TBL.MAX	 		 	+ " , "
+					+ COLUMN_TBL.MIN			 	+ " , "
+					+ COLUMN_TBL.CLOSE			 	+ " , "
+					+ COLUMN_TBL.DEKI 			 	+ " , "
+					+ COLUMN_TBL.BAYBAY 	 		+ "   "
 					+ " ) "
 					+ "values (?,?,?,?,?,?,?,?)";
 

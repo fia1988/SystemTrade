@@ -23,6 +23,7 @@ import GamenDTO.TAB_MainDTO;
 import accesarrySQL.CalculateCAPM;
 import accesarrySQL.ConAccessaryNew;
 import accesarrySQL.OneRecord_Update;
+import accesarrySQL.SEPARATE_CHECK;
 import analysis.SagyoSpace;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
@@ -1228,42 +1229,38 @@ public class cloringDate {
 
 
 		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
+
+
+		//カレンダーテーブル作成
+		//以降の処理はカレンダーテーブル結構つかうので必須
+		makeCalendarCon makeC = new makeCalendarCon();
+		makeC.createCallendar(TODAY);
+
 //		//分割ファイルの作成/取込を行う。
-//		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
-//		sepaComCheck.checkSepaComFile(mainDTO,TODAY);
-//		//分割チェック。
-//		s.resetConnection();
-//		SEPARATE_CHECK.checkSEPARATE_controll(s);
+		CreateSepaComFile sepaComCheck = new CreateSepaComFile();
+		sepaComCheck.checkSepaComFile(mainDTO,TODAY);
+		//分割チェック。
+		s.resetConnection();
+		SEPARATE_CHECK.checkSEPARATE_controll(s);
+
+		//cate:4ETFのリストを作る
+		makeList04ETF(ReCord.CODE_04_ETF,s);
 
 		//各テーブルのMAXMINなど、一レコード内で完結するデータを挿入する。
 		//いまや日足の株ETFのみ
 		OneRecord_Update.OneRecord_stock_ETF_DD(TODAY,s,true);
 
-
-		//cate:4ETFのリストを作る
-		makeList04ETF(ReCord.CODE_04_ETF,s);
-
 		s.closeConection();
-
-
-		//日足マーケットテーブル作成
-		insertMarketDD_TBL(TODAY);
-
-		//カレンダーテーブル作成
-		makeCalendarCon makeC = new makeCalendarCon();
-		makeC.createCallendar(TODAY);
-
 
 		//ニューアクセサリ(日足：株、ETF）
 		s = new S();
 		s.getCon();
-		Bean_calendarBean calBean = new Bean_calendarBean();
-		calBean.setCalendarBean(TODAY, s);
-		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
-		ac.setConAccessary(calBean,s);
-		ac = new ConAccessaryNew(ReCord.CODE_04_ETF);
-		ac.setConAccessary(calBean,s);
+		makeAccecary(TODAY,s);
+		s.resetConnection();
 		//アクセサリここまで
+
+		//日足マーケットテーブル作成
+		insertMarketDD_TBL(TODAY,s);
 
 		//月足週足を作る中で月足週足マーケットテーブルも作る
 		makeWeekMonthCon makeW_M = new makeWeekMonthCon();
@@ -1273,6 +1270,42 @@ public class cloringDate {
 		//マーケットテーブル作成、株主資本コストの計算
 		calculateDD_CAPM(TODAY);
 		return ReturnCodeConst.EVERY_UPDATE_SUCSESS;
+	}
+
+	private void makeAccecary(String TODAY,S s){
+		int checkCount = 0;
+		commonAP.writeInLog(TODAY + ":のアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
+		Bean_calendarBean calBean = new Bean_calendarBean();
+		calBean.setCalendarBean(TODAY, s);
+
+		commonAP.writeInLog("株のアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
+		//株
+		//株の全銘柄取得
+		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+//		株の全銘柄ループする
+		for (String[] stock:commonAP.getCodeList()){;
+			ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK,stock[0]);
+			ac.setConAccessary(calBean,s);
+			checkCount++;
+			if( checkCount%400 == 0){
+				checkCount=0;
+				s.resetConnection();
+				commonAP.writeInLog("株のアクセサリ作成中。。。作成中。。。" + stock[0] + "まで作成済。。。",logWriting.DATEDATE_LOG_FLG);
+			}
+		}
+		commonAP.writeInLog("株のアクセサリ作りました",logWriting.DATEDATE_LOG_FLG);
+//		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
+//		ac.setConAccessary(calBean,s);
+		s.resetConnection();
+
+		//マーケット
+		commonAP.writeInLog("ETFのアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
+		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_04_ETF);
+		ac.setConAccessary(calBean,s);
+		s.resetConnection();
+		commonAP.writeInLog("ETFのアクセサリ作りました",logWriting.DATEDATE_LOG_FLG);
+
+		commonAP.writeInLog(TODAY + ":のアクセサリ作りました",logWriting.DATEDATE_LOG_FLG);
 	}
 
 	//ETFのリストを作る
@@ -1307,9 +1340,8 @@ public class cloringDate {
 
 	}
 
-	private void insertMarketDD_TBL(String TODAY){
-		S s = new S();
-		s.getCon();
+	private void insertMarketDD_TBL(String TODAY,S s){
+
 //		String TODAY = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_STOCK_ETF, s);
 		String lastUpdateDay = controllDay.getDAY_DD_FROM_UPDATE_MAMAGE(ReCord.KOSHINBI_MARKET_TBL, s);
 		String column = COLUMN_TBL.CODE									 + " , " //銘柄名
@@ -1435,7 +1467,7 @@ public class cloringDate {
 
 		controllDay.update_KOSHINBI(TODAY,ReCord.KOSHINBI_MARKET_TBL, s);
 		commonAP.writeInLog(ReCord.KOSHINBI_MARKET_TBL + ":" + TODAY,logWriting.DATEDATE_LOG_FLG);
-		s.closeConection();
+
 
 	}
 
@@ -1511,8 +1543,8 @@ public class cloringDate {
 						   + "'" +  COLUMN_TBL.EXITMETHOD			+ "' , "
 						   + "'" +  COLUMN_TBL.MINI_CHECK_FLG		+ "' , "
 						   + "'" +  COLUMN_TBL.REAL_ENTRY_VOLUME	+ "' , "
-						   + "'" +  COLUMN_TBL.ENTRY_MONEY				+ "'" ;
-//						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
+//						   + "'" +  COLUMN_TBL.ENTRY_MONEY				+ "'" ;
+						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
 
 
 

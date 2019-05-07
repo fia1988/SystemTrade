@@ -12,10 +12,12 @@ import technique.CheckSign;
 import technique.Technique98_CONST;
 import bean.Bean_Parameta;
 import bean.Bean_Result;
+import bean.Bean_calendarBean;
 import bean.Bean_nowRecord;
 
 import common.commonAP;
 
+import constant.AccesarryParameta;
 import constant.COLUMN_TBL;
 import constant.ReCord;
 import constant.TechCon;
@@ -116,7 +118,7 @@ public class SagyoSpace {
 		paraDTO.setCheckRenzokuSign(false);
 
 	}
-	
+
 	public static void testCaseinsert(){
 		String col;
 		col = 	  COLUMN_TBL.CODE									 + " , " //銘柄名
@@ -210,12 +212,12 @@ public class SagyoSpace {
 				+ COLUMN_TBL.MIDDLE_MACD_SIGNAL					 + " , " //中期MACDシグナル線
 				+ COLUMN_TBL.LONG_MACD								 + " , " //長期MACD
 				+ COLUMN_TBL.LONG_MACD_SIGNAL						 + "  "; //長期MACDシグナル線
-		
+
 		String selectSQL;
 		selectSQL = " select "
 				  + col
 				  + " from " + TBL_Name.ETF_DD;
-		
+
 		String insSQL;
 		insSQL = "insert into "
 				+ TBL_Name.STOCK_DD
@@ -223,25 +225,41 @@ public class SagyoSpace {
 				+ col
 				+ ")"
 				+ selectSQL;
-		
+
 		System.out.println(insSQL);
 	}
-	
+
 	public static void testCaseA(){
 //		makeCalendarCon c = new makeCalendarCon();
-//		S s = new S();
-//		s.getCon();
+		S s = new S();
+		s.getCon();
+		Bean_calendarBean calBean = new Bean_calendarBean();
+		calBean.setCalendarBean("2007-05-10", s);
+
+		String beforeDay = commonAP.getStartDay("2019-04-22", AccesarryParameta.MARKET_OBSERVATION_TERM, s);
+		System.out.println("beforeDay:"+beforeDay);
+		calBean.setDayList("2019-04-22", AccesarryParameta.MARKET_OBSERVATION_TERM, s);
+		
+		for (String term:calBean.getDayList()){
+			System.out.println("term:"+term);
+		}
+		
 //		SEPARATE_CHECK.setSepaDayList("9432",s);
-//		s.closeConection();
+		s.closeConection();
 //		//0:code
 //		//1:日付
 //		for( int i = 0; i < SEPARATE_CHECK.getSepaDayList().size(); i++) {
-//			
+//
 ////			System.out.println(SEPARATE_CHECK.getSepaDayList().get(i)[1]);
 ////			c.createCallendar(SEPARATE_CHECK.getSepaDayList().get(i)[1]);
 //		}
-		
 
+		String unionSQL = "a: UNION ALL : UNION ALL ";
+		System.out.println(commonAP.stripEnd(unionSQL," UNION ALL "));
+		unionSQL = "a: UNION ALL : UNION ALL :";
+		System.out.println(commonAP.stripEnd(unionSQL," UNION ALL "));
+		unionSQL = "a: UNION ALL : :UNION ALL ";
+		System.out.println(commonAP.stripEnd(unionSQL," UNION ALL "));
 	}
 
 
@@ -252,36 +270,36 @@ public class SagyoSpace {
 
 		S s = new S();
 		s.getCon();
-//		n.createWeekMonth("2017-03-17",s);
-//		n.createWeekMonth("2017-03-21",s);
-//		n.createWeekMonth("2017-03-22",s);
-//		n.createWeekMonth("2017-03-23",s);
-//		n.createWeekMonth("2017-03-24",s);
-//		n.createWeekMonth("2017-03-27",s);
-//		n.createWeekMonth("2017-03-28",s);
-//		n.createWeekMonth("2017-03-29",s);
-//		n.createWeekMonth("2017-03-30",s);
-//		n.createWeekMonth("2017-03-31",s);
-//		n.createWeekMonth("2017-04-03",s);
-//		n.createWeekMonth("2017-04-04",s);
-//		n.createWeekMonth("2017-04-05",s);
-//		n.createWeekMonth("2017-04-06",s);
-//		n.createWeekMonth("2017-04-07",s);
-//		n.createWeekMonth("2017-04-10",s);
-//		n.createWeekMonth("2017-04-11",s);
-//		n.createWeekMonth("2017-04-12",s);
-//		n.createWeekMonth("2017-04-13",s);
-//		n.createWeekMonth("2017-04-14",s);
-//		n.createWeekMonth("2017-04-17",s);
-//		n.createWeekMonth("2017-04-18",s);
-//		n.createWeekMonth("2017-04-19",s);
-//		n.createWeekMonth("2017-04-20",s);
-//		n.createWeekMonth("2017-04-21",s);
-//		n.createWeekMonth("2017-04-24",s);
-//		n.createWeekMonth("2017-04-25",s);
-//		n.createWeekMonth("2017-04-26",s);
-//		n.createWeekMonth("2017-04-27",s);
-//		n.createWeekMonth("2017-04-28",s);
+		n.createWeekMonth("2017-03-17",s);
+		n.createWeekMonth("2017-03-21",s);
+		n.createWeekMonth("2017-03-22",s);
+		n.createWeekMonth("2017-03-23",s);
+		n.createWeekMonth("2017-03-24",s);
+		n.createWeekMonth("2017-03-27",s);
+		n.createWeekMonth("2017-03-28",s);
+		n.createWeekMonth("2017-03-29",s);
+		n.createWeekMonth("2017-03-30",s);
+		n.createWeekMonth("2017-03-31",s);
+		n.createWeekMonth("2017-04-03",s);
+		n.createWeekMonth("2017-04-04",s);
+		n.createWeekMonth("2017-04-05",s);
+		n.createWeekMonth("2017-04-06",s);
+		n.createWeekMonth("2017-04-07",s);
+		n.createWeekMonth("2017-04-10",s);
+		n.createWeekMonth("2017-04-11",s);
+		n.createWeekMonth("2017-04-12",s);
+		n.createWeekMonth("2017-04-13",s);
+		n.createWeekMonth("2017-04-14",s);
+		n.createWeekMonth("2017-04-17",s);
+		n.createWeekMonth("2017-04-18",s);
+		n.createWeekMonth("2017-04-19",s);
+		n.createWeekMonth("2017-04-20",s);
+		n.createWeekMonth("2017-04-21",s);
+		n.createWeekMonth("2017-04-24",s);
+		n.createWeekMonth("2017-04-25",s);
+		n.createWeekMonth("2017-04-26",s);
+		n.createWeekMonth("2017-04-27",s);
+		n.createWeekMonth("2017-04-28",s);
 //		n.createWeekMonth("2017-05-01",s);
 //		n.createWeekMonth("2017-05-02",s);
 //		n.createWeekMonth("2017-05-08",s);
@@ -299,12 +317,12 @@ public class SagyoSpace {
 //		n.createWeekMonth("2017-05-24",s);
 //		n.createWeekMonth("2017-05-25",s);
 //		n.createWeekMonth("2017-05-26",s);
-		n.createWeekMonth("2017-05-29",s);
-		n.createWeekMonth("2017-05-30",s);
-		n.createWeekMonth("2017-05-31",s);
-		n.createWeekMonth("2017-06-01",s);
-		n.createWeekMonth("2017-06-02",s);
-		n.createWeekMonth("2017-06-05",s);
+//		n.createWeekMonth("2017-05-29",s);
+//		n.createWeekMonth("2017-05-30",s);
+//		n.createWeekMonth("2017-05-31",s);
+//		n.createWeekMonth("2017-06-01",s);
+//		n.createWeekMonth("2017-06-02",s);
+//		n.createWeekMonth("2017-06-05",s);
 //		n.createWeekMonth("2017-06-06",s);
 //		n.createWeekMonth("2017-06-07",s);
 //		n.createWeekMonth("2017-06-08",s);
