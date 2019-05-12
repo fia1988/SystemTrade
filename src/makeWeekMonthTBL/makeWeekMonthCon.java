@@ -1,5 +1,6 @@
 package makeWeekMonthTBL;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import proparty.S;
@@ -10,6 +11,7 @@ import bean.Bean_calendarBean;
 
 import common.commonAP;
 
+import constant.AccesarryParameta;
 import constant.CATE_FLG;
 import constant.COLUMN_TBL;
 import constant.ReCord;
@@ -22,7 +24,7 @@ import constant.logWriting;
 public class makeWeekMonthCon {
 
 
-
+	private String unionTBL;
 	private String SQL_CODE_WHERE;
 	private String fromTBL = TBL_Name.STOCK_DD;
 	private String stkDD = TBL_Name.STOCK_DD;
@@ -39,10 +41,12 @@ public class makeWeekMonthCon {
 	private String w_mLetter = "";
 	private String code="";
 	private boolean sepaConFLG = false;
+	private boolean logFlg = false;
 
 	//コンストラクタ、全銘柄
 	public makeWeekMonthCon(){
 		sepaConFLG = false;
+		logFlg = true;
 		SQL_CODE_WHERE = COLUMN_TBL.CODE
 				  + " in "
 				  + " ( "
@@ -58,6 +62,7 @@ public class makeWeekMonthCon {
 	//コンストラクタ、個別銘柄
 	public makeWeekMonthCon(String code){
 		sepaConFLG = true;
+		logFlg = false;
 		SQL_CODE_WHERE = COLUMN_TBL.CODE
 				  + " = '" + code + "'"
 				  ;
@@ -80,6 +85,7 @@ public class makeWeekMonthCon {
 				nowTerm = "'" + calBean.getMONTH_NOW() + "'";
 				nowTerm_col = COLUMN_TBL.MONTH_NOW;
 				nowTerm_before_col = COLUMN_TBL.MONTH_BEFORE;
+				unionTBL = TBL_Name.STOCK_DD;
 				if ( calBean.getMONTH_BEFORE() != null){
 					nowTerm_before =  "'" + calBean.getMONTH_BEFORE() + "'";
 				}
@@ -91,6 +97,7 @@ public class makeWeekMonthCon {
 				nowTerm = "'" + calBean.getWEEK_NOW() + "'";
 				nowTerm_col = COLUMN_TBL.WEEK_NOW;
 				nowTerm_before_col = COLUMN_TBL.WEEK_BEFORE;
+				unionTBL = TBL_Name.STOCK_DD;
 				if (calBean.getWEEK_BEFORE() != null){
 					nowTerm_before = "'" + calBean.getWEEK_BEFORE() + "'";
 				}
@@ -103,6 +110,7 @@ public class makeWeekMonthCon {
 				nowTerm = "'" + calBean.getMONTH_NOW() + "'";
 				nowTerm_col = COLUMN_TBL.MONTH_NOW;
 				nowTerm_before_col = COLUMN_TBL.MONTH_BEFORE;
+				unionTBL = TBL_Name.MARKET_DD_TBL;
 				if ( calBean.getMONTH_BEFORE() != null){
 					nowTerm_before =  "'" + calBean.getMONTH_BEFORE() + "'";
 				}
@@ -114,6 +122,7 @@ public class makeWeekMonthCon {
 				nowTerm = "'" + calBean.getWEEK_NOW() + "'";
 				nowTerm_col = COLUMN_TBL.WEEK_NOW;
 				nowTerm_before_col = COLUMN_TBL.WEEK_BEFORE;
+				unionTBL = TBL_Name.MARKET_DD_TBL;
 				if (calBean.getWEEK_BEFORE() != null){
 					nowTerm_before = "'" + calBean.getWEEK_BEFORE() + "'";
 				}
@@ -124,9 +133,9 @@ public class makeWeekMonthCon {
 		}
 	}
 
-	public void createWeekMonth(String TODAY,S s) {
+	public void createWeekMonth(String TODAY,S s,boolean testcord) {
 
-		boolean testcord = false;
+//		boolean testcord = false;
 		//まだ動かしたくないからダミーをセットして動きをとめる
 		if (testcord == false){
 			return;
@@ -135,42 +144,30 @@ public class makeWeekMonthCon {
 		Bean_calendarBean calBean = new Bean_calendarBean();
 		calBean.setCalendarBean(TODAY, s);
 
-		//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
-		//前月、前週をセットする
-		checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
-		checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
-
-		//個別銘柄の時は処理しない
 		if (sepaConFLG==false){
+			commonAP.writeInLog("株とマーケットの月足週足作成開始：" + TODAY,logWriting.DATEDATE_LOG_FLG);
+			//ここは全株
+			//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
+			//前月、前週をセットする
+			checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
+			checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
 			//日足から月/週足に銘柄名、日付をつくる
 			checkBaseW_M(CATE_FLG.W_STOCK_F,calBean,s);
 			checkBaseW_M(CATE_FLG.M_STOCK_F,calBean,s);
-		}else{
-			//この中に分割併合時に始値(仮)、高値、安値、終値、売買高、出来高、ナウ、BEFOREをセットする仕組みを書く
-		}
 
-		//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
-		makeBeseMonthWeek(CATE_FLG.W_STOCK_F,calBean,s);
-		makeBeseMonthWeek(CATE_FLG.M_STOCK_F,calBean,s);
+			//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
+			//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高を正しく加工するつくる。
+//			//始値をつくる
+			createWeekMonthCon_NormalTime(calBean, s);
 
-		//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高を正しく加工するつくる。
-		updateCol(CATE_FLG.W_STOCK_F,calBean,s);
-		updateCol(CATE_FLG.M_STOCK_F,calBean,s);
+//			//アクセサリを作る。共分散も計算、相関係数
+//			createAllStockAccecary_Renzoku(calBean,s);
 
-//		//始値をつくる
-		updateStart(CATE_FLG.W_STOCK_F,calBean,s);
-		updateStart(CATE_FLG.M_STOCK_F,calBean,s);
+			createAllStockAccecary_Ikatsu(calBean,s);
 
 
-		//アクセサリを作る
-		ConAccessaryNew ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F);
-		ac.setConAccessary(calBean,s);
-		ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F);
-		ac.setConAccessary(calBean,s);
-
-		//全銘柄のアクセサリ、マーケットテーブルを作る、日付と現在株価の相関係数をもとめる、capmを作る。。
-		if (sepaConFLG==false){
-			commonAP.writeInLog("ここからマーケットの月足週足を作る",logWriting.DATEDATE_LOG_FLG);
+			//ここからマーケット
+			if (logFlg){commonAP.writeInLog("ここからマーケットの月足週足を作る",logWriting.DATEDATE_LOG_FLG);}
 			//マーケットテーブル：1306
 			String nowSQL = SQL_CODE_WHERE;
 			String nowTBL = fromTBL;
@@ -191,29 +188,28 @@ public class makeWeekMonthCon {
 			makeBeseMonthWeek(CATE_FLG.M_MARKET_F,calBean,s);
 			//マーケットの始値以外とか作る
 			//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高正しく加工するつくる。
-			updateCol(CATE_FLG.W_MARKET_F,calBean,s);
-			updateCol(CATE_FLG.M_MARKET_F,calBean,s);
+			updateCol_fast(CATE_FLG.W_MARKET_F,calBean,s);
+			updateCol_fast(CATE_FLG.M_MARKET_F,calBean,s);
 			//マーケットの始値
 			updateStart(CATE_FLG.W_MARKET_F,calBean,s);
 			updateStart(CATE_FLG.M_MARKET_F,calBean,s);
 
 			//マーケットのアクセサリ
-			ac = new ConAccessaryNew(CATE_FLG.M_MARKET_F,ReCord.MARKET_CODE_1306);
+			ConAccessaryNew ac = new ConAccessaryNew(CATE_FLG.M_MARKET_F,ReCord.MARKET_CODE_1306);
 			ac.setConAccessary(calBean,s);
 			ac = new ConAccessaryNew(CATE_FLG.W_MARKET_F,ReCord.MARKET_CODE_1306);
 			ac.setConAccessary(calBean,s);
 
 			//日付と終わりのとの相関係数
-			//マーケットから
-			makeSokanWithTimeCon cover = new makeSokanWithTimeCon(CATE_FLG.M_MARKET_F,ReCord.MARKET_CODE_1306);
-			cover.makeSokanWithTime( calBean, s);
+			//マーケット
+			makeSokanWithTimeCon
+			cover = new makeSokanWithTimeCon(CATE_FLG.M_MARKET_F,ReCord.MARKET_CODE_1306);
+			cover.makeKyoBunsanWithTime(AccesarryParameta.IDOSHORT, calBean, s);
+			cover.makeSokanWithTime(AccesarryParameta.IDOSHORT, s,calBean);
+
 			cover = new makeSokanWithTimeCon(CATE_FLG.W_MARKET_F,ReCord.MARKET_CODE_1306);
-			cover.makeSokanWithTime( calBean, s);
-			//株の月足週足
-			cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F);
-			cover.makeSokanWithTime( calBean, s);
-			cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F);
-			cover.makeSokanWithTime( calBean, s);
+			cover.makeKyoBunsanWithTime(AccesarryParameta.IDOSHORT, calBean, s);
+			cover.makeSokanWithTime(AccesarryParameta.IDOSHORT, s,calBean);
 
 			//CAPM
 			//⇒計算しない
@@ -222,14 +218,134 @@ public class makeWeekMonthCon {
 			SQL_CODE_WHERE = nowSQL;
 			fromTBL = nowTBL;
 			stkDD = nowstkDD;
-			commonAP.writeInLog("ここまでマーケットの月足週足。無事終了",logWriting.DATEDATE_LOG_FLG);
+			if (logFlg){
+				commonAP.writeInLog("ここまでマーケットの月足週足。無事終了",logWriting.DATEDATE_LOG_FLG);
+			}
+
+			//ここまでマーケット
+
 			//前日など参照せず、一行のレコードのみで比較できるもの月足週足
 			OneRecord_Update.OneRecord_stock_MARKET_DD(TODAY,s,true);
+			commonAP.writeInLog("株とマーケットの月足週足作成完了：" + TODAY,logWriting.DATEDATE_LOG_FLG);
 		}else{
-			//個別銘柄のアクセサリ
+			//ここはシングル
+
+			createWeekMonthCon_NormalTime(calBean, s);
+
+			//アクセサリ
+			ConAccessaryNew
+			ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F,code);
+			ac.setConAccessary(calBean,s);
+			ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F,code);
+			ac.setConAccessary(calBean,s);
+
+			//株の月足週足の相関係数
+
+
+			//共分散と相関係数
+			makeSokanWithTimeCon
+			cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F,code);
+			cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
+			cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
+
+			cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F,code);
+			cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
+			cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
 
 		}
 
+
+
+	}
+
+	private void createWeekMonthCon_NormalTime(Bean_calendarBean calBean,S s) {
+		//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
+		makeBeseMonthWeek(CATE_FLG.W_STOCK_F,calBean,s);
+		makeBeseMonthWeek(CATE_FLG.M_STOCK_F,calBean,s);
+
+		//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高を正しく加工するつくる。
+//		updateCol(CATE_FLG.W_STOCK_F,calBean,s);
+//		updateCol(CATE_FLG.M_STOCK_F,calBean,s);
+		updateCol_fast(CATE_FLG.W_STOCK_F,calBean,s);
+		updateCol_fast(CATE_FLG.M_STOCK_F,calBean,s);
+
+//		//始値をつくる
+		updateStart(CATE_FLG.W_STOCK_F,calBean,s);
+		updateStart(CATE_FLG.M_STOCK_F,calBean,s);
+
+
+	}
+
+	private void createAllStockAccecary_Ikatsu(Bean_calendarBean calBean,S s) {
+		commonAP.writeInLog("株の月足週足のアクセサリ作成開始",logWriting.DATEDATE_LOG_FLG);
+
+		logFlg = false;
+		//アクセサリ一括作成
+		ConAccessaryNew
+		ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F);
+		ac.logFLG = true;
+		ac.setConAccessary(calBean,s);
+		ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F);
+		ac.logFLG = true;
+		ac.setConAccessary(calBean,s);
+		//共分散と相関係数
+		makeSokanWithTimeCon
+		cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F);
+		cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
+		cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
+		cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F);
+		cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
+		cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
+
+		logFlg = true;
+		commonAP.writeInLog("株の月足週足のアクセサリ作成完了",logWriting.DATEDATE_LOG_FLG);
+	}
+
+	private void createAllStockAccecary_Renzoku(Bean_calendarBean calBean,S s) {
+
+		commonAP.writeInLog("株の月足週足のアクセサリ作成開始",logWriting.DATEDATE_LOG_FLG);
+
+		int checkCount = 0;
+		//株
+		//株の全銘柄取得
+		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+		logFlg = false;
+//		株の全銘柄ループする
+		for (String[] stock:commonAP.getCodeList()){;
+
+			//アクセサリを作る
+
+			ConAccessaryNew ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F,stock[0]);
+			ac.setConAccessary(calBean,s);
+			ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F,stock[0]);
+			ac.setConAccessary(calBean,s);
+
+			//株の月足週足の相関係数
+
+			//共分散
+			makeSokanWithTimeCon cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F,stock[0]);
+			cover.makeKyoBunsanWithTime(AccesarryParameta.IDOSHORT, calBean, s);
+			cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F,stock[0]);
+			cover.makeKyoBunsanWithTime(AccesarryParameta.IDOSHORT, calBean, s);
+
+			checkCount++;
+			if( checkCount%400 == 0){
+				checkCount=0;
+				s.resetConnection();
+				commonAP.writeInLog("株の月足週足足のアクセサリ作成中。。。作成中。。。" + stock[0] + "まで作成済。。。",logWriting.DATEDATE_LOG_FLG);
+			}
+		}
+		logFlg = true;
+
+		commonAP.writeInLog("株の月足週足のアクセサリ作成完了",logWriting.DATEDATE_LOG_FLG);
+
+		//相関係数を一括で。共分散は↑で作成
+		commonAP.writeInLog("株の月足週足の相関係数作成開始",logWriting.DATEDATE_LOG_FLG);
+		makeSokanWithTimeCon cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F);
+		cover.makeSokanWithTime(AccesarryParameta.IDOSHORT, s,calBean);
+		cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F);
+		cover.makeSokanWithTime(AccesarryParameta.IDOSHORT, s,calBean);
+		commonAP.writeInLog("株の月足週足の相関係数作成完了",logWriting.DATEDATE_LOG_FLG);
 
 	}
 
@@ -271,7 +387,8 @@ public class makeWeekMonthCon {
 			+ " and "
 			+ "A" + "." + SQL_CODE_WHERE;
 
-		commonAP.writeInLog("makeBeseMonthWeek:" + w_mLetter + "足の各列のリアルタイムとして仮基本情報作成：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		if (logFlg){commonAP.writeInLog("makeBeseMonthWeek:" + w_mLetter + "足の各列のリアルタイムとして仮基本情報作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
+
 
 		s.freeUpdateQuery(SQL);
 	}
@@ -303,45 +420,96 @@ public class makeWeekMonthCon {
 				+ " and "
 				+ "A." + SQL_CODE_WHERE;
 
-			commonAP.writeInLog("updateStart:" + w_mLetter + "足の各列の始値作成：" + SQL,logWriting.DATEDATE_LOG_FLG);
+			if (logFlg){commonAP.writeInLog("updateStart:" + w_mLetter + "足の各列の始値作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
 
 			s.freeUpdateQuery(SQL);
 	}
 
-	//true:週足、false月足
-	private String createUnionSQL(boolean checkMonthWeek,String TBL,S s){
-		ArrayList<String> thisList = new ArrayList<String>();
-		String checkCol;
-		if(checkMonthWeek){
-			//週足
-//			thisList = useListShort;
-			checkCol = COLUMN_TBL.WEEK_NOW;
-		}else{
-			//月足
-			checkCol = COLUMN_TBL.MONTH_NOW;
+
+
+	private void updateCol_fast(String cate,Bean_calendarBean calBean,S s){
+		setParameta(cate, calBean);
+		String SQL;
+		ArrayList<String> dayList = new ArrayList<String>();
+		SQL = " select " + COLUMN_TBL.DAYTIME + " from " + TBL_Name.CALENDAR_TBL + " where " + nowTerm_col + " = " + nowTerm + " and " + COLUMN_TBL.DAYTIME + " <= " + TODAY;
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				dayList.add(s.rs.getString(COLUMN_TBL.DAYTIME));
+			}
+		} catch (SQLException e) {
+			commonAP.writeInLog("updateCol_fastでエラー。スタックトレース:" + SQL,logWriting.DATEDATE_LOG_FLG);
+			commonAP.writeInErrLog(e);
+			e.getStackTrace();
 		}
 
 		String unionSQL = "";
 
-		if (thisList.size()==1){
-			unionSQL = " select * from " + TBL +" where " + TBL + "." + SQL_CODE_WHERE + " and " + checkCol + " = '" + thisList.get(0) + "'";
+		if (dayList.size()==1){
+			unionSQL = " select * from " + unionTBL +" where " + unionTBL + "." + SQL_CODE_WHERE + " and " + COLUMN_TBL.DAYTIME + " = '" + dayList.get(0) + "'";
 		}else{
 
-			for (String term:thisList){
-				unionSQL = unionSQL + " select * from " + TBL + " where " + TBL + "." + SQL_CODE_WHERE + " and "  + checkCol + " = '" + term + "'" + " UNION ALL ";
+			for (String term:dayList){
+				unionSQL = unionSQL + " select * from " + unionTBL + " where " + unionTBL + "." + SQL_CODE_WHERE + " and "  + COLUMN_TBL.DAYTIME + " = '" + term + "'" + " UNION ALL ";
 			}
 
 //			+第一引数：刈り取り対象文字列（テキスト）
 //			+第二引数：刈り取る文字
 			unionSQL = commonAP.stripEnd(unionSQL," UNION ALL ");
-
 		}
 
+		String maxCol	 = "maxCol";
+		String minCol	 = "minCol";
+		String dekCol	 = "dekiCol";
+		String bayCol = "baybayCol";
+		String codeCol = "codeCol";
+
+		String unionLetter = "unionLetter";
+
+		String selectColCode = 			unionLetter + "." + COLUMN_TBL.CODE +  " as " + codeCol;
+		String selectColMax = "max(" + 	unionLetter + "." + COLUMN_TBL.MAX	  + ") as " + maxCol;
+		String selectColMin = "min(" + 	unionLetter + "." + COLUMN_TBL.MIN	  + ") as " + minCol;
+		String selectColDek = "sum(" + 	unionLetter + "." + COLUMN_TBL.DEKI  + ") as " + dekCol;
+		String selectColBay = "sum(" + 	unionLetter + "." + COLUMN_TBL.BAYBAY + ") as " + bayCol;
 
 
+		String dummyT = "dummyT";
+		String dummyTBL = " ( "
+					+ " select "
+					+ selectColCode + "," + selectColMax + "," + selectColMin + "," + selectColDek + "," + selectColBay
+					+ " from "
+						+ " ( "
+							+ unionSQL
+						+ " ) as " + unionLetter + " group by " + unionLetter + "." + COLUMN_TBL.CODE
+					+ " ) as " + dummyT;
+		//System.out.println("a:" + dummyTBL);
 
-		return unionSQL;
+		SQL = " update "
+		//+ TBL		 + "  "
+		//+ " left outer join "
+		//+ dummyTBL	 + "   "
+		//+ " on "
+		//+ TBL + "." + COLUMN_TBL.CODE		 + " = " + dummyT	 + "."  + codeCol
+		//+ " set "
+		+ TBL		 + " , "
+		+ dummyTBL	 + "   "
+		+ " set "
+		+ TBL + "." + COLUMN_TBL.MAX		 + " = " + dummyT	 + "."  + maxCol	 +  " , "
+		+ TBL + "." + COLUMN_TBL.MIN		 + " = " + dummyT	 + "."  + minCol	 +  " , "
+		+ TBL + "." + COLUMN_TBL.DEKI		 + " = " + dummyT	 + "."  + dekCol	 +  " , "
+		+ TBL + "." + COLUMN_TBL.BAYBAY		 + " = " + dummyT	 + "."  + bayCol	 +  "   "
+		+ " where "
+		+ TBL + "." + SQL_CODE_WHERE
+		+ " and "
+		+ TBL + "." + COLUMN_TBL.DAYTIME + " = " + TODAY
+		+ " and "
+		+ TBL + "." + COLUMN_TBL.CODE + " = " + dummyT + "." + codeCol;
+
+		if (logFlg){commonAP.writeInLog("updateCol_fast:" + w_mLetter + "足の各列のリアルタイム基本情報作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
+
+		s.freeUpdateQuery(SQL);
 	}
+
 
 	//始値以外の列を作る(高値、安値、出来高、売買高、ピックアップフラグ(=true))
 	private void updateCol(String cate,Bean_calendarBean calBean,S s){
@@ -418,7 +586,7 @@ public class makeWeekMonthCon {
 			+ " and "
 			+ TBL + "." + COLUMN_TBL.CODE + " = " + dummyT + "." + codeCol;
 
-		commonAP.writeInLog("updateCol:" + w_mLetter + "足の各列のリアルタイム基本情報作成：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		if (logFlg){commonAP.writeInLog("updateCol:" + w_mLetter + "足の各列のリアルタイム基本情報作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
 
 		s.freeUpdateQuery(SQL);
 	}
@@ -457,7 +625,7 @@ public class makeWeekMonthCon {
 				+ ")"
 				+ selectSQL;
 
-		commonAP.writeInLog("checkBaseW_M:" + w_mLetter + "足の銘柄名、本日日付、終値作成：" + insSQL,logWriting.DATEDATE_LOG_FLG);
+		if (logFlg){commonAP.writeInLog("checkBaseW_M:" + w_mLetter + "足の銘柄名、本日日付、終値作成：" + insSQL,logWriting.DATEDATE_LOG_FLG);}
 		s.freeUpdateQuery(insSQL);
 
 		String updateSQL;
@@ -469,7 +637,7 @@ public class makeWeekMonthCon {
 					+ COLUMN_TBL.DAYTIME + " = " + TODAY
 					+ " and "
 					  + SQL_CODE_WHERE;
-		commonAP.writeInLog("checkBaseW_M:" + w_mLetter + "足のナウとBEFORE設定：" + updateSQL,logWriting.DATEDATE_LOG_FLG);
+		if (logFlg){commonAP.writeInLog("checkBaseW_M:" + w_mLetter + "足のナウとBEFORE設定：" + updateSQL,logWriting.DATEDATE_LOG_FLG);}
 		s.freeUpdateQuery(updateSQL);
 	}
 
@@ -501,11 +669,43 @@ public class makeWeekMonthCon {
 			+ COLUMN_TBL.DAYTIME + " = " + yesterDay
 			+ " and "
 			  + SQL_CODE_WHERE;
-		commonAP.writeInLog("checkEndTerm:" + w_mLetter + "足のピックアップチェック："+SQL,logWriting.DATEDATE_LOG_FLG);
+		if (logFlg){commonAP.writeInLog("checkEndTerm:" + w_mLetter + "足のピックアップチェック："+SQL,logWriting.DATEDATE_LOG_FLG);}
 		s.freeUpdateQuery(SQL);
 
 		return thisResult;
 	}
 
+	public void bunkatuheigoParametaReset(String code,S s){
+		String SQL;
+		SQL = " update "
+			+ TBL_Name.STOCK_MM_REAL_TIME
+			+ " set "
+			+ COLUMN_TBL.OPEN + " = null ,"
+			+ COLUMN_TBL.CLOSE + " = null ,"
+			+ COLUMN_TBL.MAX + " = null ,"
+			+ COLUMN_TBL.MIN + " = null ,"
+			+ COLUMN_TBL.DEKI + " = null ,"
+			+ COLUMN_TBL.BAYBAY + " = null "
+			+ " where "
+			+ SQL_CODE_WHERE;
+
+		if (logFlg){commonAP.writeInLog("bunkatuheigoParametaReset:"+ code + "の月足分割併合対応："+SQL,logWriting.DATEDATE_LOG_FLG);}
+		s.freeUpdateQuery(SQL);
+
+		SQL = " update "
+				+ TBL_Name.STOCK_WW_REAL_TIME
+				+ " set "
+				+ COLUMN_TBL.OPEN + " = null ,"
+				+ COLUMN_TBL.CLOSE + " = null ,"
+				+ COLUMN_TBL.MAX + " = null ,"
+				+ COLUMN_TBL.MIN + " = null ,"
+				+ COLUMN_TBL.DEKI + " = null ,"
+				+ COLUMN_TBL.BAYBAY + " = null "
+				+ " where "
+				+ SQL_CODE_WHERE;
+
+		if (logFlg){commonAP.writeInLog("bunkatuheigoParametaReset:"+ code + "の週足分割併合対応："+SQL,logWriting.DATEDATE_LOG_FLG);}
+		s.freeUpdateQuery(SQL);
+	}
 
 }

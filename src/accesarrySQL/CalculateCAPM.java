@@ -15,13 +15,20 @@ import constant.logWriting;
 
 public class CalculateCAPM {
 
+	String SQL_CODE_WHERE = COLUMN_TBL.CODE
+			  + " in "
+			  + " ( "
+			  	+ " select " + TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE
+			  	+ " from "
+			  	+ TBL_Name.CODELISTTBL
+			  + " ) ";
 
 	private String createUnionSQL(ArrayList<String> thisList,String TBL){
 		String unionSQL = "";
 
 		String cate = ReCord.CODE_01_STOCK;
 
-		String SQL_CODE_WHERE = COLUMN_TBL.CODE
+		String thisSQL_CODE_WHERE = COLUMN_TBL.CODE
 		  + " in "
 		  + " ( "
 		  	+ " select " + TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE
@@ -32,11 +39,11 @@ public class CalculateCAPM {
 		  + " ) ";
 
 		if (thisList.size()==1){
-			unionSQL = " select * from " + TBL +" where " + TBL + "." + SQL_CODE_WHERE + " and " + COLUMN_TBL.DAYTIME + " = '" + thisList.get(0) + "'";
+			unionSQL = " select * from " + TBL +" where " + TBL + "." + thisSQL_CODE_WHERE + " and " + COLUMN_TBL.DAYTIME + " = '" + thisList.get(0) + "'";
 		}else{
 
 			for (String term:thisList){
-				unionSQL = unionSQL + " select * from " + TBL + " where " + TBL + "." + SQL_CODE_WHERE + " and "  + COLUMN_TBL.DAYTIME + " = '" + term + "'" + " UNION ALL ";
+				unionSQL = unionSQL + " select * from " + TBL + " where " + TBL + "." + thisSQL_CODE_WHERE + " and "  + COLUMN_TBL.DAYTIME + " = '" + term + "'" + " UNION ALL ";
 			}
 //			+第一引数：刈り取り対象文字列（テキスト）
 //			+第二引数：刈り取る文字
@@ -207,11 +214,20 @@ public class CalculateCAPM {
 		persentUpdate(TBL,COLUMN_TBL.RISK_FOR_BETA,TODAY,s);
 
 		//分散の計算
-		SQL = " update " + TBL
+		SQL = " update "
+			+ TBL + " as A "
+			+ " left outer join "
+			+ TBL + " as B "
+			+ " on "
+		 	+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE	  + " "
+		 	+ " and "
+		 	+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME	  + " "
 			+ " set "
-			+ COLUMN_TBL.RISK_Squaring_FOR_BETA + " = " + COLUMN_TBL.RISK_FOR_BETA + " * " + COLUMN_TBL.RISK_FOR_BETA + "  "
+			+ "A."+ COLUMN_TBL.RISK_Squaring_FOR_BETA + " = "+ "A." + COLUMN_TBL.RISK_FOR_BETA + " * "+ "A." + COLUMN_TBL.RISK_FOR_BETA + "  "
 			+ " where "
-			+ COLUMN_TBL.DAYTIME + " = "+ "'" +  TODAY + "'";
+			+ "A." + SQL_CODE_WHERE
+			+ " and "
+			+ "A."+ COLUMN_TBL.DAYTIME + " = "+ "'" +  TODAY + "'";
 		commonAP.writeInLog(TBL + "の分散：" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 
@@ -267,6 +283,8 @@ public class CalculateCAPM {
 						+ " )  as dummycolumn "
 					+ " from " + marketTBL + " left outer join " + stockTBL + " on " + stockTBL + "." + COLUMN_TBL.DAYTIME + " = " + marketTBL + "." + COLUMN_TBL.DAYTIME
 					+ " where "
+						+ stockTBL + "." + SQL_CODE_WHERE
+						+ " and "
 						+ marketTBL + "." + COLUMN_TBL.DAYTIME + " <= '" + TODAY + "'"
 						+ " and "
 						+ marketTBL + "." + COLUMN_TBL.DAYTIME + " >= '" + beforeDay + "'"
@@ -280,7 +298,7 @@ public class CalculateCAPM {
 				+ " and "
 				+ " a." + COLUMN_TBL.DAYTIME + " = '" + TODAY + "'";
 
-		
+
 //		//改善案
 //		SQL = " update " + stockTBL + " a , " + marketTBL + " b , "
 //				+ " ( "
@@ -321,6 +339,8 @@ public class CalculateCAPM {
 				+ " = "
 				+ " (A." + COLUMN_TBL.COVAR_with_TOPIX + " / ( " + " B." + COLUMN_TBL.MARKET_RISK_FOR_BETA + " * A." + COLUMN_TBL.RISK_FOR_BETA + " ) )  "
 			+ " where "
+					+ "A." + SQL_CODE_WHERE
+				+ " and "
 					+ " B." + COLUMN_TBL.DAYTIME
 					+ " = "
 					+ " A." + COLUMN_TBL.DAYTIME
@@ -339,6 +359,8 @@ public class CalculateCAPM {
 				+ " = "
 				+ " (B." + COLUMN_TBL.RISK_FREE_RATE + " + ( A." + COLUMN_TBL.BETA + " * B." + COLUMN_TBL.MARKET_RISK_PREMIUM + "  ) ) "
 			+ " where "
+					+ "A." + SQL_CODE_WHERE
+				+ " and "
 					+ " B." + COLUMN_TBL.DAYTIME
 					+ " = "
 					+ " A." + COLUMN_TBL.DAYTIME
@@ -403,27 +425,44 @@ public class CalculateCAPM {
 
 		String thisTBL = TBL;
 
-
+		 
 		String unionTBL = "unionTBL";
 		if(marketFLG==false){
 			//このなかSTOCK
-			SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
+			SQL = " UPDATE " + TBL + " " + updateLetter 
+					+  " left outer join "
 					+ " ( "
-					+ " select "
-					+ COLUMN_TBL.CODE + " , "
-					+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
-					+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + "   "
-					+ " from "
-					+ " ( "
-					+ unionSQL
-					+ " ) as " + unionTBL
-					+ " group by " + unionTBL + "." + COLUMN_TBL.CODE
+						+ " select "
+						+ COLUMN_TBL.CODE + " , "
+						+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
+						+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + "   "
+						+ " from "
+						
+//					 	+ TBL
+//						+ " where "
+//						+ SQL_CODE_WHERE
+//						+ " and "
+//						+ COLUMN_TBL.DAYTIME + " <= " + "'" + TODAY + "'"
+//						+ " and "
+//						+ COLUMN_TBL.DAYTIME + " >= " + "'" + beforeDay + "'"
+//						+ " group by "+ COLUMN_TBL.CODE
+//						+ " )  " + selectLetter
+//					+ " on "
+//					+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
+
+						+ " ( "
+						+ unionSQL
+						+ " ) as " + unionTBL
+						+ " group by " + unionTBL + "." + COLUMN_TBL.CODE
 					+ " )  " + selectLetter
+					+ " on "
+					+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
+
 					+ " set "
 					+ updateLetter + "." + updateColumn1	 + " = " + selectLetter + "." + dummyCOLUMN_1 + " ,  "
 					+ updateLetter + "." + updateColumn2	 + " = " + selectLetter + "." + dummyCOLUMN_2 + "    "
 					+ " where "
-					+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
+					+ updateLetter + "." + SQL_CODE_WHERE
 					+ " and "
 					+ updateLetter + "." + COLUMN_TBL.DAYTIME + " = " + "'" +  TODAY + "'";
 		}else{
@@ -474,27 +513,44 @@ public class CalculateCAPM {
 			//このなかSTOCK
 			//処理速度向上案
 
-			SQL = " UPDATE " + TBL + " " + updateLetter + " ,  "
+			SQL = " UPDATE " + TBL + " " + updateLetter
+					+ " left outer join  "
 					+ " ( "
-					+ " select "
-					+ COLUMN_TBL.CODE + " , "
-					+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
-					+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + " , "
-					+ " " + calculateLetter3 +  "(" + calculateColumn3 + ") as " + dummyCOLUMN_3 + " , "
-					+ " " + calculateLetter4 +  "(" + calculateColumn4 + ") as " + dummyCOLUMN_4 + "  "
-					+ " from "
-					+ " ( "
-					+ unionSQL
-					+ " ) as " + unionTBL
-					+ " group by " + unionTBL + "." + COLUMN_TBL.CODE
+						+ " select "
+						+ COLUMN_TBL.CODE + " , "
+						+ " " + calculateLetter1 +  "(" + calculateColumn1 + ") as " + dummyCOLUMN_1 + " , "
+						+ " " + calculateLetter2 +  "(" + calculateColumn2 + ") as " + dummyCOLUMN_2 + " , "
+						+ " " + calculateLetter3 +  "(" + calculateColumn3 + ") as " + dummyCOLUMN_3 + " , "
+						+ " " + calculateLetter4 +  "(" + calculateColumn4 + ") as " + dummyCOLUMN_4 + "  "
+						+ " from "
+						
+//					 	+ TBL
+//						+ " where "
+//						+ SQL_CODE_WHERE
+//						+ " and "
+//						+ COLUMN_TBL.DAYTIME + " <= " + "'" + TODAY + "'"
+//						+ " and "
+//						+ COLUMN_TBL.DAYTIME + " >= " + "'" + beforeDay + "'"
+//						+ " group by "+ COLUMN_TBL.CODE
+//					+ " )  " + selectLetter
+//					+ " on "
+//					+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
+					
+						+ " ( "
+						+ unionSQL
+						+ " ) as " + unionTBL
+						+ " group by " + unionTBL + "." + COLUMN_TBL.CODE
 					+ " )  " + selectLetter
+					+ " on "
+					+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
+					
 			+ " set "
 					+ updateLetter + "." + updateColumn1	 + " = " + selectLetter + "." + dummyCOLUMN_1 + " ,  "
 					+ updateLetter + "." + updateColumn2	 + " = " + selectLetter + "." + dummyCOLUMN_2 + " ,  "
 					+ updateLetter + "." + updateColumn3	 + " = " + selectLetter + "." + dummyCOLUMN_3 + " ,  "
 					+ updateLetter + "." + updateColumn4	 + " = " + selectLetter + "." + dummyCOLUMN_4 + "   "
 			+ " where "
-					+ updateLetter + "." + COLUMN_TBL.CODE + " = "+ selectLetter + "." + COLUMN_TBL.CODE
+					+ updateLetter + "." + SQL_CODE_WHERE
 					+ " and "
 					+ updateLetter + "." + COLUMN_TBL.DAYTIME + " = " + "'" +  TODAY + "'";
 		}else{
@@ -531,17 +587,24 @@ public class CalculateCAPM {
 	//0.008⇒0.8％にする。
 	//100倍にする。
 	private void persentUpdate(String TBL,String column,String dayTime, S s){
-		String SQL="";
+		String SQL;
 
-		SQL = " update " + TBL
+		SQL = " update "
+				+ TBL + " as A "
+				+ " left outer join "
+				+ TBL + " as B "
+				+ " on "
+			 	+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE	  + " "
+			 	+ " and "
+			 	+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME	  + " "
 				+ " set "
-				+ column + " = " + column + " * 100 "
+				+ "A." + column + " = " + "A." + column + " * 100 "
 				+ " where "
-				+ COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
-
+				+ "A." + SQL_CODE_WHERE
+				+ " and "
+				+ "A." + COLUMN_TBL.DAYTIME + " = '" + dayTime + "'";
+		commonAP.writeInLog("persentUpdate:％にする:" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 	}
-
-
 
 }

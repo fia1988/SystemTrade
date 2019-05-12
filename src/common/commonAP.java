@@ -545,8 +545,8 @@ public class commonAP {
 		return getDev(doubleList,judge);
 	}
 
-	//judgeがtrueのとき、不偏分散
-	//       falseのとき、分散
+	//judgeがtrueのとき、不偏分散をもとに標準偏差
+	//       falseのとき、分散をもとに標準偏差
 	public static double getDev(List<Double> list,boolean judge){
         double vars = 0;
         double sum = 0;

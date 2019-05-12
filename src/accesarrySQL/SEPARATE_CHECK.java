@@ -46,7 +46,7 @@ public class SEPARATE_CHECK {
 				+ " order by "
 				+ COLUMN_TBL.DAYTIME_KENRI_LAST;
 
-		commonAP.writeInLog("checkSEPARATE_controll:本日の対象検索:" + SQL_defo ,logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog("checkSEPARATE_controll:本日の分割併合対象検索:" + SQL_defo ,logWriting.DATEDATE_LOG_FLG);
 
 
 		try {
@@ -198,7 +198,7 @@ public class SEPARATE_CHECK {
 
 //		s.closeConection();
 
-
+		commonAP.writeInLog("checkSEPARATE_controll:本日の分割併合対象検索終了",logWriting.DATEDATE_LOG_FLG);
 	}
 
 	public static void updateSEPAFLG(String code,String DAY,S s){
@@ -221,6 +221,7 @@ public class SEPARATE_CHECK {
 		setSepaDayList(code,s);
 		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK , code);
 		makeWeekMonthCon n = new makeWeekMonthCon( code);
+		n.bunkatuheigoParametaReset(code, s);
 		commonAP.writeInLog("updateAccesary:" + code + ":過去の更新開始" ,logWriting.DATEDATE_LOG_FLG);
 		//0:code
 		//1:日付
@@ -234,8 +235,8 @@ public class SEPARATE_CHECK {
 			//ニューアクセサリここまで
 
 			//月週足の加工
-			n.createWeekMonth(getSepaDayList().get(i)[1],s);
-			
+			n.createWeekMonth(getSepaDayList().get(i)[1],s,false);
+
 //			ConAccessary.setConAccessary(getSepaDayList().get(i)[0],ReCord.CODE_01_STOCK,getSepaDayList().get(i)[1],s);
 
 			checkCount++;

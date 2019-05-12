@@ -10,7 +10,6 @@ import bean.Bean_calendarBean;
 
 import common.commonAP;
 
-import constant.AccesarryParameta;
 import constant.CATE_FLG;
 import constant.COLUMN_TBL;
 import constant.ReCord;
@@ -28,7 +27,7 @@ public class makeSokanWithTimeCon {
 	private String logLetter;
 	private String cate;
 	private String thisTBL;
-
+	private boolean logFlg = false;
 	private String termCol;
 	private String idoHeikinCol = COLUMN_TBL.SHORTIDO;
 	private String COVAR_Col = COLUMN_TBL.COVAR_with_TIME;
@@ -38,7 +37,7 @@ public class makeSokanWithTimeCon {
 
 	public makeSokanWithTimeCon(String cate){
 		this.cate = cate;
-
+		logFlg = true;
 		switch (cate) {
 			case CATE_FLG.W_STOCK_F:
 				cate = ReCord.CODE_01_STOCK;
@@ -66,6 +65,7 @@ public class makeSokanWithTimeCon {
 		SQL_CODE_WHERE = COLUMN_TBL.CODE
 				  + " = '" + code + "'"
 				  ;
+		logFlg = false;
 	}
 
 
@@ -189,25 +189,29 @@ public class makeSokanWithTimeCon {
 	}
 
 	//cateは月足週足だけ入る
-	public void makeSokanWithTime(Bean_calendarBean calBean,S s){
+	public void makeKyoBunsanWithTime(int term,Bean_calendarBean calBean,S s){
 		setParameta(calBean,cate);
 
-		upDateCoverWithTime(AccesarryParameta.IDOSHORT,s);
+		upDateCoverWithTime(term,s);
+
 	}
 
 
 	private void upDateCoverWithTime(int term, S s){
-		commonAP.writeInLog(logLetter+"と日付との共分散計算開始。ただしterm:" + term,logWriting.DATEDATE_LOG_FLG);
+		if(logFlg){
+			commonAP.writeInLog(logLetter+"と日付との共分散計算開始。ただしterm:" + term,logWriting.DATEDATE_LOG_FLG);
+		}
+
 
 		//分散の計算、ついでに平均も求める
 		List<Double> list = new ArrayList<Double>();
 		for (int counter = 1; counter <= term; counter++) {
 			list.add((double)counter);
 		}
-		double timeBunsan = commonAP.getDev(list, true);
-		double timeHensa =  Math.sqrt(timeBunsan); 
+		double timeHensa = commonAP.getDev(list, true);
+//		double timeHensa =  Math.sqrt(timeBunsan);
 		double timeAve =  ( term+1 ) / 2 ;
-		
+
 
 		String idoHeikinSQL_A	= " ( "
 								+ " select "
@@ -262,16 +266,16 @@ public class makeSokanWithTimeCon {
 		String targetCol = "targetCol";
 		String dmyA		 = "dmyA";
 		String dmyB		 = "dmyB";
-		
+
 		String asCombine = "asCombine";
 		String SQL_B_leftOn_A_leftOn_C
-								= " ( " 
+								= " ( "
 								+ " select "
-								+ "sum("
+								+ "avg("
 									+ " ( " + "C." +  idCol + " - " + timeAve + " ) "
 									+ " * "
 									+ " (" + "B." + COLUMN_TBL.CLOSE + " - " + "A." + idoHeikinCol + " ) "
-								+ ")" + " as " + targetCol	 + " , " 
+								+ ")" + " as " + targetCol	 + " , "
 //								+ "C." +  idCol				 + " , "
 								+ "A." +  COLUMN_TBL.CODE	 + "  "
 //								+ "B." + termCol			 + " , "
@@ -292,32 +296,50 @@ public class makeSokanWithTimeCon {
 								+ " group by "
 								+ "A." +  COLUMN_TBL.CODE
 								+ " ) as " + asCombine;
-		String upSQL = 
+		String upSQL =
 		   " update " + thisTBL + "," + SQL_B_leftOn_A_leftOn_C
 		 + " set "
-		 + thisTBL + "." + COLUMN_TBL.COVAR_with_TIME	+ " = " + asCombine	 + "."  + targetCol	
+		 + thisTBL + "." + COLUMN_TBL.COVAR_with_TIME	+ " = " + asCombine	 + "."  + targetCol
 		 + " where "
 		 + thisTBL + "."+ termCol + " = " + "'" + nowTerm + "'"
 		 + " and "
 		 + thisTBL + "."+ COLUMN_TBL.CODE + " = " + asCombine + "."+ COLUMN_TBL.CODE
 		 ;
-		
-		
-		commonAP.writeInLog("upDateCoverWithTime" + logLetter+"の共分散:" + upSQL,logWriting.DATEDATE_LOG_FLG);
+
+		if(logFlg){
+			commonAP.writeInLog("upDateCoverWithTime" + logLetter+"の共分散:" + upSQL,logWriting.DATEDATE_LOG_FLG);
+		}
+
 		s.freeUpdateQuery(upSQL);
 
+
+	}
+
+	//calBeanは使わない
+	public void makeSokanWithTime(int term,S s,Bean_calendarBean calBean){
+		setParameta(calBean,cate);
+
+		//分散の計算、ついでに平均も求める
+		List<Double> list = new ArrayList<Double>();
+		for (int counter = 1; counter <= term; counter++) {
+			list.add((double)counter);
+		}
+		double timeHensa = commonAP.getDev(list, true);
+		String upSQL;
 		upSQL = " update "
-			  + thisTBL 
-			  + " set "
-			  + COLUMN_TBL.SOKANKEISU_with_TIME
-			  	+ " = "
-			  + " ( " +  COLUMN_TBL.COVAR_with_TIME + " /" + " ( " + COLUMN_TBL.SHORT_DEV + " * " + timeHensa + " ) " + ")"
-			  + " where "
-			  + SQL_CODE_WHERE
-			  + " and "
-			  + termCol + " = " + "'" + nowTerm + "'";
-		
-		commonAP.writeInLog("upDateCoverWithTime" + logLetter+"の相関係数（時間）:" + upSQL,logWriting.DATEDATE_LOG_FLG);
-		s.freeUpdateQuery(upSQL);
+				  + thisTBL
+				  + " set "
+				  + COLUMN_TBL.SOKANKEISU_with_TIME
+				  	+ " = "
+				  + " ( " +  COLUMN_TBL.COVAR_with_TIME + " /" + " ( " + COLUMN_TBL.SHORT_DEV + " * " + timeHensa + " ) " + ")"
+				  + " where "
+				  + SQL_CODE_WHERE
+				  + " and "
+				  + termCol + " = " + "'" + nowTerm + "'";
+			if(logFlg){
+				commonAP.writeInLog("makeSokanWithTime" + logLetter+"の相関係数（時間）:" + upSQL,logWriting.DATEDATE_LOG_FLG);
+			}
+
+			s.freeUpdateQuery(upSQL);
 	}
 }

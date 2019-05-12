@@ -1264,7 +1264,7 @@ public class cloringDate {
 
 		//月足週足を作る中で月足週足マーケットテーブルも作る
 		makeWeekMonthCon makeW_M = new makeWeekMonthCon();
-		makeW_M.createWeekMonth(TODAY,s);
+		makeW_M.createWeekMonth(TODAY,s,false);
 		s.closeConection();
 
 		//マーケットテーブル作成、株主資本コストの計算
@@ -1279,28 +1279,33 @@ public class cloringDate {
 		calBean.setCalendarBean(TODAY, s);
 
 		commonAP.writeInLog("株のアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
-		//株
-		//株の全銘柄取得
-		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
-//		株の全銘柄ループする
-		for (String[] stock:commonAP.getCodeList()){;
-			ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK,stock[0]);
-			ac.setConAccessary(calBean,s);
-			checkCount++;
-			if( checkCount%400 == 0){
-				checkCount=0;
-				s.resetConnection();
-				commonAP.writeInLog("株のアクセサリ作成中。。。作成中。。。" + stock[0] + "まで作成済。。。",logWriting.DATEDATE_LOG_FLG);
-			}
-		}
-		commonAP.writeInLog("株のアクセサリ作りました",logWriting.DATEDATE_LOG_FLG);
-//		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
-//		ac.setConAccessary(calBean,s);
-		s.resetConnection();
-
+//-------------------------------------------------------------------		
+//		//株
+//		//株の全銘柄取得
+//		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
+////		株の全銘柄ループする
+//		for (String[] stock:commonAP.getCodeList()){;
+//			ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK,stock[0]);
+//			ac.setConAccessary(calBean,s);
+//			checkCount++;
+//			if( checkCount%400 == 0){
+//				checkCount=0;
+//				s.resetConnection();
+//				commonAP.writeInLog("株のアクセサリ作成中。。。作成中。。。" + stock[0] + "まで作成済。。。",logWriting.DATEDATE_LOG_FLG);
+//			}
+//		}
+//		commonAP.writeInLog("株のアクセサリ作りました",logWriting.DATEDATE_LOG_FLG);
+////		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
+////		ac.setConAccessary(calBean,s);
+//		s.resetConnection();
+//-----------------------------------------------------------------
+		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK);
+		ac.setConAccessary(calBean,s);
+//------------------------------------------------------------------
 		//マーケット
 		commonAP.writeInLog("ETFのアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
-		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_04_ETF);
+//		ConAccessaryNew 
+		ac = new ConAccessaryNew(ReCord.CODE_04_ETF);
 		ac.setConAccessary(calBean,s);
 		s.resetConnection();
 		commonAP.writeInLog("ETFのアクセサリ作りました",logWriting.DATEDATE_LOG_FLG);
@@ -1331,13 +1336,15 @@ public class cloringDate {
 				+ col
 				+ ")"
 				+ selectSQL;
+		
+		commonAP.writeInLog("makeList04ETF：ETFリスト作成開始"+insSQL,logWriting.DATEDATE_LOG_FLG);
 		try {
 			int addRecord = s.sqlGetter().executeUpdate(insSQL);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
+		commonAP.writeInLog("makeList04ETF：ETFリスト作成完了",logWriting.DATEDATE_LOG_FLG);
 	}
 
 	private void insertMarketDD_TBL(String TODAY,S s){

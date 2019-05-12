@@ -34,7 +34,7 @@ public class ConAccessaryNew {
 	private String thisTBL;
 	private boolean singleFLG = false;
 	private String termCol;
-	private boolean logFLG = false;
+	public boolean logFLG = false;
 	private final int typeLong = 3;
 	private final int typeMiddle = 2;
 	private final int typeShort = 1;
@@ -59,8 +59,8 @@ public class ConAccessaryNew {
 				  	+ " select " + TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE
 				  	+ " from "
 				  	+ TBL_Name.CODELISTTBL
-				  	+ " where "
-				  	+ COLUMN_TBL.CATE_FLG + " = '" + cate + "'"
+//				  	+ " where "
+//				  	+ COLUMN_TBL.CATE_FLG + " = '" + cate + "'"
 				  + " ) ";
 
 	}
@@ -75,42 +75,6 @@ public class ConAccessaryNew {
 				  ;
 	}
 
-	private String SQL_CODE_WHEREa(String serchTBL,String cate){
-		String resultWhere;
-
-		switch (cate) {
-		case CATE_FLG.W_STOCK_F:
-			cate = ReCord.CODE_01_STOCK;
-			break;
-		case CATE_FLG.M_STOCK_F:
-			cate = ReCord.CODE_01_STOCK;
-			break;
-		default:
-			break;
-		}
-		if (singleFLG == false){
-			//こっちが全社
-			resultWhere =
-						   "  EXISTS "
-						  + " ( "
-						  	+ " select "
-						  	+ TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE
-						  	+ " from "
-						  	+ TBL_Name.CODELISTTBL
-						  	+ " where "
-						  	+ TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE + " = "+ serchTBL + "." + COLUMN_TBL.CODE
-						  	+ " and "
-						  	+ COLUMN_TBL.CATE_FLG + " = '" + cate + "'"
-						  + " ) ";;
-		}else{
-			//こっちは単体（分割併合の時とかマーケットの時とか）
-			resultWhere = COLUMN_TBL.CODE
-					  + " = '" + code + "'"
-					  ;
-		}
-
-		return resultWhere;
-	}
 
 	private void setParameta(Bean_calendarBean calBean,String cate){
 		//個別銘柄・・・1
@@ -232,23 +196,21 @@ public class ConAccessaryNew {
 	}
 
 	public void setConAccessary(Bean_calendarBean calBean,S s){
-		boolean testcord = false;
-//		まだ動かしたくないからダミーをセットして動きをとめる
-//		if (testcord == false){
-//			return;
-//		}
 
 		TODAY  = calBean.getDAYTIME();
 		setParameta(calBean,cate);
 
-
 		//平滑指数移動平均線とMACDを引く。
-		idoheikatuMACDupdate(typeShort, s);
-		idoheikatuMACDupdate(typeMiddle, s);
-		idoheikatuMACDupdate(typeLong, s);
-
+		idoheikatuUpdate_Ikkatsu(AccesarryParameta.HEKATUSHORT,AccesarryParameta.HEKATUMIDDLE,AccesarryParameta.HEKATULONG,s);
 //		//平滑線の後処理としてnull列を今日のCLOSEと同じ値にする。
 		heikatuAfter(s);
+		
+		//MACDを作成する。
+		MACDupdate(typeShort, s);
+		MACDupdate(typeMiddle, s);
+		MACDupdate(typeLong, s);
+
+
 
 		//売買高、出来高、終値で移動平均線を引く。。ボリバン用の標準偏差の計算をする。
 		closeDekiBayIDOheikinUpdate(typeShort, s);
@@ -478,27 +440,34 @@ public class ConAccessaryNew {
 //		COLUMN_TBL.MIDDLEIDO_HEKATU;
 //		COLUMN_TBL.LONGIDO_HEKATU;
 		upSQL = " update "
-				+ thisTBL + " "
+			 	+ thisTBL + " as A"
+			 	+ " left outer join "
+			 	+ thisTBL + " as B"
+			 	+ " on "
+			 	+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE	  + " "
+			 	+ " and "
+			 	+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME	  + " "
 				+ " set "
-				+ thisTBL + "." + COLUMN_TBL.SHORTIDO_HEKATU	 + " = "
+				+ "A." + COLUMN_TBL.SHORTIDO_HEKATU	 + " = "
 					+ " CASE "
-						+ " WHEN " + COLUMN_TBL.SHORTIDO_HEKATU + " is  null then " + thisTBL + "." + COLUMN_TBL.CLOSE
-						+ " else " + COLUMN_TBL.SHORTIDO_HEKATU
+						+ " WHEN " + "A." + COLUMN_TBL.SHORTIDO_HEKATU + " is  null then " + "A." + COLUMN_TBL.CLOSE
+						+ " else " + "A." + COLUMN_TBL.SHORTIDO_HEKATU
 					+ " END "	+ ","
-				+ thisTBL + "." + COLUMN_TBL.MIDDLEIDO_HEKATU	 + " = "
+				+ "A." + COLUMN_TBL.MIDDLEIDO_HEKATU	 + " = "
 					+ " CASE "
-						+ " WHEN " + COLUMN_TBL.MIDDLEIDO_HEKATU + " is  null then " + thisTBL + "." + COLUMN_TBL.CLOSE
-						+ " else " + COLUMN_TBL.MIDDLEIDO_HEKATU
+						+ " WHEN " + "A." + COLUMN_TBL.MIDDLEIDO_HEKATU + " is  null then " + "A." + COLUMN_TBL.CLOSE
+						+ " else " + "A." + COLUMN_TBL.MIDDLEIDO_HEKATU
 					+ " END "	+ ","
-				+ thisTBL + "." + COLUMN_TBL.LONGIDO_HEKATU	 + " = "
+				+ "A." + COLUMN_TBL.LONGIDO_HEKATU	 + " = "
 					+ " CASE "
-						+ " WHEN " + COLUMN_TBL.LONGIDO_HEKATU + " is  null then " + thisTBL + "." + COLUMN_TBL.CLOSE
-						+ " else " + COLUMN_TBL.LONGIDO_HEKATU 
+						+ " WHEN " + "A." + COLUMN_TBL.LONGIDO_HEKATU + " is  null then " + "A." + COLUMN_TBL.CLOSE
+						+ " else " + "A." + COLUMN_TBL.LONGIDO_HEKATU
 					+ " END "	+ " "
 				+ " where "
-				+ thisTBL + "." + SQL_CODE_WHERE
+				+ "A." + SQL_CODE_WHERE
+//				+ exitCode(thisTBL, singleFLG, cate)
 				+ " and "
-				+ thisTBL + "." + termCol + " = " + "'" + nowTerm + "'";
+				+ "A." + termCol + " = " + "'" + nowTerm + "'";
 							;
 
 //						upSQL = " update "
@@ -533,7 +502,7 @@ public class ConAccessaryNew {
 	private void idoheikatuMACDupdate(int type,S s){
 		//※平滑指数移動平均線をもとにMACDを引く。
 		//MACD
-		idoheikatuUpdate(type, s);
+//		idoheikatuUpdate(type, s);
 		MACDupdate(type, s);
 	}
 
@@ -544,15 +513,25 @@ public class ConAccessaryNew {
 
 		//MACDを作る。
 		SQL = " update "
-			+ thisTBL
+		 	+ thisTBL + " as A"
+		 	+ " left outer join "
+		 	+ thisTBL + " as B"
+		 	+ " on "
+		 	+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE	  + " "
+		 	+ " and "
+		 	+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME	  + " "
 			+ " set "
-			+ COLUMN_TBL.SHORT_MACD  + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + COLUMN_TBL.MIDDLEIDO_HEKATU + ","
-			+ COLUMN_TBL.MIDDLE_MACD + " = " + COLUMN_TBL.MIDDLEIDO_HEKATU + " - " + COLUMN_TBL.LONGIDO_HEKATU	 + ","
-			+ COLUMN_TBL.LONG_MACD   + " = " + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + COLUMN_TBL.LONGIDO_HEKATU	 + ""
+			+ "A."+ COLUMN_TBL.SHORT_MACD  + " = "+ "A." + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + "A." + COLUMN_TBL.MIDDLEIDO_HEKATU + ","
+			+ "A."+ COLUMN_TBL.MIDDLE_MACD + " = "+ "A." + COLUMN_TBL.MIDDLEIDO_HEKATU + " - " + "A." + COLUMN_TBL.LONGIDO_HEKATU	 + ","
+			+ "A."+ COLUMN_TBL.LONG_MACD   + " = "+ "A." + COLUMN_TBL.SHORTIDO_HEKATU  + " - " + "A." + COLUMN_TBL.LONGIDO_HEKATU	 + ""
 			+ " where "
-			+ thisTBL + "." + termCol + " = " + "'" + nowTerm + "'"
+			+ "A." + termCol + " = " + "'" + nowTerm + "'"
 			+ " and "
-			+ thisTBL + "." + SQL_CODE_WHERE;;
+			+ "A." + SQL_CODE_WHERE;
+
+		if ( logFLG == false){
+			commonAP.writeInLog("【MACD】" + SQL,logWriting.DATEDATE_LOG_FLG);
+		}
 		s.freeUpdateQuery(SQL);
 	}
 	//※平滑指数移動平均線をもとにMACDを引く。
@@ -589,20 +568,7 @@ public class ConAccessaryNew {
 		double alpha = ( (term+1) );
 		alpha = 2 / alpha;
 
-		String beforeTBL = "A";
-		String beforeCol = "B";
-		String selectBeforeTBL = " ("
-									+ " select "
-									+ COLUMN_TBL.CODE + ","
-									+ heikatuCol + " as "+ beforeCol
-									+ " from "
-									+ thisTBL
-									+ " where "
-									+ termCol + " = " + "'" + beforeTerm + "'"
-									+ " and "
-									+ SQL_CODE_WHERE
-									+ " ) as " + beforeTBL;
-
+		String beforeTBL = "beforeTBL";
 //		upSQL = " update "
 //				+ thisTBL + " "
 //				+" left outer join "
@@ -621,78 +587,72 @@ public class ConAccessaryNew {
 //				+ thisTBL + "." + SQL_CODE_WHERE
 //				;;
 
-
-
+		String upTBL = "upTBL";
 
 
 		upSQL = " update "
-				+ thisTBL + " "
-				+" left outer join "
-				+ selectBeforeTBL
+				+ thisTBL + " " + " as " + upTBL
+				+ " left outer join "
+				+ thisTBL + " " + " as " + beforeTBL
 				+ " on "
-				+ thisTBL + "." + COLUMN_TBL.CODE + " = " + beforeTBL + "." + COLUMN_TBL.CODE	  + " "
+				+ upTBL + "." + COLUMN_TBL.CODE + " = " + beforeTBL + "." + COLUMN_TBL.CODE	  + " "
 				+ " set "
-				+ thisTBL + "." + heikatuCol	 + " = ( " + beforeTBL + "." + beforeCol + " +  ( " + alpha + " * " + " ( " + thisTBL + "." + COLUMN_TBL.CLOSE + " - " + beforeTBL + "." + beforeCol + " ) ) )"
+				+ upTBL + "."  + heikatuCol	 + " = ( " + beforeTBL + "." + heikatuCol + " +  ( " + alpha + " * " + " ( " + upTBL + "." + COLUMN_TBL.CLOSE + " - " + beforeTBL + "." + heikatuCol + " ) ) )"
 				+ " where "
-				+ thisTBL + "." + SQL_CODE_WHERE
+				+ upTBL + "."  + SQL_CODE_WHERE
+//				+ exitCode(upTBL,singleFLG,cate)
 				+ " and "
-				+ thisTBL + "." + termCol + " = " + "'" + nowTerm + "'"
+				+ upTBL + "."  + termCol + " = " + "'" + nowTerm + "'"
+				+ " and "
+				+ beforeTBL + "."  + termCol + " = " + "'" + beforeTerm + "'"
 				;;
 
 		if ( logFLG == false){
 			commonAP.writeInLog("【移動平滑線】" + upSQL,logWriting.DATEDATE_LOG_FLG);
 		}
-
-
 		s.freeUpdateQuery(upSQL);
+	}
 
-//		//前日の指数平滑移動平均を参照するため、nullだと処理がスキップされる。そのため指数平滑移動平均列がNULLならをCLOSEにセットする。
-//		String upTBL = " select "
-//					 + COLUMN_TBL.CODE	+ " , "
-//					 + termCol			+ " , "
-//					 + heikatuCol
-//					 + " from "
-//					 + thisTBL
-//					 + " where "
-//					 + SQL_CODE_WHERE
-//					 + " and "
-//					 + termCol + " = " + "'" + nowTerm + "'"
-//					 + " and "
-//					 +  heikatuCol + " is null ";
-//		upSQL = " update "
-//				+ thisTBL + " as A"
-//				+" left outer join "
-//				+ thisTBL + " as B"
-//				+ " on "
-//				+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE	  + " "
-//				+ " and "
-//				+ "A." + SQL_CODE_WHERE
-//				+ " and "
-//				+ "A." + termCol + " = " + "'" + nowTerm + "'"
-//				+ " and "
-//				+ "A." + heikatuCol + " is null "
-//				+ " and "
-//				+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME	  + " "
-//				+ " set "
-//				+ "A." + heikatuCol	 + " = " + "A." + COLUMN_TBL.CLOSE
-////				+ " where "
-//				;
-//		upSQL = " update "
-//				+ thisTBL + " "
-//				+ " set "
-//				+ thisTBL + "." + heikatuCol	 + " = " + thisTBL + "." + COLUMN_TBL.CLOSE
-//				+ " where "
-//				+ thisTBL + "." + SQL_CODE_WHERE
-//				+ " and "
-//				+ thisTBL + "." + termCol + " = " + "'" + nowTerm + "'"
-//				+ " and "
-//				+ thisTBL + "." + heikatuCol + " is null "
-//				;
-//		if ( logFLG == false){
-//			commonAP.writeInLog("【移動平滑線事後処理】" + upSQL,logWriting.DATEDATE_LOG_FLG);
-//		}
-//
-//		s.freeUpdateQuery(upSQL);
+	//※平滑指数移動平均線をもとにMACDを引く。
+	private void idoheikatuUpdate_Ikkatsu(int shortTerm,int middleTerm,int longTerm,S s){
+
+		String upSQL;
+
+//		前日の指数平滑移動平均＋α×{当日終値-前日の指数平滑移動平均}
+//		※α（平滑定数）＝2÷（ｎ+1）
+		//※α（平滑定数）＝2÷（ｎ+1）
+		double shortAlpha = ( (shortTerm+1) );
+		shortAlpha = 2 / shortAlpha;
+		double middleAlpha = ( (middleTerm+1) );
+		middleAlpha = 2 / middleAlpha;
+		double longAlpha = ( (longTerm+1) );
+		longAlpha = 2 / longAlpha;
+
+		String beforeTBL = "beforeTBL";
+		String upTBL = "upTBL";
+
+		upSQL = " update "
+				+ thisTBL + " " + " as " + upTBL
+				+ " left outer join "
+				+ thisTBL + " " + " as " + beforeTBL
+				+ " on "
+				+ upTBL + "." + COLUMN_TBL.CODE + " = " + beforeTBL + "." + COLUMN_TBL.CODE	  + " "
+				+ " set "
+				+ upTBL + "."  + COLUMN_TBL.SHORTIDO_HEKATU	 + " = ( " + beforeTBL + "." + COLUMN_TBL.SHORTIDO_HEKATU	 + " +  ( " + shortAlpha	 + " * " + " ( " + upTBL + "." + COLUMN_TBL.CLOSE + " - " + beforeTBL + "." + COLUMN_TBL.SHORTIDO_HEKATU + " ) ) ) " + " , "
+				+ upTBL + "."  + COLUMN_TBL.MIDDLEIDO_HEKATU + " = ( " + beforeTBL + "." + COLUMN_TBL.MIDDLEIDO_HEKATU	 + " +  ( " + middleAlpha	 + " * " + " ( " + upTBL + "." + COLUMN_TBL.CLOSE + " - " + beforeTBL + "." + COLUMN_TBL.MIDDLEIDO_HEKATU + " ) ) ) " + " , "
+				+ upTBL + "."  + COLUMN_TBL.LONGIDO_HEKATU	 + " = ( " + beforeTBL + "." + COLUMN_TBL.LONGIDO_HEKATU	 + " +  ( " + longAlpha		 + " * " + " ( " + upTBL + "." + COLUMN_TBL.CLOSE + " - " + beforeTBL + "." + COLUMN_TBL.LONGIDO_HEKATU + " ) ) ) " + "  "
+				+ " where "
+				+ upTBL + "."  + termCol + " = " + "'" + nowTerm + "'"
+				+ " and "
+				+ beforeTBL + "."  + termCol + " = " + "'" + beforeTerm + "'"
+				+ " and "
+				+ upTBL + "."  + SQL_CODE_WHERE				
+				;;
+
+		if ( logFLG == false){
+			commonAP.writeInLog("【移動平滑線】" + upSQL,logWriting.DATEDATE_LOG_FLG);
+		}
+		s.freeUpdateQuery(upSQL);
 	}
 
 	//終値をもとにボリンジャーバンドを引く(終値から作った移動平均線が元ネタ）
@@ -980,6 +940,42 @@ public class ConAccessaryNew {
 		return unionSQL;
 	}
 
-
+	//checkFLGがtrueのとき個別銘柄
+	//falseのとき複数銘柄
+//	private String exitCode(String upTBL,boolean checkFLG,String cate){
+//
+//		switch (cate) {
+//			case CATE_FLG.W_STOCK_F:
+//				cate = ReCord.CODE_01_STOCK;
+//				break;
+//			case CATE_FLG.M_STOCK_F:
+//				cate = ReCord.CODE_01_STOCK;
+//				break;
+//			default:
+//				break;
+//		}
+//
+//		String returnCode;
+//		String EXISTSBBB = "EXISTSBBB";
+//		String EXISTSTBL = "EXISTSTBL";
+//		if (checkFLG){
+//			//この中は個別銘柄
+//			returnCode = upTBL + "." + COLUMN_TBL.CODE  + " = '" + code + "'"
+//					  ;
+//		}else{
+//			//この中は全銘柄
+////			EXISTS(SELECT B BB WHERE AA.id = BB.id);
+//			returnCode = " EXISTS("
+//							+ "SELECT "+ COLUMN_TBL.CODE + " as " + EXISTSBBB
+//						  	+ " from "
+//						  	+ TBL_Name.CODELISTTBL + " as " + EXISTSTBL
+//						  	+ " where "
+//						  	+ EXISTSTBL + "." + COLUMN_TBL.CODE + " = "+ upTBL + "." + COLUMN_TBL.CODE
+//						  	+ " and "
+//						  	+ EXISTSTBL + "." + COLUMN_TBL.CATE_FLG + " = '" + cate + "') ";
+//		}
+//
+//		return returnCode;
+//	}
 
 }
