@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import proparty.S;
 import proparty.TBL_Name;
-import proparty.VIEW_Name;
 import proparty.controllDay;
 import constant.CATE_FLG;
 import constant.COLUMN_TBL;
@@ -119,21 +118,21 @@ public class SQLChecker {
 		case ReCord.CODE_06_CURRENCY:
 			TBL = TBL_Name.CURRENCY_DD;
 			break;
-			
+
 		case CATE_FLG.M_MARKET_F:
-			TBL = VIEW_Name.MARKET_MM_VIEW;
+			TBL = TBL_Name.MARKET_MM_TBL;
 			break;
-			
+
 		case CATE_FLG.W_MARKET_F:
-			TBL = VIEW_Name.MARKET_WW_VIEW;
+			TBL = TBL_Name.MARKET_WW_TBL;
 			break;
-			
+
 		case CATE_FLG.M_STOCK_F:
-			TBL = VIEW_Name.STOCK_MM_VIEW;
+			TBL = TBL_Name.STOCK_MM_TBL;
 			break;
-			
+
 		case CATE_FLG.W_STOCK_F:
-			TBL = VIEW_Name.STOCK_WW_VIEW;
+			TBL = TBL_Name.STOCK_WW_TBL;
 			break;
 
 		default:

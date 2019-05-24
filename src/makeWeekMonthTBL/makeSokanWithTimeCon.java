@@ -1,11 +1,11 @@
 package makeWeekMonthTBL;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
-import proparty.VIEW_Name;
 import bean.Bean_calendarBean;
 
 import common.commonAP;
@@ -122,21 +122,21 @@ public class makeSokanWithTimeCon {
 			break;
 
 		case CATE_FLG.W_STOCK_F:
-			thisTBL = VIEW_Name.STOCK_WW_VIEW;
+			thisTBL = TBL_Name.STOCK_WW_TBL;
 			termCol = COLUMN_TBL.WEEK_NOW;
 			logLetter = "株週足";
 			setParameta_sub(calBean,"2");
 			break;
 
 		case CATE_FLG.M_STOCK_F:
-			thisTBL = VIEW_Name.STOCK_MM_VIEW;
+			thisTBL = TBL_Name.STOCK_MM_TBL;
 			termCol = COLUMN_TBL.MONTH_NOW;
 			logLetter = "株月足";
 			setParameta_sub(calBean,"3");
 			break;
 
 		case CATE_FLG.W_MARKET_F:
-			thisTBL = VIEW_Name.MARKET_WW_VIEW;
+			thisTBL = TBL_Name.MARKET_WW_TBL;
 			termCol = COLUMN_TBL.WEEK_NOW;
 			setParameta_sub(calBean,"2");
 			logLetter = "マーケット週足";
@@ -146,7 +146,7 @@ public class makeSokanWithTimeCon {
 			setParameta_sub(calBean,"3");
 			termCol = COLUMN_TBL.MONTH_NOW;
 			logLetter = "マーケット月足";
-			thisTBL = VIEW_Name.MARKET_MM_VIEW;
+			thisTBL = TBL_Name.MARKET_MM_TBL;
 			break;
 
 
@@ -226,21 +226,35 @@ public class makeSokanWithTimeCon {
 								+ " ) "
 								+ " as A";
 
+//		String updateSQL_B		= " ( "
+//								+ " select "
+//								+ COLUMN_TBL.CODE + " , "
+//								+ termCol + " , "
+//								+ COLUMN_TBL.CLOSE
+//								+ " from "
+//								+ thisTBL
+//								+ " where "
+//								+ "'" + startShortterm + "'" + " <= "+ termCol
+//								+ " and "
+//								+ termCol + " <= " + "'" + nowTerm + "'"
+//								+ " and "
+//								+ SQL_CODE_WHERE
+//								+ " ) "
+//								+ "as B";
+
 		String updateSQL_B		= " ( "
 								+ " select "
 								+ COLUMN_TBL.CODE + " , "
 								+ termCol + " , "
 								+ COLUMN_TBL.CLOSE
 								+ " from "
-								+ thisTBL
-								+ " where "
-								+ "'" + startShortterm + "'" + " <= "+ termCol
-								+ " and "
-								+ termCol + " <= " + "'" + nowTerm + "'"
-								+ " and "
-								+ SQL_CODE_WHERE
+								+ " ( "
+								+ createUnionSQL(thisTBL, startShortterm, nowTerm, s)
+								+ " ) as Vaaaa"
+								+ " group by Vaaaa." + COLUMN_TBL.CODE + ", Vaaaa."+termCol
 								+ " ) "
 								+ "as B";
+
 
 		String calendarCol = "aa";
 		String calendarCol_use = "bbbb";
@@ -315,6 +329,7 @@ public class makeSokanWithTimeCon {
 
 	}
 
+
 	//calBeanは使わない
 	public void makeSokanWithTime(int term,S s,Bean_calendarBean calBean){
 		setParameta(calBean,cate);
@@ -326,20 +341,73 @@ public class makeSokanWithTimeCon {
 		}
 		double timeHensa = commonAP.getDev(list, true);
 		String upSQL;
+		String A = "A";
+		String B = "B";
 		upSQL = " update "
-				  + thisTBL
-				  + " set "
-				  + COLUMN_TBL.SOKANKEISU_with_TIME
-				  	+ " = "
-				  + " ( " +  COLUMN_TBL.COVAR_with_TIME + " /" + " ( " + COLUMN_TBL.SHORT_DEV + " * " + timeHensa + " ) " + ")"
-				  + " where "
-				  + SQL_CODE_WHERE
+				  + thisTBL + " as " + A
+				  + " left outer join "
+				  + thisTBL + " as " + B
+				  + " on "
+				  + A + "." + COLUMN_TBL.CODE + " = " + B + "." + COLUMN_TBL.CODE
 				  + " and "
-				  + termCol + " = " + "'" + nowTerm + "'";
+				  + A + "." + termCol + " = " + B + "." + termCol
+				  + " set "
+				  + A + "." + COLUMN_TBL.SOKANKEISU_with_TIME
+				  	+ " = "
+				  + " ( " + A + "." +  COLUMN_TBL.COVAR_with_TIME + " /" + " ( " + A + "." + COLUMN_TBL.SHORT_DEV + " * " + timeHensa + " ) " + ")"
+				  + " where "
+				  + A + "." + SQL_CODE_WHERE
+				  + " and "
+				  + A + "." + termCol + " = " + "'" + nowTerm + "'";
 			if(logFlg){
 				commonAP.writeInLog("makeSokanWithTime" + logLetter+"の相関係数（時間）:" + upSQL,logWriting.DATEDATE_LOG_FLG);
 			}
 
 			s.freeUpdateQuery(upSQL);
+	}
+
+	private String createUnionSQL(String TBL,String start,String end,S s){
+		ArrayList<String> thisList = new ArrayList<String>();
+
+		//入れる範囲を入れる
+		String startCheck	=  " and "
+				 			+ "'" + start + "'" + " <= " + termCol;
+		if( start==null ){
+			startCheck =  "  ";
+		}
+		String SQL = " select distinct(" + termCol + ") from " + TBL_Name.CALENDAR_TBL
+				+" where "
+				+ termCol + " <= '" + end + "'"
+				+ startCheck;
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				thisList.add(s.rs.getString(termCol));
+			}
+
+		} catch (SQLException e) {
+			commonAP.writeInLog("createUnionSQL:エラー検知。スタックトレース:" + SQL,logWriting.DATEDATE_LOG_FLG);
+			e.getStackTrace();
+		}
+
+		String unionSQL = "";
+
+
+		if (thisList.size()==1){
+			unionSQL = " select * from " + TBL +" where " + TBL + "." + SQL_CODE_WHERE + " and " + termCol + " = '" + thisList.get(0) + "'";
+		}else{
+
+			for (String term:thisList){
+				unionSQL = unionSQL + " select * from " + TBL + " where " + TBL + "." + SQL_CODE_WHERE + " and "  + termCol + " = '" + term + "'" + " UNION ALL ";
+			}
+
+//			+第一引数：刈り取り対象文字列（テキスト）
+//			+第二引数：刈り取る文字
+			unionSQL = commonAP.stripEnd(unionSQL," UNION ALL ");
+
+		}
+
+
+		return unionSQL;
 	}
 }

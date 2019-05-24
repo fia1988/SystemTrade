@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import proparty.S;
 import proparty.TBL_Name;
-import proparty.VIEW_Name;
 import bean.Bean_calendarBean;
 
 import common.commonAP;
@@ -122,19 +121,19 @@ public class ConAccessaryNew {
 			break;
 
 		case CATE_FLG.W_STOCK_F:
-			thisTBL = VIEW_Name.STOCK_WW_VIEW;
+			thisTBL = TBL_Name.STOCK_WW_TBL;
 			termCol = COLUMN_TBL.WEEK_NOW;
 			setParameta_sub(calBean,"2");
 			break;
 
 		case CATE_FLG.M_STOCK_F:
-			thisTBL = VIEW_Name.STOCK_MM_VIEW;
+			thisTBL = TBL_Name.STOCK_MM_TBL;
 			termCol = COLUMN_TBL.MONTH_NOW;
 			setParameta_sub(calBean,"3");
 			break;
 
 		case CATE_FLG.W_MARKET_F:
-			thisTBL = VIEW_Name.MARKET_WW_VIEW;
+			thisTBL = TBL_Name.MARKET_WW_TBL;
 			termCol = COLUMN_TBL.WEEK_NOW;
 			setParameta_sub(calBean,"2");
 			break;
@@ -142,7 +141,7 @@ public class ConAccessaryNew {
 		case CATE_FLG.M_MARKET_F:
 			setParameta_sub(calBean,"3");
 			termCol = COLUMN_TBL.MONTH_NOW;
-			thisTBL = VIEW_Name.MARKET_MM_VIEW;
+			thisTBL = TBL_Name.MARKET_MM_TBL;
 			break;
 
 
@@ -204,13 +203,9 @@ public class ConAccessaryNew {
 		idoheikatuUpdate_Ikkatsu(AccesarryParameta.HEKATUSHORT,AccesarryParameta.HEKATUMIDDLE,AccesarryParameta.HEKATULONG,s);
 //		//平滑線の後処理としてnull列を今日のCLOSEと同じ値にする。
 		heikatuAfter(s);
-		
+
 		//MACDを作成する。
-		MACDupdate(typeShort, s);
-		MACDupdate(typeMiddle, s);
-		MACDupdate(typeLong, s);
-
-
+		MACDupdate(s);
 
 		//売買高、出来高、終値で移動平均線を引く。。ボリバン用の標準偏差の計算をする。
 		closeDekiBayIDOheikinUpdate(typeShort, s);
@@ -226,8 +221,6 @@ public class ConAccessaryNew {
 		closeBoriban(typeShort, s);
 		closeBoriban(typeMiddle, s);
 		closeBoriban(typeLong, s);
-
-
 
 		//各テーブルの前日比、窓
 		zenzituhi(s);
@@ -503,11 +496,11 @@ public class ConAccessaryNew {
 		//※平滑指数移動平均線をもとにMACDを引く。
 		//MACD
 //		idoheikatuUpdate(type, s);
-		MACDupdate(type, s);
+		MACDupdate(s);
 	}
 
 	//MACD
-	private void MACDupdate(int type,S s){
+	private void MACDupdate(S s){
 		String SQL;
 
 
@@ -646,7 +639,7 @@ public class ConAccessaryNew {
 				+ " and "
 				+ beforeTBL + "."  + termCol + " = " + "'" + beforeTerm + "'"
 				+ " and "
-				+ upTBL + "."  + SQL_CODE_WHERE				
+				+ upTBL + "."  + SQL_CODE_WHERE
 				;;
 
 		if ( logFLG == false){

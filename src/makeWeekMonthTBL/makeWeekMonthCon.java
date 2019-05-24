@@ -23,7 +23,7 @@ import constant.logWriting;
 
 public class makeWeekMonthCon {
 
-
+	private String monthWeekTBL = "";
 	private String unionTBL;
 	private String SQL_CODE_WHERE;
 	private String fromTBL = TBL_Name.STOCK_DD;
@@ -53,8 +53,8 @@ public class makeWeekMonthCon {
 				  	+ " select " + TBL_Name.CODELISTTBL + "." + COLUMN_TBL.CODE
 				  	+ " from "
 				  	+ TBL_Name.CODELISTTBL
-				  	+ " where "
-				  	+ COLUMN_TBL.CATE_FLG + " = '" + ReCord.CODE_01_STOCK + "'"
+//				  	+ " where "
+//				  	+ COLUMN_TBL.CATE_FLG + " = '" + ReCord.CODE_01_STOCK + "'"
 				  + " ) ";
 
 	}
@@ -86,6 +86,7 @@ public class makeWeekMonthCon {
 				nowTerm_col = COLUMN_TBL.MONTH_NOW;
 				nowTerm_before_col = COLUMN_TBL.MONTH_BEFORE;
 				unionTBL = TBL_Name.STOCK_DD;
+				monthWeekTBL = TBL_Name.STOCK_MM_TBL;
 				if ( calBean.getMONTH_BEFORE() != null){
 					nowTerm_before =  "'" + calBean.getMONTH_BEFORE() + "'";
 				}
@@ -98,6 +99,7 @@ public class makeWeekMonthCon {
 				nowTerm_col = COLUMN_TBL.WEEK_NOW;
 				nowTerm_before_col = COLUMN_TBL.WEEK_BEFORE;
 				unionTBL = TBL_Name.STOCK_DD;
+				monthWeekTBL = TBL_Name.STOCK_WW_TBL;
 				if (calBean.getWEEK_BEFORE() != null){
 					nowTerm_before = "'" + calBean.getWEEK_BEFORE() + "'";
 				}
@@ -111,6 +113,7 @@ public class makeWeekMonthCon {
 				nowTerm_col = COLUMN_TBL.MONTH_NOW;
 				nowTerm_before_col = COLUMN_TBL.MONTH_BEFORE;
 				unionTBL = TBL_Name.MARKET_DD_TBL;
+				monthWeekTBL = TBL_Name.MARKET_MM_TBL;
 				if ( calBean.getMONTH_BEFORE() != null){
 					nowTerm_before =  "'" + calBean.getMONTH_BEFORE() + "'";
 				}
@@ -123,6 +126,7 @@ public class makeWeekMonthCon {
 				nowTerm_col = COLUMN_TBL.WEEK_NOW;
 				nowTerm_before_col = COLUMN_TBL.WEEK_BEFORE;
 				unionTBL = TBL_Name.MARKET_DD_TBL;
+				monthWeekTBL = TBL_Name.MARKET_WW_TBL;
 				if (calBean.getWEEK_BEFORE() != null){
 					nowTerm_before = "'" + calBean.getWEEK_BEFORE() + "'";
 				}
@@ -149,21 +153,24 @@ public class makeWeekMonthCon {
 			//ここは全株
 			//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
 			//前月、前週をセットする
+			//月足週足テーブルの古いレコードを削除する。
 			checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
 			checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
 			//日足から月/週足に銘柄名、日付をつくる
 			checkBaseW_M(CATE_FLG.W_STOCK_F,calBean,s);
 			checkBaseW_M(CATE_FLG.M_STOCK_F,calBean,s);
 
+			//月足週足テーブルに新レコードを挿入する。リアルタイムのレコードを消す。アクセサリ更新して、リアルタイムレコードを作る
 			//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
 			//月/週足の銘柄名、日付、始値(仮)、高値、安値、終値、売買高、出来高を正しく加工するつくる。
 //			//始値をつくる
+			//アクセサリを作る
 			createWeekMonthCon_NormalTime(calBean, s);
 
 //			//アクセサリを作る。共分散も計算、相関係数
 //			createAllStockAccecary_Renzoku(calBean,s);
 
-			createAllStockAccecary_Ikatsu(calBean,s);
+			//アクセサリの入った月足週足をリアルタイムに入れる
 
 
 			//ここからマーケット
@@ -211,6 +218,8 @@ public class makeWeekMonthCon {
 			cover.makeKyoBunsanWithTime(AccesarryParameta.IDOSHORT, calBean, s);
 			cover.makeSokanWithTime(AccesarryParameta.IDOSHORT, s,calBean);
 
+			endTaskWeekMonthTBL(CATE_FLG.M_MARKET_F,calBean,s);
+			endTaskWeekMonthTBL(CATE_FLG.W_MARKET_F,calBean,s);
 			//CAPM
 			//⇒計算しない
 
@@ -232,30 +241,64 @@ public class makeWeekMonthCon {
 
 			createWeekMonthCon_NormalTime(calBean, s);
 
-			//アクセサリ
-			ConAccessaryNew
-			ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F,code);
-			ac.setConAccessary(calBean,s);
-			ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F,code);
-			ac.setConAccessary(calBean,s);
 
-			//株の月足週足の相関係数
-
-
-			//共分散と相関係数
-			makeSokanWithTimeCon
-			cover = new makeSokanWithTimeCon(CATE_FLG.M_STOCK_F,code);
-			cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
-			cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
-
-			cover = new makeSokanWithTimeCon(CATE_FLG.W_STOCK_F,code);
-			cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
-			cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
 
 		}
 
 
 
+	}
+
+	//月足週足作成の後処理をする。
+	//月週足をアクセサリで更新した後に動かす。
+	//リアルタイムのレコードを削除する。
+	//週足月足のレコードをリアルタイムに入れる。
+	private void endTaskWeekMonthTBL(String cate,Bean_calendarBean calBean,S s){
+
+		setParameta(cate, calBean);
+		deleteRecordWeekMonthTBL(TBL,COLUMN_TBL.DAYTIME, TODAY, s);
+//		insertTBL(monthWeekTBL,TBL, COLUMN_TBL.DAYTIME, TODAY, s);
+		insertTBL(monthWeekTBL,TBL,  nowTerm_col , nowTerm, s);
+	}
+
+	private void deleteRecordWeekMonthTBL(String TBL,String keyTermCol,String timeData,S s){
+		String A = "A";
+		String B = "B";
+		String SQL = " delete " + A + " from "
+					+ TBL + " as " + A
+					+ " left outer join "
+					+ TBL + " as " + B
+					+ " on "
+					+ " " + A + "." + COLUMN_TBL.CODE + " = " + B + "." + COLUMN_TBL.CODE
+					+ " and "
+					+ " " + A + "." + keyTermCol + " = " + B + "." + keyTermCol
+					+ " where "
+					+ " " + A + "." + SQL_CODE_WHERE
+					+ " and "
+					+ " " + A + "." + keyTermCol + " = " + "" + timeData + "";;
+		if(logFlg){
+			commonAP.writeInLog("deleteRecordWeekMonthTBL:" + SQL,logWriting.DATEDATE_LOG_FLG);
+		}
+//		try {
+//			commonAP.writeInLog(s.sqlGetter().executeUpdate(SQL) + "",logWriting.DATEDATE_LOG_FLG);
+//		} catch (SQLException e) {
+//		}
+		s.freeUpdateQuery(SQL);
+	}
+
+	private void insertTBL(String motoTBL,String sakiTBL,String keyTermCol,String timeData,S s){
+		String SQL = " insert into "
+					+ sakiTBL
+					+ " select * from " + motoTBL
+					+ " where "
+					+ SQL_CODE_WHERE
+					  + " and "
+					  + keyTermCol + " = " + "" + timeData + "";;
+		if(logFlg){
+			commonAP.writeInLog("insertTBL:" + SQL,logWriting.DATEDATE_LOG_FLG);
+		}
+
+		s.freeUpdateQuery(SQL);
 	}
 
 	private void createWeekMonthCon_NormalTime(Bean_calendarBean calBean,S s) {
@@ -273,20 +316,23 @@ public class makeWeekMonthCon {
 		updateStart(CATE_FLG.W_STOCK_F,calBean,s);
 		updateStart(CATE_FLG.M_STOCK_F,calBean,s);
 
+		//アクセサリと相関係数
+		createAllStockAccecary_Ikatsu(calBean,s);
+
+
+		endTaskWeekMonthTBL(CATE_FLG.M_STOCK_F,calBean,s);
+		endTaskWeekMonthTBL(CATE_FLG.W_STOCK_F,calBean,s);
 
 	}
 
 	private void createAllStockAccecary_Ikatsu(Bean_calendarBean calBean,S s) {
 		commonAP.writeInLog("株の月足週足のアクセサリ作成開始",logWriting.DATEDATE_LOG_FLG);
 
-		logFlg = false;
 		//アクセサリ一括作成
 		ConAccessaryNew
 		ac = new ConAccessaryNew(CATE_FLG.M_STOCK_F);
-		ac.logFLG = true;
 		ac.setConAccessary(calBean,s);
 		ac = new ConAccessaryNew(CATE_FLG.W_STOCK_F);
-		ac.logFLG = true;
 		ac.setConAccessary(calBean,s);
 		//共分散と相関係数
 		makeSokanWithTimeCon
@@ -297,7 +343,6 @@ public class makeWeekMonthCon {
 		cover.makeKyoBunsanWithTime	(AccesarryParameta.IDOSHORT, calBean, s);
 		cover.makeSokanWithTime		(AccesarryParameta.IDOSHORT, s,calBean);
 
-		logFlg = true;
 		commonAP.writeInLog("株の月足週足のアクセサリ作成完了",logWriting.DATEDATE_LOG_FLG);
 	}
 
@@ -400,6 +445,7 @@ public class makeWeekMonthCon {
 		//resultCheckがtrueの時は月/週のスタートなので処理しない。
 		//true=週/月の始まりなので前営業日が週/月の最終日になるので編集しなくてもよい。
 		if ( resultCheck ){
+			insertTBL(TBL,monthWeekTBL,  COLUMN_TBL.DAYTIME ,TODAY, s);
 			return;
 		}
 
@@ -411,6 +457,8 @@ public class makeWeekMonthCon {
 				+ TBL		 + " as B  "
 				+ " on "
 				+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE
+				+ " and "
+				+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME
 				+ " set "
 				+ "A." + COLUMN_TBL.OPEN + " = " + "B." + COLUMN_TBL.OPEN
 				+ " where "
@@ -423,6 +471,9 @@ public class makeWeekMonthCon {
 			if (logFlg){commonAP.writeInLog("updateStart:" + w_mLetter + "足の各列の始値作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
 
 			s.freeUpdateQuery(SQL);
+
+			//週月足リアルを週月足にいれる
+			insertTBL(TBL,monthWeekTBL,  COLUMN_TBL.DAYTIME ,TODAY, s);
 	}
 
 
@@ -629,14 +680,21 @@ public class makeWeekMonthCon {
 		s.freeUpdateQuery(insSQL);
 
 		String updateSQL;
-		updateSQL = " update " + TBL
-					+ " set "
-					+ nowTerm_col		 + " = " + nowTerm +  " , "
-					+ nowTerm_before_col + " = " + nowTerm_before +  "   "
-					+ " where "
-					+ COLUMN_TBL.DAYTIME + " = " + TODAY
+		updateSQL = " update "
+					+ TBL + " as A"
+					+ " left outer join "
+					+ TBL + " as B"
+					+ " on "
+					+ "A." + COLUMN_TBL.CODE +" = " + "B." + COLUMN_TBL.CODE
 					+ " and "
-					  + SQL_CODE_WHERE;
+					+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME
+					+ " set "
+					+ "A."+ nowTerm_col		 + " = " + nowTerm +  " , "
+					+ "A."+ nowTerm_before_col + " = " + nowTerm_before +  "   "
+					+ " where "
+					+ "A."+ COLUMN_TBL.DAYTIME + " = " + TODAY
+					+ " and "
+					+ "A." + SQL_CODE_WHERE;
 		if (logFlg){commonAP.writeInLog("checkBaseW_M:" + w_mLetter + "足のナウとBEFORE設定：" + updateSQL,logWriting.DATEDATE_LOG_FLG);}
 		s.freeUpdateQuery(updateSQL);
 	}
@@ -662,16 +720,24 @@ public class makeWeekMonthCon {
 
 		String SQL;
 		SQL = " update "
-			+ TBL
-			+ " set "
-			+ COLUMN_TBL.PICK_UP_FLG + " = false"
-			+ " where "
-			+ COLUMN_TBL.DAYTIME + " = " + yesterDay
+			+ TBL + " as A"
+			+ " left outer join "
+			+ TBL + " as B"
+			+ " on "
+			+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE
 			+ " and "
-			  + SQL_CODE_WHERE;
+			+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME
+			+ " set "
+			+ "A."+ COLUMN_TBL.PICK_UP_FLG + " = false "
+			+ " where "
+			+ "A."+ COLUMN_TBL.DAYTIME + " = " + yesterDay
+			+ " and "
+			+ "A." + SQL_CODE_WHERE;
 		if (logFlg){commonAP.writeInLog("checkEndTerm:" + w_mLetter + "足のピックアップチェック："+SQL,logWriting.DATEDATE_LOG_FLG);}
 		s.freeUpdateQuery(SQL);
 
+		//ここに週足月足のDELETE
+		deleteRecordWeekMonthTBL(monthWeekTBL, nowTerm_col, nowTerm, s);
 		return thisResult;
 	}
 

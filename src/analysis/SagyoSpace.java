@@ -246,11 +246,15 @@ public class SagyoSpace {
 			n.createWeekMonth(SEPARATE_CHECK.getSepaDayList().get(i)[1],s,true);
 
 			a++;
-			if (a%30==0){
-				a=0;
+			if (a%50==0){
+//				a=0;
 				s.resetConnection();
 				TS.longTermTestSupporter();
 				s.resetConnection();
+				if(a==100){
+					s.closeConection();
+					return;
+				}
 			}
 		}
 		s.closeConection();

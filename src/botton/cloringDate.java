@@ -1540,7 +1540,8 @@ public class cloringDate {
 						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.ENTRYMETHOD		+ " , " //
 						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.EXITMETHOD			+ " , "
 						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.MINI_CHECK_FLG		+ " , "
-						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.REAL_ENTRY_VOLUME	+ " , "
+//						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.REAL_ENTRY_VOLUME	+ " , "
+						+ TBL_Name.OUT_PUT_LASTORDER + "." + COLUMN_TBL.IDEA_VOLUME	+ " , "
 						+ TBL_Name.STOCK_DD + "." + COLUMN_TBL.CLOSE;
 
 		String heddaColumn = "'" +  COLUMN_TBL.CODE		 			+ "' , " //
@@ -1549,7 +1550,7 @@ public class cloringDate {
 						   + "'" +  COLUMN_TBL.ENTRYMETHOD			+ "' , " //
 						   + "'" +  COLUMN_TBL.EXITMETHOD			+ "' , "
 						   + "'" +  COLUMN_TBL.MINI_CHECK_FLG		+ "' , "
-						   + "'" +  COLUMN_TBL.REAL_ENTRY_VOLUME	+ "' , "
+						   + "'" +  COLUMN_TBL.IDEA_VOLUME	+ "' , "
 //						   + "'" +  COLUMN_TBL.ENTRY_MONEY				+ "'" ;
 						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
 
@@ -1607,7 +1608,8 @@ public class cloringDate {
 					+ COLUMN_TBL.EXITMETHOD									 + " ,  " //
 					+ COLUMN_TBL.VOLUME_UNIT								 + " ,  " //売買単位
 					+ COLUMN_TBL.MINI_CHECK_FLG								 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-					+ COLUMN_TBL.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+//					+ COLUMN_TBL.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+					+ COLUMN_TBL.IDEA_VOLUME							 + " ,  " //理想的購入枚数
 					+ " ( " + COLUMN_TBL.CLOSE + " * " + COLUMN_TBL.IDEA_VOLUME	+	" ) as "	+ COLUMN_TBL.ENTRY_MONEY + "   " //エントリーマネーを出す。
 					+ " from "
 					+ TBL_Name.LASTORDER;
@@ -1779,7 +1781,7 @@ public class cloringDate {
 			judgeFile = "Lファイル";
 		};
 
-		commonAP.writeInLog(judgeFile + "を作成します。SQL：" + SQL,logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog(judgeFile + "を作成します。SQL：" + SQL + " ; ",logWriting.DATEDATE_LOG_FLG);
 
 		return SQL;
 	}
