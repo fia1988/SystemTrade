@@ -1279,7 +1279,7 @@ public class cloringDate {
 		calBean.setCalendarBean(TODAY, s);
 
 		commonAP.writeInLog("株のアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
-//-------------------------------------------------------------------		
+//-------------------------------------------------------------------
 //		//株
 //		//株の全銘柄取得
 //		commonAP.setCodeList(ReCord.CODE_01_STOCK,s);
@@ -1304,7 +1304,7 @@ public class cloringDate {
 //------------------------------------------------------------------
 		//マーケット
 		commonAP.writeInLog("ETFのアクセサリ作ります",logWriting.DATEDATE_LOG_FLG);
-//		ConAccessaryNew 
+//		ConAccessaryNew
 		ac = new ConAccessaryNew(ReCord.CODE_04_ETF);
 		ac.setConAccessary(calBean,s);
 		s.resetConnection();
@@ -1336,7 +1336,7 @@ public class cloringDate {
 				+ col
 				+ ")"
 				+ selectSQL;
-		
+
 		commonAP.writeInLog("makeList04ETF：ETFリスト作成開始"+insSQL,logWriting.DATEDATE_LOG_FLG);
 		try {
 			int addRecord = s.sqlGetter().executeUpdate(insSQL);
@@ -1550,7 +1550,8 @@ public class cloringDate {
 						   + "'" +  COLUMN_TBL.ENTRYMETHOD			+ "' , " //
 						   + "'" +  COLUMN_TBL.EXITMETHOD			+ "' , "
 						   + "'" +  COLUMN_TBL.MINI_CHECK_FLG		+ "' , "
-						   + "'" +  COLUMN_TBL.IDEA_VOLUME	+ "' , "
+						   + "'" +  COLUMN_TBL.IDEA_VOLUME			+ "' , "
+//						   + "'" +  COLUMN_TBL.REAL_ENTRY_VOLUME	+ "' , "
 //						   + "'" +  COLUMN_TBL.ENTRY_MONEY				+ "'" ;
 						   + "'" +  COLUMN_TBL.CLOSE				+ "'" ;
 
@@ -1569,6 +1570,7 @@ public class cloringDate {
         if(file.delete()){
         	//成功
         	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+        	try {Thread.sleep(2000);} catch (InterruptedException e) {}
         };
 		s.exportFile(SQL);
 
@@ -1581,6 +1583,7 @@ public class cloringDate {
         if(file.delete()){
         	//成功
         	commonAP.writeInLog(file + "が存在するので上書きします。",logWriting.DATEDATE_LOG_FLG);
+        	try {Thread.sleep(2000);} catch (InterruptedException e) {}
         };
 		resultInt = s.exportFile(SQL);
 //		System.out.println(SQL);
@@ -1637,7 +1640,7 @@ public class cloringDate {
 				 + " set "
 				 + COLUMN_TBL.MINI_CHECK_FLG + " = false "
 				 + " where "
-				 + COLUMN_TBL.VOLUME_UNIT + " = " + COLUMN_TBL.REAL_ENTRY_VOLUME;
+				 + COLUMN_TBL.VOLUME_UNIT + " = " + COLUMN_TBL.IDEA_VOLUME;
 		s.freeUpdateQuery(SQL);
 
 		//売買単位をいい感じにする。
@@ -1653,7 +1656,7 @@ public class cloringDate {
 		checkMINI_NORMAL(s);
 
 		//91_outPutlastOrderTBLにある、購入数0株の銘柄を削除する
-		String SQL = " delete from " + TBL_Name.OUT_PUT_LASTORDER + " where " + COLUMN_TBL.REAL_ENTRY_VOLUME + " = 0 ";
+		String SQL = " delete from " + TBL_Name.OUT_PUT_LASTORDER + " where " + COLUMN_TBL.IDEA_VOLUME + " = 0 ";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -1666,7 +1669,7 @@ public class cloringDate {
 		//minicheckFLGがtrueのものに対して売買単位をチェックする。単元株数を超えるものをfalseで新規にインサートする。
 		SQL1 = " select * from " + TBL
 			+ " where "
-			+ COLUMN_TBL.VOLUME_UNIT + " < " + COLUMN_TBL.REAL_ENTRY_VOLUME
+			+ COLUMN_TBL.VOLUME_UNIT + " < " + COLUMN_TBL.IDEA_VOLUME
 			+ " and "
 			+ COLUMN_TBL.MINI_CHECK_FLG + " is true ";
 
@@ -1675,7 +1678,7 @@ public class cloringDate {
 
 			while ( s.rs.next() ) {
 				int volumeUnit = s.rs.getInt(COLUMN_TBL.VOLUME_UNIT);
-				int entryVolume = s.rs.getInt(COLUMN_TBL.REAL_ENTRY_VOLUME);
+				int entryVolume = s.rs.getInt(COLUMN_TBL.IDEA_VOLUME);
 				int miniVolume = entryVolume % volumeUnit;
 				int tangenVolume = entryVolume - miniVolume;
 				String code = s.rs.getString	(COLUMN_TBL.CODE);
@@ -1697,7 +1700,7 @@ public class cloringDate {
 					+ COLUMN_TBL.EXITMETHOD								 + " ,  " //
 					+ COLUMN_TBL.VOLUME_UNIT								 + " ,  " //売買単位
 					+ COLUMN_TBL.MINI_CHECK_FLG							 + " ,  " //ミニ株本株チェック trueミニ株、false普通株
-					+ COLUMN_TBL.REAL_ENTRY_VOLUME							 + " ,  " //現実的購入枚数
+					+ COLUMN_TBL.IDEA_VOLUME							 + " ,  " //理想的購入枚数
 					+ COLUMN_TBL.ENTRY_MONEY								 + "   "//一回辺り投資金額
 					+ " ) "
 					+ "values "
@@ -1723,7 +1726,7 @@ public class cloringDate {
 //				s.rs.updateRow();
 				SQL3 = " update " + TBL
 					 + " set "
-					 + COLUMN_TBL.REAL_ENTRY_VOLUME + " = " + miniVolume
+					 + COLUMN_TBL.IDEA_VOLUME + " = " + miniVolume
 					 + " where "
 					 + COLUMN_TBL.MINI_CHECK_FLG + " is true"
 					 + " and "

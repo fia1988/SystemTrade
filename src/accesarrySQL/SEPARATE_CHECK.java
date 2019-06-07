@@ -215,8 +215,35 @@ public class SEPARATE_CHECK {
 		s.freeUpdateQuery(SQL);
 	}
 	static int checkCount=0;
+
+	private static void resetWeekConTBL(String code,S s){
+		resetWeekConTBL(TBL_Name.STOCK_MM_REAL_TIME,code,s);
+		resetWeekConTBL(TBL_Name.STOCK_WW_REAL_TIME,code,s);
+		resetWeekConTBL(TBL_Name.STOCK_MM_TBL,code,s);
+		resetWeekConTBL(TBL_Name.STOCK_WW_TBL,code,s);
+	}
+
+	private static void resetWeekConTBL(String TBL,String code,S s){
+		String A = "A";
+		String B = "B";
+		String SQL = " delete " + A + " from "
+				+ TBL + " as " + A
+				+ " left outer join "
+				+ TBL + " as " + B
+				+ " on "
+				+ " " + A + "." + COLUMN_TBL.CODE + " = " + B + "." + COLUMN_TBL.CODE
+				+ " and "
+				+ " " + A + "." + COLUMN_TBL.DAYTIME + " = " + B + "." + COLUMN_TBL.DAYTIME
+				+ " where "
+				+ " " + A + "." + COLUMN_TBL.CODE + " = " + "'" + code + "'";
+		commonAP.writeInLog("resetWeekConTBL:" + code + ":"+TBL+"月足週足のテーブルリセット" ,logWriting.DATEDATE_LOG_FLG);
+		s.freeUpdateQuery(SQL);
+	}
+
 	public static void updateAccesary(String code,S s){
 
+		//月足週足の関係テーブルすべて削除する。
+		resetWeekConTBL(code,s);
 
 		setSepaDayList(code,s);
 		ConAccessaryNew ac = new ConAccessaryNew(ReCord.CODE_01_STOCK , code);

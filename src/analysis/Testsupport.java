@@ -1,5 +1,6 @@
 package analysis;
 
+import java.io.File;
 import java.util.List;
 
 import GamenDTO.TAB_MainDTO;
@@ -62,58 +63,6 @@ public class Testsupport {
 
 	public static void longTermTestSupporter(){
 
-//		cloringDate CD = new cloringDate();
-//
-//
-//		Calendar now = Calendar.getInstance(); //インスタンス化
-//
-//		int h = now.get(now.HOUR_OF_DAY);//時を取得
-//		int m = now.get(now.MINUTE);     //分を取得
-//		int second = now.get(now.SECOND);      //秒を取得
-//		String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
-//                "木曜日", "金曜日", "土曜日"};
-//		int baseHour = 17;
-//		int baseMinitu = 20;
-//		int sleepTime = 10;
-//		int week = now.get(Calendar.DAY_OF_WEEK) - 1;
-//
-//
-//		switch (week_name[week]) {
-//			case "日曜日":
-//				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
-//				return;
-//			case "土曜日":
-//				System.out.println(h + ":" + m + ":" + second + ",今日は" + week_name[week]);
-//				return;
-//
-//			default:
-//				break;
-//		}
-//
-//
-//		if ( h > baseHour ){
-////			System.out.println("ちょいと止まります。");
-////			sleepTime = 1000 * 60 * 60 *  ( baseHour - h );
-////			System.out.println(sleepTime + "ﾐﾘ秒と止まります。");
-////			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-////			if ( h == baseHour ){
-////				if ( m < baseMinitu ){
-////					sleepTime = 1000 * 60 * ( baseMinitu - m );
-////
-////					try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
-////
-////				}
-////			}
-//			System.out.println(h + ":" + m + ":" + second + ",処理します。");
-//			longTermTestSupporter_main();
-//		}else if(h == baseHour){
-//			if ( m >= baseMinitu ){
-//				System.out.println(h + ":" + m + ":" + second + ",処理します。");
-//				longTermTestSupporter_main();
-//			}
-//		}else{
-//			System.out.println(h + ":" + m + ":" + second + ",スキップします。");
-//		}
 		longTermTestSupporter_main();
 
 	}
@@ -123,13 +72,34 @@ public class Testsupport {
 
 		//バックテストである場合のみそれを判断するフラグをここにセットする
 		mainDTO.setBackTestFLG(true);
+		//IDとパス
+		mainDTO.setMysqlID("root");
+		mainDTO.setMysqlPass("8Jecikj");
+		//へそごま
+		mainDTO.setHesogomaFile(true);
+		//セパフラグ
+		mainDTO.setSepaComFileAutoCaptureFLG(true);
+		//バックアップとる
+		mainDTO.setAutoBackUp(true);
+		//ログ
+		mainDTO.setLogFilePath						("C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\01.log");
+		mainDTO.setLogFilePath						("D:\\01.kabu_backup");
+		
+		//LSファイル
+		mainDTO.setEntryFolderPath					("C:\\Users\\NOBORU1988\\Dropbox\\01.kabu\\02.everyDayFile");
+		//セパファイル
+		mainDTO.setSepaFolderPath					("D:\\01.kabu_backup\\03.sepaFile");
+		//へそごま
+		mainDTO.setEveryDayHesoGomaCsvFolderPath	("D:\\01.kabu_backup\\04.hesoGoma");
+		//backup
+		mainDTO.setOutBackUpFolderPath				("D:" + File.separator + "01.kabu_backup" + File.separator + "99.dumpbakup");
 
 		//即座にばらまく
 		mainDTO.setCloringSokuzaCheck(true);
 		cloringDate C_D = new cloringDate();
 		C_D.getDayDate(mainDTO);
 		C_D = new cloringDate();
-
+		mainDTO.setCloringSokuzaCheck(false);
 		//最後にバックテストフラグを終了する
 		mainDTO.setBackTestFLG(false);
 	}

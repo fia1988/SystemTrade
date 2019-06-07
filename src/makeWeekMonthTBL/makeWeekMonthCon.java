@@ -151,14 +151,7 @@ public class makeWeekMonthCon {
 		if (sepaConFLG==false){
 			commonAP.writeInLog("株とマーケットの月足週足作成開始：" + TODAY,logWriting.DATEDATE_LOG_FLG);
 			//ここは全株
-			//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
-			//前月、前週をセットする
-			//月足週足テーブルの古いレコードを削除する。
-			checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
-			checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
-			//日足から月/週足に銘柄名、日付をつくる
-			checkBaseW_M(CATE_FLG.W_STOCK_F,calBean,s);
-			checkBaseW_M(CATE_FLG.M_STOCK_F,calBean,s);
+
 
 			//月足週足テーブルに新レコードを挿入する。リアルタイムのレコードを消す。アクセサリ更新して、リアルタイムレコードを作る
 			//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
@@ -302,6 +295,16 @@ public class makeWeekMonthCon {
 	}
 
 	private void createWeekMonthCon_NormalTime(Bean_calendarBean calBean,S s) {
+
+		//前営業日が月/週の最終営業日でなければピックアップフラグをfalseにする。
+		//前月、前週をセットする
+		//月足週足テーブルの古いレコードを削除する。
+		checkEndTerm(CATE_FLG.W_STOCK_F,calBean,s);
+		checkEndTerm(CATE_FLG.M_STOCK_F,calBean,s);
+		//日足から月/週足に銘柄名、日付をつくる
+		checkBaseW_M(CATE_FLG.W_STOCK_F,calBean,s);
+		checkBaseW_M(CATE_FLG.M_STOCK_F,calBean,s);
+
 		//リアルタイムTBLには日付とCODEのみあるので日足と同じ始値(仮)終値をつくる。
 		makeBeseMonthWeek(CATE_FLG.W_STOCK_F,calBean,s);
 		makeBeseMonthWeek(CATE_FLG.M_STOCK_F,calBean,s);
@@ -482,7 +485,7 @@ public class makeWeekMonthCon {
 		setParameta(cate, calBean);
 		String SQL;
 		ArrayList<String> dayList = new ArrayList<String>();
-		SQL = " select " + COLUMN_TBL.DAYTIME + " from " + TBL_Name.CALENDAR_TBL + " where " + nowTerm_col + " = " + nowTerm + " and " + COLUMN_TBL.DAYTIME + " <= " + TODAY;
+		SQL = " select " + COLUMN_TBL.DAYTIME + " from " + TBL_Name.CALENDAR_TBL + " where " + nowTerm_col + " = " + nowTerm + " and " + COLUMN_TBL.DAYTIME + " <= " + TODAY + " order by " + COLUMN_TBL.DAYTIME;
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while ( s.rs.next() ) {
@@ -495,13 +498,14 @@ public class makeWeekMonthCon {
 		}
 
 		String unionSQL = "";
-
+		String startDay = TODAY;
 		if (dayList.size()==1){
 			unionSQL = " select * from " + unionTBL +" where " + unionTBL + "." + SQL_CODE_WHERE + " and " + COLUMN_TBL.DAYTIME + " = '" + dayList.get(0) + "'";
 		}else{
 
 			for (String term:dayList){
 				unionSQL = unionSQL + " select * from " + unionTBL + " where " + unionTBL + "." + SQL_CODE_WHERE + " and "  + COLUMN_TBL.DAYTIME + " = '" + term + "'" + " UNION ALL ";
+				startDay = "'" + term + "'"; 
 			}
 
 //			+第一引数：刈り取り対象文字列（テキスト）
@@ -533,6 +537,21 @@ public class makeWeekMonthCon {
 							+ unionSQL
 						+ " ) as " + unionLetter + " group by " + unionLetter + "." + COLUMN_TBL.CODE
 					+ " ) as " + dummyT;
+
+//		String dummyTBL =
+//				" ( "
+//				+ " select "
+//						+ selectColCode + "," + selectColMax + "," + selectColMin + "," + selectColDek + "," + selectColBay
+//				+ " from "
+//						+ unionTBL + " as " + unionLetter
+//						+ " where "
+//						+ unionLetter + "." + SQL_CODE_WHERE
+//						+ " and "
+//						+ startDay +  " <= "+ COLUMN_TBL.DAYTIME
+//						+ " and "
+//						+ COLUMN_TBL.DAYTIME + " <= " + TODAY
+//						+ " group by " + unionLetter + "." + COLUMN_TBL.CODE
+//				+ " ) as " + dummyT;
 		//System.out.println("a:" + dummyTBL);
 
 		SQL = " update "
@@ -659,6 +678,11 @@ public class makeWeekMonthCon {
 //					+ COLUMN_TBL.BAYBAY	 + " , "
 //					+ COLUMN_TBL.CLOSE
 					;
+
+//		String selCol =  COLUMN_TBL.CODE	 + " , "
+//				+ "" + TODAY + " "
+//				;
+
 		String selectSQL;
 		selectSQL = " select "
 				  + col
@@ -666,7 +690,10 @@ public class makeWeekMonthCon {
 				  + " where "
 				  + COLUMN_TBL.DAYTIME + " = " + TODAY
 				  + " and "
-				  + SQL_CODE_WHERE;
+				  + SQL_CODE_WHERE
+//				  + " and "
+//				  + COLUMN_TBL.CODE + " not in ('0001','0002') "
+				  ;
 
 		String insSQL;
 		insSQL = "insert into "

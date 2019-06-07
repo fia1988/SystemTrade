@@ -88,9 +88,9 @@ public class makeCalendarCon {
 		//直前の月情報、週情報
 		String checkWeek = checkChangeWeekMontn(TODAY,2,s);
 		String checkMonth = checkChangeWeekMontn(TODAY,3,s);
-		
-		
-		
+
+
+
 		SQL = " update "
 				+ TBL_Name.CALENDAR_TBL
 				+ " set "
@@ -136,8 +136,8 @@ public class makeCalendarCon {
 			default:
 				break;
 		}
-		
-		
+
+
 		SQL = " select  " + col + " from " + TBL_Name.CALENDAR_TBL
 				+ " where " + COLUMN_TBL.DAYTIME + " <= '" + TODAY + "'"
 				+ " order by " + col + " desc"
@@ -153,7 +153,7 @@ public class makeCalendarCon {
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-		}		
+		}
 
 		return data;
 	}
@@ -222,7 +222,14 @@ public class makeCalendarCon {
 		String week_now = Integer.toString(week_now_int);
 
 		if (week_now.length() == 1){
-			week_now = "0" + week_now;
+			if(mm==12){
+				//なぜか12月のweeknowが１のときがあるので修正
+				cal.set(yyyy, mm-1, dd-7);
+				week_now_int = cal.get(Calendar.WEEK_OF_YEAR);
+				week_now = Integer.toString(week_now_int+1);
+			}else{
+				week_now = "0" + week_now;	
+			}
 		}
 
 
