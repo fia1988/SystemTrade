@@ -69,10 +69,6 @@ public class makeWeekMonthCon {
 		this.code = code;
 	}
 
-	public void zikken(){
-		System.out.println("sepaConFLG:" + sepaConFLG);
-		System.out.println("SQL_CODE_WHERE:" + SQL_CODE_WHERE);
-	}
 
 	private void setParameta(String cate,Bean_calendarBean calBean){
 		yesterDay = "'" + calBean.getDAYTIME_BEFORE() + "'";
@@ -448,35 +444,37 @@ public class makeWeekMonthCon {
 		//resultCheckがtrueの時は月/週のスタートなので処理しない。
 		//true=週/月の始まりなので前営業日が週/月の最終日になるので編集しなくてもよい。
 		if ( resultCheck ){
-			insertTBL(TBL,monthWeekTBL,  COLUMN_TBL.DAYTIME ,TODAY, s);
-			return;
+//			insertTBL(TBL,monthWeekTBL,  COLUMN_TBL.DAYTIME ,TODAY, s);
+//			return;
+		}else{
+			String SQL;
+
+			SQL = " update "
+					+ TBL		 + " as A  "
+					+ " left outer join "
+					+ TBL		 + " as B  "
+					+ " on "
+					+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE
+					+ " and "
+					+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME
+					+ " set "
+					+ "A." + COLUMN_TBL.OPEN + " = " + "B." + COLUMN_TBL.OPEN
+					+ " where "
+					+ "A." + COLUMN_TBL.DAYTIME + " = " + TODAY
+					+ " and "
+					+ "B." + COLUMN_TBL.DAYTIME + " = " + yesterDay
+					+ " and "
+					+ "A." + SQL_CODE_WHERE;
+
+				if (logFlg){commonAP.writeInLog("updateStart:" + w_mLetter + "足の各列の始値作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
+
+				s.freeUpdateQuery(SQL);
+
 		}
 
-		String SQL;
 
-		SQL = " update "
-				+ TBL		 + " as A  "
-				+ " left outer join "
-				+ TBL		 + " as B  "
-				+ " on "
-				+ "A." + COLUMN_TBL.CODE + " = " + "B." + COLUMN_TBL.CODE
-				+ " and "
-				+ "A." + COLUMN_TBL.DAYTIME + " = " + "B." + COLUMN_TBL.DAYTIME
-				+ " set "
-				+ "A." + COLUMN_TBL.OPEN + " = " + "B." + COLUMN_TBL.OPEN
-				+ " where "
-				+ "A." + COLUMN_TBL.DAYTIME + " = " + TODAY
-				+ " and "
-				+ "B." + COLUMN_TBL.DAYTIME + " = " + yesterDay
-				+ " and "
-				+ "A." + SQL_CODE_WHERE;
-
-			if (logFlg){commonAP.writeInLog("updateStart:" + w_mLetter + "足の各列の始値作成：" + SQL,logWriting.DATEDATE_LOG_FLG);}
-
-			s.freeUpdateQuery(SQL);
-
-			//週月足リアルを週月足にいれる
-			insertTBL(TBL,monthWeekTBL,  COLUMN_TBL.DAYTIME ,TODAY, s);
+		//週月足リアルを週月足にいれる
+		insertTBL(TBL,monthWeekTBL,  COLUMN_TBL.DAYTIME ,TODAY, s);
 	}
 
 
@@ -505,7 +503,7 @@ public class makeWeekMonthCon {
 
 			for (String term:dayList){
 				unionSQL = unionSQL + " select * from " + unionTBL + " where " + unionTBL + "." + SQL_CODE_WHERE + " and "  + COLUMN_TBL.DAYTIME + " = '" + term + "'" + " UNION ALL ";
-				startDay = "'" + term + "'"; 
+				startDay = "'" + term + "'";
 			}
 
 //			+第一引数：刈り取り対象文字列（テキスト）
@@ -694,6 +692,18 @@ public class makeWeekMonthCon {
 //				  + " and "
 //				  + COLUMN_TBL.CODE + " not in ('0001','0002') "
 				  ;
+
+//		selectSQL = " select "
+//				  +	COLUMN_TBL.CODE	 + " , "
+//				  + TODAY + " as " + COLUMN_TBL.DAYTIME
+//				  + " from " + TBL_Name.CODELISTTBL
+//				  + " where "
+//				  + TBL_Name.CODELISTTBL + "." + SQL_CODE_WHERE
+//				  + " and "
+//				  + COLUMN_TBL.CODE + " not in ('0001','0002') "
+//				  ;
+
+
 
 		String insSQL;
 		insSQL = "insert into "

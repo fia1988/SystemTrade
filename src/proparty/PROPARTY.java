@@ -2,14 +2,15 @@ package proparty;
 
 public class PROPARTY {
 
-	//propartyTBLの項目名
-	//暗号化キー
-	public static String FBS_KEY = "FBS_KEY";
-	//各項目の初期値
-	public static String FIRST_SET = "firstRecord";
-
 	//------------------------------------ここはアップロードする前に消してやること
-	//へそのごまのID
+		//propartyTBLの項目名
+		//暗号化キー
+		public static String FBS_KEY = "";
+		//各項目の初期値
+		public static String FIRST_SET = "";
+
+
+		//へそのごまのID
 		public static final String hesoGomaID = "";
 		//へそのごまのパスワード
 		public static final String hesoGomePASS = "";

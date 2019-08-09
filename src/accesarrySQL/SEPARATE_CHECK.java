@@ -236,7 +236,7 @@ public class SEPARATE_CHECK {
 				+ " " + A + "." + COLUMN_TBL.DAYTIME + " = " + B + "." + COLUMN_TBL.DAYTIME
 				+ " where "
 				+ " " + A + "." + COLUMN_TBL.CODE + " = " + "'" + code + "'";
-		commonAP.writeInLog("resetWeekConTBL:" + code + ":"+TBL+"月足週足のテーブルリセット" ,logWriting.DATEDATE_LOG_FLG);
+		commonAP.writeInLog("resetWeekConTBL:" + code + ":"+TBL+"月足週足のテーブルリセット" + SQL,logWriting.DATEDATE_LOG_FLG);
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -258,6 +258,7 @@ public class SEPARATE_CHECK {
 			//ニューアクセサリ
 			Bean_calendarBean calBean = new Bean_calendarBean();
 			calBean.setCalendarBean(getSepaDayList().get(i)[1], s);
+			
 			ac.setConAccessary(calBean,s);
 			//ニューアクセサリここまで
 
@@ -283,6 +284,48 @@ public class SEPARATE_CHECK {
 		String RESULT = columnName + " = ( " + columnName + " ) " + enXan + " ( " + WARIAI + " ) ";
 
 		return RESULT;
+	}
+
+	public static void setSepaDayList(String code,String startDay,S s){
+		codeSeparateList = new ArrayList<String[]>();
+
+
+
+		String SQL	= " select "
+				+ COLUMN_TBL.CODE + ","
+				+ COLUMN_TBL.DAYTIME
+				+ " from "
+				+ TBL_Name.STOCK_DD
+				+ " where "
+				+ COLUMN_TBL.CODE + " = '" + code + "'"
+				+ " and "
+				+ COLUMN_TBL.DAYTIME + " >= '" +  startDay + "'"
+				+ " order by "
+				+ COLUMN_TBL.DAYTIME;
+		try {
+
+			s.rs = s.sqlGetter().executeQuery(SQL);
+
+			while ( s.rs.next() ) {
+
+				codeSeparate = new String[4];
+				//コード
+				codeSeparate[0]		=	s.rs.getString(COLUMN_TBL.CODE);
+
+				//日付
+				codeSeparate[1]		=	s.rs.getString(COLUMN_TBL.DAYTIME);
+
+//				System.out.println("code:" + codeSeparate[0]);
+//				System.out.println("day:" + codeSeparate[1]);
+	//			System.out.println("rate:" + codeSeparate[2]);
+//				System.out.println("judge:" + codeSeparate[3]);
+
+				codeSeparateList.add(codeSeparate);
+			}
+
+		} catch (SQLException e) {
+
+		}
 	}
 
 	public static void setSepaDayList(String code,S s){
