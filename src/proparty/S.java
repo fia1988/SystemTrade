@@ -58,7 +58,7 @@ public class S {
 	public int getCon(){
 		try {
 			con = DriverManager.getConnection(
-				    "jdbc:mysql://localhost/"  + TBL_Name.KABU_DB, PROPARTY.DBUSER, PROPARTY.DBPASS);
+				    "jdbc:mysql://localhost/"  + TBL_Name.KABU_DB + "?useUnicode=true&characterEncoding=utf8", PROPARTY.DBUSER, PROPARTY.DBPASS);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 
