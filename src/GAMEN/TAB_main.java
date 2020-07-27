@@ -83,6 +83,7 @@ public class TAB_main extends JPanel {
 		logFolderPath.setBounds(42, 362, 330, 25);
 		add(logFolderPath);
 		logFolderPath.setColumns(10);
+		logFolderPath.setText("logfolder");
 
 		JButton btnNewButton = new JButton("timerOn");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -110,6 +111,7 @@ public class TAB_main extends JPanel {
 		mysqlID.setColumns(10);
 		mysqlID.setBounds(95, 210, 136, 25);
 		add(mysqlID);
+		mysqlID.setText("ID");
 
 		JLabel lblMysql = new JLabel("MYSQL情報");
 		lblMysql.setBounds(42, 176, 142, 19);
@@ -131,6 +133,7 @@ public class TAB_main extends JPanel {
 		entryFolderPath.setColumns(10);
 		entryFolderPath.setBounds(42, 434, 330, 25);
 		add(entryFolderPath);
+		entryFolderPath.setText("entryFolder");
 
 		JLabel label_1 = new JLabel("ログファイル出力先フォルダパス");
 		label_1.setBounds(42, 333, 375, 19);
@@ -148,6 +151,7 @@ public class TAB_main extends JPanel {
 		sepaComFolderPath.setColumns(10);
 		sepaComFolderPath.setBounds(434, 80, 330, 25);
 		add(sepaComFolderPath);
+		sepaComFolderPath.setText("sepaComFolder");
 
 		JLabel label_4 = new JLabel("結果：");
 		label_4.setBounds(434, 155, 60, 19);
@@ -182,11 +186,13 @@ public class TAB_main extends JPanel {
 		outBackUplogFolderPath.setColumns(10);
 		outBackUplogFolderPath.setBounds(434, 244, 330, 25);
 		add(outBackUplogFolderPath);
+		outBackUplogFolderPath.setText("outBack");
 
 		inBackUplogFilePath = new JTextField();
 		inBackUplogFilePath.setColumns(10);
 		inBackUplogFilePath.setBounds(434, 421, 330, 25);
 		add(inBackUplogFilePath);
+		inBackUplogFilePath.setText("inBack");
 
 		JButton button_1 = new JButton("test");
 		button_1.setAction(action_9);
@@ -330,6 +336,7 @@ public class TAB_main extends JPanel {
 		sepaFolderPath.setColumns(10);
 		sepaFolderPath.setBounds(42, 502, 330, 25);
 		add(sepaFolderPath);
+		sepaFolderPath.setText("sepafolder");
 
 		JLabel label_9 = new JLabel("分割併合ファイル出力先");
 		label_9.setBounds(42, 474, 330, 19);
@@ -401,6 +408,7 @@ public class TAB_main extends JPanel {
 		hesoGomaFolderPath.setBounds(42, 603, 330, 25);
 		add(hesoGomaFolderPath);
 		hesoGomaFolderPath.setColumns(10);
+		hesoGomaFolderPath.setText("hesogoma");
 
 		JLabel label_22 = new JLabel("へそごまファイル格納場所");
 		label_22.setBounds(42, 572, 330, 19);
