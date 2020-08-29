@@ -96,6 +96,8 @@ public class TBL_Name {
 	//株の分割とか収束を管理するテーブル
 	final public static String SEPARATE_DD	 = "99_separate"		+ TAIL_DAY;
 
+	final public static String AB_MarketPortForio	 = "ab_MarketPortForio";
+
 	private static List<String> codeNewList = new ArrayList<String>(); //コードリストテーブルのうち、日付の新しいものをとる。
 	private static List<String> codeAllList = new ArrayList<String>();
 	private static List<String> codeList_HaihunReplace = new ArrayList<String>();

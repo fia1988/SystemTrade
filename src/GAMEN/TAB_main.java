@@ -83,7 +83,7 @@ public class TAB_main extends JPanel {
 		logFolderPath.setBounds(42, 362, 330, 25);
 		add(logFolderPath);
 		logFolderPath.setColumns(10);
-		logFolderPath.setText("logfolder");
+		logFolderPath.setText("D:\\01.kabu_backup\\00.dropbox\\Dropbox\\01.kabu\\01.log");
 
 		JButton btnNewButton = new JButton("timerOn");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -133,7 +133,7 @@ public class TAB_main extends JPanel {
 		entryFolderPath.setColumns(10);
 		entryFolderPath.setBounds(42, 434, 330, 25);
 		add(entryFolderPath);
-		entryFolderPath.setText("entryFolder");
+		entryFolderPath.setText("D:\\01.kabu_backup\\00.dropbox\\Dropbox\\01.kabu\\02.everyDayFile");
 
 		JLabel label_1 = new JLabel("ログファイル出力先フォルダパス");
 		label_1.setBounds(42, 333, 375, 19);
@@ -186,7 +186,7 @@ public class TAB_main extends JPanel {
 		outBackUplogFolderPath.setColumns(10);
 		outBackUplogFolderPath.setBounds(434, 244, 330, 25);
 		add(outBackUplogFolderPath);
-		outBackUplogFolderPath.setText("outBack");
+		outBackUplogFolderPath.setText("D:\\01.kabu_backup\\99.dumpbakup");
 
 		inBackUplogFilePath = new JTextField();
 		inBackUplogFilePath.setColumns(10);
@@ -336,7 +336,7 @@ public class TAB_main extends JPanel {
 		sepaFolderPath.setColumns(10);
 		sepaFolderPath.setBounds(42, 502, 330, 25);
 		add(sepaFolderPath);
-		sepaFolderPath.setText("sepafolder");
+		sepaFolderPath.setText("D:\\01.kabu_backup\\03.sepaFile");
 
 		JLabel label_9 = new JLabel("分割併合ファイル出力先");
 		label_9.setBounds(42, 474, 330, 19);
@@ -408,7 +408,7 @@ public class TAB_main extends JPanel {
 		hesoGomaFolderPath.setBounds(42, 603, 330, 25);
 		add(hesoGomaFolderPath);
 		hesoGomaFolderPath.setColumns(10);
-		hesoGomaFolderPath.setText("hesogoma");
+		hesoGomaFolderPath.setText("D:\\01.kabu_backup\\04.hesoGoma");
 
 		JLabel label_22 = new JLabel("へそごまファイル格納場所");
 		label_22.setBounds(42, 572, 330, 19);

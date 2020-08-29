@@ -228,6 +228,14 @@ public class SagyoSpace {
 		System.out.println(insSQL);
 	}
 
+	public static void testCaseB(){
+		marketPortForio a = new marketPortForio();
+		
+		a.checkA();
+		
+	}
+	
+	
 	public static void testCaseA(){
 //		makeCalendarCon c = new makeCalendarCon();
 		S s = new S();

@@ -1109,6 +1109,25 @@ public class COLUMN_TBL {
 	public static String PICK_UP_FLG										= "PICK_UP_FLG";
 	public static String PICK_UP_FLG_KATA 									= PICK_UP_FLG + " tinyint(1)  default true ";
 
+	//物理削除アップフラグ
+	public static String ACTIVE_FLG										= "ACTIVE_FLG";
+	public static String ACTIVE_FLG_KATA 									= ACTIVE_FLG + " tinyint(1)  default false ";
+
+	//AB_MARKETPORTFORIOテーブルの開始日
+	//日付
+	public static String START_DAY											= "START_DAY";
+	public static String START_DAY_KATA										= START_DAY + " DATE  ";
+
+	//AB_MARKETPORTFORIOテーブルの開始日
+	//アドレス
+	public static String MARKET_ADRESS												= "MARKET_ADRESS";
+	public static String MARKET_ADRESS_KATA											= MARKET_ADRESS + " BIGINT unsigned  ";
+
+	//複数証券コード
+	public static String CODES											= "codes";
+	public static String CODES_KATA										= CODES + " varchar(200) ";
+
+
 //	alter table 01_stock_dd add DIVIDEND_PER double; //配当利回り
 //	alter table 01_stock_dd add CAPM double; //CAPM株主資本コスト（リスクフリーレート+ベータ*マーケットリスクプレミアム）
 

@@ -54,9 +54,41 @@ public class createTBL {
 		createSTOCK_09_MM(s);
 		createMARKET_WW_TBL(s);
 		createMARKET_MM_TBL(s);
+
+		createAA_MarketPortForio(s);
 		return createLastOrderTable(s);
 	}
 
+	private void createAA_MarketPortForio(S s){
+		//列名の取得
+		String colum;
+		String TBL = TBL_Name.AB_MarketPortForio;
+		//SQL全文
+		String SQL;
+
+		//単位は％で計算している。
+		colum = " ( "
+				+ COLUMN_TBL.MARKET_ADRESS_KATA					 + " ,  "
+				+ COLUMN_TBL.CODES_KATA					 + " ,  "
+				+ COLUMN_TBL.START_DAY_KATA					 + " ,  "
+				+ COLUMN_TBL.DAYTIME_KATA					 + " ,  "
+				+ COLUMN_TBL.DAYTIME_BEFORE_KATA			 + " ,  "
+				+ COLUMN_TBL.CLOSE_KATA						 + " ,  "
+				+ COLUMN_TBL.RETURN_FOR_BETA_KATA			 + " ,  "
+				+ COLUMN_TBL.RISK_FOR_BETA_KATA			 + " ,  "
+				+ COLUMN_TBL.ACTIVE_FLG_KATA			 + " ,  "
+
+				+ "primary key ("
+				+ COLUMN_TBL.CODES + "," + COLUMN_TBL.DAYTIME +  "," + COLUMN_TBL.ACTIVE_FLG + ") )";;
+
+
+		//SQL文の取得
+		String create = "create table ";
+		SQL = create + TBL + colum;
+		System.out.println(SQL);
+		s.createTBL(SQL);
+
+	}
 
 	private void createSTOCK_08_WW(S s){
 		//SQL全文
