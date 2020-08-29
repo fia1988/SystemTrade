@@ -29,7 +29,8 @@ public class marketPortForio {
 		String budget = "100000";
 		String filePath = "D:\\01.kabu_backup\\00.dropbox\\Dropbox\\01.kabu\\01.log";
 		//select count(*) from kabudata.aa_calendartbl where daytime between '2017-01-04' and '2019-12-30'
-		reserchMarketportForio(0,999999999, strDay, endDay, budget,filePath,730);
+//		reserchMarketportForio(0,999999999, strDay, endDay, budget,filePath,730);
+		reserchMarketportForio(0,180000, strDay, endDay, budget,filePath,730);
 		
 //		System.out.println("size:" + testList.size());
 
@@ -81,7 +82,7 @@ public class marketPortForio {
 		deleteTBL("false",s);
 		
 		//ABテーブルを作成する。
-		upDate_AB_MarketPortForio(5,codes,codeSplit,strDay,endDay,budget,s);
+		upDate_AB_MarketPortForio(marketAdress,codes,codeSplit,strDay,endDay,budget,s);
 
 		//最終日の平均、標準偏差を計算する
 		calculateAB_TBL(endDay,s);
